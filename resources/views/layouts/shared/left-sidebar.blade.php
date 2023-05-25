@@ -253,16 +253,13 @@
                         <div class="collapse" id="contract">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">合約類別</a>
+                                    <a href="{{ route('contractTypes') }}"  class="{{ request()->is('contractTypes') ? 'active' : '' }}">合約類別</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">合約設定</a>
+                                    <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">合約管理</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">合約管理</a>
-                                </li>
-                                <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">新增合約</a>
+                                    <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增合約</a>
                                 </li>
                             </ul>
                         </div>

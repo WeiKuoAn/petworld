@@ -145,7 +145,7 @@
                             </table>
                             <br>
                             <ul class="pagination pagination-rounded justify-content-end mb-0">
-                                {{ $datas->links('vendor.pagination.bootstrap-4') }}
+                                {{ $datas->appends($condition)->links('vendor.pagination.bootstrap-4') }}
                             </ul>
                         </div>
                     </div>

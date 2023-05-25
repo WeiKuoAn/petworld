@@ -255,6 +255,23 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/customer/pet/search', [PujaDataController::class, 'customer_pet_search'])->name('customer.pet.search');
     Route::get('/puja/search', [PujaDataController::class, 'puja_search'])->name('puja.search');
 
+    /*合約類別管理*/
+    Route::get('/contractType', [ContractTypeController::class, 'index'])->name('contractTypes');
+    Route::get('/contractType/create', [ContractTypeController::class, 'create'])->name('contractType.create');
+    Route::post('/contractType/create', [ContractTypeController::class, 'store'])->name('contractType.create.data');
+    Route::get('/contractType/edit/{id}', [ContractTypeController::class, 'show'])->name('contractType.edit');
+    Route::post('/contractType/edit/{id}', [ContractTypeController::class, 'update'])->name('contractType.edit.data');
+
+    /*合約管理*/
+    Route::get('/contract', [ContractController::class, 'index'])->name('contracts');
+    Route::get('/contract/create', [ContractController::class, 'create'])->name('contract.create');
+    Route::post('/contract/create', [ContractController::class, 'store'])->name('contract.create.data');
+    Route::get('/contract/edit/{id}', [ContractController::class, 'show'])->name('contract.edit');
+    Route::post('/contract/edit/{id}', [ContractController::class, 'update'])->name('contract.edit.data');
+    Route::get('/contract/del/{id}', [ContractController::class, 'delete'])->name('contract.del');
+    Route::post('/contract/del/{id}', [ContractController::class, 'destroy'])->name('contract.del.data');
+
+
     Route::get('image', function()
     {
         $img = Image::make('https://images.pexels.com/photos/4273439/pexels-photo-4273439.jpeg')->resize(300, 200); // 這邊可以隨便用網路上的image取代
