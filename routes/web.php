@@ -28,6 +28,8 @@ use App\Http\Controllers\VacationController;
 use App\Http\Controllers\PujaController;
 use App\Http\Controllers\PujaTypeController;
 use App\Http\Controllers\PujaDataController;
+use App\Http\Controllers\ContractController;
+use App\Http\Controllers\ContractTypeController;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -245,6 +247,13 @@ Route::group(['prefix' => '/'], function () {
     /*法會報名管理*/
     Route::get('/puja_data', [PujaDataController::class, 'index'])->name('puja_datas');
     Route::get('/puja_data/create', [PujaDataController::class, 'create'])->name('puja_data.create');
+    Route::post('/puja_data/create', [PujaDataController::class, 'store'])->name('puja_data.create.data');
+    Route::get('/puja_data/edit/{id}', [PujaDataController::class, 'show'])->name('puja_data.edit');
+    Route::post('/puja_data/edit/{id}', [PujaDataController::class, 'update'])->name('puja_data.edit.data');
+    Route::get('/puja_data/del/{id}', [PujaDataController::class, 'delete'])->name('puja_data.del');
+    Route::post('/puja_data/del/{id}', [PujaDataController::class, 'destroy'])->name('puja_data.del.data');
+    Route::get('/customer/pet/search', [PujaDataController::class, 'customer_pet_search'])->name('customer.pet.search');
+    Route::get('/puja/search', [PujaDataController::class, 'puja_search'])->name('puja.search');
 
     Route::get('image', function()
     {

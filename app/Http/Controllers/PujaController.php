@@ -8,6 +8,7 @@ use App\Models\Puja;
 use App\Models\PujaType;
 use App\Models\Product;
 use App\Models\PujaProduct;
+use Carbon\Carbon;
 
 class PujaController extends Controller
 {
@@ -24,9 +25,10 @@ class PujaController extends Controller
      */
     public function create()
     {
+        $years = range(Carbon::now()->year, 2023);
         $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
         $types = PujaType::where('status','up')->get();
-        return view('puja.create')->with('types',$types)->with('products',$products);
+        return view('puja.create')->with('types',$types)->with('products',$products)->with('years',$years);
     }
 
     /**
@@ -71,11 +73,13 @@ class PujaController extends Controller
      */
     public function show($id)
     {
+        $years = range(Carbon::now()->year, 2023);
         $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
         $data = Puja::where('id',$id)->first();
         $types = PujaType::where('status','up')->get();
         $puja_products = PujaProduct::where('puja_id',$id)->get();
-        return view('puja.edit')->with('data',$data)->with('types',$types)->with('puja_products',$puja_products)->with('products',$products);
+        return view('puja.edit')->with('data',$data)
+        ->with('types',$types)->with('puja_products',$puja_products)->with('products',$products)->with('years',$years);
     }
 
     /**

@@ -11,6 +11,7 @@ class Puja extends Model
     protected $table = "puja";
 
     protected $fillable = [
+        'year',
         'date',
         'type',
         'name',

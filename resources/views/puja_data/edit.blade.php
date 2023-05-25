@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "新增法會"])
+@extends('layouts.vertical', ["page_title"=> "編輯法會"])
 
 @section('css')
 {{-- <link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
@@ -30,17 +30,17 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">法會管理</a></li>
-                        <li class="breadcrumb-item active">新增法會</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">法會報名管理</a></li>
+                        <li class="breadcrumb-item active">編輯法會報名</li>
                     </ol>
                 </div>
-                <h5 class="page-title">新增法會</h5>
+                <h5 class="page-title">編輯法會報名</h5>
             </div>
         </div>
     </div>
     <!-- end page title -->
 
-    <form action="{{ route('puja_data.create.data') }}" method="POST" id="your-form"  enctype="multipart/form-data" data-plugin="dropzone" data-previews-container="#file-previews" data-upload-preview-template="#uploadPreviewTemplate">
+    <form action="{{ route('puja_data.edit.data',$data->id) }}" method="POST" id="your-form"  enctype="multipart/form-data" data-plugin="dropzone" data-previews-container="#file-previews" data-upload-preview-template="#uploadPreviewTemplate">
         @csrf
     <div class="row">
         <div class="col-lg-12">
@@ -50,30 +50,30 @@
                     <div class="row">
                         <div class="mb-3 col-md-4">
                             <label for="date" class="form-label">報名日期<span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="date" name="date" required>
+                            <input type="date" class="form-control" id="date" name="date" value="{{ $data->date }}" required>
                         </div>
                         <div class="mb-3 col-md-4">
                             <label for="puja_id" class="form-label">法會名稱<span class="text-danger">*</span></label>
                             <select id="puja_id" class="form-select" name="puja_id" >
                                 <option value="">請選擇...</option>
                                 @foreach($pujas as $puja)
-                                    <option value="{{ $puja->id }}">{{ $puja->name }}</option>
+                                    <option value="{{ $puja->id }}" @if($data->puja_id == $puja->id) selected @endif>{{ $puja->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3 col-md-4">
                             <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" readonly value="{{ Auth::user()->name }}">
+                            <input type="text" class="form-control"  readonly value="{{ $data->user_name->name }}">
                         </div>
                         <div class="mb-3 col-md-4">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
-                            <input list="cust_name_list_q" class="form-control" id="cust_name_q" name="cust_name_q" placeholder="請輸入客戶姓名" required>
+                            <input list="cust_name_list_q" class="form-control" id="cust_name_q" name="cust_name_q" placeholder="請輸入客戶姓名" value="{{ $data->customer_id }}" required>
                             <datalist id="cust_name_list_q">
                             </datalist>
                         </div>
                         <div class="mb-3 col-md-4">
                             <label for="customer_id" class="form-label">寶貝數量<span class="text-danger"></span></label>
-                            <input class="form-control" id="pet_count" name="pet_count" required>
+                            <input class="form-control" id="pet_count" name="pet_count" value="{{ $pet_count }}" required>
                         </div>
                     </div>
                 </div>
@@ -97,24 +97,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php $j = 0; @endphp
-                                        @for ($i = 0; $i < 1; $i++)
-                                            @php $j = $i+1; @endphp
-                                            <tr id="row-{{ $i }}">
+                                        @foreach ($data_pets as $key=>$data_pet)
+                                            <tr id="row-{{ $key }}">
                                                 <td class="text-center" width="10%">
-                                                    @if($j==1)
+                                                    @if($key==0)
                                                     <button type="button" class="ibtnAdd_pet demo-delete-row btn btn-primary btn-sm btn-icon"><i class="fa fas fa-plus"></i></button>                                                    
                                                     @else
                                                     <button type="button" class="ibtnDel_pet demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <select id="pet_id" alt="{{ $i }}" class="mobile form-select" name="pet_ids[]" required>
-                                                        <option value="" selected>請選擇...</option>
+                                                    <select id="pet_id" alt="{{ $key }}" class="mobile form-select" name="pet_ids[]">
+                                                        <option value="{{ $data_pet->pet_name }}" selected>{{ $data_pet->pet_name }}</option>
                                                     </select>
                                                 </td>
                                             </tr>
-                                        @endfor
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div> <!-- end .table-responsive -->
@@ -143,33 +141,31 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php $j = 0; @endphp
-                                        @for ($i = 0; $i < 2; $i++)
-                                            @php $j = $i+1; @endphp
-                                            <tr id="row-{{ $i }}">
+                                        @foreach ($data_products as $key=>$data_product)
+                                            <tr id="row-{{ $key }}">
                                                 <td class="text-center">
-                                                    @if($j==1)
+                                                    @if($key==0)
                                                     <button type="button" class="ibtnAdd_gdpaper demo-delete-row btn btn-primary btn-sm btn-icon"><i class="fa fas fa-plus"></i></button>                                                    
                                                     @else
                                                     <button type="button" class="ibtnDel_gdpaper demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button>
                                                     @endif
                                                 </td>
                                             <td>
-                                                <select id="gdpaper_id_{{$i}}" alt="{{ $i }}" class="mobile form-select" name="gdpaper_ids[]" onchange="chgPapers(this)" >
+                                                <select id="gdpaper_id_{{$key}}" alt="{{ $key }}" class="mobile form-select" name="gdpaper_ids[]" onchange="chgPapers(this)" >
                                                     <option value="" selected>請選擇...</option>
                                                     @foreach($products as $product)
-                                                        <option value="{{ $product->id }}">{{ $product->name }}({{ $product->price }})</option>
+                                                        <option value="{{ $product->id }}" @if($data_product->product_id == $product->id) selected @endif>{{ $product->name }}({{ $product->price }})</option>
                                                     @endforeach
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="number"  alt="{{ $i }}" class="mobile form-control" id="gdpaper_num_{{$i}}" name="gdpaper_num[]" onchange="chgNums(this)">
+                                                <input type="number"  alt="{{ $key }}" class="mobile form-control" id="gdpaper_num_{{$key}}" name="gdpaper_num[]" value="{{ $data_product->product_num }}" onchange="chgNums(this)">
                                             </td>
                                             <td>
-                                                <input type="text" class="mobile form-control total_number" id="gdpaper_total_{{$i}}" name="gdpaper_total[]" value="">
+                                                <input type="text" class="mobile form-control total_number" id="gdpaper_total_{{$key}}" name="gdpaper_total[]" value="{{ $data_product->product_total }}">
                                             </td>
                                         </tr>
-                                        @endfor
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div> <!-- end .table-responsive -->
@@ -190,32 +186,32 @@
                             <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
                             <select class="form-select" name="pay_id" required>
                                 <option value="" selected>請選擇</option>
-                                <option value="A">一次付清</option>
-                                <option value="C">訂金</option>
-                                <option value="E">追加</option>
-                                <option value="D">尾款</option>
+                                <option value="A" @if($data->pay_id == 'A') selected @endif>一次付清</option>
+                                <option value="C" @if($data->pay_id == 'C') selected @endif>訂金</option>
+                                <option value="E" @if($data->pay_id == 'E') selected @endif>追加</option>
+                                <option value="D" @if($data->pay_id == 'D') selected @endif>尾款</option>
                             </select>
                         </div>
                         <div class="mb-3 col-md-3">
                             <label for="pay_id" class="form-label">支付方式<span class="text-danger">*</span></label>
                             <select class="form-select" name="pay_method" required>
                                 <option value="" selected>請選擇</option>
-                                <option value="A">現金</option>
-                                <option value="B">匯款</option>
+                                <option value="A" @if($data->pay_id == 'A') selected @endif>現金</option>
+                                <option value="B" @if($data->pay_id == 'B') selected @endif>匯款</option>
                             </select>
                         </div>
                         <div class="mb-3 col-md-3">
                             <label for="pay_price" class="form-label">本次收款<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="pay_price" name="pay_price" required>
+                            <input type="text" class="form-control" id="pay_price" name="pay_price" value="{{ $data->pay_price }}" required>
                         </div>
                         <div class="mb-3 col-md-3">
                             <label for="total" class="form-label">應收金額<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="total" name="total" value="0" readonly>
+                            <input type="text" class="form-control" id="total" name="total" value="{{ $data->total }}" readonly>
                         </div>
                     </div>
                     <div>
                         <label class="form-label">備註</label>
-                        <textarea class="form-control" rows="3" placeholder="" name="comm"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="" name="comm">{{ $data->comm }}</textarea>
                     </div>
                 </div>
             </div> <!-- end card -->
@@ -228,7 +224,7 @@
         <div class="col-12">
             <div class="text-center mb-3">
                 <button type="button" class="btn w-sm btn-light waves-effect" onclick="history.go(-1)">回上一頁</button>
-                <button type="submit" class="btn w-sm btn-success waves-effect waves-light">新增</button>
+                <button type="submit" class="btn w-sm btn-success waves-effect waves-light">編輯</button>
                 {{-- <button type="button" class="btn w-sm btn-danger waves-effect waves-light">Delete</button> --}}
             </div>
         </div> <!-- end col -->
@@ -351,7 +347,7 @@
         var cols = '';
         cols += '<td class="text-center"><button type="button" class="ibtnDel_pet demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button></td>';
         cols += '<td>';
-        cols += '<select id="pet_id_'+rowCount+'" alt="'+rowCount+'" class="mobile form-select" name="pet_ids[]" required>請選擇...</select>';
+        cols += '<select id="pet_id_'+rowCount+'" alt="'+rowCount+'" class="mobile form-select" name="pet_ids[]">請選擇...</select>';
         cols += '</td>';
         cols += '</tr>';
         newRow.append(cols);

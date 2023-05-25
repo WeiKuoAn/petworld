@@ -6,13 +6,120 @@ use Illuminate\Http\Request;
 use App\Models\Puja;
 use App\Models\PujaData;
 use App\Models\Product;
+use App\Models\Sale;
+use App\Models\PujaProduct;
+use App\Models\PujaPet;
+use App\Models\PujaDataAttchProduct;
+use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 
 class PujaDataController extends Controller
 {
-    public function index()
+    public function puja_search(Request $request)
     {
-        $datas = Puja::paginate(50);
-        return view('puja.index')->with('datas',$datas);
+        if ($request->ajax()) {
+            $output = "";
+
+            $puja = Puja::where('id', $request->puja_id)->first();
+            
+            if(isset($puja)){
+                $output = $puja->price;
+            }else{
+                $output=  0;
+            }
+            return Response($output);
+        }
+    }
+
+    public function customer_pet_search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = "";
+
+            $pet_count = Sale::where('customer_id', $request->cust_id)->distinct('pet_name')->count();
+            
+            $sales = Sale::where('customer_id', $request->cust_id)->distinct('pet_name')->whereNotNull('pet_name')->get();
+            
+            if(isset($sales)){
+                foreach ($sales as $key => $sale) {
+                    $output.=  '<option value="'.$sale->pet_name.'">'.$sale->pet_name.'</option>';
+                  }
+            }else{
+                $output.=  '<option value="">請選擇...</option>';
+            }
+            return response()->json([$pet_count, $output]);
+        }
+    }
+
+    public function index(Request $request)
+    {
+        $years = range(Carbon::now()->year, 2023);
+
+        $pujas = [];
+        $year = $request->year;
+        if ($year != "null") {
+            if(isset($year)){
+                $pujas = Puja::where('date','like',$year.'%')->get();
+            }
+        }
+        
+
+        $datas = PujaData::where('status','1');
+        if ($request) {
+            $after_date = $request->after_date;
+            if ($after_date) {
+                $datas = $datas->where('date', '>=', $after_date);
+            }
+            $before_date = $request->before_date;
+            if ($before_date) {
+                $datas = $datas->where('date', '<=', $before_date);
+            }
+            $cust_name = $request->cust_name;
+            if ($cust_name) {
+                $cust_name = $request->cust_name.'%';
+                $customers = Customer::where('name', 'like' ,$cust_name)->get();
+                foreach($customers as $customer) {
+                    $customer_ids[] = $customer->id;
+                }
+                if(isset($customer_ids)){
+                    $datas = $datas->whereIn('customer_id', $customer_ids);
+                }else{
+                    $datas = $datas;
+                }
+            }
+            $puja_id = $request->puja_id;
+
+            if ($puja_id != "null") {
+                if (isset($puja_id)) {
+                    $datas = $datas->where('puja_id',  $puja_id);
+                }else{
+                    $datas = $datas ;
+                }
+            }
+                
+            $datas = $datas->orderby('date', 'desc')->paginate(50);
+
+            $condition = $request->all();
+        } else {
+            $condition = '';
+            $datas = $datas->orderby('date', 'desc')->paginate(50);
+        }
+        // dd($pujas);
+
+        $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
+        foreach($products as $product)
+        {
+            $product_name[$product->id] = $product->name;
+        }
+        // dd($product_name);
+        return view('puja_data.index')->with('datas',$datas)
+                                      ->with('product_name',$product_name)
+                                      ->with('request',$request)
+                                      ->with('years',$years)
+                                      ->with('pujas',$pujas)
+                                      ->with('condition',$condition);
     }
 
     /**
@@ -35,30 +142,45 @@ class PujaDataController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Puja;
+        $data = new PujaData;
         $data->date = $request->date;
-        $data->type = $request->type;
-        $data->name = $request->name;
-        $data->price = $request->price;
-        $data->comment = $request->comment;
+        $data->puja_id = $request->puja_id;
+        $data->customer_id = $request->cust_name_q;
+        $data->pay_id = $request->pay_id;
+        $data->user_id = Auth::user()->id;
+        $data->pay_method = $request->pay_method;
+        $data->pay_price = $request->pay_price;
+        $data->total = $request->total;
+        $data->status = 1;
+        $data->comm = $request->comm;
         $data->save();
 
-        $puja_id = Puja::orderby('id', 'desc')->first();
+        $puja_data = PujaData::orderby('id', 'desc')->first();
+        // dd($request->pet_ids);
+        foreach($request->pet_ids as $key=>$pet)
+        {
+            if(isset($pet))
+            {
+                $puja_pet = new PujaPet;
+                $puja_pet->puja_data_id = $puja_data->id;
+                $puja_pet->pet_name = $request->pet_ids[$key];
+                $puja_pet->save();
+            }
+        }
 
         foreach($request->gdpaper_ids as $key=>$gdpaper_id)
         {
             if(isset($gdpaper_id)){
-                $gdpaper = new PujaProduct();
-                $gdpaper->puja_id = $puja_id->id;
+                $gdpaper = new PujaDataAttchProduct();
+                $gdpaper->puja_data_id = $puja_data->id;
                 $gdpaper->product_id = $request->gdpaper_ids[$key];
                 $gdpaper->product_num = $request->gdpaper_num[$key];
                 $gdpaper->product_total = $request->gdpaper_total[$key];
                 $gdpaper->save();
             }
         }
-
-
-        return redirect()->route('pujas');
+        
+        return redirect()->route('puja_datas');
     }
 
     /**
@@ -70,10 +192,18 @@ class PujaDataController extends Controller
     public function show($id)
     {
         $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
-        $data = Puja::where('id',$id)->first();
-        $types = PujaType::where('status','up')->get();
-        $puja_products = PujaProduct::where('puja_id',$id)->get();
-        return view('puja.edit')->with('data',$data)->with('types',$types)->with('puja_products',$puja_products)->with('products',$products);
+        $data = PujaData::where('id',$id)->first();
+        $data_pets = PujaPet::where('puja_data_id',$id)->get();
+        $pujas = Puja::get();
+        $data_products = PujaDataAttchProduct::where('puja_data_id',$id)->get();
+        $pet_count = Sale::where('customer_id', $data->customer_id)->distinct('pet_name')->count();
+
+        return view('puja_data.edit')->with('data',$data)
+                                ->with('pujas',$pujas)
+                                ->with('data_products',$data_products)
+                                ->with('products',$products)
+                                ->with('data_pets',$data_pets)
+                                ->with('pet_count',$pet_count);
     }
 
     /**
@@ -97,22 +227,40 @@ class PujaDataController extends Controller
     public function update(Request $request, $id)
     {
 
-        $data = Puja::where('id',$id)->first();
+        $data = PujaData::where('id',$id)->first();
         $data->date = $request->date;
-        $data->type = $request->type;
-        $data->name = $request->name;
-        $data->price = $request->price;
-        $data->comment = $request->comment;
+        $data->puja_id = $request->puja_id;
+        $data->customer_id = $request->cust_name_q;
+        $data->pay_id = $request->pay_id;
+        $data->user_id = Auth::user()->id;
+        $data->pay_method = $request->pay_method;
+        $data->pay_price = $request->pay_price;
+        $data->total = $request->total;
+        $data->status = 1;
+        $data->comm = $request->comm;
         $data->save();
 
-        $puja_id = Puja::where('id',$id)->first();
-        $old_product = PujaProduct::where('puja_id', $puja_id->id)->delete();
-        if(isset($request->gdpaper_ids)){
+        PujaPet::where('puja_data_id', $data->id)->delete();
+        foreach($request->pet_ids as $key=>$pet)
+        {
+            if(isset($pet))
+            {
+                $puja_pet = new PujaPet;
+                $puja_pet->puja_data_id = $data->id;
+                $puja_pet->pet_name = $request->pet_ids[$key];
+                $puja_pet->save();
+            }
+        }
+
+        PujaDataAttchProduct::where('puja_data_id', $data->id)->delete();
+
+        if(isset($request->gdpaper_ids))
+        {
             foreach($request->gdpaper_ids as $key=>$gdpaper_id)
             {
                 if(isset($gdpaper_id)){
-                    $gdpaper = new PujaProduct();
-                    $gdpaper->puja_id = $puja_id->id;
+                    $gdpaper = new PujaDataAttchProduct();
+                    $gdpaper->puja_data_id = $data->id;
                     $gdpaper->product_id = $request->gdpaper_ids[$key];
                     $gdpaper->product_num = $request->gdpaper_num[$key];
                     $gdpaper->product_total = $request->gdpaper_total[$key];
@@ -120,7 +268,34 @@ class PujaDataController extends Controller
                 }
             }
         }
+        return redirect()->route('puja_datas');
+    }
 
-        return redirect()->route('pujas');
+    public function delete($id)
+    {
+        $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
+        $data = PujaData::where('id',$id)->first();
+        $data_pets = PujaPet::where('puja_data_id',$id)->get();
+        $pujas = Puja::get();
+        $data_products = PujaDataAttchProduct::where('puja_data_id',$id)->get();
+        $pet_count = Sale::where('customer_id', $data->customer_id)->distinct('pet_name')->count();
+
+        return view('puja_data.del')->with('data',$data)
+                                ->with('pujas',$pujas)
+                                ->with('data_products',$data_products)
+                                ->with('products',$products)
+                                ->with('data_pets',$data_pets)
+                                ->with('pet_count',$pet_count);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+
+        $data = PujaData::where('id',$id)->first();
+        PujaData::where('id',$id)->delete();
+        PujaPet::where('puja_data_id', $data->id)->delete();
+        PujaDataAttchProduct::where('puja_data_id', $data->id)->delete();
+
+        return redirect()->route('puja_datas');
     }
 }
