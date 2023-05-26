@@ -120,7 +120,7 @@
 
                     <li>
                         <a href="#visit" data-bs-toggle="collapse">
-                            <i data-feather="users"></i>
+                            <i data-feather="github"></i>
                             <span> 拜訪管理 </span>
                             <span class="menu-arrow"></span>
                         </a>

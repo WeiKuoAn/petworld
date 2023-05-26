@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "方案列表"])
+@extends('layouts.vertical', ["page_title"=> "拜訪紀錄"])
 
 @section('content')
 <!-- Start Content-->
