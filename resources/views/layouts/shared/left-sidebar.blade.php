@@ -119,21 +119,21 @@
                     </li>
 
                     <li>
-                        <a href="#sidebarEcommerce" data-bs-toggle="collapse">
+                        <a href="#visit" data-bs-toggle="collapse">
                             <i data-feather="users"></i>
-                            <span> ＸＸ管理 </span>
+                            <span> 拜訪管理 </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="sidebarEcommerce">
+                        <div class="collapse" id="visit">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="{{route('branchs')}}"  class="{{ request()->is('branchs') ? 'active' : '' }}">醫院列表</a>
+                                    <a href="{{route('hospitals')}}"  class="{{ request()->is('hospitals') ? 'active' : '' }}">醫院紀錄</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('jobs')}}"  class="{{ request()->is('jobs') ? 'active' : '' }}">禮儀社列表</a>
+                                    <a href="{{route('etiquettes')}}"  class="{{ request()->is('etiquettes') ? 'active' : '' }}">禮儀社紀錄</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('user.create')}}"  class="{{ request()->is('user.create') ? 'active' : '' }}">繁殖場列表</a>
+                                    <a href="{{route('reproduces')}}"  class="{{ request()->is('reproduces') ? 'active' : '' }}">繁殖場紀錄</a>
                                 </li>
                             </ul>
                         </div>
@@ -343,7 +343,7 @@
                                     <a href="{{ route('cashs') }}"  class="{{ request()->is('cashs') ? 'active' : '' }}">零用金管理</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">零用金Key單</a>
+                                    <a href="{{ route('cash.create') }}"  class="{{ request()->is('cash.create') ? 'active' : '' }}">零用金Key單</a>
                                 </li>
                             </ul>
                         </div>

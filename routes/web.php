@@ -29,9 +29,11 @@ use App\Http\Controllers\PujaController;
 use App\Http\Controllers\PujaTypeController;
 use App\Http\Controllers\PujaDataController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\VisitController;
 use App\Http\Controllers\ContractTypeController;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -62,6 +64,7 @@ require __DIR__ . '/auth.php';
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', function ()    {
+        Auth::logout();
         return view('auth.login');
     });
     //登入後的打卡畫面
@@ -102,6 +105,19 @@ Route::group(['prefix' => '/'], function () {
     Route::post('customer/create', [CustomerController::class, 'store'])->name('customer.create.data');
     Route::get('customer/edit/{id}', [CustomerController::class, 'show'])->name('customer.edit');
     Route::post('customer/edit/{id}', [CustomerController::class, 'update'])->name('customer.edit.data');
+
+    /*拜訪管理*/
+    Route::get('hospitals', [VisitController::class, 'hospitals'])->name('hospitals');//醫院
+    Route::get('etiquettes', [VisitController::class, 'etiquettes'])->name('etiquettes');//禮儀社
+    Route::get('reproduces', [VisitController::class, 'reproduces'])->name('reproduces');//繁殖場
+    Route::get('visit/{id}', [VisitController::class, 'index'])->name('visits');
+    Route::get('visit/create/{id}', [VisitController::class, 'create'])->name('visit.create');
+    Route::post('visit/create/{id}', [VisitController::class, 'store'])->name('visit.create.data');
+    Route::get('visit/edit/{cust_id}/{id}', [VisitController::class, 'show'])->name('visit.edit');
+    Route::post('visit/edit/{cust_id}{id}', [VisitController::class, 'update'])->name('visit.edit.data');
+    Route::get('visit/del/{cust_id}/{id}', [VisitController::class, 'delete'])->name('visit.del');
+    Route::post('visit/del/{cust_id}{id}', [VisitController::class, 'destroy'])->name('visit.del.data');
+
 
     /*客戶群組管理*/
     Route::get('/customer/group', [CustomrtGruopController::class, 'index'])->name('customer.group');
@@ -270,7 +286,6 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/contract/edit/{id}', [ContractController::class, 'update'])->name('contract.edit.data');
     Route::get('/contract/del/{id}', [ContractController::class, 'delete'])->name('contract.del');
     Route::post('/contract/del/{id}', [ContractController::class, 'destroy'])->name('contract.del.data');
-
 
     Route::get('image', function()
     {

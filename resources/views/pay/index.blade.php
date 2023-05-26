@@ -99,8 +99,12 @@
                                         <th>支出總價格</th>
                                         <th width="15%">備註</th>
                                         <th width="10%">key單人員</th>
-                                        <th>瀏覽</th>
                                         @if($request->status == '1')
+                                            <th>查看</th>
+                                        @else
+                                            <th>審核</th>
+                                        @endif
+                                        @if($request->status == '0')
                                             <th width="10%">動作</th>
                                         @endif
                                     </tr>
@@ -138,7 +142,7 @@
                                                 <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
                                             </a>
                                         </td>
-                                        @if($request->status == '1')
+                                        @if($request->status == '0')
                                         <td>
                                             <div class="btn-group dropdown">
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>

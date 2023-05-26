@@ -30,14 +30,14 @@
                         <div class="col-auto">
                             <form class="d-flex flex-wrap align-items-center" action="{{ route('cashs') }}" method="GET">
                                 <div class="me-3">
-                                    <label for="after_date" class="form-label">收入日期</label>
+                                    <label for="after_date" class="form-label">日期</label>
                                     <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="after_date" value="{{ $request->after_date }}">
                                 </div>
                                 <div class="me-3">
                                     <label for="before_date" class="form-label">&nbsp;</label>
                                     <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="before_date" value="{{ $request->before_date }}">
                                 </div>
-                                <div class="me-sm-3">
+                                {{-- <div class="me-sm-3">
                                     <label for="before_date" class="form-label">業務</label>
                                     <select id="inputState" class="form-select" name="user" onchange="this.form.submit()">
                                         <option value="null" @if (isset($request->user) || $request->user == '') selected @endif>請選擇</option>
@@ -46,7 +46,7 @@
                                                 {{ $user->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="me-sm-3">
                                     <label for="before_date" class="form-label">狀態</label>
                                     <select id="inputState" class="form-select" name="status" onchange="this.form.submit()">

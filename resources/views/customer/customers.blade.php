@@ -48,7 +48,7 @@
                                     </select>
                                 </div>
                                 <div class="me-3">
-                                    <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog me-1"></i>搜尋</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
                                 </div>
                             </form>
                         </div>
