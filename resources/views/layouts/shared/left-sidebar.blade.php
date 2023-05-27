@@ -358,7 +358,7 @@
                         <div class="collapse" id="rpg">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">支出科目</a>
+                                    <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
                                 </li>
                                 <li>
                                     <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">支出管理</a>

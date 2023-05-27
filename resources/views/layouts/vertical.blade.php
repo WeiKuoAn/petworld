@@ -14,7 +14,9 @@
     <div id="wrapper">
         @include('layouts.shared/topbar')
 
-        @include('layouts.shared/left-sidebar')
+        @if(Auth::user()->level == 1)
+            @include('layouts.shared/left-sidebar')
+        @endif
 
         <!-- ============================================================== -->
         <!-- Start Page Content here -->

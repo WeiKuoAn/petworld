@@ -31,6 +31,7 @@ use App\Http\Controllers\PujaDataController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\ContractTypeController;
+use App\Http\Controllers\Rpg01Controller;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
@@ -286,6 +287,10 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/contract/edit/{id}', [ContractController::class, 'update'])->name('contract.edit.data');
     Route::get('/contract/del/{id}', [ContractController::class, 'delete'])->name('contract.del');
     Route::post('/contract/del/{id}', [ContractController::class, 'destroy'])->name('contract.del.data');
+
+    /*報表管理*/
+    Route::get('/rpg/rpg01', [Rpg01Controller::class, 'rpg01'])->name('rpg01');
+    Route::get('/rpg/rpg01/detail/{date}/{plan_id}', [Rpg01Controller::class, 'detail'])->middleware(['auth'])->name('rpg01.detail');
 
     Route::get('image', function()
     {

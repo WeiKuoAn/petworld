@@ -166,6 +166,7 @@ class SaleDataController extends Controller
             $CompanyCommission = new SaleCompanyCommission();
             $CompanyCommission->sale_date = $request->sale_date;
             $CompanyCommission->type = $request->type;
+            $CompanyCommission->customer_id = $request->cust_name_q;
             $CompanyCommission->sale_id = $sale_id->id;
             $CompanyCommission->company_id = $request->source_company_name_q;
             $CompanyCommission->plan_price = $request->plan_price;
@@ -457,6 +458,7 @@ class SaleDataController extends Controller
         $data = Sale::where('id', $id)->first();
         $sale_gdpapers = Sale_gdpaper::where('sale_id', $id)->get();
         $sale_proms = Sale_prom::where('sale_id', $id)->get();
+        $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
         return view('sale.edit')->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
@@ -464,7 +466,8 @@ class SaleDataController extends Controller
             ->with('proms', $proms)
             ->with('sale_proms', $sale_proms)
             ->with('sale_gdpapers', $sale_gdpapers)
-            ->with('sources',$sources);
+            ->with('sources',$sources)
+            ->with('sale_company',$sale_company);
     }
 
     public function check($id)
@@ -538,7 +541,6 @@ class SaleDataController extends Controller
      */
     public function update(Request $request, $id)
     {
-    
         $sale = Sale::where('id', $id)->first();
         $sale->sale_on = $request->sale_on;
         $sale->type = $request->type;
@@ -562,7 +564,7 @@ class SaleDataController extends Controller
         $sale->save();
 
         $sale_id = Sale::where('id', $id)->first();
-        $old_prom = Sale_prom::where('sale_id', $sale_id->id)->delete();
+        Sale_prom::where('sale_id', $sale_id->id)->delete();
 
         if(isset($request->select_proms)){
             foreach($request->select_proms as $key=>$select_prom)
@@ -578,7 +580,7 @@ class SaleDataController extends Controller
             }
         }
         
-        $old_gdpaper = Sale_gdpaper::where('sale_id', $sale_id->id)->delete();
+        Sale_gdpaper::where('sale_id', $sale_id->id)->delete();
         if(isset($request->gdpaper_ids)){
             foreach($request->gdpaper_ids as $key=>$gdpaper_id)
             {
@@ -594,6 +596,37 @@ class SaleDataController extends Controller
                     }
                     $gdpaper->save();
                 }
+            }
+        }
+        if($request->source_company_name_q == 'null')//如果是null，會把舊的存在刪除
+        {
+            $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
+            if(isset($sale_company))
+            {
+                SaleCompanyCommission::where('sale_id', $id)->delete();
+            }
+        }else{//不是null，如果存在值就更新，不然就新增
+            $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
+            if(isset($sale_company))
+            {
+                $sale_company->sale_date = $request->sale_date;
+                $sale_company->type = $request->type;
+                $sale_company->customer_id = $request->customer_id;
+                $sale_company->sale_id = $sale_id->id;
+                $sale_company->company_id = $request->source_company_name_q;
+                $sale_company->plan_price = $request->plan_price;
+                $sale_company->commission = $request->plan_price/2;
+                $sale_company->save();
+            }else{
+                $CompanyCommission = new SaleCompanyCommission();
+                $CompanyCommission->sale_date = $request->sale_date;
+                $CompanyCommission->type = $request->type;
+                $CompanyCommission->customer_id = $request->customer_id;
+                $CompanyCommission->sale_id = $sale_id->id;
+                $CompanyCommission->company_id = $request->source_company_name_q;
+                $CompanyCommission->plan_price = $request->plan_price;
+                $CompanyCommission->commission = $request->plan_price/2;
+                $CompanyCommission->save();
             }
         }
         

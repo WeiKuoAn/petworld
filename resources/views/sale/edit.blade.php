@@ -86,6 +86,13 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mb-3 col-md-4" id="source_company">
+                            <label for="source_company_id" class="form-label">來源公司名稱<span class="text-danger">*</span>@if(isset($sale_company))（{{ $sale_company->company_name->name }}）@endif</label>
+                            <input list="source_company_name_list_q" class="form-control" id="source_company_name_q" 
+                                    name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院名稱" @if(isset($sale_company)) value="{{ $sale_company->company_id }}" @endif>
+                            <datalist id="source_company_name_list_q">
+                            </datalist>
+                        </div>
                         <div class="mb-3 col-md-4 not_final_show not_memorial_show">
                             <label for="plan_id" class="form-label">方案選擇<span class="text-danger">*</span></label>
                             <select id="plan_id" class="form-select" name="plan_id" >
@@ -297,6 +304,27 @@
 
 
 <script>
+    type = $('select[name="type"]').val();
+    console.log(type);
+    if(type == 'H' || type == 'B' || type == 'Salon'){
+        $("#source_company").show(300);
+        $("#source_company_name_q").prop('required', true);
+    }else{
+        $("#source_company").hide(300);
+        $("#source_company_name_q").prop('required', false);
+    }
+
+    $('select[name="type"]').on('change', function() {
+        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon'){
+            $("#source_company").show(300);
+            $("#source_company_name_q").prop('required', true);
+        }else{
+            $("#source_company").hide(300);
+            $("#source_company_name_q").prop('required', false);
+            $("#source_company_name_q").val('null');
+        }
+    });
+
     payIdValue = $('select[name="pay_id"]').val();
     if(payIdValue == 'D' || payIdValue =='E'){
         $("#final_price").show(300);
@@ -461,6 +489,19 @@
             data:{'cust_name':$value},
             success:function(data){
                 $('#cust_name_list_q').html(data);
+            }
+            });
+            console.log($value);
+        });
+
+        $( "#source_company_name_q" ).keydown(function() {
+            $value=$(this).val();
+            $.ajax({
+            type : 'get',
+            url : '{{ route('company.search') }}',
+            data:{'cust_name':$value},
+            success:function(data){
+                $('#source_company_name_list_q').html(data);
             }
             });
             console.log($value);

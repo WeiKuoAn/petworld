@@ -48,11 +48,11 @@ class Rpg01Controller extends Controller
                 }
             }
     
-            return view('rpg01')->with('datas', $datas)
-                                ->with('sums', $sums)
-                                ->with('plans', $plans)
-                                ->with('years', $years)
-                                ->with('request', $request);
+            return view('rpg01.index')->with('datas', $datas)
+                                      ->with('sums', $sums)
+                                      ->with('plans', $plans)
+                                      ->with('years', $years)
+                                      ->with('request', $request);
         }else{
             abort(404);
         }
