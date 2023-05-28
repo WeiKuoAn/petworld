@@ -93,7 +93,7 @@ class VisitController extends Controller
         if ($request) {
             $name = $request->name;
             if (!empty($name)) {
-                $name = $request->name . '%';
+                $name = '%'.$request->name . '%';
                 $datas = $datas->where('name', 'like', $name);
             }
             $mobile = $request->mobile;
@@ -112,7 +112,7 @@ class VisitController extends Controller
         if ($request) {
             $name = $request->name;
             if (!empty($name)) {
-                $name = $request->name . '%';
+                $name = '%'.$request->name . '%';
                 $datas = $datas->where('name', 'like', $name);
             }
             $mobile = $request->mobile;
@@ -131,7 +131,7 @@ class VisitController extends Controller
         if ($request) {
             $name = $request->name;
             if (!empty($name)) {
-                $name = $request->name . '%';
+                $name = '%'.$request->name . '%';
                 $datas = $datas->where('name', 'like', $name);
             }
             $mobile = $request->mobile;
@@ -150,7 +150,7 @@ class VisitController extends Controller
         if ($request) {
             $name = $request->name;
             if (!empty($name)) {
-                $name = $request->name . '%';
+                $name = '%'.$request->name . '%';
                 $datas = $datas->where('name', 'like', $name);
             }
             $mobile = $request->mobile;
@@ -169,7 +169,7 @@ class VisitController extends Controller
         if ($request) {
             $name = $request->name;
             if (!empty($name)) {
-                $name = $request->name . '%';
+                $name = '%'.$request->name . '%';
                 $datas = $datas->where('name', 'like', $name);
             }
             $mobile = $request->mobile;

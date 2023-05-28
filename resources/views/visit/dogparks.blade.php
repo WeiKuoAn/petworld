@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <div class="col-auto">
-                            <form class="d-flex flex-wrap align-items-center" action="{{ route('hospitals') }}" method="GET">
+                            <form class="d-flex flex-wrap align-items-center" action="{{ route('dogparks') }}" method="GET">
                                 <div class="me-3">
                                     <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" name="name" placeholder="姓名" value="{{ $request->name }}">
                                 </div>
