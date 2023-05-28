@@ -43,7 +43,7 @@
                                    <input type="date" class="form-control" name="cash_date" value="" required>
                                </div>
                            </div>
-                           <div class="mb-3">
+                           {{-- <div class="mb-3">
                                 <div class="mb-3">
                                     <label class="form-label">狀態<span class="text-danger">*</span></label>
                                     <select class="form-control" data-toggle="select" data-width="100%" name="status">
@@ -51,14 +51,14 @@
                                         <option value="0">存入</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <div class="mb-3">
                                     <label class="form-label">名稱<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="title" value="" required>
                                 </div>
                            </div>
-                           <div class="mb-3">
+                           {{-- <div class="mb-3">
                                 <div class="mb-3">
                                     <label class="form-label">專員<span class="text-danger">*</span></label>
                                     <select class="form-control" data-toggle="select" data-width="100%" name="give_user_id">
@@ -68,7 +68,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                           </div>
+                           </div> --}}
                            <div class="mb-3">
                                 <div class="mb-3">
                                     <label class="form-label">金額<span class="text-danger">*</span></label>
@@ -77,7 +77,7 @@
                            </div>
                            <div class="mb-3">
                                 <div class="mb-3">
-                                    <label class="form-label">備註<span class="text-danger">*</span></label>
+                                    <label class="form-label">備註<span class="text-danger"></span></label>
                                     <textarea class="form-control" id="floatingTextarea" name="comment" rows="8"></textarea>
                                 </div>
                            </div>

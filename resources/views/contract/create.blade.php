@@ -49,7 +49,7 @@
                                </div>
                            </div>
                            <div class="mb-3">
-                                <label for="number" class="form-label">合約編號<span class="text-danger">*</span></label>
+                                <label for="number" class="form-label">位置編號<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="number" name="number"  required>
                            </div>
                            <div class="mb-3">
@@ -64,9 +64,7 @@
                            </div>
                            <div class="mb-3">
                                 <label for="pet_name" class="form-label">寶貝名稱<span class="text-danger">*</span></label>
-                                <select id="pet_name" class="mobile form-select" name="pet_name" required>
-                                    <option value="" selected>請選擇...</option>
-                                </select>
+                                <input type="text" class="form-control" id="pet_name" name="pet_name"  required>
                            </div>
                            <div class="mb-3">
                                 <label for="year" class="form-label">第幾年<span class="text-danger">*</span></label>
@@ -152,22 +150,22 @@
             data:{'cust_name':$value},
             success:function(data){
                 $('#cust_name_list_q').html(data);
-                $("#cust_name_q").change(function() {
-                    var value1 = $(this).val();
-                    console.log(value1);
-                    $.ajax({
-                        type: 'get',
-                        url: '{{ route('customer.pet.search') }}',
-                        data: { 'cust_id': value1 },
-                        success: function(data) {
-                            $("#pet_name").html(data[1]);
-                            // 在這裡處理第二個 AJAX 請求的成功回應
-                        },
-                        error: function(xhr, status, error) {
-                            // 處理第二個 AJAX 請求的錯誤
-                        }
-                    });
-                });
+                // $("#cust_name_q").change(function() {
+                //     var value1 = $(this).val();
+                //     console.log(value1);
+                //     $.ajax({
+                //         type: 'get',
+                //         url: '{{ route('customer.pet.search') }}',
+                //         data: { 'cust_id': value1 },
+                //         success: function(data) {
+                //             $("#pet_name").html(data[1]);
+                //             // 在這裡處理第二個 AJAX 請求的成功回應
+                //         },
+                //         error: function(xhr, status, error) {
+                //             // 處理第二個 AJAX 請求的錯誤
+                //         }
+                //     });
+                // });
             }
         });
         console.log($value);

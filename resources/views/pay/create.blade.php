@@ -84,16 +84,15 @@
                                             <th></th>
                                             <th>消費日期<span class="text-danger">*</span></th>
                                             <th>會計項目<span class="text-danger">*</span></th>
-                                            <th>發票號碼<span class="text-danger">*</span></th>
                                             <th>支出金額<span class="text-danger">*</span></th>
                                             <th>發票類型<span class="text-danger">*</span></th>
-                                            <th class="number"></span></th>
-                                            <th>備註<span class="text-danger">*</span></th>
+                                            <th></th>
+                                            <th>備註<span class="text-danger"></span></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody valign="center" align="center">
                                         @for ($i = 0; $i < 1; $i++)
-                                        <tr id="row-{{ $i }}">
+                                        <tr id="row-{{ $i }}" >
                                             <td>
                                             <button class="mobile btn btn-primary del-row" alt="{{ $i }}" type="button" name="button" onclick="del_row(this)">刪除</button>
                                             </td>
@@ -108,9 +107,6 @@
                                                 </select>
                                             </td>
                                             <td>
-                                            <input id="pay_invoice-{{ $i }}" class="mobile form-control" type="text" name="pay_invoice_number[]" value="">
-                                            </td>
-                                            <td>
                                             <input id="pay_price-{{ $i }}" class="mobile form-control" type="text" name="pay_price[]" value="" required>
                                             </td>
                                             <td>
@@ -122,6 +118,7 @@
                                             </select>
                                             </td>
                                             <td>
+                                                <input id="pay_invoice-{{ $i }}" class="invoice mobile form-control" type="text" name="pay_invoice_number[]" value="" placeholder="請輸入發票號碼">
                                                 <input list="vender_number_list_q" class="vendor mobile form-control" id="vendor-{{ $i }}" name="vender_id[]" placeholder="請輸入統編號碼">
                                                 <datalist id="vender_number_list_q">
                                                 </datalist>
@@ -183,6 +180,7 @@
 
 <script>
     $(".vendor").hide();
+    $(".invoice").hide();
     function del_row(obj){
         $number = $(obj).attr("alt");
         $('#row-'+$number).remove();
@@ -190,9 +188,14 @@
     function chgInvoice(obj){
         $number = $(obj).attr("alt");
         var invoice_type = $("#pay_invoice_type-" + $number).val();
-        if(invoice_type == 'Uniform'){
+        if(invoice_type == 'FreeUniform'){
+            $("#vendor-"+$number).show(300);
+            $("#pay_invoice-"+$number).hide(300);
+        }else if(invoice_type == 'Uniform'){
+            $("#pay_invoice-"+$number).show(300);
             $("#vendor-"+$number).show(300);
         }else{
+            $("#pay_invoice-"+$number).hide(300);
             $("#vendor-"+$number).hide(300);
         }
         console.log(invoice_type);
@@ -205,7 +208,7 @@
 
             $newRow = '<tr id="row-'+$rowCount+'">';
             $newRow += '<td>';    
-            $newRow += '<button class="btn btn-primary del-row" alt="'+$rowCount+'" type="button" name="button" onclick="del_row(this)">刪除</button>';
+            $newRow += '<button class="mobile btn btn-primary del-row" alt="'+$rowCount+'" type="button" name="button" onclick="del_row(this)">刪除</button>';
             $newRow += '</td>';
             $newRow += '<td scope="row">';
             $newRow += '<input id="pay_date-'+$rowCount+'" class="form-control" type="date" name="pay_data_date[]" value="" required>';
@@ -218,21 +221,19 @@
             $newRow += '</select>';
             $newRow += '</td>';
             $newRow += '<td>';
-            $newRow += '<input id="pay_invoice-'+$rowCount+'" class="form-control" type="text" name="pay_invoice_number[]" value="" >';
-            $newRow += '</td>';
-            $newRow += '<td>';
             $newRow += '<input id="pay_price-'+$rowCount+'" class="form-control" type="text" name="pay_price[]" value="" required>';
             $newRow += '</td>';
             $newRow += '<td>';
-            $newRow += '<select id="pay_invoice_type-'+$rowCount+'"  alt="'+$rowCount+'" class="form-select" aria-label="Default select example" name="pay_invoice_type[]"  required>';
+            $newRow += '<select id="pay_invoice_type-'+$rowCount+'"  alt="'+$rowCount+'" class="form-select" aria-label="Default select example" name="pay_invoice_type[]" onchange="chgInvoice(this)"  required>';
             $newRow += '<option value="" selected>請選擇</option>';
             $newRow += '<option value="FreeUniform" >免用統一發票</option>';
             $newRow += '<option value="Uniform" >統一發票</option>';
             $newRow += '<option value="Other" >其他</option>';
-            $newRow += '</select>';
             $newRow += '</td>';
-            $newRow += '<td>';                      
-            $newRow += '<input list="vender_number_list_q" style="display: none;" class="vendor form-control" id="vendor-'+$rowCount+'" name="vender_id[]" onchange="chgInvoice(this)" placeholder="請輸入統編號碼">';
+            $newRow += '</select>';
+            $newRow += '<td>';
+            $newRow += '<input style="display: none;" id="pay_invoice-'+$rowCount+'" class="invoice form-control" type="text" name="pay_invoice_number[]" value="" placeholder="請輸入發票號碼" >';
+            $newRow += '<input style="display: none;" list="vender_number_list_q"  class="vendor form-control" id="vendor-'+$rowCount+'" name="vender_id[]" placeholder="請輸入統編號碼">';
             $newRow += '<datalist id="vender_number_list_q">';
             $newRow += '</datalist>';
             $newRow += '</td>';

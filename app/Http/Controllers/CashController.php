@@ -81,7 +81,7 @@ class CashController extends Controller
         $cash->cash_date = $request->cash_date;
         $cash->price = $request->price;
         $cash->give_user_id = $request->give_user_id;
-        $cash->status = $request->status;
+        $cash->status = 1;
         $cash->comment = $request->comment;
         $cash->user_id = Auth::user()->id;
         $cash->save();

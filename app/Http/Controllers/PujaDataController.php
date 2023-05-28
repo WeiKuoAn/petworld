@@ -146,9 +146,15 @@ class PujaDataController extends Controller
         $data->date = $request->date;
         $data->puja_id = $request->puja_id;
         $data->customer_id = $request->cust_name_q;
+        $data->pet_name = $request->pet_name;
         $data->pay_id = $request->pay_id;
         $data->user_id = Auth::user()->id;
         $data->pay_method = $request->pay_method;
+        if($request->pay_method == 'C'){
+            $data->cash_price = $request->cash_price;
+            $data->transfer_price = $request->transfer_price;
+            $data->transfer_number = $request->transfer_number;
+        }
         $data->pay_price = $request->pay_price;
         $data->total = $request->total;
         $data->status = 1;
@@ -156,18 +162,6 @@ class PujaDataController extends Controller
         $data->save();
 
         $puja_data = PujaData::orderby('id', 'desc')->first();
-        // dd($request->pet_ids);
-        foreach($request->pet_ids as $key=>$pet)
-        {
-            if(isset($pet))
-            {
-                $puja_pet = new PujaPet;
-                $puja_pet->puja_data_id = $puja_data->id;
-                $puja_pet->pet_name = $request->pet_ids[$key];
-                $puja_pet->save();
-            }
-        }
-
         foreach($request->gdpaper_ids as $key=>$gdpaper_id)
         {
             if(isset($gdpaper_id)){
@@ -193,17 +187,13 @@ class PujaDataController extends Controller
     {
         $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
         $data = PujaData::where('id',$id)->first();
-        $data_pets = PujaPet::where('puja_data_id',$id)->get();
         $pujas = Puja::get();
         $data_products = PujaDataAttchProduct::where('puja_data_id',$id)->get();
-        $pet_count = Sale::where('customer_id', $data->customer_id)->distinct('pet_name')->count();
 
         return view('puja_data.edit')->with('data',$data)
                                 ->with('pujas',$pujas)
                                 ->with('data_products',$data_products)
-                                ->with('products',$products)
-                                ->with('data_pets',$data_pets)
-                                ->with('pet_count',$pet_count);
+                                ->with('products',$products);
     }
 
     /**
@@ -231,27 +221,25 @@ class PujaDataController extends Controller
         $data->date = $request->date;
         $data->puja_id = $request->puja_id;
         $data->customer_id = $request->cust_name_q;
+        $data->pet_name = $request->pet_name;
         $data->pay_id = $request->pay_id;
         $data->user_id = Auth::user()->id;
         $data->pay_method = $request->pay_method;
+        if($request->pay_method == 'C'){
+            $data->cash_price = $request->cash_price;
+            $data->transfer_price = $request->transfer_price;
+            $data->transfer_number = $request->transfer_number;
+        }else{
+            $data->cash_price = null;
+            $data->transfer_price = null;
+            $data->transfer_number = null;
+        }
         $data->pay_price = $request->pay_price;
         $data->total = $request->total;
         $data->status = 1;
         $data->comm = $request->comm;
         $data->save();
-
-        PujaPet::where('puja_data_id', $data->id)->delete();
-        foreach($request->pet_ids as $key=>$pet)
-        {
-            if(isset($pet))
-            {
-                $puja_pet = new PujaPet;
-                $puja_pet->puja_data_id = $data->id;
-                $puja_pet->pet_name = $request->pet_ids[$key];
-                $puja_pet->save();
-            }
-        }
-
+        
         PujaDataAttchProduct::where('puja_data_id', $data->id)->delete();
 
         if(isset($request->gdpaper_ids))

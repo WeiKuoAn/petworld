@@ -72,8 +72,8 @@
                             </datalist>
                         </div>
                         <div class="mb-3 col-md-4">
-                            <label for="customer_id" class="form-label">寶貝數量<span class="text-danger"></span></label>
-                            <input class="form-control" id="pet_count" name="pet_count" required>
+                            <label for="customer_id" class="form-label">寶貝名稱<span class="text-danger">*</span></label>
+                            <input class="form-control" id="pet_name" name="pet_name" required>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
         </div> <!-- end col -->
     </div>
 
-    <div class="row" id="pet_div">
+    {{-- <div class="row" id="pet_div">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -123,7 +123,7 @@
                 </div>
             </div> <!-- end card -->
         </div> <!-- end col -->
-    </div>
+    </div> --}}
 
     <div class="row" id="gdpaper_div">
         <div class="col-lg-12">
@@ -202,9 +202,22 @@
                                 <option value="" selected>請選擇</option>
                                 <option value="A">現金</option>
                                 <option value="B">匯款</option>
+                                <option value="C">現金與匯款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-3" id="cash_price_div">
+                            <label for="pay_price" class="form-label">現金收款<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="cash_price" name="cash_price">
+                        </div>
+                        <div class="mb-3 col-md-3" id="transfer_price_div">
+                            <label for="pay_price" class="form-label">匯款收款<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="transfer_price" name="transfer_price">
+                        </div>
+                        <div class="mb-3 col-md-3" id="transfer_number_div">
+                            <label for="pay_price" class="form-label">匯款後五碼<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="transfer_number" name="transfer_number">
+                        </div>
+                        <div class="mb-3 col-md-3" id="this_price_div">
                             <label for="pay_price" class="form-label">本次收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pay_price" name="pay_price" required>
                         </div>
@@ -271,6 +284,36 @@
 
     $(".total_number").on('input', function(){
         calculate_price();
+    });
+
+    $("#cash_price_div").hide();
+    $("#transfer_price_div").hide();
+    $("#transfer_number_div").hide();
+
+    $('select[name="pay_method"]').on('change', function() {
+        if($(this).val() == 'C'){
+            $("#cash_price_div").show(300);
+            $("#transfer_price_div").show(300);
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', false);
+            $("#cash_price").prop('required', true);
+            $("#transfer_price").prop('required', true);
+            $("#transfer_number").prop('required', true);
+        }else if($(this).val() == 'B'){
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', true);
+        }else{
+            $("#cash_price_div").hide(300);
+            $("#transfer_price_div").hide(300);
+            $("#transfer_number_div").hide(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', false);
+        }
     });
 
     $('select[name="puja_id"]').on('change', function() {

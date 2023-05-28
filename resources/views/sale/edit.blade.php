@@ -89,7 +89,7 @@
                         <div class="mb-3 col-md-4" id="source_company">
                             <label for="source_company_id" class="form-label">來源公司名稱<span class="text-danger">*</span>@if(isset($sale_company))（{{ $sale_company->company_name->name }}）@endif</label>
                             <input list="source_company_name_list_q" class="form-control" id="source_company_name_q" 
-                                    name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院名稱" @if(isset($sale_company)) value="{{ $sale_company->company_id }}" @endif>
+                                    name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院、繁殖場、狗園名稱" @if(isset($sale_company)) value="{{ $sale_company->company_id }}" @endif>
                             <datalist id="source_company_name_list_q">
                             </datalist>
                         </div>
@@ -246,7 +246,20 @@
                                 <option value="" selected>請選擇</option>
                                 <option value="A" @if($data->pay_method == 'A') selected @endif>現金</option>
                                 <option value="B" @if($data->pay_method == 'B') selected @endif>匯款</option>
+                                <option value="C" @if($data->pay_method == 'C') selected @endif>現金與匯款</option>
                             </select>
+                        </div>
+                        <div class="mb-3 col-md-3" id="cash_price_div">
+                            <label for="pay_price" class="form-label">現金收款<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="cash_price" name="cash_price" value="{{ $data->cash_price }}">
+                        </div>
+                        <div class="mb-3 col-md-3" id="transfer_price_div">
+                            <label for="pay_price" class="form-label">匯款收款<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="transfer_price" name="transfer_price" value="{{ $data->transfer_price }}">
+                        </div>
+                        <div class="mb-3 col-md-3" id="transfer_number_div">
+                            <label for="pay_price" class="form-label">匯款後五碼<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="transfer_number" name="transfer_number" value="{{ $data->transfer_number }}">
                         </div>
                         <div class="mb-3 col-md-3">
                             <label for="pay_price" class="form-label">本次收款<span class="text-danger">*</span></label>
@@ -306,7 +319,7 @@
 <script>
     type = $('select[name="type"]').val();
     console.log(type);
-    if(type == 'H' || type == 'B' || type == 'Salon'){
+    if(type == 'H' || type == 'B' || type == 'Salon' || type == 'G' || type == 'dogpark'){
         $("#source_company").show(300);
         $("#source_company_name_q").prop('required', true);
     }else{
@@ -315,7 +328,7 @@
     }
 
     $('select[name="type"]').on('change', function() {
-        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon'){
+        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon' || $(this).val() == 'G' || $(this).val() == 'dogpark'){
             $("#source_company").show(300);
             $("#source_company_name_q").prop('required', true);
         }else{
@@ -363,6 +376,59 @@
             $("#plan_id").prop('required', true);
             $("#plan_price").prop('required', true);
             // $(".mobile").prop('required', true);
+        }
+    });
+
+    $("#cash_price_div").hide();
+    $("#transfer_price_div").hide();
+    $("#transfer_number_div").hide();
+    payMethod = $('select[name="pay_method"]').val();
+    if(payMethod == 'C'){
+            $("#cash_price_div").show(300);
+            $("#transfer_price_div").show(300);
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', false);
+            $("#cash_price").prop('required', true);
+            $("#transfer_price").prop('required', true);
+            $("#transfer_number").prop('required', true);
+        }else if(payMethod == 'B'){
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', true);
+        }else{
+            $("#cash_price_div").hide(300);
+            $("#transfer_price_div").hide(300);
+            $("#transfer_number_div").hide(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', false);
+        }
+    $('select[name="pay_method"]').on('change', function() {
+        if($(this).val() == 'C'){
+            $("#cash_price_div").show(300);
+            $("#transfer_price_div").show(300);
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', false);
+            $("#cash_price").prop('required', true);
+            $("#transfer_price").prop('required', true);
+            $("#transfer_number").prop('required', true);
+        }else if($(this).val() == 'B'){
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', true);
+        }else{
+            $("#cash_price_div").hide(300);
+            $("#transfer_price_div").hide(300);
+            $("#transfer_number_div").hide(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', false);
         }
     });
 

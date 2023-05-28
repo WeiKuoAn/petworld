@@ -114,11 +114,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if(isset($data->pets))
-                                                    @foreach($data->pets as $data->pet)
-                                                        {{ $data->pet->pet_name }}<br>
-                                                    @endforeach
-                                                @endif
+                                                {{ $data->pet_name }}<br>
                                             </td>
                                             <td>
                                                 @if(isset($data->products))

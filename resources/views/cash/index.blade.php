@@ -47,14 +47,14 @@
                                         @endforeach
                                     </select>
                                 </div> --}}
-                                <div class="me-sm-3">
+                                {{-- <div class="me-sm-3">
                                     <label for="before_date" class="form-label">狀態</label>
                                     <select id="inputState" class="form-select" name="status" onchange="this.form.submit()">
                                         <option value="NULL" @if (!isset($request->status) || $request->status == "NULL") selected @endif>不限</option>
                                         <option value="1" @if ($request->status == '1') selected @endif>支出</option>
                                         <option value="0" @if ($request->status == '0') selected @endif>存入</option>
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="me-3 mt-3">
                                     <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
                                 </div>
@@ -63,7 +63,7 @@
                         <div class="col mt-3">
                             <div class="text-lg-end my-1 my-lg-0 mt-5">
                                 {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
-                                <a href="{{ route('cash.create') }}" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i>新增收入</a>
+                                <a href="{{ route('cash.create') }}" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i>新增零用金</a>
                             </div>
                         </div><!-- end col-->
                     </div> <!-- end row -->
@@ -80,10 +80,10 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>日期</th>
-                                        <th>狀態</th>
+                                        {{-- <th>狀態</th> --}}
                                         <th>名稱</th>
-                                        <th>領款人</th>
-                                        <th>價格</th>
+                                        {{-- <th>領款人</th> --}}
+                                        <th>金額</th>
                                         <th width="25%">備註</th>
                                         <th>Key單人員</th>
                                         <th>動作</th>
@@ -93,21 +93,21 @@
                                 @foreach ($datas as $key=>$data)
                                     <tr>
                                         <td>{{ $data->cash_date }}</td>
-                                        <td>
+                                        {{-- <td>
                                             @if($data->status == 1)
                                                 支出
                                             @else
                                                 <b style="color:red;">存入</b>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>{{ $data->title }}</td>
-                                        <td>
+                                        {{-- <td>
                                             @if(isset($data->give_user_id))
                                                 {{ $data->give_user_name->name }}
                                             @else
                                                 無
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>{{ number_format($data->price) }}</td>
                                         <td>{{ $data->comment }}</td>
                                         <td>{{ $data->user_name->name }}</td>

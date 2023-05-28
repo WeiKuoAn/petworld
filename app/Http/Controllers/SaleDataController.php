@@ -45,7 +45,7 @@ class SaleDataController extends Controller
     {
         if ($request->ajax()) {
             $output = "";
-            $hospitals = Customer::whereIn('group_id',[2,5,6])->where('name', 'like', $request->cust_name . '%')->get();
+            $hospitals = Customer::whereIn('group_id',[2,3,4,5,6])->where('name', 'like', $request->cust_name . '%')->get();
 
             if($hospitals){
                 foreach ($hospitals as $key => $hospital) {
@@ -124,6 +124,11 @@ class SaleDataController extends Controller
             $sale->pay_price = $request->final_price;
         }else{
             $sale->pay_price = $request->pay_price;
+        }
+        if($request->pay_method == 'C'){
+            $sale->cash_price = $request->cash_price;
+            $sale->transfer_price = $request->transfer_price;
+            $sale->transfer_number = $request->transfer_number;
         }
         $sale->pay_method = $request->pay_method;
         $sale->total = $request->total;
@@ -558,6 +563,15 @@ class SaleDataController extends Controller
         }else{
             $sale->pay_price = $request->pay_price;
         }
+        if($request->pay_method == 'C'){
+            $sale->cash_price = $request->cash_price;
+            $sale->transfer_price = $request->transfer_price;
+            $sale->transfer_number = $request->transfer_number;
+        }else{
+            $sale->cash_price = null;
+            $sale->transfer_price = null;
+            $sale->transfer_number = null;
+        }
         $sale->pay_method = $request->pay_method;
         $sale->total = $request->total;
         $sale->comm = $request->comm;
@@ -598,7 +612,7 @@ class SaleDataController extends Controller
                 }
             }
         }
-        if($request->source_company_name_q == 'null')//如果是null，會把舊的存在刪除
+        if($request->source_company_name_q == null)//如果是null，會把舊的存在刪除
         {
             $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
             if(isset($sale_company))
