@@ -106,14 +106,11 @@
                                     <a href="{{ route('vacations') }}"  class="{{ request()->is('vacations') ? 'active' : '' }}">年度總休假設定</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">特休查看</a>
+                                    <a href="{{ route('personnel.holidays') }}"  class="{{ request()->is('personnel.holidays') ? 'active' : '' }}">例休假總覽</a>
                                 </li>
-                                <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">假期盤點</a>
-                                </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('user.bank') }}"  class="{{ request()->is('user.bank') ? 'active' : '' }}">專員戶頭設定</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </li>
@@ -134,6 +131,12 @@
                                 </li>
                                 <li>
                                     <a href="{{route('reproduces')}}"  class="{{ request()->is('reproduces') ? 'active' : '' }}">繁殖場紀錄</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('dogparks')}}"  class="{{ request()->is('dogparks') ? 'active' : '' }}">狗園紀錄</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('salons')}}"  class="{{ request()->is('salons') ? 'active' : '' }}">美容院紀錄</a>
                                 </li>
                             </ul>
                         </div>

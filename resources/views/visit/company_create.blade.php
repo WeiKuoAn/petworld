@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "Create Project"])
+@extends('layouts.vertical', ["page_title"=> "新增合作公司"])
 
 @section('css')
 <!-- third party css -->
@@ -19,11 +19,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">客戶管理</a></li>
-                        <li class="breadcrumb-item active">新增客戶</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">拜訪管理</a></li>
+                        <li class="breadcrumb-item active">新增合作公司</li>
                     </ol>
                 </div>
-                <h4 class="page-title">新增客戶</h4>
+                <h4 class="page-title">新增合作公司</h4>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form action="{{ route('customer.create.data') }}" method="POST">
+                    <form action="{{ route('visit.company.create') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-xl-12">
@@ -51,6 +51,7 @@
                                     @endforeach
                                 </select>
                             </div> --}}
+                            <input type="hidden" class="form-control" name="company_type" value="{{ $company_type }}">
                             <div class="mb-3">
                                  <div class="mb-3">
                                     <label class="form-label">姓名<span class="text-danger">*</span></label>

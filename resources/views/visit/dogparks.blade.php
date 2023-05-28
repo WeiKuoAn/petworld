@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "繁殖場列表"])
+@extends('layouts.vertical', ["page_title"=> "拜訪紀錄"])
 
 @section('content')
 <!-- Start Content-->
@@ -12,10 +12,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">拜訪管理</a></li>
-                        <li class="breadcrumb-item active">繁殖場列表</li>
+                        <li class="breadcrumb-item active">狗園列表</li>
                     </ol>
                 </div>
-                <h4 class="page-title">繁殖場列表</h4>
+                <h4 class="page-title">狗園列表</h4>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <div class="col-auto">
-                            <form class="d-flex flex-wrap align-items-center" action="{{ route('reproduces') }}" method="GET">
+                            <form class="d-flex flex-wrap align-items-center" action="{{ route('hospitals') }}" method="GET">
                                 <div class="me-3">
                                     <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" name="name" placeholder="姓名" value="{{ $request->name }}">
                                 </div>
@@ -43,7 +43,7 @@
                         <div class="col-auto">
                             <div class="text-lg-end my-1 my-lg-0">
                                 {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
-                                <a href="{{ route('visit.company.create') }}" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i>新增繁殖場</a>
+                                <a href="{{ route('visit.company.create') }}" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i>新增狗園</a>
                             </div>
                         </div><!-- end col-->
                     </div> <!-- end row -->

@@ -111,6 +111,8 @@ Route::group(['prefix' => '/'], function () {
     Route::get('hospitals', [VisitController::class, 'hospitals'])->name('hospitals');//醫院
     Route::get('etiquettes', [VisitController::class, 'etiquettes'])->name('etiquettes');//禮儀社
     Route::get('reproduces', [VisitController::class, 'reproduces'])->name('reproduces');//繁殖場
+    Route::get('dogparks', [VisitController::class, 'dogparks'])->name('dogparks');//狗園
+    Route::get('salons', [VisitController::class, 'salons'])->name('salons');//美容院
     Route::get('visit/{id}', [VisitController::class, 'index'])->name('visits');
     Route::get('visit/create/{id}', [VisitController::class, 'create'])->name('visit.create');
     Route::post('visit/create/{id}', [VisitController::class, 'store'])->name('visit.create.data');
@@ -118,6 +120,8 @@ Route::group(['prefix' => '/'], function () {
     Route::post('visit/edit/{cust_id}{id}', [VisitController::class, 'update'])->name('visit.edit.data');
     Route::get('visit/del/{cust_id}/{id}', [VisitController::class, 'delete'])->name('visit.del');
     Route::post('visit/del/{cust_id}{id}', [VisitController::class, 'destroy'])->name('visit.del.data');
+    Route::get('visit/company/create', [VisitController::class, 'company_create'])->name('visit.company.create');
+    Route::post('visit/company/create', [VisitController::class, 'company_store'])->name('visit.company.create.data');
 
 
     /*客戶群組管理*/
@@ -239,6 +243,12 @@ Route::group(['prefix' => '/'], function () {
 
     /*人事管理*/
     Route::get('personnels', [PersonnelController::class, 'index'])->name('personnels');
+    
+    /*例假日總覽 */
+    Route::get('personnel/holidays', [PersonnelController::class, 'holidays'])->name('personnel.holidays');
+    Route::get('personnel/holiday/create', [PersonnelController::class, 'holiday_create'])->name('personnel.holidays.create');
+    Route::post('personnel/holiday/create', [PersonnelController::class, 'holiday_store'])->name('personnel.holidays.create.data');
+
 
     /*年度總休假管理*/
     Route::get('/vacation', [VacationController::class, 'index'])->name('vacations');

@@ -13,13 +13,15 @@ use App\Models\UserBank;
 use App\Models\Cash;
 use App\Models\Vacation;
 use Carbon\Carbon;
+use App\Models\UserHoliday;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class PersonnelController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $users = User::where('status','0')->orderby('level')->paginate(30);
         $year = Vacation::where('year',Carbon::now()->year)->first();//取得當年
@@ -54,6 +56,93 @@ class PersonnelController extends Controller
         // dd($datas);
         
         return view('personnel.index')->with('users', $users)->with('datas',$datas);
+    }
+
+    public function holidays(Request $request)
+    {
+        $months = [
+            '01'=> [ 'name'=>'一月'],
+            '02'=> [ 'name'=>'二月'],
+            '03'=> [ 'name'=>'三月'],
+            '04'=> [ 'name'=>'四月'],
+            '05'=> [ 'name'=>'五月'],
+            '06'=> [ 'name'=>'六月'],
+            '07'=> [ 'name'=>'七月'],
+            '08'=> [ 'name'=>'八月'],
+            '09'=> [ 'name'=>'九月'],
+            '10'=> [ 'name'=>'十月'],
+            '11'=> [ 'name'=>'十一月'],
+            '12'=> [ 'name'=>'十二月'],
+        ];
+        if(isset($request->year))
+        {
+            $year = $request->year;
+        }else{
+            $year = Carbon::now()->year;//取得當年
+        }
+        $years = range(Carbon::now()->year,2022);
+        $users = User::where('status','0')->get();
+        $year_holiday = Vacation::where('year',$year)->first();//取放假天數
+        $datas = [];
+
+        foreach ($users as $user) {
+            $datas[$user->id]['name'] = $user->name;
+            $user_holidays = UserHoliday::where('year', $year)->where('user_id', $user->id)->get();
+            if(isset($year_holiday)){
+                $datas[$user->id]['last_day'] = intval($year_holiday->day);
+            }else{
+                $datas[$user->id]['last_day'] = 0;
+            }
+            foreach ($user_holidays as $user_holiday) {
+                $datas[$user->id]['holidays'][$user_holiday->month] = $user_holiday->holiday;
+            }
+        }
+        
+        foreach ($datas as &$data) {
+            if (isset($data['holidays'])) {
+                foreach ($data['holidays'] as $key => $holiday) {
+                    $data['last_day'] -= intval($holiday);
+                }
+            }
+        }
+        return view('personnel.holidays')->with('months',$months)->with('years',$years)->with('request',$request)->with('datas',$datas);
+    }
+
+    public function holiday_create()
+    {
+        $year = Carbon::now()->year;//取得當年
+        $this_month = Carbon::now()->month;
+        $users = User::where('status','0')->get();
+        $months = [
+            '01'=> [ 'name'=>'一月'],
+            '02'=> [ 'name'=>'二月'],
+            '03'=> [ 'name'=>'三月'],
+            '04'=> [ 'name'=>'四月'],
+            '05'=> [ 'name'=>'五月'],
+            '06'=> [ 'name'=>'六月'],
+            '07'=> [ 'name'=>'七月'],
+            '08'=> [ 'name'=>'八月'],
+            '09'=> [ 'name'=>'九月'],
+            '10'=> [ 'name'=>'十月'],
+            '11'=> [ 'name'=>'十一月'],
+            '12'=> [ 'name'=>'十二月'],
+        ];
+
+        return view('personnel.holiday_create')->with('year',$year)
+                                               ->with('months',$months)
+                                               ->with('this_month',$this_month)
+                                               ->with('users',$users);
+    }
+
+    public function holiday_store(Request $request)
+    {
+        $data = new UserHoliday;
+        $data->year = $request->year;
+        $data->month = $request->month;
+        $data->holiday = $request->holiday;
+        $data->user_id = $request->user_id;
+        $data->save();
+        return redirect()->route('personnel.holidays');
     }
 
     private function seniority($user_entry_date)

@@ -184,7 +184,7 @@ class CustomerController extends Controller
             $customer->county = $request->county;
             $customer->district = $request->district;
             $customer->address = $request->address;
-            $customer->group_id = $request->group_id;
+            $customer->group_id = 1;
             $customer->created_up = Auth::user()->id;
             $customer->save();
             return redirect()->route('customer');
@@ -230,7 +230,7 @@ class CustomerController extends Controller
         $customer->county = $request->county;
         $customer->district = $request->district;
         $customer->address = $request->address;
-        $customer->group_id = $request->group_id;
+        $customer->group_id = 1;
         $customer->save();
         return redirect()->route('customer');
     }

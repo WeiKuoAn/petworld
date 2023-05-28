@@ -20,8 +20,12 @@
                         醫院拜訪紀錄
                     @elseif($customer->group_id == '5')
                         禮儀社拜訪紀錄
-                    @else
+                    @elseif($customer->group_id == '4')
                         繁殖場拜訪紀錄
+                    @elseif($customer->group_id == '3')
+                        狗園拜訪紀錄
+                    @else
+                        美容院拜訪紀錄
                     @endif
                 </h4>
             </div>

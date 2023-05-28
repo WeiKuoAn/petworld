@@ -43,14 +43,14 @@
                         <table class="table table-centered table-nowrap table-hover mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th width="15%">姓名</th>
-                                    <th width="8%">職稱</th>
-                                    <th width="15%">入職時間</th>
+                                    <th>姓名</th>
+                                    <th>職稱</th>
+                                    <th>入職時間</th>
                                     <th>電話</th>
                                     <th>年資</th>
-                                    <th>餘額</th>
+                                    {{-- <th>餘額</th>
                                     <th>特休天數</th>
-                                    <th>剩餘休假天數（含特休）</th>
+                                    <th>剩餘休假天數（含特休）</th> --}}
                                     <th>動作</th>
                                 </tr>
                             </thead>
@@ -66,7 +66,7 @@
                                     <td>{{ $user->entry_date }}</td>    
                                     <td>{{ $user->mobile }}</td>
                                         <td>{{ $datas[$user->id]['seniority'] }}年</td>
-                                        <td>
+                                        {{-- <td>
                                             @if($datas[$user->id]['balance'] <= 0)
                                                 <span style="color:red;">{{ number_format($datas[$user->id]['balance']) }}</span>
                                             @else
@@ -75,11 +75,12 @@
                                             元
                                         </td>
                                         <td>{{ $datas[$user->id]['specil_vacation'] }}天</td>
-                                        <td>{{ $datas[$user->id]['remain_specil_vacation'] }}天</td>
+                                        <td>{{ $datas[$user->id]['remain_specil_vacation'] }}天</td> --}}
                                         <td>
                                             <div class="btn-group dropdown">
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="{{ route('user.sale',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看個資</a>
                                                     <a class="dropdown-item" href="{{ route('user.sale',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看假單</a>
                                                     <a class="dropdown-item" href="{{ route('user.sale',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看收支紀錄</a>
                                                 </div>
