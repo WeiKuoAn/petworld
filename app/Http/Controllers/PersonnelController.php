@@ -27,6 +27,7 @@ class PersonnelController extends Controller
         $year = Vacation::where('year',Carbon::now()->year)->first();//取得當年
         //計算當前專員餘額
         $datas = [];
+
         foreach($users as $user)
         {
             $user_bank = UserBank::where('user_id',$user->id)->first();//使用者最初餘額
@@ -46,16 +47,19 @@ class PersonnelController extends Controller
             }else{
                 $user_cash = 0;
             }
-
-            if(!isset($year)){
-                $year->day = 0;
+            if($year == null){
+                $day = 0;
+            }else{
+                $day = $year->day;
             }
+
+
 
             $datas[$user->id]['pay_data'] = $user_pay_data;
             $datas[$user->id]['balance'] = intval($user_balance) + intval($user_cash) - intval($user_pay_data);
             $datas[$user->id]['seniority'] = $this->seniority($user->entry_date);
             $datas[$user->id]['specil_vacation'] = $this->specil_vacation($user->entry_date);
-            $datas[$user->id]['remain_specil_vacation'] = intval($this->specil_vacation($user->entry_date)) + intval($year->day);//剩餘休假天數
+            $datas[$user->id]['remain_specil_vacation'] = intval($this->specil_vacation($user->entry_date)) + intval($day);//剩餘休假天數
         }
         // dd($datas);
         
