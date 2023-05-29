@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\UserLog;
 use App\Models\Debit;
+use App\Models\Customer;
+use App\Models\Sale_gdpaper;
+use App\Models\Sale;
+use App\Models\Product;
+use App\Models\CustGroup;
+use App\Models\SaleCompanyCommission;
+use Illuminate\Support\Facades\Redis;
 
 class PersonController extends Controller
 {
@@ -101,4 +108,79 @@ class PersonController extends Controller
          $data->save();
          return redirect()->route('new-debit');
      }
-}
+
+     //員工業務
+     public function sale_index(Request $request)
+     {
+            if ($request) {
+                $status = $request->status;
+                if (!isset($status) || $status == 'not_check') {
+                    $sales = Sale::where('user_id', Auth::user()->id)->whereIn('status', [1, 2]);
+                }
+                if ($status == 'check') {
+                    $sales = Sale::where('user_id', Auth::user()->id)->where('status', 9);
+                }
+                $after_date = $request->after_date;
+                if ($after_date) {
+                    $sales = $sales->where('sale_date', '>=', $after_date);
+                }
+                $before_date = $request->before_date;
+                if ($before_date) {
+                    $sales = $sales->where('sale_date', '<=', $before_date);
+                }
+                $sale_on = $request->sale_on;
+                if ($sale_on) {
+                    $sales = $sales->where('sale_on', $sale_on);
+                }
+                $cust_mobile = $request->cust_mobile;
+                if ($cust_mobile) {
+                    $customer = Customer::where('mobile', $cust_mobile)->first();
+                    $sales = $sales->where('customer_id', $customer->id);
+                }
+                $plan = $request->plan;
+                if ($plan != "null") {
+                    if (isset($plan)) {
+                        $sales = $sales->where('plan_id', $plan);
+                    } else {
+                        $sales = $sales;
+                    }
+                }
+                $pay_id = $request->pay_id;
+                if ($pay_id) {
+                    if($pay_id == 'A'){
+                        $sales = $sales->whereIn('pay_id', ['A','B']);
+                    }else{
+                        $sales = $sales->where('pay_id', $pay_id);
+                    }
+                }
+                $sales = $sales->orderby('sale_date', 'desc')->paginate(50);
+                $price_total = $sales->sum('pay_price');
+                $condition = $request->all();
+
+                foreach ($sales as $sale) {
+                    $sale_ids[] = $sale->id;
+                }
+                if (isset($sale_ids)) {
+                    $gdpaper_total = Sale_gdpaper::whereIn('sale_id', $sale_ids)->sum('gdpaper_total');
+                } else {
+                    $gdpaper_total = 0;
+                }
+            } else {
+                $condition = ' ';
+                $price_total = Sale::where('status', '1')->sum('pay_price');
+                $sales = Sale::orderby('sale_date', 'desc')->where('status', '1')->paginate(15);
+            }
+            return view('person.sales')->with('sales', $sales)
+                                       ->with('request', $request)
+                                       ->with('condition', $condition)
+                                       ->with('price_total', $price_total)
+                                       ->with('gdpaper_total', $gdpaper_total);
+     }
+
+     public function wait_sale_index(Request $request)
+     {
+        $sales = Sale::where('status', 3)->where('user_id', Auth::user()->id)->orderby('sale_date', 'desc')->get();
+        return view('person.wait')->with('sales', $sales);
+     }
+
+    }

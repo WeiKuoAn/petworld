@@ -291,89 +291,15 @@ class SaleDataController extends Controller
             ->with('sources',$sources)
             ->with('plans',$plans);
         }else{
-            return redirect()->route('preson-sale');
+            return redirect()->route('person.sales');
         }
         
-    }
-
-    public function preson_index(Request $request)
-    {
-
-        if ($request) {
-            $status = $request->status;
-            if (!isset($status) || $status == 'not_check') {
-                $sales = Sale::where('user_id', Auth::user()->id)->whereIn('status', [1, 2]);
-            }
-            if ($status == 'check') {
-                $sales = Sale::where('user_id', Auth::user()->id)->where('status', 9);
-            }
-            $after_date = $request->after_date;
-            if ($after_date) {
-                $sales = $sales->where('sale_date', '>=', $after_date);
-            }
-            $before_date = $request->before_date;
-            if ($before_date) {
-                $sales = $sales->where('sale_date', '<=', $before_date);
-            }
-            $sale_on = $request->sale_on;
-            if ($sale_on) {
-                $sales = $sales->where('sale_on', $sale_on);
-            }
-            $cust_mobile = $request->cust_mobile;
-            if ($cust_mobile) {
-                $customer = Customer::where('mobile', $cust_mobile)->first();
-                $sales = $sales->where('customer_id', $customer->id);
-            }
-            $plan = $request->plan;
-            if ($plan != "null") {
-                if (isset($plan)) {
-                    $sales = $sales->where('plan_id', $plan);
-                } else {
-                    $sales = $sales;
-                }
-            }
-            $pay_id = $request->pay_id;
-            if ($pay_id) {
-                if($pay_id == 'A'){
-                    $sales = $sales->whereIn('pay_id', ['A','B']);
-                }else{
-                    $sales = $sales->where('pay_id', $pay_id);
-                }
-            }
-            $sales = $sales->orderby('sale_date', 'desc')->paginate(15);
-            $price_total = $sales->sum('pay_price');
-            $condition = $request->all();
-
-            foreach ($sales as $sale) {
-                $sale_ids[] = $sale->id;
-            }
-            if (isset($sale_ids)) {
-                $gdpaper_total = Sale_gdpaper::whereIn('sale_id', $sale_ids)->sum('gdpaper_total');
-            } else {
-                $gdpaper_total = 0;
-            }
-        } else {
-            $condition = ' ';
-            $price_total = Sale::where('status', '1')->sum('pay_price');
-            $sales = Sale::orderby('sale_date', 'desc')->where('status', '1')->paginate(15);
-        }
-        return view('preson-sale')->with('sales', $sales)
-            ->with('request', $request)
-            ->with('condition', $condition)
-            ->with('price_total', $price_total)
-            ->with('gdpaper_total', $gdpaper_total);
     }
 
     public function wait_index(Request $request) //代確認業務單
     {
         $sales = Sale::where('status', 3)->orderby('sale_date', 'desc')->get();
-        return view('wait-sale')->with('sales', $sales);
-    }
-
-    public function user_wait_index() //代確認業務單
-    {
-        $sales = Sale::where('status', 3)->where('user_id', Auth::user()->id)->orderby('sale_date', 'desc')->get();
-        return view('wait-sale')->with('sales', $sales);
+        return view('sale.wait')->with('sales', $sales);
     }
 
     public function user_sale($id, Request $request) //從用戶管理進去看業務單
@@ -475,26 +401,26 @@ class SaleDataController extends Controller
             ->with('sale_company',$sale_company);
     }
 
-    public function check($id)
+    public function check_show($id)
     {
         $sources = SaleSource::where('status','up')->get();
         $customers = Customer::get();
         $plans = Plan::where('status', 'up')->get();
-        $gdpapers = Gdpaper::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
-        $promBs = PromB::where('status', 'up')->orderby('seq','asc')->get();
-        $promAs = PromA::where('status', 'up')->get();
-        $sale = Sale::where('id', $id)->first();
+        $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
+        $proms = Prom::where('status', 'up')->orderby('seq','asc')->get();
+        $data = Sale::where('id', $id)->first();
         $sale_gdpapers = Sale_gdpaper::where('sale_id', $id)->get();
-        $sale_promBs = Sale_promB::where('sale_id', $id)->get();
-        return view('check_saledata')->with('sale', $sale)
+        $sale_proms = Sale_prom::where('sale_id', $id)->get();
+        $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
+        return view('sale.check')->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
-            ->with('gdpapers', $gdpapers)
-            ->with('promAs', $promAs)
-            ->with('promBs', $promBs)
-            ->with('sale_promBs', $sale_promBs)
+            ->with('products', $products)
+            ->with('proms', $proms)
+            ->with('sale_proms', $sale_proms)
             ->with('sale_gdpapers', $sale_gdpapers)
-            ->with('sources',$sources);;
+            ->with('sources',$sources)
+            ->with('sale_company',$sale_company);
     }
 
     public function check_update(Request $request, $id)
@@ -515,16 +441,15 @@ class SaleDataController extends Controller
                 $sale->status = '1';
                 $sale->save();
             }
+            return redirect()->route('wait.sales');
         } else {
             if ($request->user_check == 'usercheck') {
                 $sale->status = '3';
                 $sale->save();
             }
+            return redirect()->route('person.sales');
         }
 
-
-
-        return redirect()->route('preson-sale');
     }
 
     /**
@@ -684,35 +609,5 @@ class SaleDataController extends Controller
         $sale_gdpapers->delete();
         $sale_promBs->delete();
         return redirect()->route('sales');
-    }
-
-
-    private function update_total($id)
-    {
-        $sale = Sale::where('id', $id)->first();
-        $plan_price = intval($sale->plan_price);
-        $before_prom_price = intval($sale->before_prom_price);
-        $after_prom_price = Sale_promB::where('sale_id', $sale->id)->sum('after_prom_total');
-
-        $sales = Sale::where('id', $sale->id)->get();
-        foreach ($sales as $sale) {
-            foreach ($sale->gdpapers as $gdpaper) {
-                if (isset($gdpaper->gdpaper_id) && $gdpaper->gdpaper_id != null) {
-                    $num = $gdpaper->gdpaper_num;
-                    $price = $gdpaper->gdpaper_name->price;
-                    if ($sale->plan_id != 4) {
-                        $totals[] = intval($num) * intval($price);
-                    } else {
-                        $totals[] = 0;
-                    }
-                }
-            }
-        }
-        if (isset($gdpaper->gdpaper_id) && $gdpaper->gdpaper_id != null) {
-            $gdpaper_total = intval(array_sum($totals));
-        } else {
-            $gdpaper_total = 0;
-        }
-        return $plan_price + $before_prom_price + $after_prom_price + $gdpaper_total;
     }
 }

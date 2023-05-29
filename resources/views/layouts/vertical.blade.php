@@ -14,8 +14,14 @@
     <div id="wrapper">
         @include('layouts.shared/topbar')
 
-        @if(Auth::user()->level == 1)
-            @include('layouts.shared/left-sidebar')
+        @if(Auth::user()->status == 0)<!--用戶是否啟用-->
+            @if(Auth::user()->level == 0 || Auth::user()->id == 2)
+                @include('layouts.shared/left-sidebar')
+            @elseif(Auth::user()->level == 1 && Auth::user()->jod_id == 2)
+            {{-- @elseif(Auth::user()->level == 1 && Auth::user()->jod_id == 2) --}}
+            @else
+                @include('layouts.shared/user-left-sidebar')
+            @endif
         @endif
 
         <!-- ============================================================== -->

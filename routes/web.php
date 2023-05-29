@@ -99,6 +99,8 @@ Route::group(['prefix' => '/'], function () {
     Route::post('user-profile', [PersonController::class, 'update'])->name('user-profile.data');
     Route::get('user-password', [UserController::class, 'password_show'])->name('user-password');
     Route::post('user-password', [UserController::class, 'password_update'])->name('user-password.data');
+    Route::get('person/sales', [PersonController::class, 'sale_index'])->name('person.sales');
+    Route::get('person/wait/sales', [PersonController::class, 'wait_sale_index'])->name('person.wait.sales');
     
     /*客戶管理 */
     Route::get('customers', [CustomerController::class, 'index'])->name('customer');
@@ -154,12 +156,15 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/sale/create', [SaleDataController::class, 'store'])->name('sale.data.create');
     Route::get('/sale/edit/{id}', [SaleDataController::class, 'show'])->name('sale.edit');
     Route::post('/sale/edit/{id}', [SaleDataController::class, 'update'])->name('sale.data.edit');
+    Route::get('/sale/check/{id}', [SaleDataController::class, 'check_show'])->name('sale.check');
+    Route::post('/sale/check/{id}', [SaleDataController::class, 'check_update'])->name('sale.data.check');
     Route::get('/sale/del/{id}', [SaleDataController::class, 'delete'])->name('sale.del');
     Route::post('/sale/del/{id}', [SaleDataController::class, 'destroy'])->name('sale.data.del');
     Route::get('/prom/search', [SaleDataController::class, 'prom_search'])->name('prom.search');
     Route::get('/gdpaper/search', [SaleDataController::class, 'gdpaper_search'])->name('gdpaper.search');
     Route::get('/customer/search', [SaleDataController::class, 'customer_search'])->name('customer.search');
     Route::get('/company/search', [SaleDataController::class, 'company_search'])->name('company.search');
+    Route::get('wait/sales', [SaleDataController::class, 'wait_index'])->name('wait.sales');
 
     Route::get('user/{id}/sale', [SaleDataController::class, 'user_sale'])->name('user.sale');
 

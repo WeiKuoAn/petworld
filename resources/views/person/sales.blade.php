@@ -27,7 +27,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <form action="{{ route('sales') }}" method="GET">
+                        <form action="{{ route('person.sales') }}" method="GET">
                                 <div class="col-auto d-flex flex-wrap align-items-center">
                                         <div class="me-2">
                                             <label for="after_date" class="form-label">單號日期</label>
@@ -45,56 +45,34 @@
                                             <label for="sale_on" class="form-label">單號</label>
                                             <input type="text" class="form-control" id="sale_on" name="sale_on" value="{{ $request->sale_on }}">
                                         </div>
-                                </div>
-                                <div class="col-auto d-flex flex-wrap align-items-center mt-3">
-                                    <div class="me-2">
-                                        <label for="pet_name" class="form-label">寶貝名稱</label>
-                                        <input type="text" class="form-control" id="pet_name" name="pet_name" value="{{ $request->pet_name }}">
-                                    </div>
-                                    <div class="me-2">
-                                        <label for="before_date" class="form-label">業務</label>
-                                        <select id="inputState" class="form-select" name="user" onchange="this.form.submit()">
-                                            <option value="null" @if (isset($request->user) || $request->user == '') selected @endif>請選擇</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}" @if ($request->user == $user->id) selected @endif>
-                                                    {{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="me-2">
-                                        <label for="sale_on" class="form-label">方案</label>
-                                        <select id="inputState" class="form-select" name="plan" onchange="this.form.submit()">
-                                            <option value="null" @if (isset($request->plan) || $request->plan == '') selected @endif>請選擇</option>
-                                            @foreach ($plans as $plan)
-                                                <option value="{{ $plan->id }}" @if ($request->plan == $plan->id) selected @endif>
-                                                    {{ $plan->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="me-2">
-                                        <label for="after_date">付款方式</label>
-                                        <select id="inputState" class="form-select" name="pay_id" onchange="this.form.submit()">
-                                            <option value="" @if (!isset($request->pay_id)) selected @endif>請選擇</option>
-                                            <option value="A" @if($request->pay_id == 'A') selected @endif>一次付清</option>
-                                            <option value="C" @if($request->pay_id == 'C') selected @endif>訂金</option>
-                                            <option value="E" @if($request->pay_id == 'E') selected @endif>追加</option>
-                                            <option value="D" @if($request->pay_id == 'D') selected @endif>尾款</option>
-                                        </select>
-                                    </div>
-                                    <div class="me-2">
-                                        <label for="after_date">狀態</label>
-                                        <select id="inputState" class="form-select" name="status" onchange="this.form.submit()">
-                                            <option value="not_check" @if (isset($request->status) || $request->status == 'not_check') selected @endif>未對帳</option>
-                                            <option value="check" @if ($request->status == 'check') selected @endif>已對帳</option>
-                                        </select>
-                                    </div>
-                                    <div class="me-3 mt-3">
-                                        <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
-                                    </div>
-                                    <div class="col mt-3" style="text-align: right;">
-                                        {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
-                                        <a href="{{ route('sale.create') }}" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i>新增業務</a>
-                                    </div>
+                                        <div class="me-2">
+                                            <label for="pet_name" class="form-label">寶貝名稱</label>
+                                            <input type="text" class="form-control" id="pet_name" name="pet_name" value="{{ $request->pet_name }}">
+                                        </div>
+                                        <div class="me-2">
+                                            <label for="after_date">付款方式</label>
+                                            <select id="inputState" class="form-select" name="pay_id" onchange="this.form.submit()">
+                                                <option value="" @if (!isset($request->pay_id)) selected @endif>請選擇</option>
+                                                <option value="A" @if($request->pay_id == 'A') selected @endif>一次付清</option>
+                                                <option value="C" @if($request->pay_id == 'C') selected @endif>訂金</option>
+                                                <option value="E" @if($request->pay_id == 'E') selected @endif>追加</option>
+                                                <option value="D" @if($request->pay_id == 'D') selected @endif>尾款</option>
+                                            </select>
+                                        </div>
+                                        <div class="me-2">
+                                            <label for="after_date">狀態</label>
+                                            <select id="inputState" class="form-select" name="status" onchange="this.form.submit()">
+                                                <option value="not_check" @if (isset($request->status) || $request->status == 'not_check') selected @endif>未對帳</option>
+                                                <option value="check" @if ($request->status == 'check') selected @endif>已對帳</option>
+                                            </select>
+                                        </div>
+                                        <div class="me-3 mt-3">
+                                            <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
+                                        </div>
+                                        <div class="col mt-3" style="text-align: right;">
+                                            {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
+                                            <a href="{{ route('sale.create') }}" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i>新增業務</a>
+                                        </div>
                                 </div>
                         </form>
                         <!-- end col-->
@@ -216,15 +194,19 @@
                                                 <a href="{{ route('check-sale', $sale->id) }}"><button type="button"
                                                         class="btn btn-danger btn-sm">查看</button></a>
                                             @endif --}}
-                                            <div class="btn-group dropdown">
-                                                <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="{{ route('sale.edit',$sale->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
-                                                    {{-- <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a> --}}
-                                                    <a class="dropdown-item" href="{{ route('sale.del',$sale->id) }}"><i class="mdi mdi-delete me-2 font-18 text-muted vertical-middle"></i>刪除</a>
-                                                    <a class="dropdown-item" href="{{ route('sale.check',$sale->id) }}"><i class="mdi mdi-send me-2 font-18 text-muted vertical-middle"></i>送出對帳</a>
+                                            @if ($sale->status != '9')
+                                                <div class="btn-group dropdown">
+                                                    <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item" href="{{ route('sale.edit',$sale->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                        {{-- <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a> --}}
+                                                        <a class="dropdown-item" href="{{ route('sale.del',$sale->id) }}"><i class="mdi mdi-delete me-2 font-18 text-muted vertical-middle"></i>刪除</a>
+                                                        <a class="dropdown-item" href="{{ route('sale.check',$sale->id) }}"><i class="mdi mdi-send me-2 font-18 text-muted vertical-middle"></i>送出對帳</a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @else
+                                                <a href="{{ route('sale.check',$sale->id) }}"><button type="button" class="btn btn-secondary waves-effect waves-light">查看</button></a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

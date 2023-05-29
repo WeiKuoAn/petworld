@@ -202,7 +202,7 @@
                                     <a href="{{ route('sale.create') }}"  class="{{ request()->is('sale.create') ? 'active' : '' }}">業務Key單</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">業務對帳確認</a>
+                                    <a href="{{ route('wait.sales') }}"  class="{{ request()->is('wait.sales') ? 'active' : '' }}">業務對帳確認</a>
                                 </li>
                             </ul>
                         </div>
@@ -372,7 +372,19 @@
                             </ul>
                         </div>
                     </li>
-                    
+                </li>
+                <li class="menu-title mt-2">fast Use</li>
+                <li>
+                    <a href="{{ route('sale.create') }}">
+                        <i data-feather="airplay"></i>
+                        <span> 業務key單 </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('pay.create') }}">
+                        <i data-feather="airplay"></i>
+                        <span> 支出key單 </span>
+                    </a>
                 </li>
                 
                 
