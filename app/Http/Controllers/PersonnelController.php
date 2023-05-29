@@ -33,6 +33,7 @@ class PersonnelController extends Controller
             $user_bank = UserBank::where('user_id',$user->id)->first();//使用者最初餘額
             $user_pay_data = PayData::where('status','1')->where('pay_date','>=','2023-05-23')->where('user_id',$user->id)->sum('price');
             $cash = Cash::where('status','1')->where('give_user_id',$user->id)->sum('price');
+            dd($cash);
             $user_balance = '';
             $user_cash = '';
 
