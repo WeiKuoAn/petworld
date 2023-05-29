@@ -51,6 +51,7 @@ class PersonnelController extends Controller
             $datas[$user->id]['balance'] = intval($user_balance) + intval($user_cash) - intval($user_pay_data);
             $datas[$user->id]['seniority'] = $this->seniority($user->entry_date);
             $datas[$user->id]['specil_vacation'] = $this->specil_vacation($user->entry_date);
+            if(!isset($year)) $year->day = 0;
             $datas[$user->id]['remain_specil_vacation'] = intval($this->specil_vacation($user->entry_date)) + intval($year->day);//剩餘休假天數
         }
         // dd($datas);
