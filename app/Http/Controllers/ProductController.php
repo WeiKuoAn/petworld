@@ -51,7 +51,12 @@ class ProductController extends Controller
         $data->cost = $request->cost;
         $data->alarm_num = $request->alarm_num;
         $data->status = $request->status;
-        $data->commission = $request->commission;
+        if(isset($request->commission))
+        {
+            $data->commission = $request->commission;
+        }else{
+            $data->commission = 0;
+        }
         $data->stock = $request->stock;
         $data->save();
         // dd($data->type);

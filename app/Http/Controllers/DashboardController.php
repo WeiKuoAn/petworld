@@ -20,6 +20,7 @@ class DashboardController extends Controller
 
     public function loginSuccess(){
         $now = Carbon::now()->locale('zh-tw');
+        // dd(Auth::user());
         if(Auth::user()->status != 1){
             $work = Works::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->first();
             return view('index')->with('now',$now)->with('work',$work);
