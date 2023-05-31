@@ -57,7 +57,12 @@ class ProductController extends Controller
         }else{
             $data->commission = 0;
         }
-        $data->stock = $request->stock;
+        if(isset($request->stock))
+        {
+            $data->stock = $request->stock;
+        }else{
+            $data->stock = 0;
+        }
         $data->save();
         // dd($data->type);
         if($request->type == 'combo')
