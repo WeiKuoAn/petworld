@@ -37,6 +37,7 @@ class Rpg10Controller extends Controller
                     ->where('users.status', '0')
                     ->whereIn('users.job_id',[1,3])
                     ->whereNotNull('sale_gdpaper.gdpaper_id')
+                    ->whereNotNull('sale_data.plan_id')
                     ->where('sale_data.sale_date','>=',$firstDay)
                     ->where('sale_data.sale_date','<=',$lastDay);
 

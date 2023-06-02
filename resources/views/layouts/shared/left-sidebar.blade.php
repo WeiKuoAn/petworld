@@ -352,7 +352,7 @@
                                     <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">支出報表</a>
+                                    <a href="{{ route('rpg02') }}"  class="{{ request()->is('rpg02') ? 'active' : '' }}">支出報表</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙報表</a>
@@ -364,12 +364,31 @@
                                     <a href="{{ route('rpg07') }}"  class="{{ request()->is('rpg07') ? 'active' : '' }}">團火查詢</a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('rpg09') }}"  class="{{ request()->is('rpg09') ? 'active' : '' }}">年度營收報表</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('rpg10') }}"  class="{{ request()->is('rpg10') ? 'active' : '' }}">專員金紙抽成</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                 </li>
+
+                <li>
+                    <a href="#person" data-bs-toggle="collapse">
+                        <i data-feather="dollar-sign"></i>
+                        <span> 個人管理 </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="person">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('person.pays') }}"  class="{{ request()->is('person.pays') ? 'active' : '' }}">零用金管理</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 <li class="menu-title mt-2">fast Use</li>
                 <li>
                     <a href="{{ route('sale.create') }}">

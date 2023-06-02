@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "CRM Customers"])
+@extends('layouts.vertical', ["page_title"=> "個人業務列表"])
 
 @section('content')
 <!-- Start Content-->
@@ -12,10 +12,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">業務管理</a></li>
-                        <li class="breadcrumb-item active">業務列表</li>
+                        <li class="breadcrumb-item active">個人業務列表</li>
                     </ol>
                 </div>
-                <h4 class="page-title">業務列表</h4>
+                <h4 class="page-title">個人業務列表</h4>
             </div>
         </div>
     </div>

@@ -68,7 +68,7 @@ class Rpg02Controller extends Controller
         $pays = Pay::where('status', 'up')->orderby('id')->get();
        
 
-        return view('rpg02')->with('request', $request)
+        return view('rpg02.index')->with('request', $request)
                             ->with('first_date',$first_date)
                             ->with('last_date',$last_date)
                             ->with('datas',$datas)

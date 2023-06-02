@@ -33,9 +33,11 @@ use App\Http\Controllers\VisitController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\Rpg01Controller;
+use App\Http\Controllers\Rpg02Controller;
 use App\Http\Controllers\Rpg04Controller;
 use App\Http\Controllers\Rpg06Controller;
 use App\Http\Controllers\Rpg07Controller;
+use App\Http\Controllers\Rpg09Controller;
 use App\Http\Controllers\Rpg10Controller;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -114,6 +116,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('user-password', [UserController::class, 'password_update'])->name('user-password.data');
     Route::get('person/sales', [PersonController::class, 'sale_index'])->name('person.sales');
     Route::get('person/wait/sales', [PersonController::class, 'wait_sale_index'])->name('person.wait.sales');
+    Route::get('person/pays', [PersonController::class, 'pay_index'])->name('person.pays');
     
     /*客戶管理 */
     Route::get('customers', [CustomerController::class, 'index'])->name('customer');
@@ -319,11 +322,12 @@ Route::group(['prefix' => '/'], function () {
     /*報表管理*/
     Route::get('/rpg/rpg01', [Rpg01Controller::class, 'rpg01'])->name('rpg01');
     Route::get('/rpg/rpg01/detail/{date}/{plan_id}', [Rpg01Controller::class, 'detail'])->middleware(['auth'])->name('rpg01.detail');
-
+    Route::get('/rpg/rpg02', [Rpg02Controller::class, 'rpg02'])->name('rpg02');
     Route::get('/rpg/rpg04', [Rpg04Controller::class, 'rpg04'])->name('rpg04');
     Route::get('/rpg/rpg06', [Rpg06Controller::class, 'rpg06'])->name('rpg06');//舊法會查詢
     Route::get('/rpg/rpg07', [Rpg07Controller::class, 'rpg07'])->name('rpg07');
     Route::get('/rpg/rpg07/export', [Rpg07Controller::class, 'export'])->name('rpg07.export');
+    Route::get('/rpg/rpg09', [Rpg09Controller::class, 'rpg09'])->name('rpg09');
     Route::get('/rpg/rpg10', [Rpg10Controller::class, 'rpg10'])->name('rpg10');
 
     Route::get('image', function()

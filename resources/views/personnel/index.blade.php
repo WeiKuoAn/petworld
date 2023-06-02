@@ -80,7 +80,7 @@
                                             <div class="btn-group dropdown">
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="{{ route('user.sale',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看個資</a>
+                                                    <a class="dropdown-item" href="{{ route('user.edit',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看個資</a>
                                                     <a class="dropdown-item" href="{{ route('user.sale',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看假單</a>
                                                     <a class="dropdown-item" href="{{ route('user.sale',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看收支紀錄</a>
                                                 </div>
