@@ -59,8 +59,8 @@
                         <label for="project-priority" class="form-label">分館<span class="text-danger">*</span></label>
 
                         <select class="form-control" data-toggle="select" data-width="100%" name="job_id">
-                            @foreach($jobs as $job)
-                            <option value="{{ $job->id }}">{{$job->name}}</option>
+                            @foreach($branchs as $branch)
+                                <option value="{{ $user->branch_id == $branch->id }}">{{$branch->name}}</option>
                             @endforeach
                         </select>
                     </div>

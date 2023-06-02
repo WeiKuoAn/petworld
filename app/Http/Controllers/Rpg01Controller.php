@@ -61,14 +61,12 @@ class Rpg01Controller extends Controller
 
     public function detail(Request $request , $date , $plan_id)
     {
-        // $date = $request->date;
-        // $plan_id = $request->plan_id;
         $plans = Plan::where('status', 'up')->orderby('id')->get();
         foreach($plans as $plan){
             $plan_name[$plan->id] = $plan->name; 
         }
         $datas = Sale::where('sale_date',$date)->whereIn('pay_id', ['A', 'B', 'C'])->where('plan_id',$plan_id)->get();
-        return view('rpg01_detail')->with('datas',$datas)
+        return view('rpg01.detail')->with('datas',$datas)
                                    ->with('plan_name',$plan_name)
                                    ->with('date',$date)
                                    ->with('plan_id',$plan_id);

@@ -49,6 +49,14 @@
                     <h5 class="text-uppercase bg-light  p-2 mt-0 mb-3">基本資訊</h5>
                     <div class="row">
                         <div class="mb-3 col-md-4">
+                            <label for="type_list" class="form-label">案件類別選擇<span class="text-danger">*</span></label>
+                            <select id="type_list" class="form-select" name="type_list" >
+                                <option value="">請選擇...</option>
+                                <option value="dispatch">派件單</option>
+                                <option value="memorial">追思</option>                            
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="sale_on" class="form-label">單號<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="sale_on" name="sale_on" required >
                         </div>
@@ -83,7 +91,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3 col-md-4" id="source_company">
+                        <div class="mb-3 col-md-4 not_memorial_show" id="source_company">
                             <label for="source_company_id" class="form-label">來源公司名稱<span class="text-danger">*</span></label>
                             <input list="source_company_name_list_q" class="form-control" id="source_company_name_q" name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院、繁殖場、狗園名稱">
                             <datalist id="source_company_name_list_q">
@@ -328,6 +336,24 @@
         }else{
             $("#source_company").hide(300);
             $("#source_company_name_q").prop('required', false);
+        }
+    });
+
+    
+    //案件單類別
+    $('select[name="type_list"]').on('change', function() {
+        if($(this).val() == 'memorial'){
+            $(".not_memorial_show").hide(300);
+            $("#pet_name").prop('required', false);
+            $("#kg").prop('required', false);
+            $("#type").prop('required', false);
+            $("#plan_id").prop('required', false);
+        }else{
+            $(".not_memorial_show").show(300);
+            $("#pet_name").prop('required', true);
+            $("#kg").prop('required', true);
+            $("#type").prop('required', true);
+            $("#plan_id").prop('required', true);
         }
     });
     

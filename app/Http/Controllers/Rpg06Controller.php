@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use App\Models\Sale_promB;
+use App\Models\Prom;
+use App\Models\Sale_prom;
 use App\Models\Sale;
 use App\Models\Customer;
 
@@ -14,7 +15,7 @@ class Rpg06Controller extends Controller
     {
 
         if($request){
-            $datas = Sale_promB::where('after_prom_id',8);
+            $datas = Sale_prom::where('prom_type','B')->where('prom_id',8);
             $after_date = $request->after_date;
             if($after_date){
                 $after_date = $after_date.' 00:00:00';
@@ -54,7 +55,7 @@ class Rpg06Controller extends Controller
             $datas = $datas->orderby('created_at', 'desc')->paginate(50);
             $condition = $request->all();
         }else{
-            $datas = Sale_promB::where('after_prom_id',8)->orderby('created_at', 'desc')->paginate(50);
+            $datas = Sale_prom::where('prom_type','B')->where('prom_id',8)->orderby('created_at', 'desc')->paginate(50);
             $condition = '';
         }
         

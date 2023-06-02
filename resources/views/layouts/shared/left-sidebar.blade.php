@@ -225,18 +225,6 @@
                                 <li>
                                     <a href="{{ route('pujas') }}"  class="{{ request()->is('pujas') ? 'active' : '' }}">法會管理</a>
                                 </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="#puja_data" data-bs-toggle="collapse">
-                            <i data-feather="codesandbox"></i>
-                            <span> 法會報名管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="puja_data">
-                            <ul class="nav-second-level">
                                 <li>
                                     <a href="{{ route('puja_data.create') }}"  class="{{ request()->is('puja_data.create') ? 'active' : '' }}">法會報名</a>
                                 </li>
@@ -364,10 +352,19 @@
                                     <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">支出管理</a>
+                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">支出報表</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">支出Key單</a>
+                                    <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙報表</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('rpg06') }}"  class="{{ request()->is('rpg06') ? 'active' : '' }}">舊法會查詢</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('rpg07') }}"  class="{{ request()->is('rpg07') ? 'active' : '' }}">團火查詢</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('rpg10') }}"  class="{{ request()->is('rpg10') ? 'active' : '' }}">專員金紙抽成</a>
                                 </li>
                             </ul>
                         </div>

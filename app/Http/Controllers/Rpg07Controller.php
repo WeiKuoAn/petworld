@@ -57,6 +57,8 @@ class Rpg07Controller extends Controller
             }
             $datas = $datas->get();
         }else{
+            $after_date='';
+            $before_date ='';
             $datas = [];
         }
 
@@ -83,7 +85,6 @@ class Rpg07Controller extends Controller
             "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
             "Expires"             => "0"
         );
-
         $header = array('日期', $after_date.'~' ,  $before_date);
         $columns = array('No', '日期', '客戶', '寶貝名', '公斤數' , '方案','金紙','備註','評論（送資材袋）','完成準備');
 

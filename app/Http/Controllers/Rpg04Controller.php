@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\CarbonPeriod;
 use Carbon\Carbon;
-use App\Models\Gdpaper;
+use App\Models\Product;
+use App\Models\Category;
 use App\Models\Sale_gdpaper;
 use Illuminate\Support\Facades\DB;
 
@@ -16,65 +17,76 @@ class Rpg04Controller extends Controller
         $first_date = Carbon::now()->firstOfMonth();
         $last_date = Carbon::now()->lastOfMonth();
 
-        // $after_date = Carbon::now()->firstOfMonth();
-        // $before_date = Carbon::now()->lastOfMonth();
-
         $after_date = Carbon::now()->firstOfMonth();
         $before_date = Carbon::now()->lastOfMonth();
         $periods = CarbonPeriod::create($after_date, $before_date);
+
         
-       
+        $category_id = $request->category_id;
+        $products = Product::where('status','up')->get();
+        
+        if ($category_id != "null") {
+            if($category_id){
+                $products = Product::where('status','up')->where('category_id',$category_id)->get();
+            }
+        }else{
+            $products = Product::where('status','up')->get();
+        }
+        
+        $categorys = Category::where('status','up')->get();
 
-        $gdpapers = Gdpaper::where('status','up')->get();
-
-        $gdpaper_datas = DB::table('sale_data')
+        if($request->input() != null){
+            $product_datas = DB::table('sale_data')
                             ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                            ->where('sale_data.sale_date','>=',$after_date)
-                            ->where('sale_data.sale_date','<=',$before_date)
-                            ->whereNotNull('sale_gdpaper.gdpaper_id')
-                            ->get();
+                            ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
+                            ->leftjoin('category','category.id', '=', 'product.id');
 
-        if($request){
             $after_date = $request->after_date;
             if($after_date){
-                $gdpaper_datas = DB::table('sale_data')
-                                    ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                                    ->where('sale_data.sale_date','>=',$after_date)
-                                    ->whereNotNull('sale_gdpaper.gdpaper_id')
-                                    ->get();
+                $product_datas = $product_datas->where('sale_data.sale_date','>=',$after_date);
             }
+
             $before_date = $request->before_date;
             if($before_date){
-                $gdpaper_datas = DB::table('sale_data')
-                                    ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                                    ->where('sale_data.sale_date','<=',$before_date)
-                                    ->whereNotNull('sale_gdpaper.gdpaper_id')
-                                    ->get();
+                $product_datas = $product_datas->where('sale_data.sale_date','<=',$before_date);
             }
-            if($after_date && $before_date){
-                $gdpaper_datas = DB::table('sale_data')
-                                    ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                                    ->where('sale_data.sale_date','>=',$after_date)
-                                    ->where('sale_data.sale_date','<=',$before_date)
-                                    ->whereNotNull('sale_gdpaper.gdpaper_id')
-                                    ->get();
+
+            if ($category_id != "null") {
+                if($category_id){
+                    $product_datas = $product_datas->where('category.id',$category_id);
+                }else{
+                    $product_datas = $product_datas;
+                }
             }
+            
+            $product_datas = $product_datas->whereNotNull('sale_gdpaper.gdpaper_id')->get();
+
             if($after_date && $before_date){
                 $periods = CarbonPeriod::create( $request->after_date,  $request->before_date);
             }
+        }else{
+            $product_datas = DB::table('sale_data')
+                            ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
+                            ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
+                            ->leftjoin('category','category.id', '=', 'product.id')
+                            ->where('sale_data.status','9')
+                            ->where('sale_data.sale_date','>=',$first_date)
+                            ->where('sale_data.sale_date','<=',$last_date)
+                            ->whereNotNull('sale_gdpaper.gdpaper_id')
+                            ->get();
         }
 
         $datas = [];
         $sums = [];
         $totals = [];
 
-        foreach($gdpaper_datas as $gdpaper_data){
-            $datas[$gdpaper_data->sale_date][$gdpaper_data->gdpaper_id]['nums'] = 0;
-            $datas[$gdpaper_data->sale_date][$gdpaper_data->gdpaper_id]['total'] = 0;
+        foreach($product_datas as $product_data){
+            $datas[$product_data->sale_date][$product_data->gdpaper_id]['nums'] = 0;
+            $datas[$product_data->sale_date][$product_data->gdpaper_id]['total'] = 0;
         }
-        foreach($gdpaper_datas as $gdpaper_data){
-            $datas[$gdpaper_data->sale_date][$gdpaper_data->gdpaper_id]['nums'] += $gdpaper_data->gdpaper_num;
-            $datas[$gdpaper_data->sale_date][$gdpaper_data->gdpaper_id]['total'] += $gdpaper_data->gdpaper_total;
+        foreach($product_datas as $product_data){
+            $datas[$product_data->sale_date][$product_data->gdpaper_id]['nums'] += $product_data->gdpaper_num;
+            $datas[$product_data->sale_date][$product_data->gdpaper_id]['total'] += $product_data->gdpaper_total;
         }
 
         foreach($datas as $data){
@@ -98,20 +110,16 @@ class Rpg04Controller extends Controller
             $totals['nums'] += $sum['nums'];
             $totals['total'] += $sum['total'];
         }
-        
-
-        // dd($totals);
 
 
-
-
-        return view('rpg04')->with('request',$request)
+        return view('rpg04.index')->with('request',$request)
                             ->with('first_date',$first_date)
                             ->with('last_date',$last_date)
-                            ->with('gdpapers',$gdpapers)
+                            ->with('products',$products)
                             ->with('datas',$datas)
                             ->with('periods',$periods)
                             ->with('sums',$sums)
-                            ->with('totals',$totals);
+                            ->with('totals',$totals)
+                            ->with('categorys',$categorys);
     }
 }

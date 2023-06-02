@@ -141,7 +141,7 @@ class WorkController extends Controller
     {
         if (Auth::user()->level == '0') {
             $work = Works::where('id', $workId)->first();
-            return view('edituserwork')->with(['work' => $work]);
+            return view('work.edit')->with(['work' => $work]);
         } else {
             return redirect()->route('dashboard');
         }
@@ -153,8 +153,9 @@ class WorkController extends Controller
         $userId = $work->user_id;
         $work->worktime = $request->worktime;
         $work->dutytime = $request->dutytime;
+        $work->total = $request->total;
         $work->status = $request->status;
-        $work->total = floor(Carbon::parse($request->worktime)->floatDiffInHours($request->dutytime));
+        // $work->total = floor(Carbon::parse($request->worktime)->floatDiffInHours($request->dutytime));
         if ($request->remark == '') {
             $work->remark = '';
         } else {
@@ -162,7 +163,7 @@ class WorkController extends Controller
         }
         $work->save();
 
-        return redirect()->route('userwork', $userId);
+        return redirect()->route('user.work.index', $userId);
     }
 
     /**
@@ -204,7 +205,7 @@ class WorkController extends Controller
     {
         if (Auth::user()->level == '0') {
             $work = Works::where('id', $workId)->first();
-            return view('deluserwork')->with(['work' => $work]);
+            return view('work.del')->with(['work' => $work]);
         } else {
             return redirect()->route('dashboard');
         }
@@ -221,7 +222,7 @@ class WorkController extends Controller
         $work = Works::where('id', $workId)->first();
         $userId = $work->user_id;
         $work->delete();
-        return redirect()->route('userwork', $userId);
+        return redirect()->route('user.work.index', $userId);
     }
 
     public function personwork(Request $request) //個人出勤紀錄
@@ -248,7 +249,7 @@ class WorkController extends Controller
         return view('personwork')->with(['works' => $works, 'work_sum' => $work_sum, 'condition' => $condition , 'request'=>$request]);
     }
 
-    public function userwork(Request $request, $userId) //管理者查看個人出勤紀錄
+    public function user_work(Request $request, $userId) //管理者查看個人出勤紀錄
     {
         $user = User::find($userId);
         
@@ -273,6 +274,6 @@ class WorkController extends Controller
         }
         // $test = Works::work_sum($works->id);
         // dd($test);
-        return view('userwork')->with(['works' => $works, 'user' => $user, 'work_sum' => $work_sum, 'condition' => $condition , 'request'=>$request]);
+        return view('work.index')->with(['works' => $works, 'user' => $user, 'work_sum' => $work_sum, 'condition' => $condition , 'request'=>$request]);
     }
 }

@@ -22,9 +22,7 @@ class Rpg10Controller extends Controller
             $lastDay = Carbon::createFromDate($search_year , $search_month)->lastOfMonth();
         } else {
             $firstDay = Carbon::now()->firstOfMonth();
-            $lastDay = Carbon::now()->lastOfMonth();
-            // $firstDay = '2023-01-01';
-            // $lastDay = '2023-01-31';
+            $lastDay = Carbon::now()->lastOfMonth();;
         }
         //取得專員資料，並取得老闆和專員的job_id
         $users = User::where('status', '0')->whereIn('job_id',[1,3])->get();
@@ -33,8 +31,9 @@ class Rpg10Controller extends Controller
         $sale_datas = DB::table('sale_data')
                     ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
                     ->join('users','users.id', '=' , 'sale_data.user_id')
-                    ->join('gdpaper','gdpaper.id', '=' , 'sale_gdpaper.gdpaper_id')
-                    ->join('plan','plan.id', '=' , 'sale_data.plan_id')
+                    ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
+                    ->leftJoin('plan','plan.id', '=' , 'sale_data.plan_id')
+                    ->where('product.commission', '0')
                     ->where('users.status', '0')
                     ->whereIn('users.job_id',[1,3])
                     ->whereNotNull('sale_gdpaper.gdpaper_id')
@@ -54,7 +53,7 @@ class Rpg10Controller extends Controller
                                  ->orderby('sale_data.sale_date','desc')
                                  ->orderby('sale_data.plan_id','asc')
                                  ->select('sale_data.*','sale_gdpaper.*','users.name'
-                                         ,'users.id as user_id','gdpaper.name as gdpaper_name'
+                                         ,'users.id as user_id','product.name as product_name'
                                          ,'plan.name as plan_name')
                                  ->get();
                     // dd($sale_datas);
@@ -63,15 +62,16 @@ class Rpg10Controller extends Controller
         {
             $datas[$sale_data->name]['sale_datas'] = DB::table('sale_data')
                                                     ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                                                    ->join('gdpaper','gdpaper.id', '=' , 'sale_gdpaper.gdpaper_id')
-                                                    ->join('plan','plan.id', '=' , 'sale_data.plan_id')
+                                                    ->leftJoin('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
+                                                    ->leftJoin('plan','plan.id', '=' , 'sale_data.plan_id')
+                                                    ->where('product.commission', '0')
                                                     ->whereNotNull('sale_gdpaper.gdpaper_id')
                                                     ->where('sale_data.sale_date','>=',$firstDay)
                                                     ->where('sale_data.sale_date','<=',$lastDay)
                                                     ->where('sale_data.user_id',$sale_data->user_id)
                                                     ->orderby('sale_data.sale_date','desc')
                                                     ->orderby('sale_data.plan_id','asc')
-                                                    ->select('sale_data.*','sale_gdpaper.*','plan.name as plan_name','gdpaper.name')
+                                                    ->select('sale_data.*','sale_gdpaper.*','plan.name as plan_name','product.name')
                                                     ->get();
         }
 
@@ -91,6 +91,7 @@ class Rpg10Controller extends Controller
                 
             }
         }
+        // dd($datas);
         
         $sums['total_num'] = 0;
         $sums['total_price'] = 0;

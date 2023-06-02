@@ -30,8 +30,13 @@ use App\Http\Controllers\PujaTypeController;
 use App\Http\Controllers\PujaDataController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\VisitController;
+use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\Rpg01Controller;
+use App\Http\Controllers\Rpg04Controller;
+use App\Http\Controllers\Rpg06Controller;
+use App\Http\Controllers\Rpg07Controller;
+use App\Http\Controllers\Rpg10Controller;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +84,14 @@ Route::group(['prefix' => '/'], function () {
     Route::post('user/create', [UserController::class, 'store'])->name('user.create.data');
     Route::get('user/edit/{id}', [UserController::class, 'show'])->name('user.edit');
     Route::post('user/edit/{id}', [UserController::class, 'update'])->name('user.edit.data');
+    
+    //用戶出勤
+    Route::get('user/work/{id}', [WorkController::class, 'user_work'])->name('user.work.index');
+    Route::get('user/work/edit/{id}', [WorkController::class, 'showuserwork'])->name('user.work.edit');
+    Route::post('user/work/edit/{id}', [WorkController::class, 'edituserwork'])->name('user.work.edit.data');
+    Route::get('user/work/del/{id}', [WorkController::class, 'showdeluserwork'])->name('user.work.del');
+    Route::post('user/work/del/{id}', [WorkController::class, 'deluserwork'])->name('user.work.del.data');
+
 
     /*部門管理*/
     Route::get('branchs', [BranchController::class, 'index'])->name('branchs');
@@ -306,6 +319,12 @@ Route::group(['prefix' => '/'], function () {
     /*報表管理*/
     Route::get('/rpg/rpg01', [Rpg01Controller::class, 'rpg01'])->name('rpg01');
     Route::get('/rpg/rpg01/detail/{date}/{plan_id}', [Rpg01Controller::class, 'detail'])->middleware(['auth'])->name('rpg01.detail');
+
+    Route::get('/rpg/rpg04', [Rpg04Controller::class, 'rpg04'])->name('rpg04');
+    Route::get('/rpg/rpg06', [Rpg06Controller::class, 'rpg06'])->name('rpg06');//舊法會查詢
+    Route::get('/rpg/rpg07', [Rpg07Controller::class, 'rpg07'])->name('rpg07');
+    Route::get('/rpg/rpg07/export', [Rpg07Controller::class, 'export'])->name('rpg07.export');
+    Route::get('/rpg/rpg10', [Rpg10Controller::class, 'rpg10'])->name('rpg10');
 
     Route::get('image', function()
     {

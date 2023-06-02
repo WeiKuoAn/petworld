@@ -15,7 +15,7 @@
                         <li class="breadcrumb-item active">業務列表</li>
                     </ol>
                 </div>
-                <h4 class="page-title">業務列表</h4>
+                <h4 class="page-title">{{ $user->name }} 業務列表</h4>
             </div>
         </div>
     </div>
@@ -207,9 +207,7 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <a class="dropdown-item" href="{{ route('sale.edit',$sale->id) }}">
-                                                    <button type="button" class="btn btn-outline-secondary waves-effect"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</button>
-                                                </a>
+                                            <a href="{{ route('sale.check',$sale->id) }}"><button type="button" class="btn btn-secondary waves-effect waves-light">查看</button></a>
                                             @endif
                                         </td>
                                     </tr>

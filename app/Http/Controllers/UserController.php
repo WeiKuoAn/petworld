@@ -69,9 +69,11 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
         $jobs = Job::where('status','up')->get();
+        $branchs = Branch::where('status','up')->get();
         return view('user.edit')->with('user', $user)
                                      ->with('hint', '0')
-                                     ->with('jobs',$jobs);
+                                     ->with('jobs',$jobs)
+                                     ->with('branchs',$branchs);
     }
 
     public function password_show()
