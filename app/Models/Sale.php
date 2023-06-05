@@ -14,6 +14,7 @@ class Sale extends Model
 
     protected $fillable = [
         'sale_on',
+        'type_list',
         'user_id',
         'sale_date',
         'customer_id',

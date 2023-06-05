@@ -67,6 +67,7 @@
                                 <tr>
                                     <th>編號</th>
                                     <th>職稱名稱</th>
+                                    <th>主管名稱</th>
                                     <th>狀態</th>
                                     <th>動作</th>
                                 </tr>
@@ -76,6 +77,11 @@
                                 <tr>
                                     <td>{{ $data->id }}</td>
                                     <td><span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#bs-example-modal-lg">{{ $data->name }}</span></td>
+                                    <td>
+                                        @if(isset($data->director_id)) {{ $data->director_data->name }}
+                                        @else 無
+                                        @endif
+                                    </td>
                                     <td>
                                         @if($data->status == "up") 啟用
                                         @else <b style="color:red;">停用</b>

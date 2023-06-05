@@ -100,7 +100,10 @@
                                     <a href="{{ route('personnels') }}"  class="{{ request()->is('personnels') ? 'active' : '' }}">人事列表</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">請假核准</a>
+                                    <a href="{{ route('personnel.leave_days') }}"  class="{{ request()->is('personnel.leave_days') ? 'active' : '' }}">部門請假核准</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('leave_day.create') }}"  class="{{ request()->is('leave_day.create') ? 'active' : '' }}">請假申請</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('vacations') }}"  class="{{ request()->is('vacations') ? 'active' : '' }}">年度總休假設定</a>

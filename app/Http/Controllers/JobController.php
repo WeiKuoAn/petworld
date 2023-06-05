@@ -14,25 +14,29 @@ class JobController extends Controller
     }
 
     public function create(){
-        return view('job.create');
+        $datas = Job::where('status','up')->get();
+        return view('job.create')->with('datas',$datas);
     }
 
     public function store(Request $request){
         $data = new Job();
         $data->name = $request->name;
+        $data->director_id = $request->director_id;
         $data->status = $request->status;
         $data->save();
         return redirect()->route('jobs');
     }
 
     public function show($id){
+        $jobs = Job::where('status','up')->get();
         $data = Job::where('id',$id)->first();
-        return view('job.edit')->with('data',$data);
+        return view('job.edit')->with('data',$data)->with('jobs',$jobs);
     }
 
     public function update($id, Request $request){
         $data = Job::where('id',$id)->first();
         $data->name = $request->name;
+        $data->director_id = $request->director_id;
         $data->status = $request->status;
         $data->save();
         return redirect()->route('jobs');

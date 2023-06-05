@@ -12,6 +12,7 @@ class Sale_gdpaper extends Model
 
     protected $fillable = [
         'sale_id',
+        'type_list',
         'gdpaper_id',
         'gdpaper_num',
         'gdpaper_total',

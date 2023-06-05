@@ -51,9 +51,8 @@
                         <div class="mb-3 col-md-4">
                             <label for="type_list" class="form-label">案件類別選擇<span class="text-danger">*</span></label>
                             <select id="type_list" class="form-select" name="type_list" >
-                                <option value="">請選擇...</option>
                                 <option value="dispatch">派件單</option>
-                                <option value="memorial">追思</option>                            
+                                <option value="memorial">追思單</option>                            
                             </select>
                         </div>
                         <div class="mb-3 col-md-4">
@@ -64,11 +63,7 @@
                             <label for="sale_date" class="form-label">日期<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="sale_date" name="sale_date" required>
                         </div>
-                        <div class="mb-3 col-md-4">
-                            <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" readonly value="{{ Auth::user()->name }}">
-                        </div>
-                        <div class="mb-3 col-md-4">
+                        <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
                             <input list="cust_name_list_q" class="form-control" id="cust_name_q" name="cust_name_q" placeholder="請輸入客戶姓名" required>
                             <datalist id="cust_name_list_q">
@@ -91,7 +86,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3 col-md-4 not_memorial_show" id="source_company">
+                        <div class="mb-3 col-md-4" id="source_company">
                             <label for="source_company_id" class="form-label">來源公司名稱<span class="text-danger">*</span></label>
                             <input list="source_company_name_list_q" class="form-control" id="source_company_name_q" name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院、繁殖場、狗園名稱">
                             <datalist id="source_company_name_list_q">
@@ -106,7 +101,7 @@
                                 @endforeach                                
                             </select>
                         </div>
-                        <div class="mb-3 col-md-4 not_final_show">
+                        <div class="mb-3 col-md-4 not_final_show not_memorial_show">
                             <label for="plan_price" class="form-label">方案價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number" id="plan_price" name="plan_price" >
                         </div>
@@ -114,13 +109,17 @@
                             <label for="plan_price" class="form-label">追加/尾款價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number"  name="final_price" >
                         </div>
+                        <div class="mb-3 col-md-4">
+                            <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="user_id" name="user_id" readonly value="{{ Auth::user()->name }}">
+                        </div>
                     </div>
                 </div>
             </div> <!-- end card -->
         </div> <!-- end col -->
     </div>
     
-    <div class="row" id="prom_div">
+    <div class="row not_memorial_show" id="prom_div">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -239,7 +238,11 @@
                 <div class="card-body">
                     <h5 class="text-uppercase bg-light  p-2 mt-0 mb-3">付款方式</h5>
                     <div class="row">
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-12">
+                            <h2>應收金額<span id="total_text" class="text-danger">0</span>元</h2>
+                            <input type="hidden" class="form-control" id="total" name="total" value="0" readonly>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
                             <select class="form-select" name="pay_id" required>
                                 <option value="" selected>請選擇</option>
@@ -249,7 +252,7 @@
                                 <option value="D">尾款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-4">
                             <label for="pay_id" class="form-label">支付方式<span class="text-danger">*</span></label>
                             <select class="form-select" name="pay_method" required>
                                 <option value="" selected>請選擇</option>
@@ -258,26 +261,23 @@
                                 <option value="C">現金與匯款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3" id="cash_price_div">
+                        <div class="mb-3 col-md-4" id="cash_price_div">
                             <label for="pay_price" class="form-label">現金收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="cash_price" name="cash_price">
                         </div>
-                        <div class="mb-3 col-md-3" id="transfer_price_div">
+                        <div class="mb-3 col-md-4" id="transfer_price_div">
                             <label for="pay_price" class="form-label">匯款收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="transfer_price" name="transfer_price">
                         </div>
-                        <div class="mb-3 col-md-3" id="transfer_number_div">
-                            <label for="pay_price" class="form-label">匯款後五碼<span class="text-danger">*</span></label>
+                        <div class="mb-3 col-md-4" id="transfer_number_div">
+                            <label for="pay_price" class="form-label">匯款後四碼<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="transfer_number" name="transfer_number">
                         </div>
-                        <div class="mb-3 col-md-3" id="this_price_div">
+                        <div class="mb-3 col-md-4" id="this_price_div">
                             <label for="pay_price" class="form-label">本次收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pay_price" name="pay_price" required>
                         </div>
-                        <div class="mb-3 col-md-3">
-                            <label for="total" class="form-label">應收金額<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="total" name="total" value="0" readonly>
-                        </div>
+                        
                     </div>
                     <div>
                         <label class="form-label">備註</label>
@@ -344,12 +344,14 @@
     $('select[name="type_list"]').on('change', function() {
         if($(this).val() == 'memorial'){
             $(".not_memorial_show").hide(300);
+            $("#cust_name_q").prop('required', false);
             $("#pet_name").prop('required', false);
             $("#kg").prop('required', false);
             $("#type").prop('required', false);
             $("#plan_id").prop('required', false);
         }else{
             $(".not_memorial_show").show(300);
+            $("#cust_name_q").prop('required', true);
             $("#pet_name").prop('required', true);
             $("#kg").prop('required', true);
             $("#type").prop('required', true);
@@ -387,27 +389,27 @@
         }
     });
 
-    $('select[name="pay_id"]').on('change', function() {
-        if($(this).val() == 'D' || $(this).val() =='E'){
-            $("#final_price").show(300);
-            $(".not_final_show").hide(300);
-            $("#pet_name").prop('required', false);
-            $("#kg").prop('required', false);
-            $("#type").prop('required', false);
-            $("#plan_id").prop('required', false);
-            $("#plan_price").prop('required', false);
-            // $(".mobile").prop('required', false);
-        }else{
-            $("#final_price").hide(300);
-            $(".not_final_show").show(300);
-            $("#pet_name").prop('required', true);
-            $("#kg").prop('required', true);
-            $("#type").prop('required', true);
-            $("#plan_id").prop('required', true);
-            $("#plan_price").prop('required', true);
-            // $(".mobile").prop('required', true);
-        }
-    });
+    // $('select[name="pay_id"]').on('change', function() {
+    //     if($(this).val() == 'D' || $(this).val() =='E'){
+    //         $("#final_price").show(300);
+    //         $(".not_final_show").hide(300);
+    //         $("#pet_name").prop('required', false);
+    //         $("#kg").prop('required', false);
+    //         $("#type").prop('required', false);
+    //         $("#plan_id").prop('required', false);
+    //         $("#plan_price").prop('required', false);
+    //         // $(".mobile").prop('required', false);
+    //     }else{
+    //         $("#final_price").hide(300);
+    //         $(".not_final_show").show(300);
+    //         $("#pet_name").prop('required', true);
+    //         $("#kg").prop('required', true);
+    //         $("#type").prop('required', true);
+    //         $("#plan_id").prop('required', true);
+    //         $("#plan_price").prop('required', true);
+    //         // $(".mobile").prop('required', true);
+    //     }
+    // });
 
     $("#plan_id").on('change', function(){
         var plan_id = $(this).val();
@@ -415,6 +417,7 @@
             var total = $("#total").val();
             total = total - 100;
             $("#total").val(total);
+            $("#total_text").html(total);
         }else{
             calculate_price();
         }
@@ -526,6 +529,7 @@
             total = total - 100;
         }
         $("#total").val(total);
+        $("#total_text").html(total);
         console.log(plan_id);
     }
 

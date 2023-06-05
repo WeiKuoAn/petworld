@@ -39,6 +39,7 @@ use App\Http\Controllers\Rpg06Controller;
 use App\Http\Controllers\Rpg07Controller;
 use App\Http\Controllers\Rpg09Controller;
 use App\Http\Controllers\Rpg10Controller;
+use App\Http\Controllers\LeaveDayController;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
@@ -270,6 +271,10 @@ Route::group(['prefix' => '/'], function () {
     Route::get('personnel/holiday/create', [PersonnelController::class, 'holiday_create'])->name('personnel.holidays.create');
     Route::post('personnel/holiday/create', [PersonnelController::class, 'holiday_store'])->name('personnel.holidays.create.data');
 
+    /*請假管理 */
+    Route::get('personnel/leave_days', [LeaveDayController::class, 'index'])->name('personnel.leave_days');
+    Route::get('leave_day/create', [LeaveDayController::class, 'create'])->name('leave_day.create');
+    Route::post('leave_day/create', [LeaveDayController::class, 'store'])->name('leave_day.create.data');
 
     /*年度總休假管理*/
     Route::get('/vacation', [VacationController::class, 'index'])->name('vacations');

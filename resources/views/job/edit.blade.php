@@ -43,7 +43,15 @@
                                    <input type="text" class="form-control" name="name" value="{{ $data->name }}" required>
                                </div>
                            </div>
-
+                           <div class="mb-3">
+                                <label for="project-priority" class="form-label">主管<span class="text-danger">*</span></label>
+                                <select class="form-control" data-toggle="select" data-width="100%" name="director_id">
+                                    <option value="" @if(!isset($data->director_id)) selected @endif>無</option>
+                                    @foreach($jobs as $job)
+                                        <option value="{{ $job->id }}" @if($data->director_id == $job->id) selected @endif >{{ $job->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label for="project-priority" class="form-label">狀態<span class="text-danger">*</span></label>
 

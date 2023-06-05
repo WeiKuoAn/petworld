@@ -49,6 +49,13 @@
                     <h5 class="text-uppercase bg-light  p-2 mt-0 mb-3">基本資訊</h5>
                     <div class="row">
                         <div class="mb-3 col-md-4">
+                            <label for="type_list" class="form-label">案件類別選擇<span class="text-danger">*</span></label>
+                            <select id="type_list" class="form-select" name="type_list" disabled>
+                                <option value="dispatch" @if($data->type_list == 'dispatch') selected @endif>派件單</option>
+                                <option value="memorial" @if($data->type_list == 'memorial') selected @endif>追思單</option>                            
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="sale_on" class="form-label">單號<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="sale_on" name="sale_on" value="{{ $data->sale_on }}" required  readonly >
                         </div>
@@ -60,7 +67,7 @@
                             <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="user_id" name="user_id" value="{{ $data->user_name->name }}" readonly>
                         </div>
-                        <div class="mb-3 col-md-4">
+                        <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
                             <select id="type" class="form-select" name="customer_id" disabled >
                                 <option value="">請選擇...</option>
@@ -106,7 +113,7 @@
                             <label for="plan_price" class="form-label">方案價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number" id="plan_price" name="plan_price" value="{{ $data->plan_price }}" readonly >
                         </div>
-                        <div class="mb-3 col-md-4" id="final_price">
+                        <div class="mb-3 col-md-4 not_memorial_show" id="final_price">
                             <label for="plan_price" class="form-label">尾款價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number"  name="final_price" value="{{ $data->pay_price }}" readonly >
                         </div>
@@ -321,6 +328,19 @@
 
 
 <script>
+    type_list = $('select[name="type_list"]').val();
+    console.log(type_list);
+
+    //案件單類別
+    if(type_list == 'memorial'){
+        $(".not_memorial_show").hide(300);
+        $("#cust_name_q").prop('required', false);
+        $("#pet_name").prop('required', false);
+        $("#kg").prop('required', false);
+        $("#type").prop('required', false);
+        $("#plan_id").prop('required', false);
+    }
+
     type = $('select[name="type"]').val();
     console.log(type);
     if(type == 'H' || type == 'B' || type == 'Salon' || type == 'G' || type == 'dogpark'){
@@ -342,46 +362,8 @@
         }
     });
 
-    payIdValue = $('select[name="pay_id"]').val();
-    if(payIdValue == 'D' || payIdValue =='E'){
-        $("#final_price").show(300);
-            $(".not_final_show").hide(300);
-            $("#pet_name").prop('required', false);
-            $("#kg").prop('required', false);
-            $("#type").prop('required', false);
-            $("#plan_id").prop('required', false);
-            $("#plan_price").prop('required', false);
-    }else{
-        $("#final_price").hide(300);
-            $(".not_final_show").show(300);
-            $("#pet_name").prop('required', true);
-            $("#kg").prop('required', true);
-            $("#type").prop('required', true);
-            $("#plan_id").prop('required', true);
-            $("#plan_price").prop('required', true);
-    }
 
-    $('select[name="pay_id"]').on('change', function() {
-        if($(this).val() == 'D' || $(this).val() =='E'){
-            $("#final_price").show(300);
-            $(".not_final_show").hide(300);
-            $("#pet_name").prop('required', false);
-            $("#kg").prop('required', false);
-            $("#type").prop('required', false);
-            $("#plan_id").prop('required', false);
-            $("#plan_price").prop('required', false);
-            // $(".mobile").prop('required', false);
-        }else{
-            $("#final_price").hide(300);
-            $(".not_final_show").show(300);
-            $("#pet_name").prop('required', true);
-            $("#kg").prop('required', true);
-            $("#type").prop('required', true);
-            $("#plan_id").prop('required', true);
-            $("#plan_price").prop('required', true);
-            // $(".mobile").prop('required', true);
-        }
-    });
+
 
     $("#cash_price_div").hide();
     $("#transfer_price_div").hide();

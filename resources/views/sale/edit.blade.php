@@ -49,6 +49,13 @@
                     <h5 class="text-uppercase bg-light  p-2 mt-0 mb-3">基本資訊</h5>
                     <div class="row">
                         <div class="mb-3 col-md-4">
+                            <label for="type_list" class="form-label">案件類別選擇<span class="text-danger">*</span></label>
+                            <select id="type_list" class="form-select" name="type_list" >
+                                <option value="dispatch" @if($data->type_list == 'dispatch') selected @endif>派件單</option>
+                                <option value="memorial" @if($data->type_list == 'memorial') selected @endif>追思單</option>                            
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="sale_on" class="form-label">單號<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="sale_on" name="sale_on" value="{{ $data->sale_on }}" required  >
                         </div>
@@ -60,7 +67,7 @@
                             <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="user_id" name="user_id" value="{{ $data->user_name->name }}" readonly>
                         </div>
-                        <div class="mb-3 col-md-4">
+                        <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
                             <select id="type" class="form-select" name="customer_id" >
                                 <option value="">請選擇...</option>
@@ -106,7 +113,7 @@
                             <label for="plan_price" class="form-label">方案價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number" id="plan_price" name="plan_price" value="{{ $data->plan_price }}" >
                         </div>
-                        <div class="mb-3 col-md-4" id="final_price">
+                        <div class="mb-3 col-md-4 not_memorial_show" id="final_price">
                             <label for="plan_price" class="form-label">尾款價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number"  name="final_price" value="{{ $data->pay_price }}" >
                         </div>
@@ -230,7 +237,11 @@
                 <div class="card-body">
                     <h5 class="text-uppercase bg-light  p-2 mt-0 mb-3">付款方式</h5>
                     <div class="row">
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-12">
+                            <h2>應收金額<span id="total_text" class="text-danger">{{ $data->total }}</span>元</h2>
+                            <input type="hidden" class="form-control" id="total" name="total" value="{{ $data->total }}" readonly>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
                             <select class="form-select" name="pay_id" required>
                                 <option value="" selected>請選擇</option>
@@ -240,7 +251,7 @@
                                 <option value="D" @if($data->pay_id == 'D') selected @endif>尾款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-4">
                             <label for="pay_method" class="form-label">收款方式<span class="text-danger">*</span></label>
                             <select class="form-select" id="pay_method" name="pay_method" required>
                                 <option value="" selected>請選擇</option>
@@ -249,30 +260,26 @@
                                 <option value="C" @if($data->pay_method == 'C') selected @endif>現金與匯款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3" id="cash_price_div">
+                        <div class="mb-3 col-md-4" id="cash_price_div">
                             <label for="pay_price" class="form-label">現金收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="cash_price" name="cash_price" value="{{ $data->cash_price }}">
                         </div>
-                        <div class="mb-3 col-md-3" id="transfer_price_div">
+                        <div class="mb-3 col-md-4" id="transfer_price_div">
                             <label for="pay_price" class="form-label">匯款收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="transfer_price" name="transfer_price" value="{{ $data->transfer_price }}">
                         </div>
-                        <div class="mb-3 col-md-3" id="transfer_number_div">
-                            <label for="pay_price" class="form-label">匯款後五碼<span class="text-danger">*</span></label>
+                        <div class="mb-3 col-md-4" id="transfer_number_div">
+                            <label for="pay_price" class="form-label">匯款後四碼<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="transfer_number" name="transfer_number" value="{{ $data->transfer_number }}">
                         </div>
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-4">
                             <label for="pay_price" class="form-label">本次收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pay_price" name="pay_price" value="{{ $data->pay_price }}" required>
-                        </div>
-                        <div class="mb-3 col-md-3">
-                            <label for="total" class="form-label">應收金額<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="total" name="total" value="{{ $data->total }}" readonly>
                         </div>
                     </div>
                     <div>
                         <label class="form-label">備註</label>
-                        <textarea class="form-control" rows="3" placeholder="" name="comm"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="" name="comm">{{ $data->comm }}</textarea>
                     </div>
                 </div>
             </div> <!-- end card -->
@@ -317,8 +324,38 @@
 
 
 <script>
+    type_list = $('select[name="type_list"]').val();
+    console.log(type_list);
+
+    //案件單類別
+    if(type_list == 'memorial'){
+        $(".not_memorial_show").hide(300);
+        $("#cust_name_q").prop('required', false);
+        $("#pet_name").prop('required', false);
+        $("#kg").prop('required', false);
+        $("#type").prop('required', false);
+        $("#plan_id").prop('required', false);
+    }
+
+    $('select[name="type_list"]').on('change', function() {
+        if($(this).val() == 'memorial'){
+            $(".not_memorial_show").hide(300);
+            $("#cust_name_q").prop('required', false);
+            $("#pet_name").prop('required', false);
+            $("#kg").prop('required', false);
+            $("#type").prop('required', false);
+            $("#plan_id").prop('required', false);
+        }else{
+            $(".not_memorial_show").show(300);
+            $("#cust_name_q").prop('required', true);
+            $("#pet_name").prop('required', true);
+            $("#kg").prop('required', true);
+            $("#type").prop('required', true);
+            $("#plan_id").prop('required', true);
+        }
+    });
+
     type = $('select[name="type"]').val();
-    console.log(type);
     if(type == 'H' || type == 'B' || type == 'Salon' || type == 'G' || type == 'dogpark'){
         $("#source_company").show(300);
         $("#source_company_name_q").prop('required', true);
@@ -335,47 +372,6 @@
             $("#source_company").hide(300);
             $("#source_company_name_q").prop('required', false);
             $("#source_company_name_q").val('null');
-        }
-    });
-
-    payIdValue = $('select[name="pay_id"]').val();
-    if(payIdValue == 'D' || payIdValue =='E'){
-        $("#final_price").show(300);
-            $(".not_final_show").hide(300);
-            $("#pet_name").prop('required', false);
-            $("#kg").prop('required', false);
-            $("#type").prop('required', false);
-            $("#plan_id").prop('required', false);
-            $("#plan_price").prop('required', false);
-    }else{
-        $("#final_price").hide(300);
-            $(".not_final_show").show(300);
-            $("#pet_name").prop('required', true);
-            $("#kg").prop('required', true);
-            $("#type").prop('required', true);
-            $("#plan_id").prop('required', true);
-            $("#plan_price").prop('required', true);
-    }
-
-    $('select[name="pay_id"]').on('change', function() {
-        if($(this).val() == 'D' || $(this).val() =='E'){
-            $("#final_price").show(300);
-            $(".not_final_show").hide(300);
-            $("#pet_name").prop('required', false);
-            $("#kg").prop('required', false);
-            $("#type").prop('required', false);
-            $("#plan_id").prop('required', false);
-            $("#plan_price").prop('required', false);
-            // $(".mobile").prop('required', false);
-        }else{
-            $("#final_price").hide(300);
-            $(".not_final_show").show(300);
-            $("#pet_name").prop('required', true);
-            $("#kg").prop('required', true);
-            $("#type").prop('required', true);
-            $("#plan_id").prop('required', true);
-            $("#plan_price").prop('required', true);
-            // $(".mobile").prop('required', true);
         }
     });
 
@@ -468,6 +464,11 @@
             url : '{{ route('gdpaper.search') }}',
             data:{'gdpaper_id':$("#gdpaper_id_"+row_id).val()},
             success:function(data){
+                if($("#gdpaper_num_"+row_id).val()){
+                    var gdpaper_num = $("#gdpaper_num_"+row_id).val();
+                    $("#gdpaper_total_"+row_id).val(gdpaper_num*data);
+                    calculate_price();
+                }
                 $("#gdpaper_num_"+row_id).on('change', function(){
                     var gdpaper_num = $("#gdpaper_num_"+row_id).val();
                     $("#gdpaper_total_"+row_id).val(gdpaper_num*data);
@@ -541,6 +542,7 @@
             }
         });
         $("#total").val(total);
+        $("#total_text").html(total);
         console.log(total);
     }
 

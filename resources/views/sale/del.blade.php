@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "編輯業務Key單"])
+@extends('layouts.vertical', ["page_title"=> "刪除業務Key單"])
 
 @section('css')
 {{-- <link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
@@ -50,10 +50,10 @@
 
                     <div class="row">
                         <div class="mb-3 col-md-4">
-                            <label for="sale_type" class="form-label">業務類別<span class="text-danger">*</span></label>
-                            <select id="sale_type" class="form-select" name="sale_type" >
-                                <option value="normal" @if($data->sale_type == 'normal') selected @endif>一般key單</option>
-                                <option value="memorial" @if($data->sale_type == 'memorial') selected @endif>追思</option>                            
+                            <label for="type_list" class="form-label">案件類別選擇<span class="text-danger">*</span></label>
+                            <select id="type_list" class="form-select" name="type_list" >
+                                <option value="dispatch" @if($data->type_list == 'dispatch') selected @endif>派件單</option>
+                                <option value="memorial" @if($data->type_list == 'memorial') selected @endif>追思單</option>                            
                             </select>
                         </div>
                         <div class="mb-3 col-md-4">
@@ -64,7 +64,7 @@
                             <label for="sale_date" class="form-label">日期<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="sale_date" name="sale_date" value="{{ $data->sale_date }}" required>
                         </div>
-                        <div class="mb-3 col-md-4">
+                        <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
                             <select id="type" class="form-select" name="customer_id" >
                                 <option value="">請選擇...</option>
@@ -231,7 +231,11 @@
                 <div class="card-body">
                     <h5 class="text-uppercase bg-light  p-2 mt-0 mb-3">付款方式</h5>
                     <div class="row">
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-12">
+                            <h2>應收金額<span id="total_text" class="text-danger">{{ $data->total }}</span>元</h2>
+                            <input type="hidden" class="form-control" id="total" name="total" value="{{ $data->total }}" readonly>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
                             <select class="form-select" name="pay_id" required>
                                 <option value="" selected>請選擇</option>
@@ -241,26 +245,35 @@
                                 <option value="D" @if($data->pay_id == 'D') selected @endif>尾款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-4">
                             <label for="pay_method" class="form-label">收款方式<span class="text-danger">*</span></label>
                             <select class="form-select" id="pay_method" name="pay_method" required>
                                 <option value="" selected>請選擇</option>
                                 <option value="A" @if($data->pay_method == 'A') selected @endif>現金</option>
                                 <option value="B" @if($data->pay_method == 'B') selected @endif>匯款</option>
+                                <option value="C" @if($data->pay_method == 'C') selected @endif>現金與匯款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-4" id="cash_price_div">
+                            <label for="pay_price" class="form-label">現金收款<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="cash_price" name="cash_price" value="{{ $data->cash_price }}">
+                        </div>
+                        <div class="mb-3 col-md-4" id="transfer_price_div">
+                            <label for="pay_price" class="form-label">匯款收款<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="transfer_price" name="transfer_price" value="{{ $data->transfer_price }}">
+                        </div>
+                        <div class="mb-3 col-md-4" id="transfer_number_div">
+                            <label for="pay_price" class="form-label">匯款後四碼<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="transfer_number" name="transfer_number" value="{{ $data->transfer_number }}">
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="pay_price" class="form-label">本次收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pay_price" name="pay_price" value="{{ $data->pay_price }}" required>
-                        </div>
-                        <div class="mb-3 col-md-3">
-                            <label for="total" class="form-label">應收金額<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="total" name="total" value="{{ $data->total }}" readonly>
                         </div>
                     </div>
                     <div>
                         <label class="form-label">備註</label>
-                        <textarea class="form-control" rows="3" placeholder="" name="comm"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="" name="comm">{{ $data->comm }}</textarea>
                     </div>
                 </div>
             </div> <!-- end card -->
@@ -305,153 +318,188 @@
 
 
 <script>
-    payIdValue = $('select[name="pay_id"]').val();
-    if(payIdValue == 'D'){
-        $("#final_price").show();
-        $("#gdpaper_div").hide(300);
-            $("#prom_div").hide(300);
-            $("#final_price").show(300);
-            $(".not_final_show").hide(300);
-            $("#pet_name").prop('required', false);
-            $("#kg").prop('required', false);
-            $("#type").prop('required', false);
-            $("#plan_id").prop('required', false);
-            $("#plan_price").prop('required', false);
-    }else{
-        $("#gdpaper_div").show(300);
-            $("#prom_div").show(300);
-            $("#final_price").hide(300);
-            $(".not_final_show").show(300);
-            $("#pet_name").prop('required', true);
-            $("#kg").prop('required', true);
-            $("#type").prop('required', true);
-            $("#plan_id").prop('required', true);
-            $("#plan_price").prop('required', true);
-    }
 
-    $('select[name="pay_id"]').on('change', function() {
-        if($(this).val() == 'D'){
-            $("#gdpaper_div").hide(300);
-            $("#prom_div").hide(300);
-            $("#final_price").show(300);
-            $(".not_final_show").hide(300);
-            $("#pet_name").prop('required', false);
-            $("#kg").prop('required', false);
-            $("#type").prop('required', false);
-            $("#plan_id").prop('required', false);
-            $("#plan_price").prop('required', false);
-            // $(".mobile").prop('required', false);
+    $("#cash_price_div").hide();
+    $("#transfer_price_div").hide();
+    $("#transfer_number_div").hide();
+    payMethod = $('select[name="pay_method"]').val();
+    if(payMethod == 'C'){
+            $("#cash_price_div").show(300);
+            $("#transfer_price_div").show(300);
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', false);
+            $("#cash_price").prop('required', true);
+            $("#transfer_price").prop('required', true);
+            $("#transfer_number").prop('required', true);
+        }else if(payMethod == 'B'){
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', true);
         }else{
-            $("#gdpaper_div").show(300);
-            $("#prom_div").show(300);
-            $("#final_price").hide(300);
-            $(".not_final_show").show(300);
-            $("#pet_name").prop('required', true);
-            $("#kg").prop('required', true);
-            $("#type").prop('required', true);
-            $("#plan_id").prop('required', true);
-            $("#plan_price").prop('required', true);
-            // $(".mobile").prop('required', true);
+            $("#cash_price_div").hide(300);
+            $("#transfer_price_div").hide(300);
+            $("#transfer_number_div").hide(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', false);
+        }
+    $('select[name="pay_method"]').on('change', function() {
+        if($(this).val() == 'C'){
+            $("#cash_price_div").show(300);
+            $("#transfer_price_div").show(300);
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', false);
+            $("#cash_price").prop('required', true);
+            $("#transfer_price").prop('required', true);
+            $("#transfer_number").prop('required', true);
+        }else if($(this).val() == 'B'){
+            $("#transfer_number_div").show(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', true);
+        }else{
+            $("#cash_price_div").hide(300);
+            $("#transfer_price_div").hide(300);
+            $("#transfer_number_div").hide(300);
+            $("#pay_price").prop('required', true);
+            $("#cash_price").prop('required', false);
+            $("#transfer_price").prop('required', false);
+            $("#transfer_number").prop('required', false);
         }
     });
 
-    saleType = $('select[name="sale_type"]').val();
-    if(saleType == 'memorial'){
-        $("#gdpaper_div").show(300);
-        $("#prom_div").hide(300);
+    type_list = $('select[name="type_list"]').val();
+    console.log(type_list);
+
+    //案件單類別
+    if(type_list == 'memorial'){
         $(".not_memorial_show").hide(300);
+        $("#cust_name_q").prop('required', false);
         $("#pet_name").prop('required', false);
         $("#kg").prop('required', false);
         $("#type").prop('required', false);
         $("#plan_id").prop('required', false);
-        $("#plan_price").prop('required', false);
-        $('select[name="pay_id').off('change');
-    }else{
-        $('select[name="pay_id"]').on('change', function() {
-                if($(this).val() == 'D'){
-                    $("#gdpaper_div").hide(300);
-                    $("#prom_div").hide(300);
-                    $("#final_price").show(300);
-                    $(".not_final_show").hide(300);
-                    $("#pet_name").prop('required', false);
-                    $("#kg").prop('required', false);
-                    $("#type").prop('required', false);
-                    $("#plan_id").prop('required', false);
-                    $("#plan_price").prop('required', false);
-                    // $(".mobile").prop('required', false);
-                }else{
-                    $("#gdpaper_div").show(300);
-                    $("#prom_div").show(300);
-                    $("#final_price").hide(300);
-                    $(".not_final_show").show(300);
-                    $("#pet_name").prop('required', true);
-                    $("#kg").prop('required', true);
-                    $("#type").prop('required', true);
-                    $("#plan_id").prop('required', true);
-                    $("#plan_price").prop('required', true);
-                    // $(".mobile").prop('required', true);
-                }
-            });
     }
 
-    $('select[name="sale_type"]').on('change', function() {
+    $('select[name="type_list"]').on('change', function() {
         if($(this).val() == 'memorial'){
-            //如果這張單是追思單就執行以下
-            $("#gdpaper_div").show(300);
-            $("#prom_div").hide(300);
             $(".not_memorial_show").hide(300);
+            $("#cust_name_q").prop('required', false);
             $("#pet_name").prop('required', false);
             $("#kg").prop('required', false);
             $("#type").prop('required', false);
             $("#plan_id").prop('required', false);
-            $("#plan_price").prop('required', false);
-            // $(".mobile").prop('required', false);
-            var pay_id = 1;
         }else{
-            $("#prom_div").show(300);
-            $("#final_price").hide(300);
             $(".not_memorial_show").show(300);
+            $("#cust_name_q").prop('required', true);
             $("#pet_name").prop('required', true);
             $("#kg").prop('required', true);
             $("#type").prop('required', true);
             $("#plan_id").prop('required', true);
-            $("#plan_price").prop('required', true);
-            // $(".mobile").prop('required', true);
-            var pay_id = 0;
-        }
-        console.log(pay_id);
-        if(pay_id == 1){
-            //如果這張單是追思單就停用pay_id下拉式選單
-            $('select[name="pay_id').off('change');
-        }else{
-            //不然就繼續執行pay_id的JQ
-            $('select[name="pay_id"]').on('change', function() {
-                if($(this).val() == 'D'){
-                    $("#gdpaper_div").hide(300);
-                    $("#prom_div").hide(300);
-                    $("#final_price").show(300);
-                    $(".not_final_show").hide(300);
-                    $("#pet_name").prop('required', false);
-                    $("#kg").prop('required', false);
-                    $("#type").prop('required', false);
-                    $("#plan_id").prop('required', false);
-                    $("#plan_price").prop('required', false);
-                    // $(".mobile").prop('required', false);
-                }else{
-                    $("#gdpaper_div").show(300);
-                    $("#prom_div").show(300);
-                    $("#final_price").hide(300);
-                    $(".not_final_show").show(300);
-                    $("#pet_name").prop('required', true);
-                    $("#kg").prop('required', true);
-                    $("#type").prop('required', true);
-                    $("#plan_id").prop('required', true);
-                    $("#plan_price").prop('required', true);
-                    // $(".mobile").prop('required', true);
-                }
-            });
         }
     });
+
+    // saleType = $('select[name="sale_type"]').val();
+    // if(saleType == 'memorial'){
+    //     $("#gdpaper_div").show(300);
+    //     $("#prom_div").hide(300);
+    //     $(".not_memorial_show").hide(300);
+    //     $("#pet_name").prop('required', false);
+    //     $("#kg").prop('required', false);
+    //     $("#type").prop('required', false);
+    //     $("#plan_id").prop('required', false);
+    //     $("#plan_price").prop('required', false);
+    //     $('select[name="pay_id').off('change');
+    // }else{
+    //     $('select[name="pay_id"]').on('change', function() {
+    //             if($(this).val() == 'D'){
+    //                 $("#gdpaper_div").hide(300);
+    //                 $("#prom_div").hide(300);
+    //                 $("#final_price").show(300);
+    //                 $(".not_final_show").hide(300);
+    //                 $("#pet_name").prop('required', false);
+    //                 $("#kg").prop('required', false);
+    //                 $("#type").prop('required', false);
+    //                 $("#plan_id").prop('required', false);
+    //                 $("#plan_price").prop('required', false);
+    //                 // $(".mobile").prop('required', false);
+    //             }else{
+    //                 $("#gdpaper_div").show(300);
+    //                 $("#prom_div").show(300);
+    //                 $("#final_price").hide(300);
+    //                 $(".not_final_show").show(300);
+    //                 $("#pet_name").prop('required', true);
+    //                 $("#kg").prop('required', true);
+    //                 $("#type").prop('required', true);
+    //                 $("#plan_id").prop('required', true);
+    //                 $("#plan_price").prop('required', true);
+    //                 // $(".mobile").prop('required', true);
+    //             }
+    //         });
+    // }
+
+    // $('select[name="sale_type"]').on('change', function() {
+    //     if($(this).val() == 'memorial'){
+    //         //如果這張單是追思單就執行以下
+    //         $("#gdpaper_div").show(300);
+    //         $("#prom_div").hide(300);
+    //         $(".not_memorial_show").hide(300);
+    //         $("#pet_name").prop('required', false);
+    //         $("#kg").prop('required', false);
+    //         $("#type").prop('required', false);
+    //         $("#plan_id").prop('required', false);
+    //         $("#plan_price").prop('required', false);
+    //         // $(".mobile").prop('required', false);
+    //         var pay_id = 1;
+    //     }else{
+    //         $("#prom_div").show(300);
+    //         $("#final_price").hide(300);
+    //         $(".not_memorial_show").show(300);
+    //         $("#pet_name").prop('required', true);
+    //         $("#kg").prop('required', true);
+    //         $("#type").prop('required', true);
+    //         $("#plan_id").prop('required', true);
+    //         $("#plan_price").prop('required', true);
+    //         // $(".mobile").prop('required', true);
+    //         var pay_id = 0;
+    //     }
+    //     console.log(pay_id);
+    //     if(pay_id == 1){
+    //         //如果這張單是追思單就停用pay_id下拉式選單
+    //         $('select[name="pay_id').off('change');
+    //     }else{
+    //         //不然就繼續執行pay_id的JQ
+    //         $('select[name="pay_id"]').on('change', function() {
+    //             if($(this).val() == 'D'){
+    //                 $("#gdpaper_div").hide(300);
+    //                 $("#prom_div").hide(300);
+    //                 $("#final_price").show(300);
+    //                 $(".not_final_show").hide(300);
+    //                 $("#pet_name").prop('required', false);
+    //                 $("#kg").prop('required', false);
+    //                 $("#type").prop('required', false);
+    //                 $("#plan_id").prop('required', false);
+    //                 $("#plan_price").prop('required', false);
+    //                 // $(".mobile").prop('required', false);
+    //             }else{
+    //                 $("#gdpaper_div").show(300);
+    //                 $("#prom_div").show(300);
+    //                 $("#final_price").hide(300);
+    //                 $(".not_final_show").show(300);
+    //                 $("#pet_name").prop('required', true);
+    //                 $("#kg").prop('required', true);
+    //                 $("#type").prop('required', true);
+    //                 $("#plan_id").prop('required', true);
+    //                 $("#plan_price").prop('required', true);
+    //                 // $(".mobile").prop('required', true);
+    //             }
+    //         });
+    //     }
+    // });
 
 
     $("#final_price").on('input', function(){

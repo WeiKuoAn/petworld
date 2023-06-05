@@ -112,6 +112,7 @@ class SaleDataController extends Controller
         $sale->sale_on = $request->sale_on;
         $sale->user_id = Auth::user()->id;
         $sale->sale_date = $request->sale_date;
+        $sale->type_list = $request->type_list;
         $sale->customer_id = $request->cust_name_q;
         $sale->pet_name = $request->pet_name;
         $sale->kg = $request->kg;
@@ -155,6 +156,7 @@ class SaleDataController extends Controller
             if(isset($gdpaper_id)){
                 $gdpaper = new Sale_gdpaper();
                 $gdpaper->sale_id = $sale_id->id;
+                $gdpaper->type_list = $request->type_list[$key];
                 $gdpaper->gdpaper_id = $request->gdpaper_ids[$key];
                 $gdpaper->gdpaper_num = $request->gdpaper_num[$key];
                 if ($request->plan_id != '4') {
@@ -194,6 +196,13 @@ class SaleDataController extends Controller
             }
             if ($status == 'check') {
                 $sales = Sale::where('status', 9);
+            }
+            $type_list = $request->type_list;
+            if($type_list)
+            {
+                $sales = $sales->where('type_list', $type_list);
+            }else{
+                $sales = $sales; 
             }
             $after_date = $request->after_date;
             if ($after_date) {
@@ -441,14 +450,14 @@ class SaleDataController extends Controller
                 $sale->status = '1';
                 $sale->save();
             }
-            return redirect()->route('wait.sales');
         } else {
             if ($request->user_check == 'usercheck') {
                 $sale->status = '3';
                 $sale->save();
             }
-            return redirect()->route('person.sales');
         }
+        return redirect()->route('person.sales');
+
 
     }
 

@@ -38,13 +38,20 @@
                                             <input type="date" class="form-control" id="before_date" name="before_date" value="{{ $request->before_date }}">
                                         </div>
                                         <div class="me-2">
-                                            <label for="cust_mobile" class="form-label">客戶電話</label>
-                                            <input type="text" class="form-control" id="cust_mobile" name="cust_mobile" value="{{ $request->cust_mobile }}">
+                                            <label for="sale_on" class="form-label">案件單類別</label>
+                                            <select id="inputState" class="form-select" name="type_list" onchange="this.form.submit()">
+                                                <option value="dispatch" @if (!isset($request->type_list) || $request->type_list == 'dispatch') selected @endif>派件單</option>
+                                                <option value="memorial" @if ($request->type_list == 'memorial') selected @endif>追思單</option>                                                
+                                            </select>
                                         </div>
                                         <div class="me-2">
                                             <label for="sale_on" class="form-label">單號</label>
                                             <input type="text" class="form-control" id="sale_on" name="sale_on" value="{{ $request->sale_on }}">
                                         </div>
+                                        <div class="me-2">
+                                            <label for="cust_mobile" class="form-label">客戶電話</label>
+                                            <input type="text" class="form-control" id="cust_mobile" name="cust_mobile" value="{{ $request->cust_mobile }}">
+                                        </div>  
                                 </div>
                                 <div class="col-auto d-flex flex-wrap align-items-center mt-3">
                                     <div class="me-2">
@@ -139,6 +146,8 @@
                                                 @else
                                                     {{ $sale->customer_id }}<b style="color: red;">（客戶姓名須重新登入）</b>
                                                 @endif
+                                            @elseif($sale->type_list == 'memorial')
+                                                追思
                                             @endif
                                         </td>
                                         <td>
