@@ -153,6 +153,23 @@
                             </ul>
                         </div>
                     </li>
+                    <li>
+                        <a href="#leave_day" data-bs-toggle="collapse">
+                            <i data-feather="trending-down"></i>
+                            <span> 請假管理 </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="leave_day">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{ route('person.leave_days') }}"  class="{{ request()->is('person.leave_days') ? 'active' : '' }}">請假總覽</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('leave_day.create') }}"  class="{{ request()->is('leave_day.create') ? 'active' : '' }}">請假申請</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </li>
                 <li class="menu-title mt-2">fast Use</li>
                 <li>

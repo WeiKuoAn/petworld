@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "部門請假核准"])
+@extends('layouts.vertical', ["page_title"=> "個人請假總覽"])
 
 @section('content')
 <!-- Start Content-->
@@ -11,11 +11,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">人事管理</a></li>
-                        <li class="breadcrumb-item active">部門請假核准</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">請假管理</a></li>
+                        <li class="breadcrumb-item active">個人請假總覽</li>
                     </ol>
                 </div>
-                <h4 class="page-title">部門請假核准</h4>
+                <h4 class="page-title">個人請假總覽</h4>
             </div>
         </div>
     </div>
@@ -76,6 +76,14 @@
                                 </div>
                             </form>
                         </div>
+                        <div class="col-auto"  style="margin-top: 26px;">
+                            <div class="text-lg-end my-1 my-lg-0">
+                                {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
+                                <a href="{{ route('leave_day.create') }}">
+                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#custom-modal"><i class="mdi mdi-plus-circle me-1"></i>新增假單</button>
+                                </a>
+                            </div>
+                        </div><!-- end col-->
                     </div> <!-- end row -->
                 </div>
             </div> <!-- end card -->
@@ -121,14 +129,18 @@
                                     <td>{{ $data->comment }}</td>
                                     <td>{{ $data->leave_status() }}</td>
                                     <td>
-                                        <div class="btn-group dropdown">
-                                            <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="{{ route('leave_day.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
-                                                <a class="dropdown-item" href="{{ route('leave_day.del',$data->id) }}"><i class="mdi mdi-delete me-2 font-18 text-muted vertical-middle"></i>刪除</a>
+                                        @if($data->state == 1)
+                                            <div class="btn-group dropdown">
+                                                <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="{{ route('leave_day.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                    <a class="dropdown-item" href="{{ route('leave_day.del',$data->id) }}"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a>
+                                                    <a class="dropdown-item" href="{{ route('person.leave_day.check',$data->id) }}"><i class="mdi mdi-send me-2 font-18 text-muted vertical-middle"></i>送出審核</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
+                                        @else
+                                            <a href="{{ route('person.leave_day.check',$data->id) }}"><button type="button" class="btn btn-secondary waves-effect waves-light">查看</button></a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

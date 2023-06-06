@@ -386,7 +386,10 @@
                     <div class="collapse" id="person">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('person.pays') }}"  class="{{ request()->is('person.pays') ? 'active' : '' }}">零用金管理</a>
+                                <a href="{{ route('person.pays') }}"  class="{{ request()->is('person.pays') ? 'active' : '' }}">個人支出總覽</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('person.leave_days') }}"  class="{{ request()->is('person.leave_days') ? 'active' : '' }}">個人假單總覽</a>
                             </li>
                         </ul>
                     </div>

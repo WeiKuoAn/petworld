@@ -9,13 +9,16 @@ use App\Models\UserLog;
 use App\Models\Debit;
 use App\Models\Customer;
 use App\Models\Sale_gdpaper;
+use App\Models\LeaveDay;
 use App\Models\Sale;
 use App\Models\PayData;
 use App\Models\PayItem;
 use App\Models\Pay;
 use App\Models\Product;
 use App\Models\CustGroup;
+use App\Models\LeaveDayCheck;
 use App\Models\SaleCompanyCommission;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
 
 class PersonController extends Controller
@@ -236,4 +239,33 @@ class PersonController extends Controller
         return view('person.wait')->with('sales', $sales);
      }
 
+     public function leave_index(Request $request)
+     {
+         $datas = LeaveDay::where('user_id',Auth::user()->id)->orderby('created_at')->paginate(50);
+         $condition = $condition = $request->all();
+         return view('person.leave_days')->with('datas', $datas)->with('request', $request)->with('condition',$condition);
+     }
+
+     public function leave_check_show($id)
+     {
+         $data = LeaveDay::where('id', $id)->first();
+         return view('person.leave_check')->with('data', $data);
+     }
+
+    public function leave_check_update($id ,Request $request)
+    {
+
+        $data = LeaveDay::where('id', $id)->first();
+        $data->state = 2;
+        $data->save();
+        
+        $item = LeaveDayCheck::where('leave_day_id',$data->id)->first();
+        $item->state = 2;
+        $item->created_at = Carbon::now()->locale('zh-tw');
+        $item->updated_at = Carbon::now()->locale('zh-tw');
+        $item->save();
+
+        return redirect()->route('person.leave_days');
     }
+
+}

@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "請假編輯"])
+@extends('layouts.vertical', ["page_title"=> "請假確認"])
 
 @section('css')
 <!-- third party css -->
@@ -20,11 +20,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">人事管理</a></li>
-                        <li class="breadcrumb-item active">請假編輯</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">請假管理</a></li>
+                        <li class="breadcrumb-item active">請假確認</li>
                     </ol>
                 </div>
-                <h4 class="page-title">請假編輯</h4>
+                <h4 class="page-title">請假確認</h4>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('leave_day.edit.data',$data->id) }}" method="POST">
+                    <form action="{{ route('leave_day.del.data',$data->id) }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-xl-12">
@@ -130,8 +130,13 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-success waves-effect waves-light m-1"><i class="fe-check-circle me-1"></i>編輯</button>
-                            <button type="reset" class="btn btn-secondary waves-effect waves-light m-1" onclick="history.go(-1)"><i class="fe-x me-1"></i>回上一頁</button>
+
+                            @if($data->state == 1){{--未審核--}}
+                                <button type="submit" class="btn btn-success waves-effect waves-light m-1" id="btn_submit"><i class="fe-check-circle me-1"></i>送出審核</button>
+                                <button type="reset" class="btn btn-secondary waves-effect waves-light m-1" onclick="history.go(-1)"><i class="fe-x me-1"></i>回上一頁</button>
+                            @else
+                                <button type="reset" class="btn btn-secondary waves-effect waves-light m-1" onclick="history.go(-1)"><i class="fe-x me-1"></i>回上一頁</button>
+                            @endif
                         </div>
                     </div>
                   </form>

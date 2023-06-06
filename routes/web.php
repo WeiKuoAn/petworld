@@ -118,6 +118,9 @@ Route::group(['prefix' => '/'], function () {
     Route::get('person/sales', [PersonController::class, 'sale_index'])->name('person.sales');
     Route::get('person/wait/sales', [PersonController::class, 'wait_sale_index'])->name('person.wait.sales');
     Route::get('person/pays', [PersonController::class, 'pay_index'])->name('person.pays');
+    Route::get('person/leave_days', [PersonController::class, 'leave_index'])->name('person.leave_days');
+    Route::get('person/leave_day/check/{id}', [PersonController::class, 'leave_check_show'])->name('person.leave_day.check');
+    Route::post('person/leave_day/check/{id}', [PersonController::class, 'leave_check_update'])->name('person.leave_day.check.data');
     
     /*客戶管理 */
     Route::get('customers', [CustomerController::class, 'index'])->name('customer');
@@ -275,6 +278,10 @@ Route::group(['prefix' => '/'], function () {
     Route::get('personnel/leave_days', [LeaveDayController::class, 'index'])->name('personnel.leave_days');
     Route::get('leave_day/create', [LeaveDayController::class, 'create'])->name('leave_day.create');
     Route::post('leave_day/create', [LeaveDayController::class, 'store'])->name('leave_day.create.data');
+    Route::get('leave_day/edit/{id}', [LeaveDayController::class, 'show'])->name('leave_day.edit');
+    Route::post('leave_day/edit/{id}', [LeaveDayController::class, 'update'])->name('leave_day.edit.data');
+    Route::get('leave_day/del/{id}', [LeaveDayController::class, 'delete'])->name('leave_day.del');
+    Route::post('leave_day/del/{id}', [LeaveDayController::class, 'destroy'])->name('leave_day.del.data');
 
     /*年度總休假管理*/
     Route::get('/vacation', [VacationController::class, 'index'])->name('vacations');
