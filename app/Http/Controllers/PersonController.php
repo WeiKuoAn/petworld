@@ -241,15 +241,59 @@ class PersonController extends Controller
 
      public function leave_index(Request $request)
      {
-         $datas = LeaveDay::where('user_id',Auth::user()->id)->orderby('created_at')->paginate(50);
-         $condition = $condition = $request->all();
-         return view('person.leave_days')->with('datas', $datas)->with('request', $request)->with('condition',$condition);
+        $datas = LeaveDay::orderby('created_at','desc')->where('user_id',Auth::user()->id)->orderby('created_at');
+        if($request)
+        {
+            $state = $request->state;
+            if($state){
+                $datas = $datas->where('state',$state);
+            }else{
+                $datas = $datas->where('state',1);
+            }
+            $start_date_start = $request->start_date_start;
+            if($start_date_start){
+                $start_date_start = $request->start_date_start.' 00:00:00';
+                $datas = $datas->where('start_datetime','>=',$start_date_start);
+            }
+            $start_date_end = $request->start_date_end;
+            if($start_date_end){
+                $start_date_end = $request->start_date_end.' 11:59:59';
+                $datas = $datas->where('start_datetime','<=',$start_date_end);
+            }
+            $end_date_start = $request->end_date_start;
+            if($end_date_start){
+                $end_date_start = $request->end_date_start.' 00:00:00';
+                $datas = $datas->where('end_datetime','>=',$end_date_start);
+            }
+            $end_date_end = $request->end_date_end;
+            if($end_date_end){
+                $end_date_end = $request->end_date_end.' 11:59:59';
+                $datas = $datas->where('end_datetime','<=',$end_date_end);
+            }
+            $leave_day = $request->leave_day;
+            if ($leave_day != "null") {
+                if (isset($leave_day)) {
+                    $datas = $datas->where('leave_day', $leave_day);
+                } else {
+                    $datas = $datas;
+                }
+            }
+            $condition = $condition = $request->all();
+            $datas = $datas->paginate(50);
+        }else{
+            $datas = $datas->paginate(50);
+            $condition = '';
+        }
+
+        $condition = $condition = $request->all();
+        return view('person.leave_days')->with('datas', $datas)->with('request', $request)->with('condition',$condition);
      }
 
      public function leave_check_show($id)
      {
          $data = LeaveDay::where('id', $id)->first();
-         return view('person.leave_check')->with('data', $data);
+         $items = LeaveDayCheck::where('leave_day_id',$data->id)->get();
+         return view('person.leave_check')->with('data', $data)->with('items',$items);
      }
 
     public function leave_check_update($id ,Request $request)
@@ -258,9 +302,14 @@ class PersonController extends Controller
         $data = LeaveDay::where('id', $id)->first();
         $data->state = 2;
         $data->save();
+
         
-        $item = LeaveDayCheck::where('leave_day_id',$data->id)->first();
+        $leave_data = LeaveDay::orderby('id','desc')->first();
+        $item = new LeaveDayCheck;
+        $item->leave_day_id = $leave_data->id;
+        $item->check_day = Carbon::now()->locale('zh-tw')->format('Y-m-d');
         $item->state = 2;
+        $item->check_user_id = Auth::user()->id;
         $item->created_at = Carbon::now()->locale('zh-tw');
         $item->updated_at = Carbon::now()->locale('zh-tw');
         $item->save();

@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "Add & Edit Products"])
+@extends('layouts.vertical', ["page_title"=> "編輯用戶"])
 
 @section('css')
 <!-- third party css -->
@@ -230,7 +230,7 @@
         <div class="col-12">
             <div class="text-center mb-3">
                 <button type="submit" class="btn w-sm btn-success waves-effect waves-light">修改</button>
-                <button type="button" class="btn w-sm btn-secondary waves-effect" onclick="history.go(-1)">回上一頁</button>
+                <a href="{{ route('users') }}"><button type="button" class="btn w-sm btn-secondary waves-effect">回上一頁</button></a>
                 {{-- <button type="submit" class="btn w-sm btn-danger waves-effect waves-light">Delete</button> --}}
             </div>
         </div> <!-- end col -->

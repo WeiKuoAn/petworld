@@ -18,4 +18,13 @@ class LeaveDayCheck extends Model
         'comment',
         'state',
     ];
+
+    public function leave_check_status(){
+        $leave_name = [ '1'=>'新增假單' , '2'=>'送出審核' , '3'=>'撤銷審核' , '9'=>'已核准'];
+        return $leave_name[$this->state];
+    }
+
+    public function user_name(){
+        return $this->hasOne('App\Models\User','id','check_user_id');
+    }
 }

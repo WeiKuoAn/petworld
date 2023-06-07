@@ -34,7 +34,7 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('leave_day.del.data',$data->id) }}" method="POST">
+                    <form action="{{ route('leave_day.check.data',$data->id) }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-xl-12">
@@ -51,7 +51,7 @@
                         <div class="col-xl-12">
                             <div class="mb-3">
                                 <label for="project-priority" class="form-label">假別<span class="text-danger">*</span></label>
-                                <select class="form-control" data-toggle="select" data-width="100%" name="leave_day">
+                                <select class="form-control" data-toggle="select" data-width="100%" name="leave_day" disabled>
                                     <option value="special" @if($data->leave_day == 'special') selected @endif>特休</option>
                                     <option value="marriage" @if($data->leave_day == 'marriage') selected @endif>婚假</option>
                                     <option value="sick" @if($data->leave_day == 'sick') selected @endif>病假</option>
@@ -73,16 +73,13 @@
                         <div class="col-xl-6">
                             <div class="mb-3">
                                 <label class="form-label">請假起始時間<span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" name="start_date" placeholder="起始日期" value="{{ date('Y-m-d', strtotime($data->start_datetime)) }}">
+                                <input type="date" class="form-control" name="start_date" placeholder="起始日期" value="{{ date('Y-m-d', strtotime($data->start_datetime)) }}" readonly>
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="mb-3">
                                 <label class="form-label">&nbsp;<span class="text-danger"></span></label>
-                                <div class="input-group clockpicker" data-placement="top" data-align="top" data-autoclose="true">
-                                    <input type="text" class="form-control" name="start_time" value="{{ date('H:i', strtotime($data->start_datetime)) }}">
-                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
-                                </div>
+                                    <input type="text" class="form-control" name="start_time" value="{{ date('H:i', strtotime($data->start_datetime)) }}" readonly>
                            </div>
                         </div>
                     </div>
@@ -91,7 +88,7 @@
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">請假結束時間<span class="text-danger">*</span></label>
-                                   <input type="date" class="form-control"  name="end_date" placeholder="結束時間"  value="{{ date('Y-m-d', strtotime($data->end_datetime)) }}">
+                                   <input type="date" class="form-control"  name="end_date" placeholder="結束時間"  value="{{ date('Y-m-d', strtotime($data->end_datetime)) }}" readonly>
                                </div>
                            </div>
                         </div>
@@ -99,11 +96,8 @@
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">&nbsp;<span class="text-danger"></span></label>
-                                   <div class="input-group clockpicker" data-placement="top" data-align="top" data-autoclose="true">
-                                    <input type="text" class="form-control" name="end_time" value="{{ date('H:i', strtotime($data->end_datetime)) }}">
-                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                                   <input type="text" class="form-control" name="end_time" value="{{ date('H:i', strtotime($data->end_datetime)) }}" readonly>
                                 </div>
-                               </div>
                            </div>
                         </div>
                     </div>
@@ -111,7 +105,7 @@
                         <div class="col-xl-12">
                             <div class="mb-3">
                                 <label for="project-priority" class="form-label">請假單位<span class="text-danger">*</span></label>
-                                <select class="form-control" data-toggle="select" data-width="100%" name="unit">
+                                <select class="form-control" data-toggle="select" data-width="100%" name="unit" disabled>
                                     <option value="day" @if($data->unit == 'day') selected @endif>天</option>
                                     <option value="hour" @if($data->unit == 'hour') selected @endif>小時</option>
                                 </select>
@@ -119,22 +113,22 @@
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">總請假數量<span class="text-danger">*</span></label>
-                                   <input type="text" class="form-control" name="total" value="{{ $data->total }}" >
+                                   <input type="text" class="form-control" name="total" value="{{ $data->total }}" readonly>
                                </div>
                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">備註</label>
-                            <textarea class="form-control" rows="3" placeholder="" name="comm">{{ $data->comment }}</textarea>
+                            <textarea class="form-control" rows="3" placeholder="" name="comm" readonly>{{ $data->comment }}</textarea>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-12 text-center">
 
-                            @if($data->state == 1){{--未審核--}}
-                                <button type="submit" class="btn btn-success waves-effect waves-light m-1" id="btn_submit"><i class="fe-check-circle me-1"></i>送出審核</button>
-                                <button type="reset" class="btn btn-secondary waves-effect waves-light m-1" onclick="history.go(-1)"><i class="fe-x me-1"></i>回上一頁</button>
-                            @else
+                            @if($data->state == 2){{--待審核--}}
+                                <button type="submit" class="btn btn-success waves-effect waves-light m-1" id="btn_submit" name="btn_submit" value="check"><i class="fe-check-circle me-1"></i>確定審核</button>
+                                <button type="submit" class="btn btn-danger waves-effect waves-light m-1" id="btn_submit" name="btn_submit" value="not_check"><i class="fe-check-circle me-1"></i>撤銷審核</button>
+                            @elseif($data->state == 9){{--已審核--}}
                                 <button type="reset" class="btn btn-secondary waves-effect waves-light m-1" onclick="history.go(-1)"><i class="fe-x me-1"></i>回上一頁</button>
                             @endif
                         </div>
@@ -143,6 +137,39 @@
                 </div> <!-- end card-body -->
             </div> <!-- end card-->
         </div> <!-- end col-->
+        @if($data->state != 1)
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-uppercase bg-light  p-2 mt-0 mb-3">審核資訊</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr align="center">
+                                        <th>送出審核日期</th>
+                                        <th>人員名稱</th>
+                                        <th>狀態</th>
+                                        <th>備註</th>
+                                        <th>最後審核日期</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($items as $key=>$item)
+                                        <tr align="center">
+                                            <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
+                                            <td>{{ $item->user_name->name }}</td>
+                                            <td>{{ $item->leave_check_status() }}</td>
+                                            <td>{{ $item->comment }}</td>
+                                            <td>{{ $item->updated_at }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- end card-body -->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+        @endif
     </div>
     <!-- end row-->
 

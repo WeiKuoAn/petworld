@@ -32,7 +32,7 @@ class LeaveDay extends Model
     }
 
     public function leave_status(){
-        $leave_name = [ '1'=>'未核准' , '2'=>'待審核' , '9'=>'已核准'];
+        $leave_name = [ '1'=>'未送出' , '2'=>'待審核' , '9'=>'已核准'];
         return $leave_name[$this->state];
     }
 

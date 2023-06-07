@@ -152,20 +152,22 @@
                                 <thead>
                                     <tr align="center">
                                         <th>送出審核日期</th>
-                                        <th>主管名稱</th>
-                                        <th>備註</th>
+                                        <th>人員名稱</th>
                                         <th>狀態</th>
+                                        <th>備註</th>
                                         <th>最後審核日期</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr align="center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @foreach($items as $key=>$item)
+                                        <tr align="center">
+                                            <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
+                                            <td>{{ $item->user_name->name }}</td>
+                                            <td>{{ $item->leave_check_status() }}</td>
+                                            <td>{{ $item->comment }}</td>
+                                            <td>{{ $item->updated_at }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -179,9 +179,7 @@ class UserController extends Controller
             $user_log->Update_at = Auth::user()->id;
             $user_log->save();
         }
-        return view('user.edit')->with('user', $user)
-                                    ->with('hint','1')
-                                    ->with('jobs',$jobs);
+        return redirect()->route('user.edit',$id);
     }
 
     /**
