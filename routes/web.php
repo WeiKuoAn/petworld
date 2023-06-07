@@ -8,6 +8,7 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomrtGruopController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\UserBankDataController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CategoryController;
@@ -40,6 +41,7 @@ use App\Http\Controllers\Rpg07Controller;
 use App\Http\Controllers\Rpg09Controller;
 use App\Http\Controllers\Rpg10Controller;
 use App\Http\Controllers\LeaveDayController;
+use App\Http\Controllers\RestockController;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
@@ -121,6 +123,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('person/leave_days', [PersonController::class, 'leave_index'])->name('person.leave_days');
     Route::get('person/leave_day/check/{id}', [PersonController::class, 'leave_check_show'])->name('person.leave_day.check');
     Route::post('person/leave_day/check/{id}', [PersonController::class, 'leave_check_update'])->name('person.leave_day.check.data');
+    Route::get('/person_inventory', [PersonController::class, 'person_inventory'])->name('person.inventory');
 
     /*請假管理 */
     Route::get('personnel/leave_days', [LeaveDayController::class, 'index'])->name('personnel.leave_days');
@@ -171,14 +174,32 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/product/category/edit/{id}', [CategoryController::class, 'edit'])->name('product.category.edit');
     Route::post('/product/category/edit/{id}', [CategoryController::class, 'update'])->name('product.category.edit.data');
 
+    /*商品管理*/
     Route::get('/products', [ProductController::class, 'index'])->name('product');
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product/create', [ProductController::class, 'store'])->name('product.data.create');
     Route::get('/product/edit/{id}', [ProductController::class, 'show'])->name('product.edit');
     Route::post('/product/edit/{id}', [ProductController::class, 'update'])->name('product.data.edit');
     Route::get('/product/lims_product_search', [ProductController::class, 'product_search'])->name('product.product_search');
+    Route::get('/product/cost_product_search', [ProductController::class, 'cost_product_search'])->name('product.cost_product_search');
     Route::get('/product/delete/{id}', [ProductController::class, 'delete'])->name('product.del');
     Route::post('/product/delete/{id}', [ProductController::class, 'destroy'])->name('product.del.data');
+
+    /*商品進貨*/
+    Route::get('/product/cost_search', [RestockController::class, 'product_cost_search'])->name('gdpaper.cost.search');
+    Route::get('/product/restock', [RestockController::class, 'index'])->name('product.restock');
+    Route::get('/product/restock/create', [RestockController::class, 'create'])->name('product.restock.create');
+    Route::post('/product/restock/create', [RestockController::class, 'store'])->name('product.restock.create.data');
+    // Route::get('/product/restock/{id}', [RestockController::class, 'show'])->name('product.edit');
+
+    /*商品盤點管理*/
+    Route::get('/product/inventorys', [InventoryController::class, 'index'])->name('product.inventorys');
+    Route::get('/product/inventory/create', [InventoryController::class, 'create'])->name('product.inventory.create');
+    Route::post('/product/inventory/create', [InventoryController::class, 'store'])->name('product.inventory.create.data');
+    Route::get('/product/inventory/del/{id}', [InventoryController::class, 'delete'])->name('product.inventory.del');
+    Route::post('/product/inventory/del/{id}', [InventoryController::class, 'destroy'])->name('product.inventory.del.data');
+    Route::get('/product/inventoryItem/{product_inventory_id}', [InventoryController::class, 'inventoryItem_index'])->name('inventoryItem.edit');
+    Route::post('/product/inventoryItem/{product_inventory_id}', [InventoryController::class, 'inventoryItem_edit'])->name('inventoryItem.edit.data');
 
 
     /*業務管理*/
@@ -284,8 +305,6 @@ Route::group(['prefix' => '/'], function () {
     Route::get('personnel/holidays', [PersonnelController::class, 'holidays'])->name('personnel.holidays');
     Route::get('personnel/holiday/create', [PersonnelController::class, 'holiday_create'])->name('personnel.holidays.create');
     Route::post('personnel/holiday/create', [PersonnelController::class, 'holiday_store'])->name('personnel.holidays.create.data');
-
-
 
     /*年度總休假管理*/
     Route::get('/vacation', [VacationController::class, 'index'])->name('vacations');

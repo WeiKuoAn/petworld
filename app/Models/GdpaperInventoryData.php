@@ -24,4 +24,9 @@ class GdpaperInventoryData extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'update_user_id');
     }
+
+    public function category_data()
+    {
+        return $this->hasOne('App\Models\Category', 'id', 'type');
+    }
 }

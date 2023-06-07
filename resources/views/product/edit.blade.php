@@ -43,8 +43,8 @@
                             <select id="type" class="form-select" name="type" required>
                                 <option value="normal" @if($data->type == 'normal') selected @endif>一般</option>
                                 <option value="combo" @if($data->type == 'combo') selected @endif>組合</option>
-                                <option value="online" @if($data->type == 'online') selected @endif>數位</option>
-                                <option value="service" @if($data->type == 'service') selected @endif>服務</option>
+                                {{-- <option value="online" @if($data->type == 'online') selected @endif>數位</option>
+                                <option value="service" @if($data->type == 'service') selected @endif>服務</option> --}}
                             </select>
                             <input type="hidden" name="type_hidden" id="type_hidden" value="{{ $data->type }}">
                         </div>
@@ -79,10 +79,10 @@
                             <input type="number" class="form-control" id="seq" name="seq"  value="{{ $data->seq }}">
                         </div>
                         
-                        <div class="mb-3 col-md-4">
+                        {{-- <div class="mb-3 col-md-4">
                             <label for="alarm" class="form-label">警報數量</label>
                             <input type="number" class="form-control" id="alarm" name="alarm_num" value="{{ $data->alarm_num }}">
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="mb-3" id="combo">
@@ -178,8 +178,8 @@
 
                     <div class="mb-3 mt-3">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="stock" name="stock" @if($data->stock == 1)  checked  @endif>
-                            <label class="form-check-label" for="stock"><b>此產品成本是否紀錄庫存？</b></label>
+                            <input type="checkbox" class="form-check-input" id="stock" name="stock" @if($data->stock == 0)  checked  @endif>
+                            <label class="form-check-label" for="stock"><b>此產品不須紀錄至庫存盤點</b></label>
                         </div>
                     </div>
 
@@ -309,9 +309,9 @@
 
     $('#stock').change(function() {
         if ($(this).is(':checked')) {
-            $(this).val(1);
-        } else {
             $(this).val(0);
+        } else {
+            $(this).val(1);
         }
     });
 

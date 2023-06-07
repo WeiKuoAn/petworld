@@ -190,6 +190,12 @@
                         <span> 請假key單 </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('person.inventory') }}">
+                        <i data-feather="airplay"></i>
+                        <span> 商品盤點 </span>
+                    </a>
+                </li>
                 
                 
             </ul>

@@ -19,11 +19,40 @@ class ProductController extends Controller
 
         return Response($product);
     }
+    
 
     public function index(Request $request)
     {
-        $datas = Product::orderby('seq','desc')->orderby('price','desc')->get();
-        return view('product.index')->with('datas', $datas);
+        $categorys = Category::where('status','up')->get();
+        $datas = Product::orderby('seq','desc')->orderby('price','desc');
+
+        if($request->input() != null){
+            $name = $request->name;
+            if($name){
+                $name = '%'.$request->name.'%';
+                $datas = $datas->where('name', 'like' ,$name);
+            }
+            $type = $request->type;
+            if ($type != "null") {
+                if (isset($type)) {
+                    $datas = $datas->where('type', $type);
+                } else {
+                    $datas = $datas;
+                }
+            }
+            $category_id = $request->category_id;
+            if ($category_id != "null") {
+                if (isset($category_id)) {
+                    $datas = $datas->where('category_id', $category_id);
+                } else {
+                    $datas = $datas;
+                }
+            }
+            $datas = $datas->get();
+        }else{
+            $datas = $datas->get();
+        }
+        return view('product.index')->with('datas', $datas)->with('categorys',$categorys)->with('request',$request);
     }
 
     public function create()
@@ -61,7 +90,7 @@ class ProductController extends Controller
         {
             $data->stock = $request->stock;
         }else{
-            $data->stock = 0;
+            $data->stock = 1;
         }
         $data->save();
         // dd($data->type);
@@ -121,8 +150,18 @@ class ProductController extends Controller
         $data->cost = $request->cost;
         $data->alarm_num = $request->alarm_num;
         $data->status = $request->status;
-        $data->commission = $request->commission;
-        $data->stock = $request->stock;
+        if(isset($request->commission))
+        {
+            $data->commission = $request->commission;
+        }else{
+            $data->commission = 0;
+        }
+        if(isset($request->stock))
+        {
+            $data->stock = $request->stock;
+        }else{
+            $data->stock = 1;
+        }
         $data->save();
 
         if($request->type == 'combo')

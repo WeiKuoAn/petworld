@@ -22,6 +22,6 @@ class GdpaperInventoryItem extends Model
 
     public function gdpaper_name()
     {
-        return $this->hasOne('App\Models\Gdpaper','id','product_id');
+        return $this->hasOne('App\Models\Product','id','product_id');
     }
 }

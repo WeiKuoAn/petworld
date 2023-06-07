@@ -181,7 +181,10 @@
                                     <a href="{{ route('product') }}"  class="{{ request()->is('product') ? 'active' : '' }}">商品列表</a>
                                 </li>
                                 <li>
-                                    <a href="#"  class="{{ request()->is('') ? 'active' : '' }}">庫存盤點</a>
+                                    <a href="{{ route('product.restock') }}"  class="{{ request()->is('product.restock') ? 'active' : '' }}">商品進貨</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('product.inventorys') }}"  class="{{ request()->is('product.inventorys') ? 'active' : '' }}">庫存盤點</a>
                                 </li>
                             </ul>
                         </div>

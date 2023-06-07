@@ -43,8 +43,8 @@
                             <select id="type" class="form-select" name="type" required>
                                 <option value="normal">一般</option>
                                 <option value="combo">組合</option>
-                                <option value="online">數位</option>
-                                <option value="service">服務</option>
+                                {{-- <option value="online">數位</option>
+                                <option value="service">服務</option> --}}
                             </select>
                         </div>
                         <div class="mb-3 col-md-4">
@@ -78,10 +78,10 @@
                             <input type="number" class="form-control" id="seq" name="seq" value="0">
                         </div>
                         
-                        <div class="mb-3 col-md-4">
+                        {{-- <div class="mb-3 col-md-4">
                             <label for="alarm" class="form-label">警報數量</label>
                             <input type="number" class="form-control" id="alarm" name="alarm_num">
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="mb-3" id="combo">
@@ -166,7 +166,7 @@
                     <div class="mb-3 mt-3">
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="stock" name="stock">
-                            <label class="form-check-label" for="stock"><b>此產品成本是否紀錄庫存？</b></label>
+                            <label class="form-check-label" for="stock"><b>此產品不須紀錄至庫存盤點</b></label>
                         </div>
                     </div>
 
@@ -295,9 +295,9 @@
 
     $('#stock').change(function() {
         if ($(this).is(':checked')) {
-            $(this).val(1);
-        } else {
             $(this).val(0);
+        } else {
+            $(this).val(1);
         }
     });
 

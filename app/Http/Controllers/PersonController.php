@@ -18,6 +18,8 @@ use App\Models\Product;
 use App\Models\CustGroup;
 use App\Models\LeaveDayCheck;
 use App\Models\SaleCompanyCommission;
+use App\Models\GdpaperInventoryData;
+use App\Models\GdpaperInventoryItem;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
 
@@ -315,6 +317,34 @@ class PersonController extends Controller
         $item->save();
 
         return redirect()->route('person.leave_days');
+    }
+
+
+    //員工盤點
+    public function person_inventory(Request $request)
+    {
+        $datas = GdpaperInventoryData::where('update_user_id',Auth::user()->id);
+        if($request)
+        {
+          $after_date = $request->after_date;
+          if($after_date){
+            $datas = $datas->where('date','>=',$after_date);
+          }
+          $before_date = $request->before_date;
+          if($before_date){
+            $datas = $datas->where('date','<=',$before_date);
+          }
+          $state = $request->state;
+          if (isset($state)) {
+              $datas = $datas->where('state', $state);
+          } else {
+              $datas = $datas->where('state', '0');
+          }
+          $datas = $datas->get();
+        }else{
+          $datas = $datas->get();
+        }
+        return view('person.inventorys')->with('datas',$datas)->with('request',$request);
     }
 
 }
