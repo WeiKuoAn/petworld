@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductRestock;
 use App\Models\ProductRestockItem;
+use App\Models\ProductRestockPayData;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\PreInc;
 
 class RestockController extends Controller
 {
@@ -31,7 +33,8 @@ class RestockController extends Controller
 
     public function index(Request $request)
     {
-        return view('restock.index')->with('request', $request);
+        $datas = ProductRestock::where('status','1')->orderby('date','desc')->paginate(50);
+        return view('restock.index')->with('request', $request)->with('datas',$datas);
     }
 
     public function create()
@@ -42,6 +45,7 @@ class RestockController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->total);
         $data = new ProductRestock;
         $data->date = $request->date;
         $data->user_id = Auth::user()->id;
@@ -69,7 +73,96 @@ class RestockController extends Controller
             }
         }
 
+        $pay_data = new ProductRestockPayData;
+        $pay_data->date = $request->date; 
+        $pay_data->restock_id = $restock->id;
+        $pay_data->pay_method = $request->pay_method; 
+        $pay_data->price = $request->pay_price; 
+        $pay_data->save();
+
         return redirect()->route('product.restock');
     }
+
+    public function pay_index($id)
+    {
+        $datas = ProductRestockPayData::where('restock_id',$id)->orderby('date','desc')->get();
+        return view('restock.pay_index')->with('datas',$datas);
+    }
+
+    public function pay_create($id)
+    {
+        $data = ProductRestock::where('id',$id)->first();
+        $pay_datas = ProductRestockPayData::where('restock_id',$id)->get();
+
+        $last_price = intval($data->total); 
+        foreach($pay_datas as $pay_data)
+        {
+            $last_price -= $pay_data->price;
+        }
+
+        return view('restock.pay_create')->with('last_price',$last_price)->with('data',$data);
+    }
+
+    public function pay_store($id , Request $request)
+    {
+        $data = new ProductRestockPayData;
+        $data->restock_id = $id;
+        $data->date = $request->date;
+        $data->pay_method = $request->pay_method;
+        $data->price = $request->price;
+        $data->save();
+        
+        return redirect()->route('product.restock.pay',$id);
+    } 
+
+    public function pay_edit($id)
+    {
+
+        $data = ProductRestockPayData::where('id',$id)->first();
+        $restock_data = ProductRestock::where('id',$data->restock_id)->first();
+        $currently_price = ProductRestockPayData::where('restock_id',$data->restock_id)->sum('price');//目前總付款
+        $total_price = $restock_data->total;
+        
+        $last_price = intval($total_price) - intval($currently_price);
+
+        return view('restock.pay_edit')->with('currently_price',$currently_price)
+                                       ->with('total_price',$total_price)
+                                       ->with('last_price',$last_price)
+                                       ->with('data',$data);
+    }
+
+    public function pay_update($id , Request $request)
+    {
+        $data = ProductRestockPayData::where('id',$id)->first();
+        $data->date = $request->date;
+        $data->pay_method = $request->pay_method;
+        $data->price = $request->price;
+        $data->save();
+        
+        return redirect()->route('product.restock.pay',$data->restock_id);
+    } 
+
+    public function pay_delete($id)
+    {
+
+        $data = ProductRestockPayData::where('id',$id)->first();
+        $restock_data = ProductRestock::where('id',$data->restock_id)->first();
+        $currently_price = ProductRestockPayData::where('restock_id',$data->restock_id)->sum('price');//目前總付款
+        $total_price = $restock_data->total;
+        
+        $last_price = intval($total_price) - intval($currently_price);
+
+        return view('restock.pay_del')->with('currently_price',$currently_price)
+                                       ->with('total_price',$total_price)
+                                       ->with('last_price',$last_price)
+                                       ->with('data',$data);
+    }
+
+    public function pay_destroy($id , Request $request)
+    {
+        $data = ProductRestockPayData::where('id',$id)->first();
+        ProductRestockPayData::where('id',$id)->delete();
+        return redirect()->route('product.restock.pay',$data->restock_id);
+    } 
 
 }

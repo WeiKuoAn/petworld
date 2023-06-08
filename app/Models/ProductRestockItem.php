@@ -18,4 +18,9 @@ class ProductRestockItem extends Model
         'product_num',
         'product_total',
     ];
+
+    public function product_data()
+    {
+        return $this->hasOne('App\Models\Product','id','product_id');
+    }
 }

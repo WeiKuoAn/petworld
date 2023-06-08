@@ -52,7 +52,7 @@
                             <div class="text-lg-end my-1 my-lg-0">
                                 {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
                                 <a href="{{ route('product.restock.create') }}">
-                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#custom-modal"><i class="mdi mdi-plus-circle me-1"></i>新增盤點</button>
+                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#custom-modal"><i class="mdi mdi-plus-circle me-1"></i>新增進貨</button>
                                 </a>
                             </div>
                         </div><!-- end col-->
@@ -70,16 +70,56 @@
                         <table class="table table-centered table-nowrap table-hover mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col">進貨日期</th>
-                                    <th scope="col">名稱</th>
-                                    <th scope="col">價格</th>
-                                    <th scope="col">數量</th>
-                                    <th scope="col">總價</th>
-                                    <th scope="col">動作</th>
+                                    <th>進貨日期</th>
+                                    <th>名稱與進貨數量</th>
+                                    <th>總價格</th>
+                                    <th>支付價格</th>
+                                    <th>付款方式</th>
+                                    <th>備註</th>
+                                    <th>動作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                @foreach ($datas as $key=>$data)
+                                <tr>
+                                    <td>{{ $data->date }}</td>
+                                    <td>
+                                        @if(isset($data->product_id))
+                                            {{ $data->product_data->name }}（{{ $data->num }}個）
+                                        @else
+                                            @foreach($data->restock_items as $restock_item)
+                                                {{ $restock_item->product_data->name }}（{{ $restock_item->product_num }}個）<br>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ number_format($data->total) }}元
+                                    </td>
+                                    <td>
+                                        @if(isset($data->pay_price))
+                                        {{ number_format($data->pay_price) }}元
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(isset($data->pay_id))
+                                        {{ $data->pay_type() }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $data->comment }}</td>
+                                    <td>
+                                        <div class="btn-group dropdown">
+                                            <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="{{ route('sale.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                {{-- <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a> --}}
+                                                <a class="dropdown-item" href="{{ route('product.restock.pay.create',$data->id) }}"><i class="mdi mdi-cash-plus me-2 font-18 text-muted vertical-middle"></i>新增付款</a>
+                                                <a class="dropdown-item" href="{{ route('product.restock.pay',$data->id) }}"><i class="mdi mdi-cash me-2 font-18 text-muted vertical-middle"></i>檢視付款</a>
+                                                <a class="dropdown-item" href="{{ route('sale.check',$data->id) }}"><i class="mdi mdi-delete me-2 font-18 text-muted vertical-middle"></i>刪除</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                         <br>

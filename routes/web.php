@@ -191,6 +191,13 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/product/restock/create', [RestockController::class, 'create'])->name('product.restock.create');
     Route::post('/product/restock/create', [RestockController::class, 'store'])->name('product.restock.create.data');
     // Route::get('/product/restock/{id}', [RestockController::class, 'show'])->name('product.edit');
+    Route::get('/product/restock/pay/{id}', [RestockController::class, 'pay_index'])->name('product.restock.pay');
+    Route::get('/product/restock/pay/create/{id}', [RestockController::class, 'pay_create'])->name('product.restock.pay.create');
+    Route::post('/product/restock/pay/create/{id}', [RestockController::class, 'pay_store'])->name('product.restock.pay.create.data');
+    Route::get('/product/restock/pay/edit/{id}', [RestockController::class, 'pay_edit'])->name('product.restock.pay.edit');
+    Route::post('/product/restock/pay/edit/{id}', [RestockController::class, 'pay_update'])->name('product.restock.pay.edit.data');
+    Route::get('/product/restock/pay/del/{id}', [RestockController::class, 'pay_delete'])->name('product.restock.pay.del');
+    Route::post('/product/restock/pay/del/{id}', [RestockController::class, 'pay_destroy'])->name('product.restock.pay.del.data');
 
     /*商品盤點管理*/
     Route::get('/product/inventorys', [InventoryController::class, 'index'])->name('product.inventorys');

@@ -28,8 +28,19 @@ class ProductRestock extends Model
         'status'
     ];
 
-    public function gdpaper_name()
+    public function product_data()
     {
         return $this->hasOne('App\Models\Product','id','product_id');
+    }
+
+    public function restock_items()
+    {
+        return $this->hasMany('App\Models\ProductRestockItem','restock_id','id');
+    }
+
+    public function pay_type()
+    {
+        $pay_type = ['A' => '結清', 'B' => '結清', 'C' => '訂金', 'D' => '尾款' , 'E' => '追加'];
+        return $pay_type[$this->pay_id];
     }
 }
