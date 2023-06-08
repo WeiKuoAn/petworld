@@ -27,21 +27,14 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <div class="col-auto">
-                            <form class="d-flex flex-wrap align-items-center" action="{{ route('product.inventorys') }}" method="GET">
+                            <form class="d-flex flex-wrap align-items-center" action="{{ route('product.restock') }}" method="GET">
                                 <div class="me-3">
-                                    <label for="start_date_start" class="form-label">盤點日期</label>
+                                    <label for="start_date_start" class="form-label">進貨日期</label>
                                     <input type="date" class="form-control" id="after_date" name="after_date" value="{{ $request->after_date }}">
                                 </div>
                                 <div class="me-3">
                                     <label for="start_date" class="form-label">&nbsp;</label>
                                     <input type="date" class="form-control" id="before_date" name="before_date" value="{{ $request->before_date }}">
-                                </div>
-                                <div class="me-sm-3">
-                                    <label class="form-label">盤點狀況</label>
-                                    <select class="form-select my-1 my-lg-0" id="status-select" name="state" onchange="this.form.submit()">
-                                        <option value="0" @if(!isset($request->state) || $request->state == '0') selected @endif>未盤點</option>
-                                        <option value="1" @if($request->state == '1') selected @endif>已盤點</option>
-                                    </select>
                                 </div>
                                 <div class="me-3 mt-3">
                                     <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
@@ -97,7 +90,7 @@
                                     </td>
                                     <td>
                                         @if(isset($data->pay_price))
-                                        {{ number_format($data->pay_price) }}元
+                                        {{ number_format($data->restock_pay_price()) }}元
                                         @endif
                                     </td>
                                     <td>
@@ -110,11 +103,11 @@
                                         <div class="btn-group dropdown">
                                             <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
                                             <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="{{ route('sale.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                <a class="dropdown-item" href="{{ route('product.restock.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
                                                 {{-- <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a> --}}
                                                 <a class="dropdown-item" href="{{ route('product.restock.pay.create',$data->id) }}"><i class="mdi mdi-cash-plus me-2 font-18 text-muted vertical-middle"></i>新增付款</a>
                                                 <a class="dropdown-item" href="{{ route('product.restock.pay',$data->id) }}"><i class="mdi mdi-cash me-2 font-18 text-muted vertical-middle"></i>檢視付款</a>
-                                                <a class="dropdown-item" href="{{ route('sale.check',$data->id) }}"><i class="mdi mdi-delete me-2 font-18 text-muted vertical-middle"></i>刪除</a>
+                                                <a class="dropdown-item" href="{{ route('product.restock.del',$data->id) }}"><i class="mdi mdi-delete me-2 font-18 text-muted vertical-middle"></i>刪除</a>
                                             </div>
                                         </div>
                                     </td>
@@ -124,7 +117,7 @@
                         </table>
                         <br>
                         <ul class="pagination pagination-rounded justify-content-end mb-0">
-                            {{-- {{ $datas->links('vendor.pagination.bootstrap-4') }} --}}
+                            {{ $datas->links('vendor.pagination.bootstrap-4') }}
                         </ul>
                     </div>
 

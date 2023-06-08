@@ -190,7 +190,11 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/product/restock', [RestockController::class, 'index'])->name('product.restock');
     Route::get('/product/restock/create', [RestockController::class, 'create'])->name('product.restock.create');
     Route::post('/product/restock/create', [RestockController::class, 'store'])->name('product.restock.create.data');
-    // Route::get('/product/restock/{id}', [RestockController::class, 'show'])->name('product.edit');
+    Route::get('/product/restock/edit/{id}', [RestockController::class, 'show'])->name('product.restock.edit');
+    Route::post('/product/restock/edit/{id}', [RestockController::class, 'update'])->name('product.restock.edit.data');
+    Route::get('/product/restock/del/{id}', [RestockController::class, 'delete'])->name('product.restock.del');
+    Route::post('/product/restock/del/{id}', [RestockController::class, 'destroy'])->name('product.restock.del.data');
+
     Route::get('/product/restock/pay/{id}', [RestockController::class, 'pay_index'])->name('product.restock.pay');
     Route::get('/product/restock/pay/create/{id}', [RestockController::class, 'pay_create'])->name('product.restock.pay.create');
     Route::post('/product/restock/pay/create/{id}', [RestockController::class, 'pay_store'])->name('product.restock.pay.create.data');
