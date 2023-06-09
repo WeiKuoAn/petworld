@@ -68,11 +68,11 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-auto">
+                        {{-- <div class="col-auto">
                             <div class="text-lg-end my-1 my-lg-0">
                                 <a href="{{ route('rpg07.export',request()->input()) }}" onclick="CheckForm(event)" class="btn btn-danger waves-effect waves-light">匯出</a>
                             </div>
-                        </div><!-- end col-->
+                        </div><!-- end col--> --}}
                     </div> <!-- end row -->
                 </div>
             </div> <!-- end card -->

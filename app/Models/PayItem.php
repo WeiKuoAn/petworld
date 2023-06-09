@@ -29,5 +29,6 @@ class PayItem extends Model
     public function pay_name(){
         return $this->hasOne('App\Models\Pay','id','pay_id');
     }
+    
 
 }

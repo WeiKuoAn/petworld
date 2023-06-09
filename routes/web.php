@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PersonController;
@@ -36,6 +35,7 @@ use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\Rpg01Controller;
 use App\Http\Controllers\Rpg02Controller;
 use App\Http\Controllers\Rpg04Controller;
+use App\Http\Controllers\Rpg05Controller;
 use App\Http\Controllers\Rpg06Controller;
 use App\Http\Controllers\Rpg07Controller;
 use App\Http\Controllers\Rpg09Controller;
@@ -72,6 +72,8 @@ require __DIR__ . '/auth.php';
 // });
 
 //20230321更新
+
+
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', function ()    {
@@ -370,6 +372,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/rpg/rpg01/detail/{date}/{plan_id}', [Rpg01Controller::class, 'detail'])->middleware(['auth'])->name('rpg01.detail');
     Route::get('/rpg/rpg02', [Rpg02Controller::class, 'rpg02'])->name('rpg02');
     Route::get('/rpg/rpg04', [Rpg04Controller::class, 'rpg04'])->name('rpg04');
+    Route::get('/rpg/rpg05', [Rpg05Controller::class, 'rpg05'])->name('rpg05');
     Route::get('/rpg/rpg06', [Rpg06Controller::class, 'rpg06'])->name('rpg06');//舊法會查詢
     Route::get('/rpg/rpg07', [Rpg07Controller::class, 'rpg07'])->name('rpg07');
     Route::get('/rpg/rpg07/export', [Rpg07Controller::class, 'export'])->name('rpg07.export');
@@ -381,6 +384,5 @@ Route::group(['prefix' => '/'], function () {
         $img = Image::make('https://images.pexels.com/photos/4273439/pexels-photo-4273439.jpeg')->resize(300, 200); // 這邊可以隨便用網路上的image取代
         return $img->response('jpg');
     });
-    
-});
 
+});

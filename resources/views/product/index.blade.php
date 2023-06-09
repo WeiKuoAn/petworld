@@ -116,7 +116,7 @@
                                         </td>
                                         <td>
                                             @if($restocks[$data->id]['cur_num'] < 0)
-                                                <span class="text-danger">{{$restocks[$data->id]['cur_num']}}</span>個
+                                                <span class="text-danger">{{$restocks[$data->id]['cur_num']}}</span>
                                             @else
                                                 {{ $restocks[$data->id]['cur_num'] }}
                                             @endif

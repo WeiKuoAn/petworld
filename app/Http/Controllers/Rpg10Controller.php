@@ -44,7 +44,7 @@ class Rpg10Controller extends Controller
         $user_id = $request->user_id;
         if ($user_id != "NULL") {
             if (isset($user_id)) {
-                $sale_datas = $sale_datas->where('users.id', $user_id);
+                $sale_datas = $sale_datas->where('users_id', $user_id);
             } else {
                 $sale_datas = $sale_datas;
             }

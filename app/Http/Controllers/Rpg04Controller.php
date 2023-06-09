@@ -39,7 +39,8 @@ class Rpg04Controller extends Controller
             $product_datas = DB::table('sale_data')
                             ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
                             ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
-                            ->leftjoin('category','category.id', '=', 'product.id');
+                            ->leftjoin('category','category.id', '=', 'product.id')
+                            ->where('sale_data.status','9');
 
             $after_date = $request->after_date;
             if($after_date){
@@ -70,12 +71,11 @@ class Rpg04Controller extends Controller
                             ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
                             ->leftjoin('category','category.id', '=', 'product.id')
                             ->where('sale_data.status','9')
-                            ->where('sale_data.sale_date','>=',$first_date)
-                            ->where('sale_data.sale_date','<=',$last_date)
+                            ->where('sale_data.sale_date','>=',$after_date)
+                            ->where('sale_data.sale_date','<=',$before_date)
                             ->whereNotNull('sale_gdpaper.gdpaper_id')
                             ->get();
         }
-
         $datas = [];
         $sums = [];
         $totals = [];

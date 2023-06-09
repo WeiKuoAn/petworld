@@ -361,6 +361,9 @@
                                     <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙報表</a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('rpg05') }}"  class="{{ request()->is('rpg05') ? 'active' : '' }}">營收總表</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('rpg06') }}"  class="{{ request()->is('rpg06') ? 'active' : '' }}">舊法會查詢</a>
                                 </li>
                                 <li>

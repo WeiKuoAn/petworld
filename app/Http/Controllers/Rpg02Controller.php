@@ -7,6 +7,7 @@ use Carbon\CarbonPeriod;
 use Carbon\Carbon;
 use App\Models\Pay;
 use App\Models\PayData;
+use App\Models\PayItem;
 
 class Rpg02Controller extends Controller
 {
@@ -17,24 +18,38 @@ class Rpg02Controller extends Controller
 
         $after_date = Carbon::now()->firstOfMonth();
         $before_date = Carbon::now()->lastOfMonth();
-        $pay_datas = PayData::where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->get();
 
-        if($request){
+        $pay_datas = PayData::where('status','1');
+        $pay_items = PayItem::where('status','1');
+
+
+        if($request->input() != null){
             $after_date = $request->after_date;
             if($after_date){
-                $pay_datas = PayData::where('pay_date','>=',$after_date)->get();
+                $pay_datas = $pay_datas->where('pay_date','>=',$after_date);
+                $pay_items = $pay_items->where('pay_date','>=',$after_date);
             }
             $before_date = $request->before_date;
             if($before_date){
-                $pay_datas = PayData::where('pay_date','<=',$before_date)->get();
+                $pay_datas = $pay_datas->where('pay_date','<=',$before_date);
+                $pay_items = $pay_items->where('pay_date','<=',$before_date);
             }
-            if($after_date && $before_date){
-                $pay_datas = PayData::where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->get();
+
+            $pay_id = $request->pay_id;
+            if ($pay_id != "NULL") {
+                if (isset($pay_id)) {
+                    $pay_datas = $pay_datas->where('pay_id', $pay_id);
+                    $pay_items = $pay_items->where('pay_id', $pay_id);
+                } else {
+                    $pay_datas = $pay_datas;
+                    $pay_items = $pay_items;
+                }
             }
-            $pay = $request->pay;
-            if($after_date && $before_date && $pay){
-                $pay_datas = PayData::where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('pay_id',$pay)->get();
-            }
+            $pay_datas = $pay_datas->where('created_at','<=','2023-06-09 23:59:59')->get();//擷取至6/9號
+            $pay_items = $pay_items->where('created_at','>=','2023-06-09 00:00:00')->get();//從至6/9號抓取
+        }else{
+            $pay_datas = $pay_datas->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('created_at','<=','2023-06-09 23:59:59')->get();//擷取至6/9號
+            $pay_items = $pay_items->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('created_at','>=','2023-06-09 00:00:00')->get();//從至6/9號抓取
         }
         
         // dd($after_date);
@@ -44,12 +59,29 @@ class Rpg02Controller extends Controller
         $sums = [];
         $sums['total_amount'] = 0;
         foreach($pay_datas as $pay_data){
-            $datas[$pay_data->pay_id]['pay_name'] = $pay_data->pay_name->name;
+            if(isset($pay_data->pay_name)){
+                $datas[$pay_data->pay_id]['pay_name'] = $pay_data->pay_name->name;
+            }else{
+                $datas[$pay_data->pay_id]['pay_name'] = $pay_data->pay_id;
+            }
             $datas[$pay_data->pay_id]['price'][] =  $pay_data->price;
             $datas[$pay_data->pay_id]['comment'] = $pay_data->comment;
         }
         foreach($pay_datas as $pay_data){
             $datas[$pay_data->pay_id]['total_price'] =  array_sum($datas[$pay_data->pay_id]['price']);
+        }
+
+        foreach($pay_items as $pay_item){
+            if(isset($pay_item->pay_name)){
+                $datas[$pay_item->pay_id]['pay_name'] = $pay_item->pay_name->name;
+            }else{
+                $datas[$pay_item->pay_id]['pay_name'] = $pay_item->pay_id;
+            }
+            $datas[$pay_item->pay_id]['price'][] =  $pay_item->price;
+            $datas[$pay_item->pay_id]['comment'] = $pay_item->comment;
+        }
+        foreach($pay_items as $pay_item){
+            $datas[$pay_item->pay_id]['total_price'] =  array_sum($datas[$pay_item->pay_id]['price']);
         }
 
         foreach($datas as $data){
@@ -59,6 +91,10 @@ class Rpg02Controller extends Controller
 
         foreach($pay_datas as $pay_data){
             $datas[$pay_data->pay_id]['percent'] = round($datas[$pay_data->pay_id]['total_price']*100/$sums['total_amount'],2);
+        }
+
+        foreach($pay_items as $pay_item){
+            $datas[$pay_item->pay_id]['percent'] = round($datas[$pay_item->pay_id]['total_price']*100/$sums['total_amount'],2);
         }
         
 

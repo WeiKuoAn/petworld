@@ -156,7 +156,7 @@ class SaleDataController extends Controller
             if(isset($gdpaper_id)){
                 $gdpaper = new Sale_gdpaper();
                 $gdpaper->sale_id = $sale_id->id;
-                $gdpaper->type_list = $request->type_list[$key];
+                $gdpaper->type_list = $request->type_list;
                 $gdpaper->gdpaper_id = $request->gdpaper_ids[$key];
                 $gdpaper->gdpaper_num = $request->gdpaper_num[$key];
                 if ($request->plan_id != '4') {
@@ -535,6 +535,7 @@ class SaleDataController extends Controller
                 if(isset($gdpaper_id)){
                     $gdpaper = new Sale_gdpaper();
                     $gdpaper->sale_id = $sale_id->id;
+                    $gdpaper->type_list = $request->type_list;
                     $gdpaper->gdpaper_id = $request->gdpaper_ids[$key];
                     $gdpaper->gdpaper_num = $request->gdpaper_num[$key];
                     if ($request->plan_id != '4') {

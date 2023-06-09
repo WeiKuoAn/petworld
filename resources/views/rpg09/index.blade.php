@@ -57,6 +57,7 @@
                                     <tr align="center">
                                         <th scope="col">月份</th>
                                         <th scope="col">業務單量</th>
+                                        <th scope="col">法會單量</th>
                                         <th scope="col">營收</th>
                                     </tr>
                                 </thead>
@@ -65,6 +66,7 @@
                                         <tr>
                                             <td>{{ $data['month'] }}</td>
                                             <td>{{ $data['cur_count'] }}</td>
+                                            <td>{{ $data['cur_puja_count'] }}</td>
                                             <td>{{ number_format($data['cur_price_amount']) }}</td>
                                         </tr>
                                     @endforeach

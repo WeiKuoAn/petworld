@@ -36,6 +36,15 @@
                                 <div class="me-3">
                                     <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="before_date" @if(!isset($request->before_date)) value="{{ $last_date->format("Y-m-d") }}" @endif value="{{ $request->before_date }}">
                                 </div>
+                                <label for="status-select" class="me-2">支出科目</label>
+                                <div class="me-sm-3">
+                                    <select class="form-select my-1 my-lg-0" id="status-select" name="pay_id" onchange="this.form.submit()">
+                                        <option value="NULL" selected>不限</option>
+                                        @foreach($pays as $pay)
+                                            <option value="{{ $pay->id }}" @if($request->pay_id == $pay->id) selected @endif>{{ $pay->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="me-3">
                                     <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
                                 </div>

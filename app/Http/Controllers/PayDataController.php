@@ -168,6 +168,11 @@ class PayDataController extends Controller
                 }else{
                     $Pay_Item->vender_id = null;
                 }
+                if($user->job_id == '2'){
+                    $Pay_Item->status = 1;
+                }else{
+                    $Pay_Item->status = 0;
+                }
                 $Pay_Item->comment = $request->pay_text[$key];
                 $Pay_Item->save();
             }
@@ -252,14 +257,23 @@ class PayDataController extends Controller
     public function check_data(Request $request , $id)
     {
         $data = PayData::where('id',$id)->first();
+        $items = PayItem::where('pay_data_id',$id)->get();
         if(isset($request)){
             // dd($request);
             if($request->submit1 == 'true'){
                 $data->status = 1;
                 $data->save();
+                foreach($items as $item){
+                    $item->status = 1;
+                    $item->save();
+                }
             }else{
                 $data->status = 0;
                 $data->save();
+                foreach($items as $item){
+                    $item->status = 0;
+                    $item->save();
+                }
             }
         }
         return redirect()->route('pays');

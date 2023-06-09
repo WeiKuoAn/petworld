@@ -25,6 +25,11 @@ use Illuminate\Support\Facades\Redis;
 
 class PersonController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth')->redirect()->route('login');
+    }
+
     public function show()
     {
         $user = User::where('id', Auth::user()->id)->first();
