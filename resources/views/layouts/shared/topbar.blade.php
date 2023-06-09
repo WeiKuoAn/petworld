@@ -358,16 +358,27 @@
                 </a>
                 <!-- End mobile menu toggle-->
             </li>
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('customer.create') }}" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span style="color:white;">新增客戶</span>
+                </a>
+            </li>
 
             <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('sale.create') }}" role="button" aria-haspopup="true" aria-expanded="true">
                     <span style="color:white;">業務Key單</span>
                 </a>
             </li>
 
             <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('pay.create') }}" role="button" aria-haspopup="false" aria-expanded="false">
                     <span style="color:white;">支出Key單</span>
+                </a>
+            </li>
+
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('wait.sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span style="color:white;">業務待對帳確認</span>
                 </a>
             </li>
 

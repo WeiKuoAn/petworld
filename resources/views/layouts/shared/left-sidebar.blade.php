@@ -73,16 +73,16 @@
                         <div class="collapse" id="sidebarEcommerce">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="{{route('branchs')}}"  class="{{ request()->is('branchs') ? 'active' : '' }}">部門列表</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('jobs')}}"  class="{{ request()->is('jobs') ? 'active' : '' }}">職稱列表</a>
-                                </li>
-                                <li>
                                     <a href="{{route('user.create')}}"  class="{{ request()->is('user.create') ? 'active' : '' }}">新增用戶</a>
                                 </li>
                                 <li>
                                     <a href="{{route('users')}}"  class="{{ request()->is('users') ? 'active' : '' }}">用戶列表</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('branchs')}}"  class="{{ request()->is('branchs') ? 'active' : '' }}">部門列表</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('jobs')}}"  class="{{ request()->is('jobs') ? 'active' : '' }}">職稱列表</a>
                                 </li>
                             </ul>
                         </div>
@@ -154,10 +154,10 @@
                                     <a href="{{ route('customer.create')}}"  class="{{ request()->is('customer.create') ? 'active' : '' }}">新增客戶</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('customer.group') }}"  class="{{ request()->is('customer.group') ? 'active' : '' }}">客戶群組</a>
+                                    <a href="{{ route('customer')}}"  class="{{ request()->is('customer') ? 'active' : '' }}">客戶列表</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('customer')}}"  class="{{ request()->is('customer') ? 'active' : '' }}">客戶列表</a>
+                                    <a href="{{ route('customer.group') }}"  class="{{ request()->is('customer.group') ? 'active' : '' }}">客戶群組</a>
                                 </li>
                             </ul>
                         </div>
@@ -220,20 +220,21 @@
                         <div class="collapse" id="puja">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="{{ route('puja.types') }}"  class="{{ request()->is('puja.types') ? 'active' : '' }}">法會類別設定</a>
+                                    <a href="{{ route('pujas') }}"  class="{{ request()->is('pujas') ? 'active' : '' }}">法會管理</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('puja.create') }}"  class="{{ request()->is('puja.create') ? 'active' : '' }}">法會設定</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('pujas') }}"  class="{{ request()->is('pujas') ? 'active' : '' }}">法會管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('puja_data.create') }}"  class="{{ request()->is('puja_data.create') ? 'active' : '' }}">法會報名</a>
+                                    <a href="{{ route('puja.types') }}"  class="{{ request()->is('puja.types') ? 'active' : '' }}">法會類別設定</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('puja_datas') }}"  class="{{ request()->is('puja_datas') ? 'active' : '' }}">法會報名查詢</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('puja_data.create') }}"  class="{{ request()->is('puja_data.create') ? 'active' : '' }}">法會報名</a>
+                                </li>
+                                
                             </ul>
                         </div>
                     </li>
@@ -398,7 +399,7 @@
                     </div>
                 </li>
 
-                <li class="menu-title mt-2">fast Use</li>
+                {{-- <li class="menu-title mt-2">fast Use</li>
                 <li>
                     <a href="{{ route('sale.create') }}">
                         <i data-feather="airplay"></i>
@@ -410,7 +411,7 @@
                         <i data-feather="airplay"></i>
                         <span> 支出key單 </span>
                     </a>
-                </li>
+                </li> --}}
                 
                 
             </ul>
