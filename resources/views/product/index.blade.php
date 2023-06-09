@@ -87,7 +87,7 @@
                                     <th>名稱</th>
                                     <th>類型</th>
                                     <th>類別</th>
-                                    <th>編號</th>
+                                    <th>庫存</th>
                                     <th>售價</th>
                                     <th>排序</th>
                                     <th>狀態</th>
@@ -114,7 +114,13 @@
                                                 {{ $data->category_data->name }}
                                             @endif
                                         </td>
-                                        <td>{{ $data->number }}</td>
+                                        <td>
+                                            @if($restocks[$data->id]['cur_num'] < 0)
+                                                <span class="text-danger">{{$restocks[$data->id]['cur_num']}}</span>個
+                                            @else
+                                                {{ $restocks[$data->id]['cur_num'] }}
+                                            @endif
+                                        </td>
                                         <td>{{ $data->price }}</td>
                                         <td>{{ $data->seq }}</td>
                                         <td>

@@ -83,7 +83,7 @@
                     <div class="col-auto me-auto"></div>
                         @if($data->new_num == null)
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-primary"  onclick="if(!confirm('是否確定送出盤點?')){event.returnValue=false;return false;}">送出盤點</button>
+                                <button type="submit" class="btn btn-primary">送出盤點</button>
                             </div>
                         @endif
                         <div class="col-auto">

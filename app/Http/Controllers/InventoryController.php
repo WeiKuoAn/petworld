@@ -18,7 +18,7 @@ class InventoryController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::orderBy('price','desc')->where('status','up')->get();
+        $products = Product::orderBy('price','desc')->where('type', '!=', 'combo')->where('status','up')->get();
 
         $datas = GdpaperInventoryData::orderby('id','desc');
         if($request)
@@ -107,9 +107,9 @@ class InventoryController extends Controller
 
 
         if($request->category_id == 'all'){
-          $products = Product::orderBy('price','desc')->where('stock','1')->where('status','up')->get();
+          $products = Product::orderBy('price','desc')->where('stock','1')->where('type', '!=', 'combo')->where('status','up')->get();
         }else{
-          $products = Product::orderBy('price','desc')->where('category_id',$request->category_id)->where('stock','1')->where('status','up')->get();
+          $products = Product::orderBy('price','desc')->where('category_id',$request->category_id)->where('type', '!=', 'combo')->where('stock','1')->where('status','up')->get();
         }
 
         // dd($products);
