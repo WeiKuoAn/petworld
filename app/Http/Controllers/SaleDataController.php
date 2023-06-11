@@ -462,7 +462,7 @@ class SaleDataController extends Controller
                 $sale->save();
             }
         }
-        return redirect()->route('preson-sale');
+        return redirect()->route('person.sales');
     }
 
 
