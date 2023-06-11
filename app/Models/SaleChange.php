@@ -17,4 +17,14 @@ class SaleChange extends Model
         'change_user_id',
         'comm',
     ];
+
+    public function user_data()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
+
+    public function change_user_data()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'change_user_id');
+    }
 }

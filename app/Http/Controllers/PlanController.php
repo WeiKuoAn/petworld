@@ -89,8 +89,15 @@ class PlanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function delete($id)
+    {
+        $data = Plan::where('id',$id)->first();
+        return view('plan.del')->with('data',$data);
+    }
+
     public function destroy($id)
     {
-        //
+        Plan::where('id',$id)->delete();
+        return redirect()->route('plans');
     }
 }

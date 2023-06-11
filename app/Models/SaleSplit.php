@@ -22,4 +22,14 @@ class SaleSplit extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'split_user_id');
     }
+
+    public function user_data()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
+
+    public function split_user_data()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'split_user_id');
+    }
 }

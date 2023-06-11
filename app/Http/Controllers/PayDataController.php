@@ -142,8 +142,8 @@ class PayDataController extends Controller
         $PayData->pay_date = date('Y-m-d', strtotime(Carbon::now()->locale('zh-tw')));
         $PayData->price = $request->price;
         $PayData->comment = $request->comment;
-        //是行政就直接通過
-        if($user->job_id == '2'){
+        //是行政主管或行政就直接通過
+        if($user->job_id == '2' || $user->job_id == '4'){
             $PayData->status = 1;
         }else{
             $PayData->status = 0;

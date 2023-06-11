@@ -52,7 +52,7 @@
                             <tbody>
                             @foreach ($datas as $key=>$data)
                                 <tr>
-                                    <td>{{ $data->id }}</td>
+                                    <td>{{ $key+1 }}</td>
                                     <td>{{ $data->name }}</td>
                                     <td>
                                         @if($data->status == "up") 啟用
@@ -61,6 +61,7 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('plan.edit',$data->id) }}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                        <a href="{{ route('plan.del',$data->id) }}" class="action-icon"> <i class="mdi mdi-trash-can-outline"></i></a>
                                         {{-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a> --}}
                                     </td>
                                 </tr>

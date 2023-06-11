@@ -78,11 +78,11 @@ class DashboardController extends Controller
         $firstDay = Carbon::now()->firstOfMonth();
         $lastDay = Carbon::now()->lastOfMonth();
 
-        $sale_today = Sale::where('sale_date',$today->format("Y-m-d"))->whereIn('pay_id',['A','B','C'])->count();
-        $price = Sale::where('sale_date',$today->format("Y-m-d"))->whereIn('pay_id',['A','B','C','D'])->sum('pay_price');
+        $sale_today = Sale::where('status','9')->where('sale_date',$today->format("Y-m-d"))->whereIn('pay_id', ['A', 'C', 'E'])->count();
+        $price = Sale::where('status','9')->where('sale_date',$today->format("Y-m-d"))->sum('pay_price');
         
         //月營收
-        $sale_month = Sale::where('sale_date','>=',$firstDay->format("Y-m-d"))->where('sale_date','<=',$lastDay->format("Y-m-d"))->sum('pay_price');
+        $sale_month = Sale::where('status','9')->where('sale_date','>=',$firstDay->format("Y-m-d"))->where('sale_date','<=',$lastDay->format("Y-m-d"))->sum('pay_price');
         $income_month = IncomeData::where('income_date','>=',$firstDay->format("Y-m-d"))->where('income_date','<=',$lastDay->format("Y-m-d"))->sum('price');
         $price_month = $sale_month + $income_month;
         $gdpaper_month = Sale_gdpaper::where('created_at','>=',$firstDay->format("Y-m-d"))->where('created_at','<=',$lastDay->format("Y-m-d"))->sum('gdpaper_total');

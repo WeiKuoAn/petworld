@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-end">
-                                <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ number_format($total_today_incomes) }}元</span></h3>
+                                <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ number_format($total_today_incomes) }}</span>元</h3>
                                 <p class="text-muted mb-1 text-truncate">今日營收</p>
                             </div>
                         </div>

@@ -119,7 +119,11 @@ class SaleDataController extends Controller
         $sale->pet_name = $request->pet_name;
         $sale->kg = $request->kg;
         $sale->type = $request->type;
-        $sale->plan_id = $request->plan_id;
+        if($request->type_list == 'memorial'){
+            $sale->plan_id = '4';
+        }else{
+            $sale->plan_id = $request->plan_id;
+        }
         $sale->plan_price = $request->plan_price;
         $sale->pay_id = $request->pay_id;
         //尾款或追加
@@ -434,8 +438,42 @@ class SaleDataController extends Controller
             ->with('sale_company',$sale_company);
     }
 
+    public function check_update(Request $request, $id)
+    {
+        
+        $sale = Sale::where('id', $id)->first();
+
+        if (Auth::user()->level != 2) {
+            if ($request->admin_check == 'check') {
+                $sale->status = '9';
+                $sale->save();
+            }
+            if ($request->admin_check == 'not_check') {
+                $sale->status = '1';
+                $sale->save();
+            }
+            if ($request->admin_check == 'reset') {
+                $sale->status = '1';
+                $sale->save();
+            }
+        } else {
+            if ($request->user_check == 'usercheck') {
+                $sale->status = '3';
+                $sale->save();
+            }
+        }
+        return redirect()->route('preson-sale');
+    }
+
 
     //轉單、對拆
+    public function change_record($id)
+    {
+        $sale_changes = SaleChange::where('sale_id', $id)->orderby('id','desc')->get();
+        $sale_splits = SaleSplit::where('sale_id', $id)->orderby('id','desc')->get();
+        return view('sale.change_record')->with('sale_changes', $sale_changes)->with('sale_splits', $sale_splits);
+    }
+
     public function change_show($id)
     {
         $users = User::where('status','0')->get();
@@ -468,6 +506,7 @@ class SaleDataController extends Controller
     public function change_update(Request $request, $id)
     {
         $data = Sale::where('id', $id)->first();
+        
         if($request->check_change == 1){
             $change_data = new SaleChange;
             $change_data->sale_id = $data->id;
@@ -488,8 +527,9 @@ class SaleDataController extends Controller
             $split_data->comm = $request->split_comm;
             $split_data->save();
         }
+
        
-        return redirect()->route('sales');
+        return redirect()->route('sales',['status' => 'check']);
     }
 
     /**
@@ -520,7 +560,11 @@ class SaleDataController extends Controller
         $sale->pet_name = $request->pet_name;
         $sale->kg = $request->kg;
         $sale->type = $request->type;
-        $sale->plan_id = $request->plan_id;
+        if($request->type_list == 'memorial'){
+            $sale->plan_id = '4';
+        }else{
+            $sale->plan_id = $request->plan_id;
+        }
         $sale->plan_price = $request->plan_price;
         $sale->pay_id = $request->pay_id;
         if($request->pay_id == 'D'){

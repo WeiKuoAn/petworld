@@ -229,6 +229,7 @@ Route::group(['prefix' => '/'], function () {
     //業務轉單或是對拆
     Route::get('/sale/change/{id}', [SaleDataController::class, 'change_show'])->name('sale.change');
     Route::post('/sale/change/{id}', [SaleDataController::class, 'change_update'])->name('sale.data.change');
+    Route::get('/sale/change_record/{id}', [SaleDataController::class, 'change_record'])->name('sale.change.record');
 
     Route::get('/prom/search', [SaleDataController::class, 'prom_search'])->name('prom.search');
     Route::get('/gdpaper/search', [SaleDataController::class, 'gdpaper_search'])->name('gdpaper.search');
@@ -251,6 +252,8 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/plan/create', [PlanController::class, 'store'])->name('plan.create.data');
     Route::get('/plan/edit/{id}', [PlanController::class, 'show'])->name('plan.edit');
     Route::post('/plan/edit/{id}', [PlanController::class, 'update'])->name('plan.edit.data');
+    Route::get('/plan/del/{id}', [PlanController::class, 'delete'])->name('plan.del');
+    Route::post('/plan/del/{id}', [PlanController::class, 'destroy'])->name('plan.del.data');
 
     /*後續處理管理*/
     Route::get('/proms', [PromController::class, 'index'])->name('proms');
