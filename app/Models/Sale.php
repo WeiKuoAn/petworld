@@ -30,6 +30,12 @@ class Sale extends Model
         'comm',
     ];
 
+    public function status()
+    {
+        $status = ['1' => '未送出對帳', '3' => '待確認對帳', '9' => '已對帳'];
+        return $status[$this->status];
+    }
+
     public function SaleChange()
     {
         return $this->hasOne('App\Models\SaleChange', 'sale_id', 'id')->orderBy('id', 'desc');

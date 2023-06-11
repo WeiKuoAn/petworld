@@ -40,6 +40,7 @@ use App\Http\Controllers\Rpg06Controller;
 use App\Http\Controllers\Rpg07Controller;
 use App\Http\Controllers\Rpg09Controller;
 use App\Http\Controllers\Rpg10Controller;
+use App\Http\Controllers\Rpg11Controller;
 use App\Http\Controllers\LeaveDayController;
 use App\Http\Controllers\RestockController;
 use Illuminate\Support\Facades\Storage;
@@ -217,6 +218,7 @@ Route::group(['prefix' => '/'], function () {
 
     /*業務管理*/
     Route::get('/sales', [SaleDataController::class, 'index'])->name('sales');
+    Route::get('/sales/export', [SaleDataController::class, 'export'])->name('sales.export');
     Route::get('/sale/create', [SaleDataController::class, 'create'])->name('sale.create');
     Route::post('/sale/create', [SaleDataController::class, 'store'])->name('sale.data.create');
     Route::get('/sale/edit/{id}', [SaleDataController::class, 'show'])->name('sale.edit');
@@ -386,6 +388,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/rpg/rpg07/export', [Rpg07Controller::class, 'export'])->name('rpg07.export');
     Route::get('/rpg/rpg09', [Rpg09Controller::class, 'rpg09'])->name('rpg09');
     Route::get('/rpg/rpg10', [Rpg10Controller::class, 'rpg10'])->name('rpg10');
+    Route::get('/rpg/rpg11', [Rpg11Controller::class, 'rpg11'])->name('rpg11');
 
     Route::get('image', function()
     {

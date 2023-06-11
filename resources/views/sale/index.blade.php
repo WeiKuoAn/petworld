@@ -78,7 +78,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="me-2">
+                                    <div class="me-3 mt-1">
                                         <label for="after_date">付款方式</label>
                                         <select id="inputState" class="form-select" name="pay_id" onchange="this.form.submit()">
                                             <option value="" @if (!isset($request->pay_id)) selected @endif>請選擇</option>
@@ -88,7 +88,7 @@
                                             <option value="D" @if($request->pay_id == 'D') selected @endif>尾款</option>
                                         </select>
                                     </div>
-                                    <div class="me-2">
+                                    <div class="me-3 mt-1">
                                         <label for="after_date">狀態</label>
                                         <select id="inputState" class="form-select" name="status" onchange="this.form.submit()">
                                             <option value="not_check" @if (isset($request->status) || $request->status == 'not_check') selected @endif>未對帳</option>
@@ -97,6 +97,11 @@
                                     </div>
                                     <div class="me-3 mt-3">
                                         <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
+                                    </div>
+                                    <div class="me-3 mt-3">
+                                        <a href="{{ route('sales.export',request()->input()) }}">
+                                            <button type="button" class="btn btn-primary waves-effect waves-light me-1"><i class="fe-download me-1"></i>匯出</button>
+                                        </a>
                                     </div>
                                     <div class="col mt-3" style="text-align: right;">
                                         {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
@@ -126,8 +131,8 @@
                                         <th>類別</th>
                                         <th>方案</th>
                                         <th>金紙</th>
-                                        <th>後續處理A</th>
-                                        <th>後續處理B</th>
+                                        <th>安葬方式</th>
+                                        <th>後續處理</th>
                                         <th>付款方式</th>
                                         <th>實收價格</th>
                                         @if($request->status == 'check')

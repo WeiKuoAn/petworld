@@ -695,4 +695,215 @@ class SaleDataController extends Controller
         $sale_promBs->delete();
         return redirect()->route('sales');
     }
+
+    //匯出
+    public function export(Request $request)
+    {
+        if ($request->input() != null) {
+            $status = $request->status;
+            if (!isset($status) || $status == 'not_check') {
+                $sales = Sale::whereIn('status', [1, 2]);
+            }
+            if ($status == 'check') {
+                $sales = Sale::where('status', 9);
+            }
+            $type_list = $request->type_list;
+            if($type_list)
+            {
+                $sales = $sales->where('type_list', $type_list);
+            }else{
+                $sales = $sales; 
+            }
+            $after_date = $request->after_date;
+            if ($after_date) {
+                $sales = $sales->where('sale_date', '>=', $after_date);
+            }
+            $before_date = $request->before_date;
+            if ($before_date) {
+                $sales = $sales->where('sale_date', '<=', $before_date);
+            }
+            $sale_on = $request->sale_on;
+            if ($sale_on) {
+                $sales = $sales->where('sale_on', $sale_on);
+            }
+            $cust_mobile = $request->cust_mobile;
+            if ($cust_mobile) {
+                $cust_mobile = $request->cust_mobile.'%';
+                $customers = Customer::where('mobile', 'like' ,$cust_mobile)->get();
+                foreach($customers as $customer) {
+                    $customer_ids[] = $customer->id;
+                }
+                if(isset($customer_ids)){
+                    $sales = $sales->whereIn('customer_id', $customer_ids);
+                }else{
+                    $sales = $sales;
+                }
+            }
+
+            $pet_name = $request->pet_name;
+            if ($pet_name) {
+                $pet_name = $request->pet_name.'%';
+                $sales = $sales->where('pet_name', 'like' ,$pet_name);
+            }
+
+            $pet_name = $request->pet_name;
+            if ($pet_name) {
+                $pet_name = $request->pet_name.'%';
+                $sales = $sales->where('pet_name', 'like' ,$pet_name);
+            }
+
+            $user = $request->user;
+            if ($user != "null") {
+                if (isset($user)) {
+                    $sales = $sales->where('user_id', $user);
+                } else {
+                    $sales = $sales;
+                }
+            }
+
+            $plan = $request->plan;
+            if ($plan != "null") {
+                if (isset($plan)) {
+                    $sales = $sales->where('plan_id', $plan);
+                } else {
+                    $sales = $sales;
+                }
+            }
+
+            $pay_id = $request->pay_id;
+            if ($pay_id) {
+                if($pay_id == 'A'){
+                    $sales = $sales->whereIn('pay_id', ['A','B']);
+                }else{
+                    $sales = $sales->where('pay_id', $pay_id);
+                }
+            }
+            $sales = $sales->orderby('sale_date', 'desc')->get();
+        }else{
+            $after_date='';
+            $before_date ='';
+            $sales = [];
+        }
+        // dd($request->input());
+        // foreach($datas as $key => $data)
+        // {
+        //     $data->comment = '';
+        //     foreach($data->gdpapers as $gd_key => $gdpaper)
+        //     {
+        //         if (isset($gdpaper->gdpaper_id)){
+                    
+        //             $data->comment .= $gdpaper->gdpaper_name->name.$gdpaper->gdpaper_num.'份'."\r\n";
+        //         }else{
+        //             $data->comment .= '無';
+        //         }
+        //     }
+        // }
+
+        $fileName = '專員業務key單' . date("Y-m-d") . '.csv';
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        $header = array('日期', $after_date.'~' ,  $before_date);
+        $columns = array('單號', '專員', '日期', '客戶', '寶貝名' , '類別','方案','金紙','金紙總賣價','安葬方式','後續處理','付款方式','實收價格','狀態','轉單','對拆人員');
+
+        $callback = function() use($sales, $columns ,$header) {
+            
+            $file = fopen('php://output', 'w');
+            fputs($file, chr(0xEF).chr(0xBB).chr(0xBF), 3); 
+            fputcsv($file, $header);
+            fputcsv($file, $columns);
+
+            foreach ($sales as $key=>$sale) {
+                $row['單號']  = $sale->sale_on;
+                $row['專員'] = $sale->user_name->name;
+                $row['日期'] = $sale->sale_date;
+                if((isset($sale->customer_id))){
+                    if(isset($sale->cust_name)){
+                        $row['客戶'] = $sale->cust_name->name;
+                    }else{
+                        $row['客戶'] = $sale->customer_id.'（客戶姓名須重新登入）';
+                    }
+                }elseif($sale->type_list == 'memorial'){
+                    $row['客戶'] = '追思';
+                }
+                if((isset($sale->pet_name))){
+                    $row['寶貝名'] = $sale->pet_name;
+                }
+                if(isset($sale->type)){
+                    if(isset($sale->source_type)){
+                        $row['類別'] = $sale->source_type->name;
+                    }else{
+                        $row['類別'] = $sale->type;
+                    }
+                }
+                if(isset($sale->plan_id)){
+                    $row['方案'] = $sale->plan_name->name;
+                }
+                
+                $row['金紙'] = '';
+                $row['金紙總價格'] = 0;
+                foreach ($sale->gdpapers as $gdpaper){
+                    if(isset($gdpaper->gdpaper_id)){
+                        if(isset($gdpaper->gdpaper_name)){
+                            $row['金紙'] .= ($row['金紙']=='' ? '' : "\r\n").$gdpaper->gdpaper_name->name.' '.$gdpaper->gdpaper_num.'份';
+                        }
+                        $row['金紙總價格'] += $gdpaper->gdpaper_total;
+                    }else{
+                        $row['金紙'] = '無';
+                    }
+                }
+                $row['安葬方式'] = '';
+                if(isset($sale->before_prom_id)){
+                    $row['安葬方式'] = $sale->PromA_name->name . '-' .$sale->before_prom_price;
+                }
+                foreach ($sale->proms as $prom){
+                    if ($prom->prom_type == 'A'){
+                        if(isset($prom->prom_id)){
+                            $row['安葬方式'] = $prom->prom_name->name .'-'.number_format($prom->prom_total);
+                        }else{
+                            $row['安葬方式'] = '無';
+                        }
+                    }
+                }
+                $row['後續處理'] = '';
+                foreach ($sale->proms as $prom){
+                    if ($prom->prom_type == 'B'){
+                        if(isset($prom->prom_id)){
+                            $row['後續處理'] = $prom->prom_name->name .'-'.number_format($prom->prom_total);
+                        }else{
+                            $row['後續處理'] = '無';
+                        }
+                    }
+                }
+                if (isset($sale->pay_id)){
+                    $row['付款方式'] = $sale->pay_type();
+                }
+                $row['實收價格']= number_format($sale->pay_price);
+                $row['狀態'] = $sale->status();
+                $row['轉單'] = '';
+                if(isset($sale->SaleChange)){
+                    $row['轉單'] = '是';
+                }else{
+                    $row['轉單'] = '否';
+                }
+                $row['對拆人員'] = '';
+                if(isset($sale->SaleSplit)){
+                    $row['對拆人員'] = $sale->SaleSplit->user_name->name;
+                }
+                //'付款方式','實收價格','狀態','轉單','對拆人員'
+                fputcsv($file, array($row['單號'], $row['專員'], $row['日期'], $row['客戶'],$row['寶貝名'],$row['類別']
+                                    ,$row['方案'],$row['金紙'],$row['金紙總價格'],$row['安葬方式'],$row['後續處理'],$row['付款方式']
+                                    ,$row['實收價格'],$row['狀態'],$row['轉單'],$row['對拆人員']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
