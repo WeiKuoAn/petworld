@@ -18,15 +18,15 @@
             @if(Auth::user()->job_id == 1)<!-- 老闆(1)-->
                 @include('layouts.shared/admin-left-sidebar')
             @elseif(Auth::user()->job_id == 2)<!-- 行政主管(2) -->
-
+                @include('layouts.shared/admin-left-sidebar')
             @elseif(Auth::user()->job_id == 3)<!-- 專員主管(3) -->
-
+                @include('layouts.shared/admin-left-sidebar')
             @elseif(Auth::user()->job_id == 4)<!-- 行政(4) -->
-
+                @include('layouts.shared/admin-left-sidebar')
             @elseif(Auth::user()->job_id == 5)<!-- 專員(5) -->
-
+                @include('layouts.shared/admin-left-sidebar')
             @elseif(Auth::user()->job_id == 6)<!-- 股東(6) -->
-
+                @include('layouts.shared/admin-left-sidebar')
             @endif
         @endif
 
