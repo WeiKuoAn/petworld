@@ -21,6 +21,7 @@ class PayController extends Controller
         $pay->name = $request->name;
         $pay->seq = $request->seq;
         $pay->status = $request->status;
+        $pay->comment = $request->comment;
         $pay->save();
         return redirect()->route('pay.sujects');
     }
@@ -35,6 +36,7 @@ class PayController extends Controller
         $pay->name = $request->name;
         $pay->seq = $request->seq;
         $pay->status = $request->status;
+        $pay->comment = $request->comment;
         $pay->save();
         return redirect()->route('pay.sujects');
     }

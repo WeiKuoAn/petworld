@@ -13,6 +13,8 @@ class Pay extends Model
 
     protected $fillable = [
         'name',
-        'status'
+        'status',
+        'seq',
+        'comment'
     ];
 }

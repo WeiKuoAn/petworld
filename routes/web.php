@@ -221,10 +221,15 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/sale/create', [SaleDataController::class, 'store'])->name('sale.data.create');
     Route::get('/sale/edit/{id}', [SaleDataController::class, 'show'])->name('sale.edit');
     Route::post('/sale/edit/{id}', [SaleDataController::class, 'update'])->name('sale.data.edit');
-    Route::get('/sale/check/{id}', [SaleDataController::class, 'check_show'])->name('sale.check');
-    Route::post('/sale/check/{id}', [SaleDataController::class, 'check_update'])->name('sale.data.check');
     Route::get('/sale/del/{id}', [SaleDataController::class, 'delete'])->name('sale.del');
     Route::post('/sale/del/{id}', [SaleDataController::class, 'destroy'])->name('sale.data.del');
+    //業務確認對帳
+    Route::get('/sale/check/{id}', [SaleDataController::class, 'check_show'])->name('sale.check');
+    Route::post('/sale/check/{id}', [SaleDataController::class, 'check_update'])->name('sale.data.check');
+    //業務轉單或是對拆
+    Route::get('/sale/change/{id}', [SaleDataController::class, 'change_show'])->name('sale.change');
+    Route::post('/sale/change/{id}', [SaleDataController::class, 'change_update'])->name('sale.data.change');
+
     Route::get('/prom/search', [SaleDataController::class, 'prom_search'])->name('prom.search');
     Route::get('/gdpaper/search', [SaleDataController::class, 'gdpaper_search'])->name('gdpaper.search');
     Route::get('/customer/search', [SaleDataController::class, 'customer_search'])->name('customer.search');

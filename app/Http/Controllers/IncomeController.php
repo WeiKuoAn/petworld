@@ -23,6 +23,7 @@ class IncomeController extends Controller
         $data->name = $request->name;
         $data->seq = $request->seq;
         $data->status = $request->status;
+        $data->comment = $request->comment;
         $data->save();
         return redirect()->route('income.sujects');
     }
@@ -37,6 +38,7 @@ class IncomeController extends Controller
         $data->name = $request->name;
         $data->seq = $request->seq;
         $data->status = $request->status;
+        $data->comment = $request->comment;
         $data->save();
         return redirect()->route('income.sujects');
     }

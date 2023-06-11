@@ -57,6 +57,10 @@
                                     <option value="down">下架</option>
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label">備註</label>
+                                <textarea class="form-control" rows="3" placeholder="" name="comment"></textarea>
+                            </div>
                         </div> <!-- end col-->
                         
                     </div>

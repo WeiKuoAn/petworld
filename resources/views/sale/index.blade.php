@@ -130,6 +130,10 @@
                                         <th>後續處理B</th>
                                         <th>付款方式</th>
                                         <th>實收價格</th>
+                                        @if($request->status == 'check')
+                                            <th>轉單</th>
+                                            <th>對拆</th>
+                                        @endif
                                         <th>動作</th>
                                     </tr>
                                 </thead>
@@ -217,6 +221,22 @@
                                             @endif
                                         </td>
                                         <td>{{ number_format($sale->pay_price) }}</td>
+                                        @if($request->status == 'check')
+                                            <td>
+                                                @if(isset($sale->SaleChange))
+                                                    Y
+                                                @else
+                                                    N
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if(isset($sale->SaleSplit))
+                                                    {{ $sale->SaleSplit->user_name->name }}
+                                                @else
+                                                    N
+                                                @endif
+                                            </td>
+                                        @endif
                                         <td>
                                             {{-- @if ($sale->status != '9')
                                                 <a href="{{ route('edit-sale', $sale->id) }}"><button type="button"
@@ -240,7 +260,13 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <a href="{{ route('sale.check',$sale->id) }}"><button type="button" class="btn btn-secondary waves-effect waves-light">查看</button></a>
+                                                <div class="btn-group dropdown">
+                                                    <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item" href="{{ route('sale.check',$sale->id) }}"><i class="mdi mdi-eye me-2 font-18 text-muted vertical-middle"></i>查看</a>
+                                                        <a class="dropdown-item" href="{{ route('sale.change',$sale->id) }}"><i class="mdi mdi-autorenew me-2 text-muted font-18 vertical-middle"></i>轉單/對拆</a>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>

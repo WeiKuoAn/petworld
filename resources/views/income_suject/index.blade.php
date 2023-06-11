@@ -46,6 +46,7 @@
                                             <th>收入科目</th>
                                             <th>排序</th>
                                             <th>狀態</th>
+                                            <th>備註</th>
                                             <th>動作</th>
                                         </tr>
                                     </tr>
@@ -61,6 +62,7 @@
                                                 @else <b style="color:red;">停用</b>
                                                 @endif
                                             </td>
+                                            <td>{{ $data->comment }}</td>
                                             <td>
                                                 <a href="{{ route('income.suject.edit',$data->id) }}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                             </td>

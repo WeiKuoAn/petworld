@@ -30,6 +30,16 @@ class Sale extends Model
         'comm',
     ];
 
+    public function SaleChange()
+    {
+        return $this->hasOne('App\Models\SaleChange', 'sale_id', 'id')->orderBy('id', 'desc');
+    }
+
+    public function SaleSplit()
+    {
+        return $this->hasOne('App\Models\SaleSplit', 'sale_id', 'id')->orderBy('id', 'desc');
+    }
+
     public function gdpapers()
     {
         return $this->hasMany('App\Models\Sale_gdpaper', 'sale_id', 'id');

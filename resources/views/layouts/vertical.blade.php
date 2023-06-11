@@ -15,12 +15,18 @@
         @include('layouts.shared/topbar')
 
         @if(Auth::user()->status == 0)<!--用戶是否啟用-->
-            @if(Auth::user()->level == 0 || Auth::user()->id == 2)
-                @include('layouts.shared/left-sidebar')
-            @elseif(Auth::user()->level == 1 && Auth::user()->jod_id == 2)
-            {{-- @elseif(Auth::user()->level == 1 && Auth::user()->jod_id == 2) --}}
-            @else
-                @include('layouts.shared/user-left-sidebar')
+            @if(Auth::user()->job_id == 1)<!-- 老闆(1)-->
+                @include('layouts.shared/admin-left-sidebar')
+            @elseif(Auth::user()->job_id == 2)<!-- 行政主管(2) -->
+
+            @elseif(Auth::user()->job_id == 3)<!-- 專員主管(3) -->
+
+            @elseif(Auth::user()->job_id == 4)<!-- 行政(4) -->
+
+            @elseif(Auth::user()->job_id == 5)<!-- 專員(5) -->
+
+            @elseif(Auth::user()->job_id == 6)<!-- 股東(6) -->
+
             @endif
         @endif
 

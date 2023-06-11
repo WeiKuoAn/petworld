@@ -9,6 +9,8 @@ use App\Models\Plan;
 use App\Models\Prom;
 use App\Models\Sale_gdpaper;
 use App\Models\Sale_prom;
+use App\Models\SaleSplit;
+use App\Models\SaleChange;
 use App\Models\Sale;
 use App\Models\User;
 use App\Models\SaleSource;
@@ -286,7 +288,7 @@ class SaleDataController extends Controller
             $price_total = Sale::where('status', '1')->sum('pay_price');
             $sales = Sale::orderby('sale_date', 'desc')->where('status', '1')->paginate(50);
         }
-        $users = User::get();
+        $users = User::where('status','0')->get();
         $sources = SaleSource::where('status','up')->get();
         $plans = Plan::where('status','up')->get();
 
@@ -432,33 +434,62 @@ class SaleDataController extends Controller
             ->with('sale_company',$sale_company);
     }
 
-    public function check_update(Request $request, $id)
+
+    //轉單、對拆
+    public function change_show($id)
     {
-        
-        $sale = Sale::where('id', $id)->first();
+        $users = User::where('status','0')->get();
+        $sources = SaleSource::where('status','up')->get();
+        $customers = Customer::get();
+        $plans = Plan::where('status', 'up')->get();
+        $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
+        $proms = Prom::where('status', 'up')->orderby('seq','asc')->get();
+        $data = Sale::where('id', $id)->first();
+        $sale_gdpapers = Sale_gdpaper::where('sale_id', $id)->get();
+        $sale_proms = Sale_prom::where('sale_id', $id)->get();
+        $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
 
-        if (Auth::user()->level != 2) {
-            if ($request->admin_check == 'check') {
-                $sale->status = '9';
-                $sale->save();
-            }
-            if ($request->admin_check == 'not_check') {
-                $sale->status = '1';
-                $sale->save();
-            }
-            if ($request->admin_check == 'reset') {
-                $sale->status = '1';
-                $sale->save();
-            }
-        } else {
-            if ($request->user_check == 'usercheck') {
-                $sale->status = '3';
-                $sale->save();
-            }
+        $sale_change = SaleChange::where('sale_id', $id)->orderby('id','desc')->first();
+        $sale_split = SaleSplit::where('sale_id', $id)->orderby('id','desc')->first();
+        return view('sale.change')->with('data', $data)
+                                  ->with('customers', $customers)
+                                  ->with('plans', $plans)
+                                  ->with('products', $products)
+                                  ->with('proms', $proms)
+                                  ->with('sale_proms', $sale_proms)
+                                  ->with('sale_gdpapers', $sale_gdpapers)
+                                  ->with('sources',$sources)
+                                  ->with('sale_company',$sale_company)
+                                  ->with('users',$users)
+                                  ->with('sale_change',$sale_change)
+                                  ->with('sale_split',$sale_split);
+    }
+
+    public function change_update(Request $request, $id)
+    {
+        $data = Sale::where('id', $id)->first();
+        if($request->check_change == 1){
+            $change_data = new SaleChange;
+            $change_data->sale_id = $data->id;
+            $change_data->user_id = $request->user_id;
+            $change_data->change_user_id = $request->change_user_id;
+            $change_data->comm = $request->change_comm;
+            $change_data->save();
+
+            $data->user_id = $request->change_user_id;
+            $data->save();
         }
-        return redirect()->route('person.sales');
 
-
+        if($request->check_split == 1){
+            $split_data = new SaleSplit();
+            $split_data->sale_id = $data->id;
+            $split_data->user_id = $request->split_user_id_1;
+            $split_data->split_user_id = $request->split_user_id_2;
+            $split_data->comm = $request->split_comm;
+            $split_data->save();
+        }
+       
+        return redirect()->route('sales');
     }
 
     /**
