@@ -376,11 +376,19 @@
                 </a>
             </li>
 
+            @if(Auth::user()->job_id ==1 || Auth::user()->job_id ==7 || Auth::user()->job_id ==2 || Auth::user()->job_id ==3)
             <li class="dropdown d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('wait.sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
                     <span style="color:white;">業務待對帳確認</span>
                 </a>
             </li>
+            @else
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('person.wait.sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span style="color:white;">業務待對帳確認</span>
+                </a>
+            </li>
+            @endif
 
             {{-- <li class="dropdown dropdown-mega d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
