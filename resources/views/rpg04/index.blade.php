@@ -50,11 +50,13 @@
                                 </div>
                             </form>
                         </div>
+                        @if(Auth::user()->job_id == 1 || Auth::user()->job_id== 7)
                         <div class="col-auto">
                             <div class="text-lg-end my-1 my-lg-0">
                                 <h3><span class="text-danger">共計：{{ number_format($totals['nums']) }}份，{{ number_format($totals['total']) }}元</span></h3>
                             </div>
                         </div><!-- end col-->
+                        @endif
                     </div> <!-- end row -->
                 </div>
             </div> <!-- end card -->

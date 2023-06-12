@@ -63,7 +63,7 @@
 
                 <li class="menu-title mt-2">Apps</li>
 
-                <li>
+                {{-- <li>
                     <li>
                         <a href="#sidebarEcommerce" data-bs-toggle="collapse">
                             <i data-feather="users"></i>
@@ -86,7 +86,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <li>
                         <a href="#holiday" data-bs-toggle="collapse">

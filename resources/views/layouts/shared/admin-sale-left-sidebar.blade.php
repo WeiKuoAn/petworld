@@ -52,18 +52,18 @@
                         <span> 線上打卡 </span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ route('dashboard.info') }}">
                         <i data-feather="airplay"></i>
                         <span> 當月總表 </span>
                     </a>
-                </li>
+                </li> --}}
 
                 
 
                 <li class="menu-title mt-2">Apps</li>
 
-                <li>
+                {{-- <li>
                     <li>
                         <a href="#sidebarEcommerce" data-bs-toggle="collapse">
                             <i data-feather="users"></i>
@@ -86,7 +86,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <li>
                         <a href="#holiday" data-bs-toggle="collapse">
@@ -97,20 +97,8 @@
                         <div class="collapse" id="holiday">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="{{ route('personnels') }}"  class="{{ request()->is('personnels') ? 'active' : '' }}">人事列表</a>
-                                </li>
-                                <li>
                                     <a href="{{ route('personnel.leave_days') }}"  class="{{ request()->is('personnel.leave_days') ? 'active' : '' }}">部門請假核准</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('vacations') }}"  class="{{ request()->is('vacations') ? 'active' : '' }}">年度總休假設定</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('personnel.holidays') }}"  class="{{ request()->is('personnel.holidays') ? 'active' : '' }}">例休假總覽</a>
-                                </li>
-                                {{-- <li>
-                                    <a href="{{ route('user.bank') }}"  class="{{ request()->is('user.bank') ? 'active' : '' }}">專員戶頭設定</a>
-                                </li> --}}
                             </ul>
                         </div>
                     </li>
@@ -212,34 +200,6 @@
                     </li>
 
                     <li>
-                        <a href="#puja" data-bs-toggle="collapse">
-                            <i data-feather="feather"></i>
-                            <span> 法會管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="puja">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{ route('pujas') }}"  class="{{ request()->is('pujas') ? 'active' : '' }}">法會管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('puja.create') }}"  class="{{ request()->is('puja.create') ? 'active' : '' }}">法會設定</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('puja.types') }}"  class="{{ request()->is('puja.types') ? 'active' : '' }}">法會類別設定</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('puja_datas') }}"  class="{{ request()->is('puja_datas') ? 'active' : '' }}">法會報名查詢</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('puja_data.create') }}"  class="{{ request()->is('puja_data.create') ? 'active' : '' }}">法會報名</a>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
                         <a href="#contract" data-bs-toggle="collapse">
                             <i data-feather="folder"></i>
                             <span> 合約管理 </span>
@@ -248,97 +208,10 @@
                         <div class="collapse" id="contract">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="{{ route('contractTypes') }}"  class="{{ request()->is('contractTypes') ? 'active' : '' }}">合約類別</a>
-                                </li>
-                                <li>
                                     <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">合約管理</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增合約</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="#other" data-bs-toggle="collapse">
-                            <i data-feather="database"></i>
-                            <span> 其他管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="other">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{ route('sources') }}"  class="{{ request()->is('sources') ? 'active' : '' }}">來源資料</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('plans') }}"  class="{{ request()->is('plans') ? 'active' : '' }}">方案資料</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('proms') }}"  class="{{ request()->is('proms') ? 'active' : '' }}">後續處理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('venders') }}"  class="{{ request()->is('venders') ? 'active' : '' }}">廠商資料</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="#income" data-bs-toggle="collapse">
-                            <i data-feather="trending-up"></i>
-                            <span> 收入管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="income">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{ route('income.sujects') }}"  class="{{ request()->is('income.sujects') ? 'active' : '' }}">收入科目</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('incomes') }}"  class="{{ request()->is('incomes') ? 'active' : '' }}">收入管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('income.create') }}"  class="{{ request()->is('income.create') ? 'active' : '' }}">收入key單</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="#pay" data-bs-toggle="collapse">
-                            <i data-feather="trending-down"></i>
-                            <span> 支出管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="pay">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{ route('pay.sujects') }}"  class="{{ request()->is('pay.sujects') ? 'active' : '' }}">支出科目</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('pays') }}"  class="{{ request()->is('pays') ? 'active' : '' }}">支出管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('pay.create') }}"  class="{{ request()->is('pay.create') ? 'active' : '' }}">支出Key單</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="#cash" data-bs-toggle="collapse">
-                            <i data-feather="dollar-sign"></i>
-                            <span> 零用金管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="cash">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{ route('cashs') }}"  class="{{ request()->is('cashs') ? 'active' : '' }}">零用金管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('cash.create') }}"  class="{{ request()->is('cash.create') ? 'active' : '' }}">零用金Key單</a>
                                 </li>
                             </ul>
                         </div>
@@ -353,31 +226,10 @@
                         <div class="collapse" id="rpg">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('rpg02') }}"  class="{{ request()->is('rpg02') ? 'active' : '' }}">支出報表</a>
-                                </li>
-                                <li>
                                     <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙報表</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('rpg05') }}"  class="{{ request()->is('rpg05') ? 'active' : '' }}">營收總表</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('rpg06') }}"  class="{{ request()->is('rpg06') ? 'active' : '' }}">舊法會查詢</a>
-                                </li>
-                                <li>
                                     <a href="{{ route('rpg07') }}"  class="{{ request()->is('rpg07') ? 'active' : '' }}">團火查詢</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('rpg09') }}"  class="{{ request()->is('rpg09') ? 'active' : '' }}">年度每月營收報表</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('rpg11') }}"  class="{{ request()->is('rpg11') ? 'active' : '' }}">年度營收報表</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('rpg10') }}"  class="{{ request()->is('rpg10') ? 'active' : '' }}">專員金紙抽成</a>
                                 </li>
                             </ul>
                         </div>
