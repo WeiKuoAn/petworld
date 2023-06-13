@@ -161,6 +161,8 @@ Route::group(['prefix' => '/'], function () {
     Route::post('visit/del/{cust_id}{id}', [VisitController::class, 'destroy'])->name('visit.del.data');
     Route::get('visit/company/create', [VisitController::class, 'company_create'])->name('visit.company.create');
     Route::post('visit/company/create', [VisitController::class, 'company_store'])->name('visit.company.create.data');
+    Route::get('visit/company/edit/{id}', [VisitController::class, 'company_edit'])->name('visit.company.edit');
+    Route::post('visit/company/edit/{id}', [VisitController::class, 'company_update'])->name('visit.company.edit.data');
 
 
     /*客戶群組管理*/
@@ -295,6 +297,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/pay/suject/edit/{id}', [PayController::class, 'update'])->name('pay.suject.edit.data');
 
     /*支出管理*/
+    Route::get('user/{id}/pay', [PayDataController::class, 'user_pay'])->name('user.pay');
     Route::get('/pay', [PayDataController::class, 'index'])->name('pays');
     Route::get('/pay/create', [PayDataController::class, 'create'])->name('pay.create');
     Route::post('/pay/create', [PayDataController::class, 'store'])->name('pay.create.data');

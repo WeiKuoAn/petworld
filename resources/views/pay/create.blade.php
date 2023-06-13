@@ -100,9 +100,9 @@
                                             <input id="pay_date-{{ $i }}" class="mobile form-control" type="date" name="pay_data_date[]" value="" required>
                                             </td>
                                             <td>
-                                                <select id="pay_id-{{ $i }}" class="form-select" aria-label="Default select example" name="pay_id[]" required>
+                                                <select id="pay_id-{{ $i }}" class="mobile form-select"  aria-label="Default select example" name="pay_id[]" required>
                                                     @foreach($pays as $pay)
-                                                    <option value="{{ $pay->id }}">{{ $pay->name  }}</option>
+                                                    <option value="{{ $pay->id }}" class="mobile">{{ $pay->name  }}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
@@ -211,17 +211,17 @@
             $newRow += '<button class="mobile btn btn-primary del-row" alt="'+$rowCount+'" type="button" name="button" onclick="del_row(this)">刪除</button>';
             $newRow += '</td>';
             $newRow += '<td scope="row">';
-            $newRow += '<input id="pay_date-'+$rowCount+'" class="form-control" type="date" name="pay_data_date[]" value="" required>';
+            $newRow += '<input id="pay_date-'+$rowCount+'" class="mobile form-control" type="date" name="pay_data_date[]" value="" required>';
             $newRow += '</td>';
             $newRow += '<td>';
-            $newRow += '<select id="pay_id-'+$rowCount+'" class="form-select" aria-label="Default select example" name="pay_id[]" required>';
+            $newRow += '<select id="pay_id-'+$rowCount+'" class="mobile form-select" aria-label="Default select example" name="pay_id[]" required>';
             @foreach($pays as $pay)
             $newRow += '<option value="{{ $pay->id }}">{{ $pay->name  }}</option>;'
             @endforeach
             $newRow += '</select>';
             $newRow += '</td>';
             $newRow += '<td>';
-            $newRow += '<input id="pay_price-'+$rowCount+'" class="form-control" type="text" name="pay_price[]" value="" required>';
+            $newRow += '<input id="pay_price-'+$rowCount+'" class="mobile form-control" type="text" name="pay_price[]" value="" required>';
             $newRow += '</td>';
             $newRow += '<td>';
             $newRow += '<select id="pay_invoice_type-'+$rowCount+'"  alt="'+$rowCount+'" class="form-select" aria-label="Default select example" name="pay_invoice_type[]" onchange="chgInvoice(this)"  required>';

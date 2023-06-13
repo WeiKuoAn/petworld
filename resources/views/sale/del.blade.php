@@ -373,7 +373,8 @@
     });
 
     type_list = $('select[name="type_list"]').val();
-    console.log(type_list);
+    payIdValue = $('select[name="pay_id"]').val();
+    console.log(payIdValue);
 
     //案件單類別
     if(type_list == 'memorial'){
@@ -383,6 +384,25 @@
         $("#kg").prop('required', false);
         $("#type").prop('required', false);
         $("#plan_id").prop('required', false);
+    }else if(type_list == 'dispatch'){
+        $(".not_memorial_show").show(300);
+            if(payIdValue == 'D' || payIdValue =='E'){
+                $("#final_price").show(300);
+                $(".not_final_show").hide();
+                $("#pet_name").prop('required', false);
+                $("#kg").prop('required', false);
+                $("#type").prop('required', false);
+                $("#plan_id").prop('required', false);
+                $("#plan_price").prop('required', false);
+            }else{
+                $("#final_price").hide(300);
+                $(".not_final_show").show(300);
+                $("#pet_name").prop('required', true);
+                $("#kg").prop('required', true);
+                $("#type").prop('required', true);
+                $("#plan_id").prop('required', true);
+                $("#plan_price").prop('required', true);
+            }
     }
 
     $('select[name="type_list"]').on('change', function() {
@@ -393,113 +413,51 @@
             $("#kg").prop('required', false);
             $("#type").prop('required', false);
             $("#plan_id").prop('required', false);
-        }else{
+        }else if($(this).val() == 'dispatch'){
             $(".not_memorial_show").show(300);
-            $("#cust_name_q").prop('required', true);
+            if(payIdValue == 'D' || payIdValue =='E'){
+                $("#final_price").show(300);
+                $(".not_final_show").hide();
+                $("#pet_name").prop('required', false);
+                $("#kg").prop('required', false);
+                $("#type").prop('required', false);
+                $("#plan_id").prop('required', false);
+                $("#plan_price").prop('required', false);
+            }else{
+                $("#final_price").hide(300);
+                $(".not_final_show").show(300);
+                $("#pet_name").prop('required', true);
+                $("#kg").prop('required', true);
+                $("#type").prop('required', true);
+                $("#plan_id").prop('required', true);
+                $("#plan_price").prop('required', true);
+            }
+        }
+    });
+
+    $('select[name="pay_id"]').on('change', function() {
+        if($(this).val() == 'D' || $(this).val() =='E'){
+            $(".not_final_show").hide();
+            $("#pet_name").prop('required', false);
+            $("#kg").prop('required', false);
+            $("#type").prop('required', false);
+            $("#plan_id").prop('required', false);
+            $("#plan_price").prop('required', false);
+            if(type_list == memorial){
+                $("#final_price").hide();
+            }else{
+                $("#final_price").show(300);
+            }
+        }else{
+            $("#final_price").hide(300);
+            $(".not_final_show").show(300);
             $("#pet_name").prop('required', true);
             $("#kg").prop('required', true);
             $("#type").prop('required', true);
             $("#plan_id").prop('required', true);
+            $("#plan_price").prop('required', true);
         }
     });
-
-    // saleType = $('select[name="sale_type"]').val();
-    // if(saleType == 'memorial'){
-    //     $("#gdpaper_div").show(300);
-    //     $("#prom_div").hide(300);
-    //     $(".not_memorial_show").hide(300);
-    //     $("#pet_name").prop('required', false);
-    //     $("#kg").prop('required', false);
-    //     $("#type").prop('required', false);
-    //     $("#plan_id").prop('required', false);
-    //     $("#plan_price").prop('required', false);
-    //     $('select[name="pay_id').off('change');
-    // }else{
-    //     $('select[name="pay_id"]').on('change', function() {
-    //             if($(this).val() == 'D'){
-    //                 $("#gdpaper_div").hide(300);
-    //                 $("#prom_div").hide(300);
-    //                 $("#final_price").show(300);
-    //                 $(".not_final_show").hide(300);
-    //                 $("#pet_name").prop('required', false);
-    //                 $("#kg").prop('required', false);
-    //                 $("#type").prop('required', false);
-    //                 $("#plan_id").prop('required', false);
-    //                 $("#plan_price").prop('required', false);
-    //                 // $(".mobile").prop('required', false);
-    //             }else{
-    //                 $("#gdpaper_div").show(300);
-    //                 $("#prom_div").show(300);
-    //                 $("#final_price").hide(300);
-    //                 $(".not_final_show").show(300);
-    //                 $("#pet_name").prop('required', true);
-    //                 $("#kg").prop('required', true);
-    //                 $("#type").prop('required', true);
-    //                 $("#plan_id").prop('required', true);
-    //                 $("#plan_price").prop('required', true);
-    //                 // $(".mobile").prop('required', true);
-    //             }
-    //         });
-    // }
-
-    // $('select[name="sale_type"]').on('change', function() {
-    //     if($(this).val() == 'memorial'){
-    //         //如果這張單是追思單就執行以下
-    //         $("#gdpaper_div").show(300);
-    //         $("#prom_div").hide(300);
-    //         $(".not_memorial_show").hide(300);
-    //         $("#pet_name").prop('required', false);
-    //         $("#kg").prop('required', false);
-    //         $("#type").prop('required', false);
-    //         $("#plan_id").prop('required', false);
-    //         $("#plan_price").prop('required', false);
-    //         // $(".mobile").prop('required', false);
-    //         var pay_id = 1;
-    //     }else{
-    //         $("#prom_div").show(300);
-    //         $("#final_price").hide(300);
-    //         $(".not_memorial_show").show(300);
-    //         $("#pet_name").prop('required', true);
-    //         $("#kg").prop('required', true);
-    //         $("#type").prop('required', true);
-    //         $("#plan_id").prop('required', true);
-    //         $("#plan_price").prop('required', true);
-    //         // $(".mobile").prop('required', true);
-    //         var pay_id = 0;
-    //     }
-    //     console.log(pay_id);
-    //     if(pay_id == 1){
-    //         //如果這張單是追思單就停用pay_id下拉式選單
-    //         $('select[name="pay_id').off('change');
-    //     }else{
-    //         //不然就繼續執行pay_id的JQ
-    //         $('select[name="pay_id"]').on('change', function() {
-    //             if($(this).val() == 'D'){
-    //                 $("#gdpaper_div").hide(300);
-    //                 $("#prom_div").hide(300);
-    //                 $("#final_price").show(300);
-    //                 $(".not_final_show").hide(300);
-    //                 $("#pet_name").prop('required', false);
-    //                 $("#kg").prop('required', false);
-    //                 $("#type").prop('required', false);
-    //                 $("#plan_id").prop('required', false);
-    //                 $("#plan_price").prop('required', false);
-    //                 // $(".mobile").prop('required', false);
-    //             }else{
-    //                 $("#gdpaper_div").show(300);
-    //                 $("#prom_div").show(300);
-    //                 $("#final_price").hide(300);
-    //                 $(".not_final_show").show(300);
-    //                 $("#pet_name").prop('required', true);
-    //                 $("#kg").prop('required', true);
-    //                 $("#type").prop('required', true);
-    //                 $("#plan_id").prop('required', true);
-    //                 $("#plan_price").prop('required', true);
-    //                 // $(".mobile").prop('required', true);
-    //             }
-    //         });
-    //     }
-    // });
 
 
     $("#final_price").on('input', function(){

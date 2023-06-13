@@ -88,7 +88,7 @@ class DashboardController extends Controller
         $gdpaper_month = Sale_gdpaper::where('created_at','>=',$firstDay->format("Y-m-d"))->where('created_at','<=',$lastDay->format("Y-m-d"))->sum('gdpaper_total');
         
         //月支出
-        $pay_month = PayData::where('pay_date','>=',$firstDay->format("Y-m-d"))->where('pay_date','<=',$lastDay->format("Y-m-d"))->sum('price');
+        $pay_month = PayData::where('status','1')->where('pay_date','>=',$firstDay->format("Y-m-d"))->where('pay_date','<=',$lastDay->format("Y-m-d"))->sum('price');
         
         //營業淨利
         $net_income =  $price_month -  $pay_month;

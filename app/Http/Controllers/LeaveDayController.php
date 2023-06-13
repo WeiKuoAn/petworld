@@ -14,7 +14,12 @@ class LeaveDayController extends Controller
 {
     public function index(Request $request)
     {
-        $datas = LeaveDay::orderby('created_at','desc')->where('director_id',Auth::user()->job_id);
+        if(Auth::user()->job_id == 1 || Auth::user()->job_id ==2 || Auth::user()->job_id ==7){
+            $datas = LeaveDay::orderby('created_at','desc');
+        }else{
+            $datas = LeaveDay::orderby('created_at','desc')->where('director_id',Auth::user()->job_id);
+        }
+        
         if($request)
         {
             $state = $request->state;
@@ -166,8 +171,6 @@ class LeaveDayController extends Controller
             $item->state = 3;//退回
             $item->save();
         }
-        
-
         return redirect()->route('personnel.leave_days');
     }
 

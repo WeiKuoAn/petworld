@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "Create Project"])
+@extends('layouts.vertical', ["page_title"=> "編輯合作公司"])
 
 @section('css')
 <!-- third party css -->
@@ -20,61 +20,61 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">客戶管理</a></li>
-                        <li class="breadcrumb-item active">新增客戶</li>
+                        <li class="breadcrumb-item active">編輯合作公司</li>
                     </ol>
                 </div>
-                <h4 class="page-title">新增客戶</h4>
+                <h4 class="page-title">編輯合作公司</h4>
             </div>
         </div>
     </div>
     <!-- end page title -->
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('customer.edit.data',$customer->id) }}" method="POST">
+                    <form action="{{ route('visit.company.edit.data',$data->id) }}" method="POST">
                     @csrf
                     <div class="row">
+                        <input type="hidden" class="form-control" name="company_type" value="{{ $company_type }}">
                         <div class="col-xl-12">
-                            {{-- <div class="mb-3">
+                            <div class="mb-3">
                                 <label for="project-priority" class="form-label">群組<span class="text-danger">*</span></label>
-
                                 <select class="form-control" data-toggle="select" data-width="100%" name="group_id">
                                     @foreach($groups as $group)
-                                    <option value="{{ $group->id }}" @if( $customer->group_id == $group->id ) selected @endif>{{$group->name}}</option>
+                                    <option value="{{ $group->id }}" @if( $data->group_id == $group->id ) selected @endif>{{$group->name}}</option>
                                     @endforeach
                                 </select>
-                            </div> --}}
+                            </div>
 
                             <div class="mb-3">
                                  <div class="mb-3">
                                     <label class="form-label">姓名<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name"  value="{{ $customer->name }}" required>
+                                    <input type="text" class="form-control" name="name"  value="{{ $data->name }}" required>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">電話<span class="text-danger">*</span></label>
-                                   <input type="text" class="form-control" name="mobile" value="{{ $customer->mobile }}" required>
+                                   <input type="text" class="form-control" name="mobile" value="{{ $data->mobile }}" required>
                                </div>
                            </div>
 
                            <div class="row">
                                 <label class="form-label">地址<span class="text-danger">*</span></label>
                                 <div id="twzipcode" >
-                                    <div data-role="county" data-value="{{ $customer->county }}"></div>
+                                    <div data-role="county" data-value="{{ $data->county }}"></div>
                                 </div>
                                 <div class="mb-3 mt-1">
-                                    <input type="text" class="form-control" name="address" placeholder="輸入地址" value="{{ $customer->address }}" required>
+                                    <input type="text" class="form-control" name="address" placeholder="輸入地址" value="{{ $data->address }}" required>
                                 </div>
                            </div>
 
                            <div class="row">
                             <label class="form-label">舊地址<span class="text-danger">*</span></label>
                             <div class="mb-3 mt-1">
-                                <input type="text" class="form-control" name="old-address" placeholder="輸入地址" value="{{ $customer->address }}">
+                                <input type="text" class="form-control" name="old-address" placeholder="輸入地址" value="{{ $data->address }}">
                             </div>
                        </div>
 
@@ -117,8 +117,8 @@
         css: [" form-control", "mt-1 form-control" , "mt-1 form-control"], // 自訂 "城市"、"地區" class 名稱 
         countyName: "county", // 自訂城市 select 標籤的 name 值
         districtName: "district", // 自訂地區 select 標籤的 name 值
-        countySel: '{{$customer->county}}',
-        districtSel: '{{$customer->district}}',
+        countySel: '{{$data->county}}',
+        districtSel: '{{$data->district}}',
         });
     });
 </script>

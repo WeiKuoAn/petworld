@@ -40,7 +40,7 @@
             </div>
             <!-- content -->
 
-            @include('layouts.shared/footer')
+            {{-- @include('layouts.shared/footer') --}}
 
         </div>
 

@@ -108,7 +108,7 @@ class WorkController extends Controller
                 $work->worktime = $request->worktime;
                 $work->dutytime = $request->dutytime;
                 $work->status = '1';
-                $work->total = floor(Carbon::parse($request->worktime)->floatDiffInHours($request->dutytime));
+                $work->total = floor(Carbon::parse($request->worktime)->floatDiffInHours($request->dutytime)) - 1;
                 $work->remark = $request->remark;
                 $work->save();
             }

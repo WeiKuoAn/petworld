@@ -126,12 +126,11 @@ class SaleDataController extends Controller
         }
         $sale->plan_price = $request->plan_price;
         $sale->pay_id = $request->pay_id;
-        //尾款或追加
-        if($request->pay_id == 'D' || $request->pay_id == 'E'){
-            $sale->pay_price = $request->final_price;
-        }else{
-            $sale->pay_price = $request->pay_price;
+        //尾款或追加為方案價格
+        if(isset($request->final_price)){
+            $sale->plan_price = $request->final_price;
         }
+        $sale->pay_price = $request->pay_price;
         if($request->pay_method == 'C'){
             $sale->cash_price = $request->cash_price;
             $sale->transfer_price = $request->transfer_price;
@@ -567,11 +566,11 @@ class SaleDataController extends Controller
         }
         $sale->plan_price = $request->plan_price;
         $sale->pay_id = $request->pay_id;
-        if($request->pay_id == 'D'){
-            $sale->pay_price = $request->final_price;
-        }else{
-            $sale->pay_price = $request->pay_price;
+        //尾款或追加為方案價格
+        if(isset($request->final_price)){
+            $sale->plan_price = $request->final_price;
         }
+        $sale->pay_price = $request->pay_price;
         if($request->pay_method == 'C'){
             $sale->cash_price = $request->cash_price;
             $sale->transfer_price = $request->transfer_price;

@@ -94,6 +94,7 @@
                                         <td>
                                             <a href="{{ route('user.work.edit',$work->id) }}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                             <a href="{{ route('user.work.del',$work->id) }}" class="action-icon"> <i class="mdi mdi-trash-can-outline"></i></a>
+                                        </td>
                                         @endif
                                     </tr>
                                 @endforeach

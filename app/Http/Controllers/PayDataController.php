@@ -18,7 +18,6 @@ class PayDataController extends Controller
         $pays = Pay::orderby('seq','asc')->get();
         $users = User::get();
         if($request){
-            
             $status = $request->status;
             if ($status) {
                 $datas = PayData::where('status',  $status);
@@ -299,4 +298,52 @@ class PayDataController extends Controller
         }
         return redirect()->route('pays');
     }
+
+    public function user_pay($id , Request $request)
+    {
+        $user = User::where('id', $id)->first();
+        if($request){
+            $status = $request->status;
+            if ($status) {
+                $datas = PayData::where('status',  $status);
+                $sum_pay = PayData::where('status', $status);
+            }else{
+                $datas = PayData::where('status', 0);
+                $sum_pay = PayData::where('status', 0);
+            }
+            $after_date = $request->after_date;
+            if ($after_date) {
+                $datas =  $datas->where('pay_date', '>=', $after_date);
+                $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date);
+            }
+            $before_date = $request->before_date;
+            if ($before_date) {
+                $datas =  $datas->where('pay_date', '<=', $before_date);
+                $sum_pay  = $sum_pay->where('pay_date', '<=', $before_date);
+            }
+            if($after_date && $before_date){
+                $datas =  $datas->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
+                $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
+            }
+            $pay = $request->pay;
+            if ($pay != "null") {
+                if (isset($pay)) {
+                    $datas =  $datas->where('pay_id', $pay);
+                    $sum_pay  = $sum_pay->where('pay_id', $pay);
+                } else {
+                    $datas = $datas;
+                    $sum_pay  = $sum_pay;
+                }
+            }
+            $sum_pay  = $sum_pay->sum('price');
+            $datas = $datas->orderby('pay_date','desc')->where('user_id',$id)->paginate(50);
+            $condition = $request->all();
+        }else{
+            $datas = PayData::orderby('pay_date','desc')->where('user_id',$id)->paginate(50);
+            $sum_pay  = PayData::sum('price');
+            $condition = '';
+        }
+        return view('pay.user_index')->with('datas',$datas)->with('request',$request)->with('user',$user)->with('condition',$condition)
+                                ->with('sum_pay',$sum_pay);
+    }    
 }

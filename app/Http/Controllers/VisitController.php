@@ -9,6 +9,8 @@ use App\Models\Visit;
 use Facade\FlareClient\View;
 use Illuminate\Support\Facades\Auth;
 use Whoops\Run;
+use App\Models\CustGroup;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class VisitController extends Controller
@@ -237,6 +239,45 @@ class VisitController extends Controller
                 return redirect()->route('salons');
             }
             
+        }
+    }
+
+    //編輯公司
+    public function company_edit($id , Request $request)
+    {
+        $company_type = $request->headers->get('referer');
+        $data = Customer::where('id', $id)->first();
+        $groups = CustGroup::get();
+        return View('visit.company_edit')->with('hint',0)->with('data',$data)->with('company_type',$company_type)->with('groups',$groups);
+    }
+
+    public function company_update($id , Request $request)
+    {
+        $hospital_type = Str::contains($request->company_type,'hospitals');//醫院
+        $etiquette_type = Str::contains($request->company_type,'etiquettes');//禮儀社
+        $reproduce_type = Str::contains($request->company_type,'reproduces');//繁殖場
+        $dogpark_type = Str::contains($request->company_type,'dogparks');//狗園
+        $salons_type = Str::contains($request->company_type,'salon');//美容院
+
+        $data = Customer::where('id', $id)->first();
+        $data->name = $request->name;
+        $data->mobile = $request->mobile;
+        $data->county = $request->county;
+        $data->district = $request->district;
+        $data->address = $request->address;
+        $data->group_id = $request->group_id;
+        $data->save();
+
+        if($hospital_type){
+            return redirect()->route('hospitals');
+        }elseif($etiquette_type){
+            return redirect()->route('etiquettes');
+        }elseif($reproduce_type){
+            return redirect()->route('reproduces');
+        }elseif($dogpark_type){
+            return redirect()->route('dogparks');
+        }elseif($salons_type){
+            return redirect()->route('salons');
         }
     }
 }

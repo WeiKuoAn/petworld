@@ -114,8 +114,8 @@
                             <input type="text" class="form-control total_number" id="plan_price" name="plan_price" value="{{ $data->plan_price }}" >
                         </div>
                         <div class="mb-3 col-md-4 not_memorial_show" id="final_price">
-                            <label for="plan_price" class="form-label">尾款價格<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control total_number"  name="final_price" value="{{ $data->pay_price }}" >
+                            <label for="plan_price" class="form-label">方案追加/尾款價格<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control total_number"  name="final_price" value="{{ $data->plan_price }}" >
                         </div>
                     </div>
                 </div>
@@ -325,7 +325,8 @@
 
 <script>
     type_list = $('select[name="type_list"]').val();
-    console.log(type_list);
+    payIdValue = $('select[name="pay_id"]').val();
+    console.log(payIdValue);
 
     //案件單類別
     if(type_list == 'memorial'){
@@ -335,6 +336,25 @@
         $("#kg").prop('required', false);
         $("#type").prop('required', false);
         $("#plan_id").prop('required', false);
+    }else if(type_list == 'dispatch'){
+        $(".not_memorial_show").show(300);
+            if(payIdValue == 'D' || payIdValue =='E'){
+                $("#final_price").show(300);
+                $(".not_final_show").hide();
+                $("#pet_name").prop('required', false);
+                $("#kg").prop('required', false);
+                $("#type").prop('required', false);
+                $("#plan_id").prop('required', false);
+                $("#plan_price").prop('required', false);
+            }else{
+                $("#final_price").hide(300);
+                $(".not_final_show").show(300);
+                $("#pet_name").prop('required', true);
+                $("#kg").prop('required', true);
+                $("#type").prop('required', true);
+                $("#plan_id").prop('required', true);
+                $("#plan_price").prop('required', true);
+            }
     }
 
     $('select[name="type_list"]').on('change', function() {
@@ -345,13 +365,49 @@
             $("#kg").prop('required', false);
             $("#type").prop('required', false);
             $("#plan_id").prop('required', false);
-        }else{
+        }else if($(this).val() == 'dispatch'){
             $(".not_memorial_show").show(300);
-            $("#cust_name_q").prop('required', true);
+            if(payIdValue == 'D' || payIdValue =='E'){
+                $("#final_price").show(300);
+                $(".not_final_show").hide();
+                $("#pet_name").prop('required', false);
+                $("#kg").prop('required', false);
+                $("#type").prop('required', false);
+                $("#plan_id").prop('required', false);
+                $("#plan_price").prop('required', false);
+            }else{
+                $("#final_price").hide(300);
+                $(".not_final_show").show(300);
+                $("#pet_name").prop('required', true);
+                $("#kg").prop('required', true);
+                $("#type").prop('required', true);
+                $("#plan_id").prop('required', true);
+                $("#plan_price").prop('required', true);
+            }
+        }
+    });
+
+    $('select[name="pay_id"]').on('change', function() {
+        if($(this).val() == 'D' || $(this).val() =='E'){
+            $(".not_final_show").hide();
+            $("#pet_name").prop('required', false);
+            $("#kg").prop('required', false);
+            $("#type").prop('required', false);
+            $("#plan_id").prop('required', false);
+            $("#plan_price").prop('required', false);
+            if(type_list == memorial){
+                $("#final_price").hide();
+            }else{
+                $("#final_price").show(300);
+            }
+        }else{
+            $("#final_price").hide(300);
+            $(".not_final_show").show(300);
             $("#pet_name").prop('required', true);
             $("#kg").prop('required', true);
             $("#type").prop('required', true);
             $("#plan_id").prop('required', true);
+            $("#plan_price").prop('required', true);
         }
     });
 
