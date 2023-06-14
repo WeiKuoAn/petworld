@@ -84,12 +84,12 @@
                         <table class="table table-centered table-nowrap table-hover mb-0">
                             <thead class="table-light">
                                 <tr>
+                                    <th>排序</th>
                                     <th>名稱</th>
                                     <th>類型</th>
                                     <th>類別</th>
-                                    <th>庫存</th>
                                     <th>售價</th>
-                                    <th>排序</th>
+                                    <th>庫存</th>
                                     <th>狀態</th>
                                     <th>動作</th>
                                 </tr>
@@ -97,6 +97,7 @@
                             <tbody>
                                 @foreach($datas as $data)
                                 <tr>
+                                    <td>{{ $data->seq }}</td>
                                     <td class="table-user">{{ $data->name }}</td>
                                         <td>
                                             @if($data->type == 'normal')
@@ -114,6 +115,7 @@
                                                 {{ $data->category_data->name }}
                                             @endif
                                         </td>
+                                        <td>{{ $data->price }}</td>
                                         <td>
                                             @if($restocks[$data->id]['cur_num'] < 0)
                                                 <span class="text-danger">{{$restocks[$data->id]['cur_num']}}</span>
@@ -121,8 +123,6 @@
                                                 {{ $restocks[$data->id]['cur_num'] }}
                                             @endif
                                         </td>
-                                        <td>{{ $data->price }}</td>
-                                        <td>{{ $data->seq }}</td>
                                         <td>
                                             @if ($data->status == 'up')
                                                 啟用

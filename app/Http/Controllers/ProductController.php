@@ -22,7 +22,7 @@ class ProductController extends Controller
     public function product_search(Request $request)
     {
         $query = $request->get('data'); // 获取搜索关键字
-        $product = Product::where('type','!=','combo')->where('name', $query)->first(); // 根据关键字查询数据库
+        $product = Product::where('name', $query)->first(); // 根据关键字查询数据库
 
         return Response($product);
     }
@@ -166,7 +166,6 @@ class ProductController extends Controller
                     }
                 }
             }
-            
         }
 
         return view('product.index')->with('datas', $datas)->with('categorys',$categorys)->with('request',$request)->with('restocks',$restocks);
@@ -174,7 +173,7 @@ class ProductController extends Controller
 
     public function create()
     {   
-        $products = Product::get();
+        $products = Product::where('type','!=','combo')->get();
         foreach($products as $product) {
             $data[] = $product->name;
         }
@@ -241,7 +240,7 @@ class ProductController extends Controller
 
     public function show($id)
     {   
-        $products = Product::get();
+        $products = Product::where('type','!=','combo')->get();
         foreach($products as $product) {
             $datas[] = $product->name;
         }

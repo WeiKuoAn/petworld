@@ -59,8 +59,18 @@
                                         <th scope="col">業務單量</th>
                                         <th scope="col">法會單量</th>
                                         <th scope="col">營收</th>
+                                        <th scope="col">支出</th>
+                                        <th scope="col">淨利累加</th>
                                     </tr>
                                 </thead>
+                                <tr align="center" style="font-weight:bold;" class="text-danger">
+                                    <td>當年總計</td>
+                                    <td>{{  number_format($sums['total_count']) }}</td>
+                                    <td>{{  number_format($sums['total_puja_count']) }}</td>
+                                    <td>{{  number_format($sums['total_price_amount']) }}</td>
+                                    <td>{{  number_format($sums['total_pay_price']) }}</td>
+                                    <td>{{  number_format($sums['total_month_total']) }}</td>
+                                </tr>
                                 <tbody align="center">
                                     @foreach ($datas as $key=>$data)
                                         <tr>
@@ -68,6 +78,12 @@
                                             <td>{{ $data['cur_count'] }}</td>
                                             <td>{{ $data['cur_puja_count'] }}</td>
                                             <td>{{ number_format($data['cur_price_amount']) }}</td>
+                                            <td>{{ number_format($data['cur_pay_price']) }}</td>
+                                            @if(number_format($sums[$key]['month_income']) < 0)
+                                                <td style="color: red;">{{ number_format($sums[$key]['month_income']) }}</td>
+                                            @else
+                                                <td>{{ number_format($sums[$key]['month_income']) }}</td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

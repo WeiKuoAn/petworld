@@ -33,7 +33,7 @@
                                         <th scope="col">業務營收</th>
                                         <th scope="col">法會單量</th>
                                         <th scope="col">法會營收</th>
-                                        <th scope="col">收入營收</th>
+                                        <th scope="col">其他收入</th>
                                         <th scope="col">總營收</th>
                                         <th scope="col">總支出</th>
                                         <th scope="col">淨利</th>
@@ -60,6 +60,18 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                <tr align="center">
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col" class="text-danger">{{ number_format($net_income) }}</th>
+                                    <th scope="col"></th>
+                                </tr>
                         </table><br>
                     </div>
                 </div>

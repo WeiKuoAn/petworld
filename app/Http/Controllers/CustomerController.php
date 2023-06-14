@@ -241,17 +241,24 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $groups = CustGroup::where('status','up')->get();
         $customer = Customer::where('id', $id)->first();
-        return view('del_customer')->with('customer', $customer)->with('groups',$groups);
+        return view('customer.del')->with('customer', $customer)->with('groups',$groups);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $customer = Customer::where('id', $id)->first();
         $customer->delete();
         return redirect()->route('customer');
+    }
+
+    public function sales($id)
+    {
+        $sales = Sale::where('status','9')->where('customer_id',$id)->orderby('sale_date','desc')->get();
+        $customer = Customer::where('id',$id)->first();
+        return view('customer.sales')->with('sales', $sales)->with('customer',$customer);
     }
 }

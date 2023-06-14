@@ -152,7 +152,7 @@ class LeaveDayController extends Controller
             $item = new LeaveDayCheck;
             $item->leave_day_id = $leave_data->id;
             $item->check_day = Carbon::now()->locale('zh-tw')->format('Y-m-d');;
-            $item->check_user_id = $leave_data->director_id;
+            $item->check_user_id = Auth::user()->id;
             $item->created_at = Carbon::now()->locale('zh-tw');
             $item->state = 9;
             $item->save();
@@ -166,7 +166,7 @@ class LeaveDayController extends Controller
             $item = new LeaveDayCheck;
             $item->leave_day_id = $leave_data->id;
             $item->check_day = Carbon::now()->locale('zh-tw')->format('Y-m-d');;
-            $item->check_user_id = $leave_data->director_id;
+            $item->check_user_id = Auth::user()->id;
             $item->created_at = Carbon::now()->locale('zh-tw');
             $item->state = 3;//退回
             $item->save();

@@ -11,6 +11,12 @@ use App\Models\GdpaperInventoryData;
 use App\Models\GdpaperInventoryItem;
 use App\Models\IncomeData;
 use App\Models\User;
+use App\Models\PujaProduct;
+use App\Models\ProductRestockItem;
+use App\Models\Sale_gdpaper;
+use App\Models\ComboProduct;
+use App\Models\PujaData;
+use App\Models\PujaDataAttchProduct;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -128,7 +134,7 @@ class InventoryController extends Controller
             if(!isset($Old_GdpaperInventoryItem)){
               $productInventoryItem->old_num = 0;
             }else{
-              $productInventoryItem->old_num = $Old_GdpaperInventoryItem->new_num;
+              $productInventoryItem->old_num = $this->restocks()[$product->id]['cur_num'];
             }
             $productInventoryItem->new_num = null;
             $productInventoryItem->save();
@@ -168,8 +174,9 @@ class InventoryController extends Controller
     //盤點細項
     public function inventoryItem_index(Request $request , $product_inventory_id)
     {
-        $inventory_no = $product_inventory_id;
+      $inventory_no = $product_inventory_id;
         $datas = GdpaperInventoryItem::where('gdpaper_inventory_id',$product_inventory_id)->get();
+
         return view('inventory.item')->with('datas',$datas)->with('inventory_no',$inventory_no);
     }
 
@@ -198,5 +205,119 @@ class InventoryController extends Controller
         }
     }
 
+    private function restocks()
+    {
+
+      $product_datas = Product::orderby('seq','desc')->orderby('price','desc')->get();
+      $restocks = [];
+
+      foreach($product_datas as $product_data)
+      {
+          $inventory_item = GdpaperInventoryItem::where('product_id',$product_data->id)->where('created_at','>','2023-06-09 11:59:59')->orderby('updated_at','desc')->first();
+          $restock_items = ProductRestockItem::where('product_id',$product_data->id)->where('created_at','>','2023-06-09 11:59:59')->orderby('updated_at','desc')->get();
+          $sale_gdpapers = Sale_gdpaper::where('gdpaper_id',$product_data->id)->where('created_at','>','2023-06-09 11:59:59')->orderby('updated_at','desc')->get();
+          
+          //法會預設數量
+          $puja_datas = PujaData::get();
+          
+          $combo_products = ComboProduct::where('product_id',$product_data->id)->get();
+          
+          $restocks[$product_data->id]['name'] = $product_data->name;
+
+          //取得最新庫存盤點數量
+          if(isset($inventory_item->new_num)){
+              $restocks[$product_data->id]['cur_num'] = intval($inventory_item->new_num);
+          }elseif(isset($inventory_item->old_num)){
+              $restocks[$product_data->id]['cur_num'] = intval($inventory_item->old_num);
+          }else{
+              $restocks[$product_data->id]['cur_num'] = 0;
+          }
+
+          //累加進貨數量
+          foreach($restock_items as $restock_item)
+          {
+              
+              if ($inventory_item !== null && $restock_item !== null) {
+                  //如果盤點時間 大於 進貨時間
+                  if ($inventory_item->updated_at < $restock_item->updated_at) {
+                      $restocks[$product_data->id]['cur_num'] += $restock_item->product_num;
+                  }
+              }
+          }
+
+          
+          //減去賣掉的商品數量
+          foreach($sale_gdpapers as $sale_gdpaper)
+          {
+              if ($inventory_item !== null && $sale_gdpaper !== null) {
+                  if ($inventory_item->updated_at < $sale_gdpaper->updated_at) {
+                      //如果不是組合商品，單純做扣掉單一數量
+                      if($product_data->type != 'combo'){
+                          $restocks[$product_data->id]['cur_num'] -= $sale_gdpaper->gdpaper_num;
+                      }else{
+                          //是組合商品就要抓出來計算
+                          foreach($combo_products as $combo_product){
+                              $restocks[$combo_product->include_product_id]['cur_num'] -= intval($combo_product->num) * intval($sale_gdpaper->gdpaper_num);
+                          }
+                      }
+                  }
+              }
+          }
+
+          $pujas = [];
+          //抓取法會報名數量
+          foreach($puja_datas as $puja_data){
+              $pujas[$puja_data->puja_id]['nums'] = 0; 
+          }
+
+          foreach($puja_datas as $puja_data){
+              $pujas[$puja_data->puja_id]['nums']++; 
+          }
+          
+
+          foreach($pujas as $puja_id=>$puja)
+          {
+              $puja_products = PujaProduct::where('puja_id',$puja_id)->where('product_id',$product_data->id)->where('created_at','>','2023-06-09 11:59:59')->orderby('updated_at','desc')->get();
+              $puja_attach_products = PujaDataAttchProduct::where('product_id',$product_data->id)->where('created_at','>','2023-06-09 11:59:59')->orderby('updated_at','desc')->get();
+              
+              //減去法會預設的商品數量
+              foreach($puja_products as $puja_product)
+              {
+                  if ($inventory_item !== null && $puja_product !== null) {
+                      if ($inventory_item->updated_at < $puja_product->updated_at) {
+                          //如果不是組合商品，單純做扣掉單一數量
+                          if($product_data->type != 'combo'){
+                              $restocks[$product_data->id]['cur_num'] -= (intval($pujas[$puja_product->puja_id]['nums']) * intval($puja_product->product_num));
+                          }else{
+                              //是組合商品就要抓出來計算
+                              foreach($combo_products as $combo_product){
+                                  $restocks[$combo_product->include_product_id]['cur_num'] -= intval($combo_product->num) * intval($pujas[$puja_product->puja_id]['nums']) * $puja_product->product_num;
+                              }
+                          }
+                      }
+                  }
+              }
+
+              foreach($puja_attach_products as $puja_attach_product)
+              {
+                  if ($inventory_item !== null && $puja_attach_product !== null) {
+                      if ($inventory_item->updated_at < $puja_attach_product->updated_at) {
+                          //如果不是組合商品，單純做扣掉單一數量
+                          if($product_data->type != 'combo'){
+                              $restocks[$product_data->id]['cur_num'] -= $puja_attach_product->product_num;
+                          }else{
+                              //是組合商品就要抓出來計算
+                              foreach($combo_products as $combo_product){
+                                  $restocks[$combo_product->include_product_id]['cur_num'] -= intval($combo_product->num) * $puja_attach_product->product_num;
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+
+      return $restocks;
+    }
 
 }

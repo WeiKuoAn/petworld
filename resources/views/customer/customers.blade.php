@@ -103,13 +103,11 @@
                                             <div class="btn-group dropdown">
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    @if (Auth::user()->level != 2)
                                                     <a class="dropdown-item" href="{{ route('customer.edit',$customer->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
-                                                    <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a>
-                                                    @else
-                                                    <a class="dropdown-item" href="{{ route('customer.edit',$customer->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>查看</a>
+                                                    @if (Auth::user()->level != 2)
+                                                    <a class="dropdown-item" href="{{ route('customer.del',$customer->id) }}"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a>
                                                     @endif
-                                                    <a class="dropdown-item" href="#"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>業務紀錄</a>
+                                                    <a class="dropdown-item" href="{{ route('customer.sales',$customer->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>業務紀錄</a>
                                                 </div>
                                             </div>
                                         </td>

@@ -41,6 +41,7 @@ use App\Http\Controllers\Rpg07Controller;
 use App\Http\Controllers\Rpg09Controller;
 use App\Http\Controllers\Rpg10Controller;
 use App\Http\Controllers\Rpg11Controller;
+use App\Http\Controllers\Rpg12Controller;
 use App\Http\Controllers\LeaveDayController;
 use App\Http\Controllers\RestockController;
 use Illuminate\Support\Facades\Storage;
@@ -145,6 +146,9 @@ Route::group(['prefix' => '/'], function () {
     Route::post('customer/create', [CustomerController::class, 'store'])->name('customer.create.data');
     Route::get('customer/edit/{id}', [CustomerController::class, 'show'])->name('customer.edit');
     Route::post('customer/edit/{id}', [CustomerController::class, 'update'])->name('customer.edit.data');
+    Route::get('customer/del/{id}', [CustomerController::class, 'delete'])->name('customer.del');
+    Route::post('customer/del/{id}', [CustomerController::class, 'destroy'])->name('customer.del.data');
+    Route::get('customer/{id}/sales', [CustomerController::class, 'sales'])->name('customer.sales');
 
     /*拜訪管理*/
     Route::get('hospitals', [VisitController::class, 'hospitals'])->name('hospitals');//醫院
@@ -392,6 +396,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/rpg/rpg09', [Rpg09Controller::class, 'rpg09'])->name('rpg09');
     Route::get('/rpg/rpg10', [Rpg10Controller::class, 'rpg10'])->name('rpg10');
     Route::get('/rpg/rpg11', [Rpg11Controller::class, 'rpg11'])->name('rpg11');
+    Route::get('/rpg/rpg12', [Rpg12Controller::class, 'rpg12'])->name('rpg12');
 
     Route::get('image', function()
     {
