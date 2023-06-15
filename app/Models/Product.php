@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Gdpaperrestock;
+use App\Models\ProductRestockItem;
 
 class Product extends Model
 {
@@ -30,17 +32,23 @@ class Product extends Model
         return $this->hasOne('App\Models\Category', 'id', 'category_id');
     }    
 
-    public function gdpaper_restock_num()
-    {
-        $restock_nums = Gdpaperrestock::where('gdpaper_id',$this->id)->sum('num');
-        return  $restock_nums;
-    }
+    // public function gdpaper_restock_num()
+    // {
+    //     $restock_nums = Gdpaperrestock::where('gdpaper_id',$this->id)->sum('num');
+    //     return  $restock_nums;
+    // }
     
 
-    public function restock(){
-        $gdpaper_num = Sale_gdpaper::where('gdpaper_id',$this->id)->sum('gdpaper_num');
-        $restock_nums = Gdpaperrestock::where('gdpaper_id',$this->id)->sum('num');
-        $num = intval($restock_nums) - intval($gdpaper_num);
-        return $num;
+    // public function restock(){
+    //     $gdpaper_num = Sale_gdpaper::where('gdpaper_id',$this->id)->sum('gdpaper_num');
+    //     $restock_nums = Gdpaperrestock::where('gdpaper_id',$this->id)->sum('num');
+    //     $num = intval($restock_nums) - intval($gdpaper_num);
+    //     return $num;
+    // }
+
+    public function restock_date()
+    {
+        $data = ProductRestockItem::where('product_id',$this->id)->orderby('date','desc')->first();
+        return $data;
     }
 }

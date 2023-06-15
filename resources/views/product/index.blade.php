@@ -90,6 +90,7 @@
                                     <th>類別</th>
                                     <th>售價</th>
                                     <th>庫存</th>
+                                    <th>最近進貨日期</th>
                                     <th>狀態</th>
                                     <th>動作</th>
                                 </tr>
@@ -121,6 +122,11 @@
                                                 <span class="text-danger">{{$restocks[$data->id]['cur_num']}}</span>
                                             @else
                                                 {{ $restocks[$data->id]['cur_num'] }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($data->restock_date() != null)
+                                            {{ $data->restock_date()->date }}
                                             @endif
                                         </td>
                                         <td>
