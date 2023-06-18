@@ -263,17 +263,13 @@ class PujaDataController extends Controller
     {
         $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
         $data = PujaData::where('id',$id)->first();
-        $data_pets = PujaPet::where('puja_data_id',$id)->get();
         $pujas = Puja::get();
         $data_products = PujaDataAttchProduct::where('puja_data_id',$id)->get();
-        $pet_count = Sale::where('customer_id', $data->customer_id)->distinct('pet_name')->count();
 
         return view('puja_data.del')->with('data',$data)
                                 ->with('pujas',$pujas)
                                 ->with('data_products',$data_products)
-                                ->with('products',$products)
-                                ->with('data_pets',$data_pets)
-                                ->with('pet_count',$pet_count);
+                                ->with('products',$products);
     }
 
     public function destroy(Request $request, $id)
@@ -281,7 +277,6 @@ class PujaDataController extends Controller
 
         $data = PujaData::where('id',$id)->first();
         PujaData::where('id',$id)->delete();
-        PujaPet::where('puja_data_id', $data->id)->delete();
         PujaDataAttchProduct::where('puja_data_id', $data->id)->delete();
 
         return redirect()->route('puja_datas');
