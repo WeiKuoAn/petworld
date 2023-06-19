@@ -31,6 +31,14 @@
                             <form class="d-flex flex-wrap align-items-center" action="{{ route('pays') }}" method="GET">
                                 <div class="me-3">
                                     <label for="after_date" class="form-label">支出日期</label>
+                                    <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="pay_after_date" value="{{ $request->pay_after_date }}">
+                                </div>
+                                <div class="me-3">
+                                    <label for="before_date" class="form-label">&nbsp;</label>
+                                    <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="pay_before_date" value="{{ $request->pay_before_date }}">
+                                </div>
+                                <div class="me-3">
+                                    <label for="after_date" class="form-label">key單日期</label>
                                     <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="after_date" value="{{ $request->after_date }}">
                                 </div>
                                 <div class="me-3">
@@ -155,7 +163,7 @@
                             </table>
                             <br>
                             <ul class="pagination pagination-rounded justify-content-end mb-0">
-                                {{ $datas->links('vendor.pagination.bootstrap-4') }}
+                                {{ $datas->appends($condition)->links('vendor.pagination.bootstrap-4') }}
                             </ul>
                         </div>
                     </div>

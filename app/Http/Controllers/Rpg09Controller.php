@@ -9,6 +9,7 @@ use App\Models\IncomeData;
 use App\Models\PujaData;
 use App\Models\Plan;
 use App\Models\PayData;
+use App\Models\PayItem;
 use Illuminate\Support\Facades\Redis;
 
 class Rpg09Controller extends Controller
@@ -57,7 +58,9 @@ class Rpg09Controller extends Controller
             //抓取每月起始至末的日期並取出每張單的收入金額
             $datas[$key]['cur_sale_price'] = Sale::where('status', '9')->where('sale_date','>=',$month['start_date'])->where('sale_date','<=',$month['end_date'])->sum('pay_price');
             $datas[$key]['cur_price_amount'] = $datas[$key]['cur_income_price'] + $datas[$key]['cur_sale_price'] + $datas[$key]['cur_puja_price'];
-            $datas[$key]['cur_pay_price'] = PayData::where('status','1')->where('pay_date','>=',$month['start_date'])->where('pay_date','<=',$month['end_date'])->sum('price');
+            $datas[$key]['cur_pay_data_price'] = PayData::where('status','1')->where('pay_date','>=',$month['start_date'])->where('pay_date','<=',$month['end_date'])->where('created_at','<=','2023-01-08 14:22:21')->sum('price');
+            $datas[$key]['cur_pay_item_price'] = PayItem::where('status','1')->where('pay_date','>=',$month['start_date'])->where('pay_date','<=',$month['end_date'])->sum('price');
+            $datas[$key]['cur_pay_price'] = $datas[$key]['cur_pay_data_price']+$datas[$key]['cur_pay_item_price'];
             $datas[$key]['cur_month_total'] = $datas[$key]['cur_price_amount'] - $datas[$key]['cur_pay_price'];
         }
 

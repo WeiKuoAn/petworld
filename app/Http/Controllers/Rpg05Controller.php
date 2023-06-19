@@ -27,24 +27,28 @@ class Rpg05Controller extends Controller
 
         $sale_datas = Sale::where('status','9')->where('sale_date','>=',$after_date)->where('sale_date','<=',$before_date)->get();
         $income_datas = IncomeData::where('income_date','>=',$after_date)->where('income_date','<=',$before_date)->get();
-        $pay_datas = PayData::where('status','1')->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->get();
+        $pay_datas = PayData::where('status','1')->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('created_at','<=','2023-01-08 14:22:21')->get();
+        $pay_items = PayItem::where('status','1')->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->get();
         if($request->input() != null){
             $after_date = $request->after_date;
             if($after_date){
                  $sale_datas = Sale::where('status','9')->where('sale_date','>=',$after_date)->get();
                  $income_datas = IncomeData::where('income_date','>=',$after_date)->get();
-                 $pay_datas = PayData::where('status','1')->where('pay_date','>=',$after_date)->get();
+                 $pay_datas = PayData::where('status','1')->where('pay_date','>=',$after_date)->where('created_at','<=','2023-01-08 14:22:21')->get();
+                 $pay_items = PayItem::where('status','1')->where('pay_date','>=',$after_date)->get();
             }
             $before_date = $request->before_date;
             if($before_date){
                  $sale_datas = Sale::where('status','9')->where('sale_date','<=',$before_date)->get();
                  $income_datas = IncomeData::where('income_date','<=',$before_date)->get();
-                 $pay_datas = PayData::where('status','1')->where('pay_date','<=',$before_date)->get();
+                 $pay_datas = PayData::where('status','1')->where('pay_date','<=',$before_date)->where('created_at','<=','2023-01-08 14:22:21')->get();
+                 $pay_items = PayItem::where('status','1')->where('pay_date','<=',$before_date)->get();
             }
             if($after_date && $before_date){
                  $sale_datas = Sale::where('status','9')->where('sale_date','>=',$after_date)->where('sale_date','<=',$before_date)->get();
                  $income_datas = IncomeData::where('income_date','>=',$after_date)->where('income_date','<=',$before_date)->get();
-                 $pay_datas = PayData::where('status','1')->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->get();
+                 $pay_datas = PayData::where('status','1')->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('created_at','<=','2023-01-08 14:22:21')->get();
+                 $pay_items = PayItem::where('status','1')->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->get();
             }
             if($after_date && $before_date){
                 $periods = CarbonPeriod::create( $request->after_date,  $request->before_date);
@@ -72,6 +76,10 @@ class Rpg05Controller extends Controller
         //其他支出
         foreach($pay_datas as $pay_data){
             $datas[$pay_data->pay_date]['pay_total'] += $pay_data->price;
+        }
+        // dd($pay_items);
+        foreach($pay_items as $pay_item){
+            $datas[$pay_item->pay_date]['pay_total'] += $pay_item->price;
         }
 
         $sums['sum_total'] = 0;

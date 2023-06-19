@@ -21,11 +21,38 @@ class PayDataController extends Controller
             $status = $request->status;
             if ($status) {
                 $datas = PayData::where('status',  $status);
+                $items = PayItem::where('status',  $status);
                 $sum_pay = PayData::where('status', $status);
             }else{
                 $datas = PayData::where('status', 0);
+                $items = PayItem::where('status',  0);
                 $sum_pay = PayData::where('status', 0);
             }
+
+            // item支出日期
+            $pay_after_date = $request->pay_after_date;
+            if ($pay_after_date) {
+                $items =  $items->where('pay_date', '>=', $pay_after_date);
+            }
+            $pay_before_date = $request->pay_before_date;
+            if ($pay_before_date) {
+                $items =  $items->where('pay_date', '<=', $pay_before_date);
+            }
+            if($pay_after_date && $pay_before_date){
+                $items =  $items->where('pay_date', '>=', $pay_after_date)->where('pay_date', '<=', $pay_before_date);
+            }
+
+            $items = $items->get();
+            if(count($items) > 0)
+            {
+                foreach($items as $item)
+                {
+                    $pay_data_ids[] = $item->pay_data_id;
+                }
+                $datas =  $datas->whereIn('id', $pay_data_ids);
+            }
+
+            //key單日期
             $after_date = $request->after_date;
             if ($after_date) {
                 $datas =  $datas->where('pay_date', '>=', $after_date);
@@ -40,6 +67,8 @@ class PayDataController extends Controller
                 $datas =  $datas->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
                 $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
             }
+
+
             $pay = $request->pay;
             if ($pay != "null") {
                 if (isset($pay)) {
