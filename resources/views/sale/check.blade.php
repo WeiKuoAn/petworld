@@ -263,7 +263,7 @@
                     </div>
                     <div>
                         <label class="form-label">備註</label>
-                        <textarea class="form-control" rows="3" placeholder="" name="comm"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="" name="comm">{{ $data->comm }}</textarea>
                     </div>
                 </div>
             </div> <!-- end card -->
