@@ -45,11 +45,11 @@ class Rpg02Controller extends Controller
                     $pay_items = $pay_items;
                 }
             }
-            $pay_datas = $pay_datas->where('created_at','<=','2023-06-09 23:59:59')->get();//擷取至6/9號
-            $pay_items = $pay_items->where('created_at','>=','2023-06-09 00:00:00')->get();//從至6/9號抓取
+            $pay_datas = $pay_datas->where('created_at','<=','2023-06-18 23:59:59')->get();//擷取至6/9號
+            $pay_items = $pay_items->where('created_at','>=','2023-06-19 00:00:00')->get();//從至6/9號抓取
         }else{
-            $pay_datas = $pay_datas->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('created_at','<=','2023-06-09 23:59:59')->get();//擷取至6/9號
-            $pay_items = $pay_items->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('created_at','>=','2023-06-09 00:00:00')->get();//從至6/9號抓取
+            $pay_datas = $pay_datas->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('created_at','<=','2023-06-18 23:59:59')->get();//擷取至6/9號
+            $pay_items = $pay_items->where('pay_date','>=',$after_date)->where('pay_date','<=',$before_date)->where('created_at','>=','2023-06-19 00:00:00')->get();//從至6/9號抓取
         }
         
         // dd($after_date);

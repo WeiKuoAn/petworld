@@ -104,9 +104,7 @@
                                         @else
                                             <th>審核</th>
                                         @endif
-                                        @if(!isset($request->status) || $request->status == '0')
-                                            <th width="10%">動作</th>
-                                        @endif
+                                        <th width="10%">動作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -142,7 +140,6 @@
                                                 <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
                                             </a>
                                         </td>
-                                        @if($data->status == '0')
                                         <td>
                                             <div class="btn-group dropdown">
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
@@ -152,7 +149,6 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
