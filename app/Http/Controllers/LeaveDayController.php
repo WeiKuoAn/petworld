@@ -9,6 +9,7 @@ use App\Models\LeaveDayCheck;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
+use App\Models\User;
 
 class LeaveDayController extends Controller
 {
@@ -190,6 +191,57 @@ class LeaveDayController extends Controller
         $item->delete();
 
         return redirect()->route('person.leave_days');
+    }
+
+
+    public function user_index($id , Request $request)
+    {
+        $datas = LeaveDay::orderby('created_at','desc')->where('user_id',$id);
+        $user = User::where('id',$id)->first();
+
+        if($request)
+        {
+            $state = $request->state;
+            if($state){
+                $datas = $datas->where('state',$state);
+            }else{
+                $datas = $datas->where('state',2);
+            }
+            $start_date_start = $request->start_date_start;
+            if($start_date_start){
+                $start_date_start = $request->start_date_start.' 00:00:00';
+                $datas = $datas->where('start_datetime','>=',$start_date_start);
+            }
+            $start_date_end = $request->start_date_end;
+            if($start_date_end){
+                $start_date_end = $request->start_date_end.' 11:59:59';
+                $datas = $datas->where('start_datetime','<=',$start_date_end);
+            }
+            $end_date_start = $request->end_date_start;
+            if($end_date_start){
+                $end_date_start = $request->end_date_start.' 00:00:00';
+                $datas = $datas->where('end_datetime','>=',$end_date_start);
+            }
+            $end_date_end = $request->end_date_end;
+            if($end_date_end){
+                $end_date_end = $request->end_date_end.' 11:59:59';
+                $datas = $datas->where('end_datetime','<=',$end_date_end);
+            }
+            $leave_day = $request->leave_day;
+            if ($leave_day != "null") {
+                if (isset($leave_day)) {
+                    $datas = $datas->where('leave_day', $leave_day);
+                } else {
+                    $datas = $datas;
+                }
+            }
+            $condition = $condition = $request->all();
+            $datas = $datas->paginate(50);
+        }else{
+            $datas = $datas->paginate(50);
+            $condition = '';
+        }
+        return view('leaveday.user_index')->with('user',$user)->with('datas', $datas)->with('request', $request)->with('condition',$condition);
     }
 
 }

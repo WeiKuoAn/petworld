@@ -27,6 +27,8 @@
                 @include('layouts.shared/sale-left-sidebar')
             @elseif(Auth::user()->job_id == 6)<!-- 股東(6) -->
                 @include('layouts.shared/shareholder-left-sidebar')
+            @else
+                @include('layouts.shared/sale-left-sidebar')
             @endif
         @endif
 

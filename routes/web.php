@@ -131,6 +131,7 @@ Route::group(['prefix' => '/'], function () {
 
     /*請假管理 */
     Route::get('personnel/leave_days', [LeaveDayController::class, 'index'])->name('personnel.leave_days');
+    Route::get('personnel/user/{id}/leave_day', [LeaveDayController::class, 'user_index'])->name('user.leave_day');
     Route::get('leave_day/create', [LeaveDayController::class, 'create'])->name('leave_day.create');
     Route::post('leave_day/create', [LeaveDayController::class, 'store'])->name('leave_day.create.data');
     Route::get('leave_day/edit/{id}', [LeaveDayController::class, 'show'])->name('leave_day.edit');
