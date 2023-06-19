@@ -173,7 +173,7 @@ class ProductController extends Controller
 
     public function create()
     {   
-        $products = Product::where('type','!=','combo')->get();
+        $products = Product::where('type','!=','combo')->orderby('seq','desc')->orderby('price','desc')->get();
         foreach($products as $product) {
             $data[] = $product->name;
         }
@@ -240,7 +240,7 @@ class ProductController extends Controller
 
     public function show($id)
     {   
-        $products = Product::where('type','!=','combo')->get();
+        $products = Product::where('type','!=','combo')->orderby('seq','desc')->orderby('price','desc')->get();
         foreach($products as $product) {
             $datas[] = $product->name;
         }
@@ -306,7 +306,7 @@ class ProductController extends Controller
 
     public function delete($id)
     {   
-        $products = Product::get();
+        $products = Product::orderby('seq','desc')->orderby('price','desc')->get();
         foreach($products as $product) {
             $datas[] = $product->name;
         }

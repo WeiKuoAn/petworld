@@ -418,6 +418,29 @@
         }
     });
 
+    payId = $('select[name="pay_id"]').val();
+        if(payId == 'D' || payId =='E'){
+            $(".not_final_show").hide();
+            $("#pet_name").prop('required', false);
+            $("#kg").prop('required', false);
+            $("#type").prop('required', false);
+            $("#plan_id").prop('required', false);
+            $("#plan_price").prop('required', false);
+            if(type_list == memorial){
+                $("#final_price").hide();
+            }else{
+                $("#final_price").show(300);
+            }
+        }else{
+            $("#final_price").hide(300);
+            $(".not_final_show").show(300);
+            $("#pet_name").prop('required', true);
+            $("#kg").prop('required', true);
+            $("#type").prop('required', true);
+            $("#plan_id").prop('required', true);
+            $("#plan_price").prop('required', true);
+        }
+
     
     $("#final_price").on('input', function(){
         calculate_price();
