@@ -33,7 +33,7 @@ class Rpg10Controller extends Controller
                     ->leftJoin('users','users.id', '=' , 'sale_data.user_id')
                     ->leftJoin('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
                     ->leftJoin('plan','plan.id', '=' , 'sale_data.plan_id')
-                    ->where('sale_data.type_list','memorial')
+                    ->where('sale_data.type_list','dispatch')
                     ->where('sale_data.status','9')
                     ->where('product.commission', '0')
                     ->where('users.status', '0')

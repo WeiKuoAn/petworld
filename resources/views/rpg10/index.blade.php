@@ -115,7 +115,15 @@
                                     <tr>
                                         <td align="center">{{ $key+1 }}</td>
                                         <td align="center">{{ $da->sale_date }}</td>
-                                        <td align="center">{{ $da->plan_name }}</td>
+                                        <td align="center">
+                                            @if($da->pay_id == 'D')
+                                            尾款
+                                            @elseif($da->pay_id == 'E')
+                                            追加
+                                            @else
+                                            {{ $da->plan_name }}
+                                            @endif
+                                        </td>
                                         <td align="center">{{ $da->pet_name }}</td>
                                         <td align="center">{{ $da->name }}</td>
                                         <td align="right">{{ $da->gdpaper_num }}</td>
