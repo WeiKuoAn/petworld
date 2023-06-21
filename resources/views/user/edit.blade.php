@@ -52,7 +52,7 @@
                     
                     <div class="mb-3">
                         <label class="form-label">入職時間<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" data-toggle="flatpicker" name="entry_date" value="{{ $user->entry_date }}" readonly>
+                        <input type="date" class="form-control" data-toggle="flatpicker" name="entry_date" value="{{ $user->entry_date }}">
                     </div>
 
                     <div class="mb-3">

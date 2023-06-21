@@ -120,10 +120,14 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input id="pay_invoice-{{ $key }}" class="invoice mobile form-control" type="text" name="pay_invoice_number[]" placeholder="請輸入發票號碼" @if(isset($item->invoice_number)) value="{{ $item->invoice_number }}" @else value="" @endif>
+                                                        @if(isset($item->invoice_number))
+                                                        <input id="pay_invoice-{{ $key }}" class="invoice mobile form-control" type="text" name="pay_invoice_number[]" placeholder="請輸入發票號碼"  value="{{ $item->invoice_number }}" >
+                                                        @endif
+                                                        @if(isset($item->vender_id))
                                                         <input list="vender_number_list_q" class="mobile form-control" id="vendor-{{ $key }}" name="vender_id[]"  @if(isset($item->vender_data)) value="{{ $item->vender_id }}" @else value="{{ $item->vender_id }}" @endif placeholder="請輸入統編號碼">
                                                         <datalist id="vender_number_list_q">
                                                         </datalist>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <input id="pay_text-{{ $key }}" class="mobile form-control" type="text" name="pay_text[]" value="{{ $item->comment }}">

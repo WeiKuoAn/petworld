@@ -131,7 +131,7 @@ class SaleDataController extends Controller
             $sale->plan_price = $request->final_price;
         }
         $sale->pay_price = $request->pay_price;
-        if($request->pay_method == 'C'){
+        if($request->pay_method == 'B' || $request->pay_method == 'C'){
             $sale->cash_price = $request->cash_price;
             $sale->transfer_price = $request->transfer_price;
             $sale->transfer_number = $request->transfer_number;
@@ -571,7 +571,7 @@ class SaleDataController extends Controller
             $sale->plan_price = $request->final_price;
         }
         $sale->pay_price = $request->pay_price;
-        if($request->pay_method == 'C'){
+        if($request->pay_method == 'B' || $request->pay_method == 'C'){
             $sale->cash_price = $request->cash_price;
             $sale->transfer_price = $request->transfer_price;
             $sale->transfer_number = $request->transfer_number;
