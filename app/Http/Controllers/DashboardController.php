@@ -13,6 +13,7 @@ use App\Models\Pay;
 use App\Models\PayData;
 use App\Models\PayItem;
 use App\Models\Sale_gdpaper;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -86,7 +87,13 @@ class DashboardController extends Controller
         $sale_month = Sale::where('status','9')->where('sale_date','>=',$firstDay->format("Y-m-d"))->where('sale_date','<=',$lastDay->format("Y-m-d"))->sum('pay_price');
         $income_month = IncomeData::where('income_date','>=',$firstDay->format("Y-m-d"))->where('income_date','<=',$lastDay->format("Y-m-d"))->sum('price');
         $price_month = $sale_month + $income_month;
-        $gdpaper_month = Sale_gdpaper::where('created_at','>=',$firstDay->format("Y-m-d"))->where('created_at','<=',$lastDay->format("Y-m-d"))->sum('gdpaper_total');
+        $gdpaper_month = DB::table('sale_data')
+                             ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
+                             ->where('sale_data.sale_date','>=',$firstDay->format("Y-m-d"))
+                             ->where('sale_data.sale_date','<=',$lastDay->format("Y-m-d"))
+                             ->where('sale_data.status','9')
+                             ->sum('sale_gdpaper.gdpaper_total');
+        // Sale_gdpaper::where('created_at','>=',$firstDay->format("Y-m-d"))->where('created_at','<=',$lastDay->format("Y-m-d"))->sum('gdpaper_total');
         
         //月支出
         $pay_month = PayItem::where('status','1')->where('pay_date','>=',$firstDay->format("Y-m-d"))->where('pay_date','<=',$lastDay->format("Y-m-d"))->sum('price');

@@ -56,6 +56,16 @@
                             </select>
                         </div>
                         <div class="mb-3 col-md-4">
+                            <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
+                            <select class="form-select" name="pay_id" required>
+                                <option value="" selected>請選擇</option>
+                                <option value="A" @if($data->pay_id == 'A') selected @endif>一次付清</option>
+                                <option value="C" @if($data->pay_id == 'C') selected @endif>訂金</option>
+                                <option value="E" @if($data->pay_id == 'E') selected @endif>追加</option>
+                                <option value="D" @if($data->pay_id == 'D') selected @endif>尾款</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="sale_on" class="form-label">單號<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="sale_on" name="sale_on" value="{{ $data->sale_on }}" required  >
                         </div>
@@ -240,16 +250,6 @@
                         <div class="mb-3 col-md-12">
                             <h2>應收金額<span id="total_text" class="text-danger">{{ $data->total }}</span>元</h2>
                             <input type="hidden" class="form-control" id="total" name="total" value="{{ $data->total }}" readonly>
-                        </div>
-                        <div class="mb-3 col-md-4">
-                            <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
-                            <select class="form-select" name="pay_id" required>
-                                <option value="" selected>請選擇</option>
-                                <option value="A" @if($data->pay_id == 'A') selected @endif>一次付清</option>
-                                <option value="C" @if($data->pay_id == 'C') selected @endif>訂金</option>
-                                <option value="E" @if($data->pay_id == 'E') selected @endif>追加</option>
-                                <option value="D" @if($data->pay_id == 'D') selected @endif>尾款</option>
-                            </select>
                         </div>
                         <div class="mb-3 col-md-4">
                             <label for="pay_method" class="form-label">收款方式<span class="text-danger">*</span></label>

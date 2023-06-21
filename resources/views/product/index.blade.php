@@ -90,6 +90,7 @@
                                     <th>類別</th>
                                     <th>售價</th>
                                     <th>庫存</th>
+                                    <th>計算傭金</th>
                                     <th>最近進貨日期</th>
                                     <th>狀態</th>
                                     <th>動作</th>
@@ -124,6 +125,7 @@
                                                 {{ $restocks[$data->id]['cur_num'] }}
                                             @endif
                                         </td>
+                                        <td>{{ $data->commission }}</td>
                                         <td>
                                             @if($data->restock_date() != null)
                                             {{ $data->restock_date()->date }}

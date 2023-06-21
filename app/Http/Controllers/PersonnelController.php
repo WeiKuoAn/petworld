@@ -102,6 +102,7 @@ class PersonnelController extends Controller
             }else{
                 $datas[$user->id]['last_day'] = 0;
             }
+            $datas[$user->id]['total_day'] = 0;
             foreach ($user_holidays as $user_holiday) {
                 $datas[$user->id]['holidays'][$user_holiday->month] = $user_holiday->holiday;
             }
@@ -111,6 +112,11 @@ class PersonnelController extends Controller
             if (isset($data['holidays'])) {
                 foreach ($data['holidays'] as $key => $holiday) {
                     $data['last_day'] -= intval($holiday);
+                }
+            }
+            if (isset($data['holidays'])) {
+                foreach ($data['holidays'] as $key => $holiday) {
+                    $data['total_day'] += intval($holiday);
                 }
             }
         }

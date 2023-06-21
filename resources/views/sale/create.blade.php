@@ -56,6 +56,16 @@
                             </select>
                         </div>
                         <div class="mb-3 col-md-4">
+                            <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
+                            <select class="form-select" name="pay_id" required>
+                                <option value="" selected>請選擇</option>
+                                <option value="A">一次付清</option>
+                                <option value="C">訂金</option>
+                                <option value="E">追加</option>
+                                <option value="D">尾款</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="sale_on" class="form-label">單號<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="sale_on" name="sale_on" required >
                         </div>
@@ -69,7 +79,7 @@
                             <datalist id="cust_name_list_q">
                             </datalist>
                         </div>
-                        <div class="mb-3 col-md-4 not_final_show not_memorial_show">
+                        <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="pet_name" class="form-label">寵物名稱<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pet_name" name="pet_name" >
                         </div>
@@ -243,16 +253,6 @@
                             <input type="hidden" class="form-control" id="total" name="total" value="0" readonly>
                         </div>
                         <div class="mb-3 col-md-4">
-                            <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
-                            <select class="form-select" name="pay_id" required>
-                                <option value="" selected>請選擇</option>
-                                <option value="A">一次付清</option>
-                                <option value="C">訂金</option>
-                                <option value="E">追加</option>
-                                <option value="D">尾款</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 col-md-4">
                             <label for="pay_id" class="form-label">支付方式<span class="text-danger">*</span></label>
                             <select class="form-select" name="pay_method" required>
                                 <option value="" selected>請選擇</option>
@@ -357,7 +357,6 @@
             if(payIdValue == 'D' || payIdValue =='E'){
                 $("#final_price").show(300);
                 $(".not_final_show").hide();
-                $("#pet_name").prop('required', false);
                 $("#kg").prop('required', false);
                 $("#type").prop('required', false);
                 $("#plan_id").prop('required', false);
@@ -378,8 +377,7 @@
         type_list = $('select[name="type_list"]').val();
         console.log(type_list);
         if($(this).val() == 'D' || $(this).val() =='E'){
-            $(".not_final_show").hide();
-            $("#pet_name").prop('required', false);
+            $(".not_final_show").hide(300);
             $("#kg").prop('required', false);
             $("#type").prop('required', false);
             $("#plan_id").prop('required', false);

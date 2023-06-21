@@ -71,7 +71,7 @@
                         </div> <!-- end col-->
                         <div>
                             <label class="form-label">備註</label>
-                            <textarea class="form-control" rows="3" placeholder="" name="remark"></textarea>
+                            <textarea class="form-control" rows="3" placeholder="" name="remark">{{ $work->remark }}</textarea>
                         </div>
                     </div>
                     <!-- end row -->

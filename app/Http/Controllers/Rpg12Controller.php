@@ -49,7 +49,6 @@ class Rpg12Controller extends Controller
 
         $sale_companys = $sale_companys->select('sale_company_commission.*','customer.*','sale_source.name as source_name','sale_data.status as status')
                                        ->get();
-        // dd($sale_companys);
         $datas = [];
         $sums = [];
 
@@ -62,7 +61,7 @@ class Rpg12Controller extends Controller
                                                                                 ->leftjoin('plan','plan.id', '=' , 'sale_data.plan_id')
                                                                                 ->join('customer','customer.id','=','sale_company_commission.customer_id')
                                                                                 ->leftjoin('sale_source','sale_source.code','=','sale_company_commission.type')
-                                                                                ->where('sale_company_commission.sale_date','=',$sale_company->sale_date)
+                                                                                // ->where('sale_company_commission.sale_date','=',$sale_company->sale_date)
                                                                                 ->where('sale_company_commission.type','=',$sale_company->type)
                                                                                 ->where('sale_company_commission.company_id','=',$sale_company->company_id)
                                                                                 ->where('sale_data.status','=','9')

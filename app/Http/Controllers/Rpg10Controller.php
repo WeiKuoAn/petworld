@@ -25,27 +25,28 @@ class Rpg10Controller extends Controller
             $lastDay = Carbon::now()->lastOfMonth();;
         }
         //取得專員資料，並取得老闆和專員的job_id
-        $users = User::where('status', '0')->whereIn('job_id',[1,3])->get();
+        $users = User::where('status', '0')->whereIn('job_id',[1,3,5])->get();
         $datas = [];
         $sums = [];
         $sale_datas = DB::table('sale_data')
                     ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                    ->join('users','users.id', '=' , 'sale_data.user_id')
-                    ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
-                    ->join('plan','plan.id', '=' , 'sale_data.plan_id')
-                    ->where('sale_data.type_list','dispatch')
+                    ->leftJoin('users','users.id', '=' , 'sale_data.user_id')
+                    ->leftJoin('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
+                    ->leftJoin('plan','plan.id', '=' , 'sale_data.plan_id')
+                    ->where('sale_data.type_list','memorial')
+                    ->where('sale_data.status','9')
                     ->where('product.commission', '0')
                     ->where('users.status', '0')
-                    ->whereIn('users.job_id',[1,3])
+                    ->whereIn('users.job_id',[1,3,5])
                     ->whereNotNull('sale_gdpaper.gdpaper_id')
-                    ->whereNotNull('sale_data.plan_id')
+                    // ->whereNotNull('sale_data.plan_id')
                     ->where('sale_data.sale_date','>=',$firstDay)
                     ->where('sale_data.sale_date','<=',$lastDay);
 
         $user_id = $request->user_id;
         if ($user_id != "NULL") {
             if (isset($user_id)) {
-                $sale_datas = $sale_datas->where('users_id', $user_id);
+                $sale_datas = $sale_datas->where('sale_data.user_id', $user_id);
             } else {
                 $sale_datas = $sale_datas;
             }
@@ -64,10 +65,11 @@ class Rpg10Controller extends Controller
         {
             $datas[$sale_data->name]['sale_datas'] = DB::table('sale_data')
                                                     ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                                                    ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
-                                                    ->join('plan','plan.id', '=' , 'sale_data.plan_id')
+                                                    ->leftJoin('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
+                                                    ->leftJoin('plan','plan.id', '=' , 'sale_data.plan_id')
                                                     ->where('sale_data.type_list','dispatch')
                                                     ->where('product.commission', '0')
+                                                    ->where('sale_data.status','9')
                                                     ->whereNotNull('sale_gdpaper.gdpaper_id')
                                                     ->where('sale_data.sale_date','>=',$firstDay)
                                                     ->where('sale_data.sale_date','<=',$lastDay)

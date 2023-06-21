@@ -38,7 +38,7 @@ class Rpg04Controller extends Controller
         if($request->input() != null){
             $product_datas = DB::table('sale_data')
                             ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                            ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
+                            ->leftjoin('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
                             ->leftjoin('category','category.id', '=', 'product.id')
                             ->where('sale_data.status','9');
 
@@ -68,7 +68,7 @@ class Rpg04Controller extends Controller
         }else{
             $product_datas = DB::table('sale_data')
                             ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
-                            ->join('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
+                            ->leftjoin('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
                             ->leftjoin('category','category.id', '=', 'product.id')
                             ->where('sale_data.status','9')
                             ->where('sale_data.sale_date','>=',$after_date)

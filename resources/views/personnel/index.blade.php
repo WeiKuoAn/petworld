@@ -44,7 +44,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>姓名</th>
-                                    <th>職稱</th>
+                                    {{-- <th>職稱</th> --}}
                                     <th>入職時間</th>
                                     <th>電話</th>
                                     <th>年資</th>
@@ -58,11 +58,11 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <td class="table-user"><img src="{{asset('assets/images/users/user-4.jpg')}}" alt="table-user" class="me-2 rounded-circle">{{ $user->name }}</td>
-                                    <td>
+                                    {{-- <td>
                                         @if(isset($user->job_data))
                                         {{ $user->job_data->name }}
                                         @endif
-                                    </td>
+                                    </td> --}}
                                     <td>{{ $user->entry_date }}</td>    
                                     <td>{{ $user->mobile }}</td>
                                         <td>{{ $datas[$user->id]['seniority'] }}年</td>
