@@ -151,12 +151,29 @@ class PersonnelController extends Controller
 
     public function holiday_store(Request $request)
     {
-        $data = new UserHoliday;
-        $data->year = $request->year;
-        $data->month = $request->month;
-        $data->holiday = $request->holiday;
-        $data->user_id = $request->user_id;
-        $data->save();
+        // dd($request->users);
+        foreach($request->users as $key =>$user)
+        {
+            if(isset($user))
+            {
+                $user_holiday = UserHoliday::where('year',$request->year)->where('month',$request->month)->where('user_id',$user)->first();
+                if($user_holiday == null)
+                {
+                    $data = new UserHoliday;
+                    $data->year = $request->year;
+                    $data->month = $request->month;
+                    $data->holiday = $request->holiday[$key];
+                    $data->user_id = $request->users[$key];
+                    $data->save();
+                }else{
+                    $user_holiday->holiday = $request->holiday[$key];
+                    $user_holiday->save();
+                }
+                    
+            }
+        }
+
+        
         return redirect()->route('personnel.holidays');
     }
 

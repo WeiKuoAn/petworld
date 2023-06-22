@@ -125,7 +125,13 @@
                                                 {{ $restocks[$data->id]['cur_num'] }}
                                             @endif
                                         </td>
-                                        <td>{{ $data->commission }}</td>
+                                        <td>
+                                            @if($data->commission == 0)
+                                            是
+                                            @else
+                                            否
+                                            @endif
+                                        </td>
                                         <td>
                                             @if($data->restock_date() != null)
                                             {{ $data->restock_date()->date }}
