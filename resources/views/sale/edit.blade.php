@@ -218,6 +218,7 @@
                                                 </td>
                                             <td>
                                                 <select id="gdpaper_id_{{$key}}" alt="{{ $key }}" class="mobile form-select" name="gdpaper_ids[]" onchange="chgPapers(this)" >
+                                                    <option value="" selected>請選擇...</option>
                                                     @foreach($products as $product)
                                                         <option value="{{ $product->id }}" @if($product->id == $sale_gdpaper->gdpaper_id) selected @endif>{{ $product->name }}({{ $product->price }})</option>
                                                     @endforeach

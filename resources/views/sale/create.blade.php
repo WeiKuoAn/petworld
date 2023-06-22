@@ -148,7 +148,7 @@
                                     </thead>
                                     <tbody>
                                         @php $j = 0; @endphp
-                                        @for ($i = 0; $i < 2; $i++)
+                                        @for ($i = 0; $i < 1; $i++)
                                             @php $j = $i+1; @endphp
                                             <tr id="row-{{ $i }}">
                                                 <td class="text-center">
@@ -206,7 +206,7 @@
                                     </thead>
                                     <tbody>
                                         @php $j = 0; @endphp
-                                        @for ($i = 0; $i < 2; $i++)
+                                        @for ($i = 0; $i < 1; $i++)
                                             @php $j = $i+1; @endphp
                                             <tr id="row-{{ $i }}">
                                                 <td class="text-center">
