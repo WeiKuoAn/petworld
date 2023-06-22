@@ -134,6 +134,7 @@ class UserController extends Controller
         if(Auth::user()->level == 0 || Auth::user()->level == 1){
             $user->name = $request->name;
             $user->sex = $request->sex;
+            $user->entry_date = $request->entry_date;
             $user->birthday = $request->birthday;
             $user->email = $request->email;
             $user->mobile = $request->mobile;

@@ -241,12 +241,6 @@ class SaleDataController extends Controller
                 $sales = $sales->where('pet_name', 'like' ,$pet_name);
             }
 
-            $pet_name = $request->pet_name;
-            if ($pet_name) {
-                $pet_name = $request->pet_name.'%';
-                $sales = $sales->where('pet_name', 'like' ,$pet_name);
-            }
-
             $user = $request->user;
             if ($user != "null") {
                 if (isset($user)) {
@@ -455,13 +449,15 @@ class SaleDataController extends Controller
                 $sale->status = '1';
                 $sale->save();
             }
+            return redirect()->route('sales');
         } else {
             if ($request->user_check == 'usercheck') {
                 $sale->status = '3';
                 $sale->save();
             }
+            return redirect()->route('person.sales');
         }
-        return redirect()->route('person.sales');
+
     }
 
 

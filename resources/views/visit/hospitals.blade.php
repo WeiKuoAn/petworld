@@ -92,6 +92,7 @@
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="{{ route('visit.company.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                    <a class="dropdown-item" href="{{ route('customer.sales',$data->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>業務紀錄</a>
                                                     <a class="dropdown-item" href="{{ route('visits',$data->id) }}"><i class="mdi mdi-file-document me-2 font-18 text-muted vertical-middle"></i>查看拜訪</a>
                                                     <a class="dropdown-item" href="{{ route('visit.create',$data->id) }}"><i class="mdi mdi-text-box-plus-outline me-2 text-muted font-18 vertical-middle"></i>新增拜訪</a>
                                                 </div>

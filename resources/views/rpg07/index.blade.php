@@ -56,7 +56,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive ">
+                    <div class="table-responsive">
                         <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
                             <thead class="table-light">
                                 <tr align="center">
@@ -76,8 +76,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr align="center" style="color:red;font-weight:500;">
-                                    @foreach ($datas as $data)
+                                @foreach ($datas as $data)
                                     <tr>
                                         {{-- <td>{{ $data->sale_on }}</td>
                                         <td>{{ $data->user_name->name }}</td> --}}
@@ -158,7 +157,7 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table><br>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -167,9 +166,9 @@
 </div> <!-- container -->
 @endsection
 
-<script>
+{{-- <script>
     function CheckSearch(event) {
-      event.preventDefault(); // 防止超連結的默認行為
+    //   event.preventDefault(); // 防止超連結的默認行為
     
       // 檢查欄位是否填寫
       var before_date = $("#before_date").val();
@@ -181,4 +180,4 @@
         $("#myForm").submit();
       }
     }
-</script>
+</script> --}}

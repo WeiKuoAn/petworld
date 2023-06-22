@@ -208,6 +208,13 @@ class PersonController extends Controller
                         $sales = $sales;
                     }
                 }
+
+                $pet_name = $request->pet_name;
+                if ($pet_name) {
+                    $pet_name = $request->pet_name.'%';
+                    $sales = $sales->where('pet_name', 'like' ,$pet_name);
+                }
+
                 $pay_id = $request->pay_id;
                 if ($pay_id) {
                     if($pay_id == 'A'){
