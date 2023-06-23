@@ -74,20 +74,14 @@ class PayDataController extends Controller
             }
 
             $items = $items->get();
-            // dd(count($items));
+            // dd($items);
             if(count($items) > 0)
             {
                 foreach($items as $item)
                 {
                     $pay_data_ids[] = $item->pay_data_id;
                 }
-                if(isset($pay_after_date) || isset($pay_before_date))
-                {
-                    $datas =  $datas->WhereIn('id', $pay_data_ids);
-                }elseif(isset($pay))
-                {
-                    $datas =  $datas->orWhere('id', $pay_data_ids);
-                }
+                $datas =  $datas->orWhereIn('id', $pay_data_ids);
             }
 
 
