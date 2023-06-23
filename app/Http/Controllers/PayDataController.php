@@ -75,9 +75,9 @@ class PayDataController extends Controller
                     $pay_items = PayItem::where('pay_id',$pay)->get();
                     foreach($pay_items as $pay_item)
                     {
-                        $pay_ids[] = $pay_item->pay_id;
+                        $pay_data_ids[] = $pay_item->pay_data_id;
                     }
-                    $datas =  $datas->where('pay_id', $pay)->whereIn('pay_id',$pay_ids);
+                    $datas =  $datas->whereIn('id',$pay_data_ids);
                     $sum_pay  = $sum_pay->where('pay_id', $pay);
                 } else {
                     $datas = $datas;
