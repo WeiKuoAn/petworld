@@ -72,6 +72,12 @@ class Rpg02Controller extends Controller
         }
 
         foreach($pay_items as $pay_item){
+            if($pay_item->pay_id == null)
+            {
+                $get_pay_data = PayData::where('id',$pay_item->pay_data_id)->first();
+                $pay_item->pay_id = $get_pay_data->pay_id;
+            }
+            // dd($pay_item->pay_id);
             if(isset($pay_item->pay_name)){
                 $datas[$pay_item->pay_id]['pay_name'] = $pay_item->pay_name->name;
             }else{

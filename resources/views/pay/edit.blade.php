@@ -102,6 +102,7 @@
                                                     </td>
                                                     <td>
                                                         <select id="pay_id-{{ $key }}" class="form-select" aria-label="Default select example" name="pay_id[]"  required>
+                                                            <option value="" selected>請選擇...</option>
                                                             @foreach($pays as $pay)
                                                             <option value="{{ $pay->id }}" @if($pay->id == $item->pay_id) selected @endif>{{ $pay->name  }}</option>
                                                             @endforeach

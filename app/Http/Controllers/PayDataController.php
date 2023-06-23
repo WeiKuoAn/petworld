@@ -44,7 +44,7 @@ class PayDataController extends Controller
 
             
 
-            //key單日期
+            // key單日期
             $after_date = $request->after_date;
             if ($after_date) {
                 $datas =  $datas->where('pay_date', '>=', $after_date);
@@ -69,18 +69,25 @@ class PayDataController extends Controller
                 } else {
                     // $datas = $datas;
                     $sum_pay  = $sum_pay;
+                    $items = $items;
                 }
             }
 
             $items = $items->get();
-            // dd($items);
+            // dd(count($items));
             if(count($items) > 0)
             {
                 foreach($items as $item)
                 {
                     $pay_data_ids[] = $item->pay_data_id;
                 }
-                $datas =  $datas->orWhere('id', $pay_data_ids);
+                if(isset($pay_after_date) || isset($pay_before_date))
+                {
+                    $datas =  $datas->WhereIn('id', $pay_data_ids);
+                }elseif(isset($pay))
+                {
+                    $datas =  $datas->orWhere('id', $pay_data_ids);
+                }
             }
 
 

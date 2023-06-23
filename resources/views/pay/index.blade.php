@@ -30,20 +30,20 @@
                         <div class="col-auto">
                             <form class="d-flex flex-wrap align-items-center" action="{{ route('pays') }}" method="GET">
                                 <div class="me-3">
-                                    <label for="after_date" class="form-label">支出日期</label>
-                                    <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="pay_after_date" value="{{ $request->pay_after_date }}">
-                                </div>
-                                <div class="me-3">
-                                    <label for="before_date" class="form-label">&nbsp;</label>
-                                    <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="pay_before_date" value="{{ $request->pay_before_date }}">
-                                </div>
-                                <div class="me-3">
                                     <label for="after_date" class="form-label">key單日期</label>
                                     <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="after_date" value="{{ $request->after_date }}">
                                 </div>
                                 <div class="me-3">
                                     <label for="before_date" class="form-label">&nbsp;</label>
                                     <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="before_date" value="{{ $request->before_date }}">
+                                </div>
+                                <div class="me-3">
+                                    <label for="after_date" class="form-label">支出日期</label>
+                                    <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="pay_after_date" value="{{ $request->pay_after_date }}">
+                                </div>
+                                <div class="me-3">
+                                    <label for="before_date" class="form-label">&nbsp;</label>
+                                    <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="pay_before_date" value="{{ $request->pay_before_date }}">
                                 </div>
                                 <div class="me-sm-3">
                                     <label for="before_date" class="form-label">支出來源</label>
