@@ -72,7 +72,12 @@ class PayDataController extends Controller
             $pay = $request->pay;
             if ($pay != "null") {
                 if (isset($pay)) {
-                    $datas =  $datas->where('pay_id', $pay);
+                    $pay_items = PayItem::where('pay_id',$pay)->get();
+                    foreach($pay_items as $pay_item)
+                    {
+                        $pay_ids[] = $pay_item->pay_id;
+                    }
+                    $datas =  $datas->where('pay_id', $pay)->whereIn('pay_id',$pay_ids);
                     $sum_pay  = $sum_pay->where('pay_id', $pay);
                 } else {
                     $datas = $datas;
@@ -188,7 +193,6 @@ class PayDataController extends Controller
                 $Pay_Item->pay_data_id = $Pay_data_id->id;
                 $Pay_Item->pay_date = $request->pay_data_date[$key];
                 $Pay_Item->pay_id = $request->pay_id[$key];
-                $Pay_Item->invoice_number = $request->pay_invoice_number[$key];
                 $Pay_Item->price = $request->pay_price[$key];
                 $Pay_Item->invoice_type = $request->pay_invoice_type[$key];
                 if(isset($request->vender_id[$key])){
@@ -196,7 +200,12 @@ class PayDataController extends Controller
                 }else{
                     $Pay_Item->vender_id = null;
                 }
-                if($user->job_id == '2'){
+                if(isset($request->pay_invoice_number[$key])){
+                    $Pay_Item->invoice_number = $request->pay_invoice_number[$key];
+                }else{
+                    $Pay_Item->invoice_number = null;
+                }
+                if($user->job_id == '1' || $user->job_id == '2' || $user->job_id == '4'){
                     $Pay_Item->status = 1;
                 }else{
                     $Pay_Item->status = 0;
@@ -229,46 +238,30 @@ class PayDataController extends Controller
         // $pay->pay_date = $request->pay_date;
         $pay->price = $request->price;
         $pay->comment = $request->comment;
-        $pay->user_id = Auth::user()->id;
+        // $pay->user_id = Auth::user()->id;
         $pay->save();
-
-        $pay_items = PayItem::where('pay_data_id',$id)->get();
-        if(count($pay_items) == 0){
-                foreach($request->pay_data_date as $key=>$data){
-                    $Pay_Item = new PayItem();
-                    $Pay_Item->pay_data_id = $id;
-                    $Pay_Item->pay_id = $request->pay_id[$key];
-                    $Pay_Item->pay_date = $request->pay_data_date[$key];
+        // dd($request->pay_invoice_number);
+        PayItem::where('pay_data_id', $id)->delete();
+        if(isset($request->pay_data_date)){
+            foreach($request->pay_data_date as $key=>$data){
+                $Pay_Item = new PayItem();
+                $Pay_Item->pay_data_id = $id;
+                $Pay_Item->pay_id = $request->pay_id[$key];
+                $Pay_Item->pay_date = $request->pay_data_date[$key];
+                if(isset($request->pay_invoice_number[$key])){
                     $Pay_Item->invoice_number = $request->pay_invoice_number[$key];
-                    $Pay_Item->price = $request->pay_price[$key];
-                    $Pay_Item->invoice_type = $request->pay_invoice_type[$key];
-                    if(isset($request->vender_id[$key])){
-                        $Pay_Item->vender_id = $request->vender_id[$key];
-                    }else{
-                        $Pay_Item->vender_id = null;
-                    }
-                    $Pay_Item->comment = $request->pay_text[$key];
-                    $Pay_Item->save();
-            }
-        }elseif(count($pay_items) > 0){
-            PayItem::where('pay_data_id', $id)->delete();
-            if(isset($request->pay_data_date)){
-                foreach($request->pay_data_date as $key=>$data){
-                    $Pay_Item = new PayItem();
-                    $Pay_Item->pay_data_id = $id;
-                    $Pay_Item->pay_id = $request->pay_id[$key];
-                    $Pay_Item->pay_date = $request->pay_data_date[$key];
-                    $Pay_Item->invoice_number = $request->pay_invoice_number[$key];
-                    $Pay_Item->price = $request->pay_price[$key];
-                    $Pay_Item->invoice_type = $request->pay_invoice_type[$key];
-                    if(isset($request->vender_id[$key])){
-                        $Pay_Item->vender_id = $request->vender_id[$key];
-                    }else{
-                        $Pay_Item->vender_id = null;
-                    }
-                    $Pay_Item->comment = $request->pay_text[$key];
-                    $Pay_Item->save();
+                }else{
+                    $Pay_Item->invoice_number = null;
                 }
+                $Pay_Item->price = $request->pay_price[$key];
+                $Pay_Item->invoice_type = $request->pay_invoice_type[$key];
+                if(isset($request->vender_id[$key])){
+                    $Pay_Item->vender_id = $request->vender_id[$key];
+                }else{
+                    $Pay_Item->vender_id = null;
+                }
+                $Pay_Item->comment = $request->pay_text[$key];
+                $Pay_Item->save();
             }
         }
 

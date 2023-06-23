@@ -120,14 +120,10 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        @if(isset($item->invoice_number))
                                                         <input id="pay_invoice-{{ $key }}" class="invoice mobile form-control" type="text" name="pay_invoice_number[]" placeholder="請輸入發票號碼"  value="{{ $item->invoice_number }}" >
-                                                        @endif
-                                                        @if(isset($item->vender_id))
                                                         <input list="vender_number_list_q" class="mobile form-control" id="vendor-{{ $key }}" name="vender_id[]"  @if(isset($item->vender_data)) value="{{ $item->vender_id }}" @else value="{{ $item->vender_id }}" @endif placeholder="請輸入統編號碼">
                                                         <datalist id="vender_number_list_q">
                                                         </datalist>
-                                                        @endif
                                                     </td>
                                                     <td>
                                                         <input id="pay_text-{{ $key }}" class="mobile form-control" type="text" name="pay_text[]" value="{{ $item->comment }}">
@@ -155,11 +151,7 @@
             <div class="text-center mb-3">
                 <button type="button" class="btn w-sm btn-light waves-effect" onclick="history.go(-1)">回上一頁</button>
                 <button type="submit" name="btn_submit" id="btn_submit" class="btn w-sm btn-success waves-effect waves-light">
-                    @if($data->user_id == Auth::user()->id)
                     編輯
-                    @else
-                    還原
-                    @endif
                 </button>
                 {{-- <button type="button" class="btn w-sm btn-danger waves-effect waves-light">Delete</button> --}}
             </div>
@@ -196,6 +188,8 @@
         $number = $(obj).attr("alt");
         $('#row-'+$number).remove();
     }
+    
+    
 
     function chgInvoice(obj){
         $number = $(obj).attr("alt");
@@ -217,6 +211,27 @@
     }
 
     $(document).ready(function(){
+        rowCount = $('#cart tr').length - 1;
+        console.log(rowCount);
+        for(var i = 0; i < rowCount; i++)
+        {
+            var invoice_type = $("#pay_invoice_type-" + $i).val();
+
+            if(invoice_type == 'FreeUniform'){
+                $("#vendor-"+$i).show(300);
+                $("#pay_invoice-"+$i).hide(300);
+                $(".td_show").show(300);
+            }else if(invoice_type == 'Uniform'){
+                $("#pay_invoice-"+$i).show(300);
+                $("#vendor-"+$i).show(300);
+                $(".td_show").show(300);
+            }else{
+                $("#pay_invoice-"+$i).hide(300);
+                $("#vendor-"+$i).hide(300);
+                $(".td_show").hide(300);
+            }
+        }
+
         $("#add_row").click(function(){
             $rowCount = $('#cart tr').length - 1;
             var $lastRow = $("#cart tr:last"); //grab row before the last row
@@ -258,9 +273,9 @@
             $newRow += '</tr>';
             $lastRow.after($newRow); //add in the new row at the end
         });
+
         
         $("#btn_submit").click(function(){
-            rowCount = $('#cart tr').length - 1;
             total_price = $("#price").val();
             pay_total = 0;
             for(var i = 0; i < rowCount; i++)
@@ -273,7 +288,6 @@
                 alert('金額錯誤！');
                 return false;
             }
-            console.log(pay_total);
         });
 
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });

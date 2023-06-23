@@ -449,7 +449,7 @@ class SaleDataController extends Controller
                 $sale->status = '1';
                 $sale->save();
             }
-            return redirect()->route('sales');
+            return redirect()->route('sale.check');
         } else {
             if ($request->user_check == 'usercheck') {
                 $sale->status = '3';
