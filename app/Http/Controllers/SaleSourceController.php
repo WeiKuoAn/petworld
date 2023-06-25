@@ -38,4 +38,14 @@ class SaleSourceController extends Controller
         $source->save();
         return redirect()->route('sources');
     }
+
+    public function delete($id){
+        $source = SaleSource::where('id',$id)->first();
+        return view('source.del')->with('source',$source);
+    }
+
+    public function destroy($id, Request $request){
+        SaleSource::where('id',$id)->delete();
+        return redirect()->route('sources');
+    }
 }

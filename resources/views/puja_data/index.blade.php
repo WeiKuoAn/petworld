@@ -81,7 +81,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                            <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
+                    <div class="table-responsive ">
+                        <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
                                 <thead class="table-light">
                                     <tr>
                                         <tr>
@@ -123,7 +124,11 @@
                                                     @endforeach
                                                 @endif
                                             </td>
-                                            <td>{{ $data->pay_id }}</td>
+                                            <td>
+                                                @if(isset($data->pay_id))
+                                                    {{$data->pay_type()}}
+                                                @endif
+                                            </td>
                                             <td>{{ $data->pay_price }}</td>
                                             <td>{{ $data->comment }}</td>
                                             <td>
@@ -143,6 +148,7 @@
                             <ul class="pagination pagination-rounded justify-content-end mb-0">
                                 {{ $datas->appends($condition)->links('vendor.pagination.bootstrap-4') }}
                             </ul>
+                        </div>
                         </div>
                     </div>
                 </div>

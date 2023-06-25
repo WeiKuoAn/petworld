@@ -188,6 +188,7 @@ class VisitController extends Controller
     public function company_create(Request $request)
     {
         $company_type = $request->headers->get('referer');
+        // dd($company_type);
         
         return View('visit.company_create')->with('hint',0)->with('company_type',$company_type);
     }
@@ -198,7 +199,8 @@ class VisitController extends Controller
         $etiquette_type = Str::contains($request->company_type,'etiquettes');//禮儀社
         $reproduce_type = Str::contains($request->company_type,'reproduces');//繁殖場
         $dogpark_type = Str::contains($request->company_type,'dogparks');//狗園
-        $salons_type = Str::contains($request->company_type,'salon');//美容院
+        $salons_type = Str::contains($request->company_type,'salons');//美容院
+        $others_type = Str::contains($request->company_type,'others');//美容院
 
         $data = Customer::where('mobile',$request->mobile)->first();
 

@@ -63,6 +63,7 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('source.edit',$data->id) }}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                <a href="{{ route('source.del',$data->id) }}" class="action-icon"> <i class="mdi mdi-trash-can-outline"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

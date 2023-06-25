@@ -157,6 +157,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('reproduces', [VisitController::class, 'reproduces'])->name('reproduces');//繁殖場
     Route::get('dogparks', [VisitController::class, 'dogparks'])->name('dogparks');//狗園
     Route::get('salons', [VisitController::class, 'salons'])->name('salons');//美容院
+    Route::get('others', [VisitController::class, 'others'])->name('others');//其他合作廠商
     Route::get('visit/{id}', [VisitController::class, 'index'])->name('visits');
     Route::get('visit/create/{id}', [VisitController::class, 'create'])->name('visit.create');
     Route::post('visit/create/{id}', [VisitController::class, 'store'])->name('visit.create.data');
@@ -254,6 +255,8 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/source/create', [SaleSourceController::class, 'store'])->name('source.create.data');
     Route::get('/source/edit/{id}', [SaleSourceController::class, 'show'])->name('source.edit');
     Route::post('/source/edit/{id}', [SaleSourceController::class, 'update'])->name('source.edit.data');
+    Route::get('/source/del/{id}', [SaleSourceController::class, 'delete'])->name('source.del');
+    Route::post('/source/del/{id}', [SaleSourceController::class, 'destroy'])->name('source.del.data');
 
     /*方案管理*/
     Route::get('/plans', [PlanController::class, 'index'])->name('plans');

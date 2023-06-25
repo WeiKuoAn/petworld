@@ -48,4 +48,10 @@ class PujaData extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
+
+    public function pay_type()
+    {
+        $pay_type = ['A' => '結清', 'B' => '結清', 'C' => '訂金', 'D' => '尾款' , 'E' => '追加'];
+        return $pay_type[$this->pay_id];
+    }
 }

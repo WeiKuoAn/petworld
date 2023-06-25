@@ -31,7 +31,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $categorys = Category::where('status','up')->get();
-        $datas = Product::orderby('seq','desc')->orderby('price','desc');
+        $datas = Product::orderby('seq','asc')->orderby('price','desc');
 
         if($request->input() != null){
             $name = $request->name;
@@ -306,7 +306,7 @@ class ProductController extends Controller
 
     public function delete($id)
     {   
-        $products = Product::orderby('seq','desc')->orderby('price','desc')->get();
+        $products = Product::orderby('seq','asc')->orderby('price','desc')->get();
         foreach($products as $product) {
             $datas[] = $product->name;
         }

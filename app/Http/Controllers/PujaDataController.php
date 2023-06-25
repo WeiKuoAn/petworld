@@ -130,7 +130,7 @@ class PujaDataController extends Controller
     public function create()
     {
         $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
-        $pujas = Puja::get();
+        $pujas = Puja::orderby('id','desc')->get();
         return view('puja_data.create')->with('pujas',$pujas)->with('products',$products);
     }
 
@@ -150,7 +150,7 @@ class PujaDataController extends Controller
         $data->pay_id = $request->pay_id;
         $data->user_id = Auth::user()->id;
         $data->pay_method = $request->pay_method;
-        if($request->pay_method == 'C'){
+        if($request->pay_method == 'B' || $request->pay_method == 'C'){
             $data->cash_price = $request->cash_price;
             $data->transfer_price = $request->transfer_price;
             $data->transfer_number = $request->transfer_number;
@@ -187,7 +187,7 @@ class PujaDataController extends Controller
     {
         $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
         $data = PujaData::where('id',$id)->first();
-        $pujas = Puja::get();
+        $pujas = Puja::orderby('id','desc')->get();
         $data_products = PujaDataAttchProduct::where('puja_data_id',$id)->get();
 
         return view('puja_data.edit')->with('data',$data)
@@ -225,7 +225,7 @@ class PujaDataController extends Controller
         $data->pay_id = $request->pay_id;
         $data->user_id = Auth::user()->id;
         $data->pay_method = $request->pay_method;
-        if($request->pay_method == 'C'){
+        if($request->pay_method == 'B' || $request->pay_method == 'C'){
             $data->cash_price = $request->cash_price;
             $data->transfer_price = $request->transfer_price;
             $data->transfer_number = $request->transfer_number;

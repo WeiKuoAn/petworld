@@ -138,6 +138,9 @@
                                 <li>
                                     <a href="{{route('salons')}}"  class="{{ request()->is('salons') ? 'active' : '' }}">美容院紀錄</a>
                                 </li>
+                                <li>
+                                    <a href="{{route('others')}}"  class="{{ request()->is('others') ? 'active' : '' }}">其他廠商紀錄</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

@@ -114,7 +114,7 @@
                                     <td>{{ $data->cust_name->name }}</td>
                                     <td>{{ $data->mobile }}</td>
                                     <td>{{ $data->pet_name }}</td>
-                                    <td>{{ $data->year }}年</td>
+                                    <td>第{{ $data->year }}年</td>
                                     <td>{{ $data->start_date }}</td>
                                     <td>{{ $data->end_date }}</td>
                                     <td>{{ number_format($data->price) }}</td>

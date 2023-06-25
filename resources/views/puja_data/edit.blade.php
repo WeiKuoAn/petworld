@@ -182,7 +182,11 @@
                 <div class="card-body">
                     <h5 class="text-uppercase bg-light  p-2 mt-0 mb-3">付款方式</h5>
                     <div class="row">
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-12">
+                            <h2>應收金額<span id="total_text" class="text-danger">{{ $data->total }}</span>元</h2>
+                            <input type="hidden" class="form-control" id="total" name="total" value="{{ $data->total }}" readonly>
+                        </div>
+                        <div class="mb-3 col-md-4">
                             <label for="pay_id" class="form-label">支付類別<span class="text-danger">*</span></label>
                             <select class="form-select" name="pay_id" required>
                                 <option value="" selected>請選擇</option>
@@ -192,7 +196,7 @@
                                 <option value="D" @if($data->pay_id == 'D') selected @endif>尾款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-4">
                             <label for="pay_method" class="form-label">收款方式<span class="text-danger">*</span></label>
                             <select class="form-select" id="pay_method" name="pay_method" required>
                                 <option value="" selected>請選擇</option>
@@ -201,25 +205,21 @@
                                 <option value="C" @if($data->pay_method == 'C') selected @endif>現金與匯款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-3" id="cash_price_div">
+                        <div class="mb-3 col-md-4" id="cash_price_div">
                             <label for="pay_price" class="form-label">現金收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="cash_price" name="cash_price" value="{{ $data->cash_price }}">
                         </div>
-                        <div class="mb-3 col-md-3" id="transfer_price_div">
+                        <div class="mb-3 col-md-4" id="transfer_price_div">
                             <label for="pay_price" class="form-label">匯款收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="transfer_price" name="transfer_price" value="{{ $data->transfer_price }}">
                         </div>
-                        <div class="mb-3 col-md-3" id="transfer_number_div">
+                        <div class="mb-3 col-md-4" id="transfer_number_div">
                             <label for="pay_price" class="form-label">匯款後五碼<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="transfer_number" name="transfer_number" value="{{ $data->transfer_number }}">
                         </div>
-                        <div class="mb-3 col-md-3">
+                        <div class="mb-3 col-md-4">
                             <label for="pay_price" class="form-label">本次收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pay_price" name="pay_price" value="{{ $data->pay_price }}" required>
-                        </div>
-                        <div class="mb-3 col-md-3">
-                            <label for="total" class="form-label">應收金額<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="total" name="total" value="{{ $data->total }}" readonly>
                         </div>
                     </div>
                     <div>
@@ -305,6 +305,7 @@
             }
         });
         $("#total").val(total);
+        $("#total_text").html(total);
         console.log(plan_id);
     }
 
