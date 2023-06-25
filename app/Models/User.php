@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Job', 'id', 'job_id');
     }
+
+    public function branch_data()
+    {
+        return $this->hasOne('App\Models\Branch', 'id', 'branch_id');
+    }
 }

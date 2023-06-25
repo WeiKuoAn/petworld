@@ -100,6 +100,13 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mb-3 col-md-4" id="source_company">
+                            <label for="source_company_id" class="form-label">來源公司名稱<span class="text-danger">*</span>@if(isset($sale_company))（{{ $sale_company->company_name->name }}）@endif</label>
+                            <input list="source_company_name_list_q" class="form-control" id="source_company_name_q" 
+                                    name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院、繁殖場、狗園名稱" @if(isset($sale_company)) value="{{ $sale_company->company_id }}" @endif>
+                            <datalist id="source_company_name_list_q">
+                            </datalist>
+                        </div>
                         <div class="mb-3 col-md-4 not_final_show not_memorial_show">
                             <label for="plan_id" class="form-label">方案選擇<span class="text-danger">*</span></label>
                             <select id="plan_id" class="form-select" name="plan_id" >
@@ -608,29 +615,4 @@
         });
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script>
-
-{{-- <script type="text/javascript">
-    
-    $(document).ready(function() {
-  $("#your-form").submit(function(event) {
-    event.preventDefault(); // 阻止預設的表單提交行為
-    var formData = $(this).serialize(); // 將表單數據序列化為字串
-    
-    // 使用AJAX發送表單數據
-    $.ajax({
-      url: '{{ route('sale.data.create') }}',
-      type: "POST",
-      data: formData,
-      success: function(response) {
-        // 請求成功的處理邏輯
-      },
-      error: function(xhr, status, error) {
-        // 請求失敗的處理邏輯
-      }
-    });
-  });
-});
-
-</script> --}}
-<!-- end demo js-->
 @endsection

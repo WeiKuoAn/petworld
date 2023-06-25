@@ -240,6 +240,8 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/sale/change/{id}', [SaleDataController::class, 'change_show'])->name('sale.change');
     Route::post('/sale/change/{id}', [SaleDataController::class, 'change_update'])->name('sale.data.change');
     Route::get('/sale/change_record/{id}', [SaleDataController::class, 'change_record'])->name('sale.change.record');
+    //尾款ajax
+    // Route::get('/sales/final_price', [SaleDataController::class, 'final_price'])->name('sales.final_price');
 
     Route::get('/prom/search', [SaleDataController::class, 'prom_search'])->name('prom.search');
     Route::get('/gdpaper/search', [SaleDataController::class, 'gdpaper_search'])->name('gdpaper.search');

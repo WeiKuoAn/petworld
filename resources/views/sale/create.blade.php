@@ -330,7 +330,7 @@
 
     $("#source_company").hide();
     $('select[name="type"]').on('change', function() {
-        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon' || $(this).val() == 'dogpark' || $(this).val() == 'G'){
+        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon' || $(this).val() == 'dogpark' || $(this).val() == 'G' || $(this).val() == 'other'){
             $("#source_company").show(300);
             $("#source_company_name_q").prop('required', true);
         }else{
@@ -355,7 +355,7 @@
         }else if($(this).val() == 'dispatch'){
             $(".not_memorial_show").show(300);
             if(payIdValue == 'D' || payIdValue =='E'){
-                $("#final_price").show(300);
+                // $("#final_price").show(300);
                 $(".not_final_show").hide();
                 $("#kg").prop('required', false);
                 $("#type").prop('required', false);
@@ -385,8 +385,6 @@
             if(type_list == 'memorial'){
                 $("#final_price").hide();
                 $(".not_memorial_show").hide();
-            }else{
-                $("#final_price").show();
             }
         }else{
             $("#final_price").hide(300);

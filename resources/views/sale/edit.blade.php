@@ -327,7 +327,8 @@
 <script>
     type_list = $('select[name="type_list"]').val();
     payIdValue = $('select[name="pay_id"]').val();
-    console.log(payIdValue);
+    payMethod = $('select[name="pay_method"]').val();
+    console.log(payMethod);
 
     //案件單類別
     if(type_list == 'memorial'){
@@ -413,7 +414,7 @@
     });
 
     type = $('select[name="type"]').val();
-    if(type == 'H' || type == 'B' || type == 'Salon' || type == 'G' || type == 'dogpark'){
+    if(type == 'H' || type == 'B' || type == 'Salon' || type == 'G' || type == 'dogpark' || type == 'other'){
         $("#source_company").show(300);
         $("#source_company_name_q").prop('required', true);
     }else{
@@ -422,7 +423,7 @@
     }
 
     $('select[name="type"]').on('change', function() {
-        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon' || $(this).val() == 'G' || $(this).val() == 'dogpark'){
+        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon' || $(this).val() == 'G' || $(this).val() == 'dogpark' || $(this).val() == 'other'){
             $("#source_company").show(300);
             $("#source_company_name_q").prop('required', true);
         }else{
@@ -435,7 +436,6 @@
     $("#cash_price_div").hide();
     $("#transfer_price_div").hide();
     $("#transfer_number_div").hide();
-    payMethod = $('select[name="pay_method"]').val();
     if(payMethod == 'C'){
             $("#cash_price_div").show(300);
             $("#transfer_price_div").show(300);
@@ -600,7 +600,6 @@
         });
         $("#total").val(total);
         $("#total_text").html(total);
-        console.log(total);
     }
 
    
@@ -616,7 +615,6 @@
                 $('#cust_name_list_q').html(data);
             }
             });
-            console.log($value);
         });
 
         $( "#source_company_name_q" ).keydown(function() {
@@ -629,7 +627,6 @@
                 $('#source_company_name_list_q').html(data);
             }
             });
-            console.log($value);
         });
 
         $(".ibtnAdd_prom").click(function(){
@@ -658,29 +655,4 @@
         });
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script>
-
-{{-- <script type="text/javascript">
-    
-    $(document).ready(function() {
-  $("#your-form").submit(function(event) {
-    event.preventDefault(); // 阻止預設的表單提交行為
-    var formData = $(this).serialize(); // 將表單數據序列化為字串
-    
-    // 使用AJAX發送表單數據
-    $.ajax({
-      url: '{{ route('sale.data.create') }}',
-      type: "POST",
-      data: formData,
-      success: function(response) {
-        // 請求成功的處理邏輯
-      },
-      error: function(xhr, status, error) {
-        // 請求失敗的處理邏輯
-      }
-    });
-  });
-});
-
-</script> --}}
-<!-- end demo js-->
 @endsection

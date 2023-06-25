@@ -62,7 +62,7 @@
 
                     <div class="mb-3">
                         <label for="project-priority" class="form-label">分館<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="job_id" @if(isset($user->job_data))   value="{{ $user->job_data->name }}" @endif readonly>
+                        <input type="text" class="form-control" name="job_id" @if(isset($user->branch_data))   value="{{ $user->branch_data->name }}" @endif readonly>
                     </div>
 
                     <div class="mb-3">

@@ -63,31 +63,7 @@
 
                 <li class="menu-title mt-2">Apps</li>
 
-                {{-- <li>
-                    <li>
-                        <a href="#sidebarEcommerce" data-bs-toggle="collapse">
-                            <i data-feather="users"></i>
-                            <span> 用戶管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarEcommerce">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{route('user.create')}}"  class="{{ request()->is('user.create') ? 'active' : '' }}">新增用戶</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('users')}}"  class="{{ request()->is('users') ? 'active' : '' }}">用戶列表</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('branchs')}}"  class="{{ request()->is('branchs') ? 'active' : '' }}">部門列表</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('jobs')}}"  class="{{ request()->is('jobs') ? 'active' : '' }}">職稱列表</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li> --}}
-
+                <li>
                     <li>
                         <a href="#holiday" data-bs-toggle="collapse">
                             <i data-feather="users"></i>
@@ -100,7 +76,7 @@
                                     <a href="{{ route('personnels') }}"  class="{{ request()->is('personnels') ? 'active' : '' }}">人事列表</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('personnel.leave_days') }}"  class="{{ request()->is('personnel.leave_days') ? 'active' : '' }}">部門請假核准</a>
+                                    <a href="{{ route('personnel.leave_days') }}"  class="{{ request()->is('personnel.leave_days') ? 'active' : '' }}">請假核准</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('vacations') }}"  class="{{ request()->is('vacations') ? 'active' : '' }}">年度總休假設定</a>
@@ -138,6 +114,9 @@
                                 <li>
                                     <a href="{{route('salons')}}"  class="{{ request()->is('salons') ? 'active' : '' }}">美容院紀錄</a>
                                 </li>
+                                <li>
+                                    <a href="{{route('others')}}"  class="{{ request()->is('others') ? 'active' : '' }}">其他廠商紀錄</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -154,10 +133,10 @@
                                     <a href="{{ route('customer.create')}}"  class="{{ request()->is('customer.create') ? 'active' : '' }}">新增客戶</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('customer')}}"  class="{{ request()->is('customer') ? 'active' : '' }}">客戶列表</a>
+                                    <a href="{{ route('customer.group') }}"  class="{{ request()->is('customer.group') ? 'active' : '' }}">客戶群組</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('customer.group') }}"  class="{{ request()->is('customer.group') ? 'active' : '' }}">客戶群組</a>
+                                    <a href="{{ route('customer')}}"  class="{{ request()->is('customer') ? 'active' : '' }}">客戶列表</a>
                                 </li>
                             </ul>
                         </div>
@@ -220,21 +199,20 @@
                         <div class="collapse" id="puja">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="{{ route('pujas') }}"  class="{{ request()->is('pujas') ? 'active' : '' }}">法會管理</a>
+                                    <a href="{{ route('puja.types') }}"  class="{{ request()->is('puja.types') ? 'active' : '' }}">法會類別設定</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('puja.create') }}"  class="{{ request()->is('puja.create') ? 'active' : '' }}">法會設定</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('puja.types') }}"  class="{{ request()->is('puja.types') ? 'active' : '' }}">法會類別設定</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('puja_datas') }}"  class="{{ request()->is('puja_datas') ? 'active' : '' }}">法會報名查詢</a>
+                                    <a href="{{ route('pujas') }}"  class="{{ request()->is('pujas') ? 'active' : '' }}">法會管理</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('puja_data.create') }}"  class="{{ request()->is('puja_data.create') ? 'active' : '' }}">法會報名</a>
                                 </li>
-                                
+                                <li>
+                                    <a href="{{ route('puja_datas') }}"  class="{{ request()->is('puja_datas') ? 'active' : '' }}">法會報名查詢</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -371,6 +349,9 @@
                                     <a href="{{ route('rpg10') }}"  class="{{ request()->is('rpg10') ? 'active' : '' }}">專員金紙抽成</a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('rpg12') }}"  class="{{ request()->is('rpg12') ? 'active' : '' }}">廠商傭金抽成</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('rpg05') }}"  class="{{ request()->is('rpg05') ? 'active' : '' }}">日營收報表</a>
                                 </li>
                                 <li>
@@ -393,30 +374,17 @@
                     <div class="collapse" id="person">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('person.pays') }}"  class="{{ request()->is('person.pays') ? 'active' : '' }}">個人支出總覽</a>
+                                <a href="{{ route('person.pays') }}"  class="{{ request()->is('person.pays') ? 'active' : '' }}">個人支出</a>
                             </li>
                             <li>
-                                <a href="{{ route('person.leave_days') }}"  class="{{ request()->is('person.leave_days') ? 'active' : '' }}">個人假單總覽</a>
+                                <a href="{{ route('person.leave_days') }}"  class="{{ request()->is('person.leave_days') ? 'active' : '' }}">個人假單</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user-profile') }}"  class="{{ request()->is('user-profile') ? 'active' : '' }}">個人資料</a>
                             </li>
                         </ul>
                     </div>
-                </li>
-
-                {{-- <li class="menu-title mt-2">fast Use</li>
-                <li>
-                    <a href="{{ route('sale.create') }}">
-                        <i data-feather="airplay"></i>
-                        <span> 業務key單 </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('pay.create') }}">
-                        <i data-feather="airplay"></i>
-                        <span> 支出key單 </span>
-                    </a>
-                </li> --}}
-                
-                
+                </li>                
             </ul>
 
         </div>

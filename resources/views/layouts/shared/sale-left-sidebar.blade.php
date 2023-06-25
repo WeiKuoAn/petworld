@@ -52,14 +52,6 @@
                         <span> 線上打卡 </span>
                     </a>
                 </li>
-                {{-- <li>
-                    <a href="{{ route('dashboard.info') }}">
-                        <i data-feather="airplay"></i>
-                        <span> 當月總表 </span>
-                    </a>
-                </li> --}}
-
-                
 
                 <li class="menu-title mt-2">Apps</li>
 
@@ -86,6 +78,9 @@
                                 <li>
                                     <a href="{{route('salons')}}"  class="{{ request()->is('salons') ? 'active' : '' }}">美容院紀錄</a>
                                 </li>
+                                <li>
+                                    <a href="{{route('others')}}"  class="{{ request()->is('others') ? 'active' : '' }}">其他業者紀錄</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -99,13 +94,13 @@
                         <div class="collapse" id="customer">
                             <ul class="nav-second-level">
                                 <li>
+                                    <a href="{{ route('customer.group') }}"  class="{{ request()->is('customer.group') ? 'active' : '' }}">客戶群組</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('customer.create')}}"  class="{{ request()->is('customer.create') ? 'active' : '' }}">新增客戶</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('customer')}}"  class="{{ request()->is('customer') ? 'active' : '' }}">客戶列表</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('customer.group') }}"  class="{{ request()->is('customer.group') ? 'active' : '' }}">客戶群組</a>
                                 </li>
                             </ul>
                         </div>
@@ -135,13 +130,13 @@
                         <div class="collapse" id="sale">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="{{ route('sales') }}"  class="{{ request()->is('sales') ? 'active' : '' }}">業務管理</a>
+                                    <a href="{{ route('person.sales') }}"  class="{{ request()->is('person.sales') ? 'active' : '' }}">業務管理</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('sale.create') }}"  class="{{ request()->is('sale.create') ? 'active' : '' }}">業務Key單</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('wait.sales') }}"  class="{{ request()->is('wait.sales') ? 'active' : '' }}">業務對帳確認</a>
+                                    <a href="{{ route('person.wait.sales') }}"  class="{{ request()->is('person.wait.sales') ? 'active' : '' }}">業務對帳確認</a>
                                 </li>
                             </ul>
                         </div>
@@ -160,6 +155,9 @@
                             </li>
                             <li>
                                 <a href="{{ route('person.leave_days') }}"  class="{{ request()->is('person.leave_days') ? 'active' : '' }}">個人假單總覽</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user-profile') }}"  class="{{ request()->is('user-profile') ? 'active' : '' }}">個人資料</a>
                             </li>
                         </ul>
                     </div>

@@ -184,6 +184,25 @@ class VisitController extends Controller
         return view('visit.salons')->with('datas',$datas)->with('request',$request);
     }
 
+    public function others(Request $request)
+    {
+        $datas = Customer::where('group_id',7);
+        if ($request) {
+            $name = $request->name;
+            if (!empty($name)) {
+                $name = '%'.$request->name . '%';
+                $datas = $datas->where('name', 'like', $name);
+            }
+            $mobile = $request->mobile;
+            if (!empty($mobile)) {
+                $mobile = $request->mobile . '%';
+                $datas = $datas->where('mobile', 'like', $mobile);
+            }
+        }
+        $datas = $datas->paginate(50);
+        return view('visit.others')->with('datas',$datas)->with('request',$request);
+    }
+
     //新增公司
     public function company_create(Request $request)
     {
@@ -195,17 +214,18 @@ class VisitController extends Controller
 
     public function company_store(Request $request)
     {
+        // dd($request->company_type);
         $hospital_type = Str::contains($request->company_type,'hospitals');//醫院
         $etiquette_type = Str::contains($request->company_type,'etiquettes');//禮儀社
         $reproduce_type = Str::contains($request->company_type,'reproduces');//繁殖場
         $dogpark_type = Str::contains($request->company_type,'dogparks');//狗園
         $salons_type = Str::contains($request->company_type,'salons');//美容院
-        $others_type = Str::contains($request->company_type,'others');//美容院
+        $others_type = Str::contains($request->company_type,'others');//其他業者
 
         $data = Customer::where('mobile',$request->mobile)->first();
 
         if(isset($data)){
-            return view('visit.company_create')->with(['hint' => '1']);
+            return view('visit.company_create')->with(['hint' => '1','company_type'=>$request->company_type]);
         }else{
             $customer = new Customer;
             $customer->name = $request->name;
@@ -239,6 +259,11 @@ class VisitController extends Controller
                 $customer->created_up = Auth::user()->id;
                 $customer->save();
                 return redirect()->route('salons');
+            }elseif($others_type){
+                $customer->group_id = 7;
+                $customer->created_up = Auth::user()->id;
+                $customer->save();
+                return redirect()->route('others');
             }
             
         }
@@ -260,6 +285,7 @@ class VisitController extends Controller
         $reproduce_type = Str::contains($request->company_type,'reproduces');//繁殖場
         $dogpark_type = Str::contains($request->company_type,'dogparks');//狗園
         $salons_type = Str::contains($request->company_type,'salon');//美容院
+        $others_type = Str::contains($request->company_type,'others');//其他業者
 
         $data = Customer::where('id', $id)->first();
         $data->name = $request->name;
@@ -280,6 +306,8 @@ class VisitController extends Controller
             return redirect()->route('dogparks');
         }elseif($salons_type){
             return redirect()->route('salons');
+        }elseif($others_type){
+            return redirect()->route('others');
         }
     }
 }

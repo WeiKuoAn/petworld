@@ -86,6 +86,7 @@ class ContractController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->renew);
         $data = new Contract;
         $data->type = $request->type;
         $data->number = $request->number;

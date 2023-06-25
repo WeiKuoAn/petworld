@@ -47,7 +47,7 @@ class SaleDataController extends Controller
     {
         if ($request->ajax()) {
             $output = "";
-            $hospitals = Customer::whereIn('group_id',[2,3,4,5,6])->where('name', 'like', $request->cust_name . '%')->get();
+            $hospitals = Customer::whereIn('group_id',[2,3,4,5,6,7])->where('name', 'like', $request->cust_name . '%')->get();
 
             if($hospitals){
                 foreach ($hospitals as $key => $hospital) {
@@ -90,6 +90,21 @@ class SaleDataController extends Controller
             return Response($output);
         }
     }
+    
+    // public function final_price(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $output = "";
+    //         $product = Sale::where('customer_id', $request->cust_id)->orderby('id','desc')->first();
+            
+
+    //         if($product){
+    //             $output.=  $product->price;
+    //         }
+    //         return Response($output);
+    //     }
+    // }
+
 
     public function create()
     {
@@ -670,6 +685,7 @@ class SaleDataController extends Controller
         $data = Sale::where('id', $id)->first();
         $sale_gdpapers = Sale_gdpaper::where('sale_id', $id)->get();
         $sale_proms = Sale_prom::where('sale_id', $id)->get();
+        $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
         return view('sale.del')->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
@@ -677,17 +693,20 @@ class SaleDataController extends Controller
             ->with('proms', $proms)
             ->with('sale_proms', $sale_proms)
             ->with('sale_gdpapers', $sale_gdpapers)
-            ->with('sources',$sources);
+            ->with('sources',$sources)
+            ->with('sale_company',$sale_company);
     }
     public function destroy($id)
     {
         $sale = Sale::where('id', $id);
         $sale_gdpapers = Sale_gdpaper::where('sale_id', $id);
         $sale_promBs = Sale_prom::where('sale_id', $id);
+        $sale_company = SaleCompanyCommission::where('sale_id', $id);
 
         $sale->delete();
         $sale_gdpapers->delete();
         $sale_promBs->delete();
+        $sale_company->delete();
         return redirect()->route('sales');
     }
 

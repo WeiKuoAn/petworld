@@ -147,10 +147,11 @@
         }
     });
 
-    if($("input[name='renew_year_hidden']").val() != ""){
+    if($("input[name='renew_year_hidden']").val() == '1'){
         $("#renew").prop("checked", true);
         $("#renew_div").show();
     }
+
 
     $( "#cust_name_q" ).keydown(function() {
         $value=$(this).val();

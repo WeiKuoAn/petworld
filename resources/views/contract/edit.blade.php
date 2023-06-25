@@ -91,7 +91,7 @@
                             </div>
                            <div class="mb-3 mt-3">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="renew" name="renew" @if($data->renew == 1)  checked  @endif>
+                                    <input type="checkbox" class="form-check-input" id="renew" name="renew" @if($data->renew == '1')  checked  @endif>
                                     <label class="form-check-label" for="renew"><b>是否為續約？</b></label>
                                 </div>
                             </div>
@@ -143,7 +143,9 @@
         }
     });
 
-    if($("input[name='renew_year_hidden']").val() != ""){
+    console.log($("input[name='renew_year_hidden']").val());
+
+    if($("input[name='renew_year_hidden']").val() == '1'){
         $("#renew").prop("checked", true);
         $("#renew_div").show();
     }
