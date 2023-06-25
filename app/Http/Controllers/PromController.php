@@ -15,7 +15,7 @@ class PromController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = Prom::orderby('type','asc')->orderby('id','asc')->orderby('status','asc');
+        $datas = Prom::orderby('type','asc')->orderby('seq','asc')->orderby('status','asc');
         $type = $request->type;
         if($type){
             $datas = $datas->where('type', $type);
@@ -88,6 +88,7 @@ class PromController extends Controller
         $prom = Prom::where('id',$id)->first();
         $prom->type = $request->type;
         $prom->name = $request->name;
+        $prom->seq = $request->seq;
         $prom->status = $request->status;
         $prom->save();
         return redirect()->route('proms');

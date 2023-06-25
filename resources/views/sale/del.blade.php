@@ -120,10 +120,10 @@
                             <label for="plan_price" class="form-label">方案價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number" id="plan_price" name="plan_price" value="{{ $data->plan_price }}" >
                         </div>
-                        <div class="mb-3 col-md-4" id="final_price">
+                        {{-- <div class="mb-3 col-md-4" id="final_price">
                             <label for="plan_price" class="form-label">尾款價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number"  name="final_price" value="{{ $data->pay_price }}" >
-                        </div>
+                        </div> --}}
                         <div class="mb-3 col-md-4">
                             <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="user_id" name="user_id" value="{{ $data->user_name->name }}" readonly>
