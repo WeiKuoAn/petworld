@@ -104,9 +104,16 @@
                             </select>
                         </div>
                         <div class="mb-3 col-md-4" id="source_company">
-                            <label for="source_company_id" class="form-label">來源公司名稱<span class="text-danger">*</span>@if(isset($sale_company))（{{ $sale_company->company_name->name }}）@endif</label>
+                            <label for="source_company_id" class="form-label">來源公司名稱<span class="text-danger">*</span>
+                                @if(isset($sale_company))
+                                    @if(isset($sale_company->company_name))
+                                        （{{ $sale_company->company_name->name }}）
+                                    @else <b style="color: red;">（來源公司須重新至拜訪管理新增公司資料）</b>
+                                    @endif
+                                @endif
+                            </label>
                             <input list="source_company_name_list_q" class="form-control" id="source_company_name_q" 
-                                    name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院、繁殖場、狗園名稱" @if(isset($sale_company)) value="{{ $sale_company->company_id }}" @endif>
+                                    name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院、繁殖場、狗園名稱" @if(isset($sale_company)) value="{{ $sale_company->company_id }}" @else value="來源公司須重新登入"  @endif>
                             <datalist id="source_company_name_list_q">
                             </datalist>
                         </div>

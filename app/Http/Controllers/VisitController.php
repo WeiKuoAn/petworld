@@ -223,49 +223,61 @@ class VisitController extends Controller
         $others_type = Str::contains($request->company_type,'others');//其他業者
 
         $data = Customer::where('mobile',$request->mobile)->first();
-
-        if(isset($data)){
-            return view('visit.company_create')->with(['hint' => '1','company_type'=>$request->company_type]);
-        }else{
+        if($request->not_mobile == 1){ //未提供電話
             $customer = new Customer;
             $customer->name = $request->name;
-            $customer->mobile = $request->mobile;
+            $customer->mobile = '未提供電話';
             $customer->county = $request->county;
             $customer->district = $request->district;
             $customer->address = $request->address;
-
-            if($hospital_type){
-                $customer->group_id = 2;
-                $customer->created_up = Auth::user()->id;
-                $customer->save();
-                return redirect()->route('hospitals');
-            }elseif($etiquette_type){
-                $customer->group_id = 5;
-                $customer->created_up = Auth::user()->id;
-                $customer->save();
-                return redirect()->route('etiquettes');
-            }elseif($reproduce_type){
-                $customer->group_id = 4;
-                $customer->created_up = Auth::user()->id;
-                $customer->save();
-                return redirect()->route('reproduces');
-            }elseif($dogpark_type){
-                $customer->group_id = 3;
-                $customer->created_up = Auth::user()->id;
-                $customer->save();
-                return redirect()->route('dogparks');
-            }elseif($salons_type){
-                $customer->group_id = 6;
-                $customer->created_up = Auth::user()->id;
-                $customer->save();
-                return redirect()->route('salons');
-            }elseif($others_type){
-                $customer->group_id = 7;
-                $customer->created_up = Auth::user()->id;
-                $customer->save();
-                return redirect()->route('others');
+        }else{
+            if(isset($data)){
+                return view('visit.company_create')->with(['hint' => '1','company_type'=>$request->company_type]);
+            }else{
+                if(isset($data)){
+                    return view('visit.company_create')->with(['hint' => '1','company_type'=>$request->company_type]);
+                }else{
+                    $customer = new Customer;
+                    $customer->name = $request->name;
+                    $customer->mobile = $request->mobile;
+                    $customer->county = $request->county;
+                    $customer->district = $request->district;
+                    $customer->address = $request->address;
+                }
+                
             }
-            
+        }
+
+        if($hospital_type){
+            $customer->group_id = 2;
+            $customer->created_up = Auth::user()->id;
+            $customer->save();
+            return redirect()->route('hospitals');
+        }elseif($etiquette_type){
+            $customer->group_id = 5;
+            $customer->created_up = Auth::user()->id;
+            $customer->save();
+            return redirect()->route('etiquettes');
+        }elseif($reproduce_type){
+            $customer->group_id = 4;
+            $customer->created_up = Auth::user()->id;
+            $customer->save();
+            return redirect()->route('reproduces');
+        }elseif($dogpark_type){
+            $customer->group_id = 3;
+            $customer->created_up = Auth::user()->id;
+            $customer->save();
+            return redirect()->route('dogparks');
+        }elseif($salons_type){
+            $customer->group_id = 6;
+            $customer->created_up = Auth::user()->id;
+            $customer->save();
+            return redirect()->route('salons');
+        }elseif($others_type){
+            $customer->group_id = 7;
+            $customer->created_up = Auth::user()->id;
+            $customer->save();
+            return redirect()->route('others');
         }
     }
 

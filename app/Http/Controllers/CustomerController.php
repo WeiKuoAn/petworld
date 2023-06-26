@@ -175,19 +175,32 @@ class CustomerController extends Controller
     {
         $groups = CustGroup::where('status','up')->get();
         $data = Customer::where('mobile',$request->mobile)->first();
-        if(isset($data)){
-            return view('customer.create')->with('groups',$groups)->with(['hint' => '1']);
-        }else{
+        if($request->not_mobile == 1){ //未提供電話
             $customer = new Customer;
-            $customer->name = $request->name;
-            $customer->mobile = $request->mobile;
-            $customer->county = $request->county;
-            $customer->district = $request->district;
-            $customer->address = $request->address;
-            $customer->group_id = 1;
-            $customer->created_up = Auth::user()->id;
-            $customer->save();
-            return redirect()->route('customer');
+                $customer->name = $request->name;
+                $customer->mobile = '未提供電話';
+                $customer->county = $request->county;
+                $customer->district = $request->district;
+                $customer->address = $request->address;
+                $customer->group_id = 1;
+                $customer->created_up = Auth::user()->id;
+                $customer->save();
+                return redirect()->route('customer');
+        }else{
+            if(isset($data)){
+                return view('customer.create')->with('groups',$groups)->with(['hint' => '1']);
+            }else{
+                $customer = new Customer;
+                $customer->name = $request->name;
+                $customer->mobile = $request->mobile;
+                $customer->county = $request->county;
+                $customer->district = $request->district;
+                $customer->address = $request->address;
+                $customer->group_id = 1;
+                $customer->created_up = Auth::user()->id;
+                $customer->save();
+                return redirect()->route('customer');
+            }
         }
         
     }

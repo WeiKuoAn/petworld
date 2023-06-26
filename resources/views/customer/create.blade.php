@@ -61,7 +61,7 @@
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">電話<span class="text-danger">*</span></label>
-                                   <input type="text" class="form-control" name="mobile" required>
+                                   <input type="text" class="form-control" name="mobile" id="mobile" required>
                                </div>
                            </div>
 
@@ -72,6 +72,12 @@
                                     <input type="text" class="form-control" name="address" placeholder="輸入地址" required>
                                 </div>
                            </div>
+                           <div class="mb-3 mt-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="not_mobile" name="not_mobile">
+                                <label class="form-check-label" for="not_mobile"><b>未提供電話</b></label>
+                            </div>
+                        </div>
 
                            
                         </div> <!-- end col-->
@@ -99,6 +105,15 @@
 @section('script')
 <!-- third party js -->
 <script>
+    $('#not_mobile').change(function() {
+        if ($(this).is(':checked')) {
+            $(this).val(1);
+            $("#mobile").prop('required', false);
+        } else {
+            $(this).val(0);
+            $("#mobile").prop('required', true);
+        }
+    });
     $(document).ready(function(){
         $("#twzipcode").twzipcode({
         css: [" form-control", "mt-1 form-control" , "mt-1 form-control"], // 自訂 "城市"、"地區" class 名稱 
