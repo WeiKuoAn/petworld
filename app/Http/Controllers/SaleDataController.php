@@ -47,7 +47,7 @@ class SaleDataController extends Controller
     {
         if ($request->ajax()) {
             $output = "";
-            $hospitals = Customer::whereIn('group_id',[2,3,4,5,6,7])->where('name', 'like', $request->cust_name . '%')->get();
+            $hospitals = Customer::whereIn('group_id',[2,3,4,5,6,7])->where('name', 'like', '%'. $request->cust_name . '%')->get();
 
             if($hospitals){
                 foreach ($hospitals as $key => $hospital) {
