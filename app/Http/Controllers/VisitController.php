@@ -160,6 +160,8 @@ class VisitController extends Controller
         if(isset($county))
         {
             $data_districts = Customer::where('group_id',2)->where('county', $county)->get();
+        }else{
+            $data_districts = [];
         }
         $districts = [];
         foreach($data_districts as $data_district)
