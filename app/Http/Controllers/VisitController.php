@@ -15,6 +15,34 @@ use Illuminate\Support\Str;
 
 class VisitController extends Controller
 {
+    public function search_district(Request $request)
+    {
+        $hospital_type = Str::contains($request->company_type,'hospitals');//醫院
+
+        if ($request->ajax()) {
+            $output = "";
+
+            $datas = Customer::where('group_id',2)->where('county', $request->county)->get();
+
+            $districts = [];
+            foreach($datas as $data)
+            {
+                $districts[] = $data->district;
+            }
+            $districts = array_unique($districts);
+            
+            if(isset($districts)){
+                foreach ($districts as $key => $district) {
+                    $output.=  '<option value="'.$district.'">'.$district.'</option>';
+                  }
+            }else{
+                $output.=  '<option value="">請選擇...</option>';
+            }
+            // dd($output);
+            return Response($output);
+        }
+    }
+
     public function index(Request $request,$id)
     {
         $datas = Visit::where('customer_id',$id);
@@ -103,9 +131,45 @@ class VisitController extends Controller
                 $mobile = $request->mobile . '%';
                 $datas = $datas->where('mobile', 'like', $mobile);
             }
+            $county = $request->county;
+            if ($county != "null") {
+                if (isset($county)) {
+                    $datas = $datas->where('county', $county);
+                } else {
+                    $datas = $datas;
+                }
+            }
+            $district = $request->district;
+            if ($district != "null") {
+                if (isset($district)) {
+                    $datas = $datas->where('district', $district);
+                } else {
+                    $datas = $datas;
+                }
+            }
         }
-        $datas = $datas->paginate(50);
-        return view('visit.hospitals')->with('datas',$datas)->with('request',$request);
+        $datas = $datas->orderby('name','desc')->paginate(50);
+        
+        $data_countys = Customer::where('group_id',2)->get();
+        foreach($data_countys as $data_county)
+        {
+            $countys[] = $data_county->county;
+        }
+        $countys = array_unique($countys);
+        
+        if(isset($county))
+        {
+            $data_districts = Customer::where('group_id',2)->where('county', $county)->get();
+        }
+        $districts = [];
+        foreach($data_districts as $data_district)
+        {
+            $districts[] = $data_district->district;
+        }
+        $districts = array_unique($districts);
+        // dd($districts);
+
+        return view('visit.hospitals')->with('datas',$datas)->with('request',$request)->with('countys',$countys)->with('districts',$districts);
     }
 
     public function etiquettes(Request $request)//禮儀社
@@ -124,6 +188,8 @@ class VisitController extends Controller
             }
         }
         $datas = $datas->paginate(50);
+
+       
         return view('visit.etiquettes')->with('datas',$datas)->with('request',$request);
     }
 

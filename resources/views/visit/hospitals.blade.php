@@ -28,12 +28,28 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <div class="col-auto">
-                            <form class="d-flex flex-wrap align-items-center" action="{{ route('hospitals') }}" method="GET">
+                            <form class="d-flex flex-wrap align-items-center" action="{{ route('hospitals') }}" method="GET" >
                                 <div class="me-3">
                                     <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" name="name" placeholder="姓名" value="{{ $request->name }}">
                                 </div>
                                 <div class="me-3">
                                     <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" name="mobile" placeholder="電話" value="{{ $request->mobile }}">
+                                </div>
+                                <div class="me-sm-3">
+                                    <select class="form-select my-1 my-lg-0" id="status-select" name="county" onchange="this.form.submit()">
+                                        <option value="null" selected>選擇地區</option>
+                                        @foreach($countys as $county)
+                                            <option value="{{ $county }}" @if($county == $request->county) selected @endif >{{ $county }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="me-sm-3">
+                                    <select class="form-select my-1 my-lg-0" id="district" name="district" onchange="this.form.submit()">
+                                        <option value="null" selected>選擇地區</option>
+                                        @foreach($districts as $district)
+                                            <option value="{{ $district }}" @if($district == $request->district) selected @endif >{{ $district }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="me-3">
                                     <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
@@ -115,4 +131,23 @@
                     
 
 </div> <!-- container -->
+
+@endsection
+@section('script')
+{{-- <script>
+    function chgCountys(obj) {
+        var value = $(obj).val();
+
+        $.ajax({
+            type: 'get',
+            url: '{{ route('search.district') }}',
+            data: { 'county': value },
+            success: function(data) {
+            console.log(data);
+                $('#district').html(data);
+            }
+        });
+    }
+    $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+</script> --}}
 @endsection

@@ -152,6 +152,8 @@ Route::group(['prefix' => '/'], function () {
     Route::get('customer/{id}/sales', [CustomerController::class, 'sales'])->name('customer.sales');
 
     /*拜訪管理*/
+    Route::get('search_district', [VisitController::class, 'search_district'])->name('search.district');//ajax搜尋區域
+
     Route::get('hospitals', [VisitController::class, 'hospitals'])->name('hospitals');//醫院
     Route::get('etiquettes', [VisitController::class, 'etiquettes'])->name('etiquettes');//禮儀社
     Route::get('reproduces', [VisitController::class, 'reproduces'])->name('reproduces');//繁殖場
