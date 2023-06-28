@@ -63,7 +63,7 @@ class Rpg09Controller extends Controller
             $datas[$key]['cur_pay_price'] = $datas[$key]['cur_pay_data_price']+$datas[$key]['cur_pay_item_price'];
             $datas[$key]['cur_month_total'] = $datas[$key]['cur_price_amount'] - $datas[$key]['cur_pay_price'];
         }
-
+        // dd($datas);
         $sums['total_count'] = 0;
         $sums['total_puja_count'] = 0;
         $sums['total_income_price'] = 0;
