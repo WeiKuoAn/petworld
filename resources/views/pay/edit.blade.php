@@ -171,7 +171,6 @@
 <!-- third party js -->
 <script src="{{asset('assets/libs/select2/select2.min.js')}}"></script>
 <script src="{{asset('assets/libs/dropzone/dropzone.min.js')}}"></script>
-<script src="{{asset('assets/libs/quill/quill.min.js')}}"></script>
 <script src="{{asset('assets/libs/footable/footable.min.js')}}"></script>
 <!-- third party js ends -->
 
@@ -210,31 +209,10 @@
         }
         console.log(invoice_type);
     }
-
-    $(document).ready(function(){
-        rowCount = $('#cart tr').length - 1;
-        console.log(rowCount);
-        for(var i = 0; i < rowCount; i++)
-        {
-            var invoice_type = $("#pay_invoice_type-" + $i).val();
-
-            if(invoice_type == 'FreeUniform'){
-                $("#vendor-"+$i).show(300);
-                $("#pay_invoice-"+$i).hide(300);
-                $(".td_show").show(300);
-            }else if(invoice_type == 'Uniform'){
-                $("#pay_invoice-"+$i).show(300);
-                $("#vendor-"+$i).show(300);
-                $(".td_show").show(300);
-            }else{
-                $("#pay_invoice-"+$i).hide(300);
-                $("#vendor-"+$i).hide(300);
-                $(".td_show").hide(300);
-            }
-        }
-
-        $("#add_row").click(function(){
+    
+    $("#add_row").click(function(){
             $rowCount = $('#cart tr').length - 1;
+            // console.log($rowCount);
             var $lastRow = $("#cart tr:last"); //grab row before the last row
 
             $newRow = '<tr id="row-'+$rowCount+'">';
@@ -275,14 +253,37 @@
             $lastRow.after($newRow); //add in the new row at the end
         });
 
-        
-        $("#btn_submit").click(function(){
+    $(document).ready(function(){
+        rowCount = $('#cart tr').length - 1;
+        console.log(invoice_type);
+
+        for(var i = 0; i < rowCount; i++)
+        {
+            invoice_type = $("#pay_invoice_type-" + i).val();
+            if(invoice_type == 'FreeUniform'){
+                $("#vendor-"+i).show(300);
+                $("#pay_invoice-"+i).hide(300);
+                $(".td_show").show(300);
+            }else if(invoice_type == 'Uniform'){
+                $("#pay_invoice-"+i).show(300);
+                $("#vendor-"+i).show(300);
+                $(".td_show").show(300);
+            }else{
+                $("#pay_invoice-"+i).hide(300);
+                $("#vendor-"+i).hide(300);
+                $(".td_show").hide(300);
+            }
+        }
+    });
+
+    $("#btn_submit").click(function(){
+            rowCount = $('#cart tr').length - 1;
             total_price = $("#price").val();
             pay_total = 0;
             for(var i = 0; i < rowCount; i++)
             {
                 pay_total += parseInt($('#pay_price-'+i).val(),10);
-
+                // alert(pay_total);
                 // pay_total+= Number($('#pay_price-'+$rowCount).val());
             }
             if(total_price != pay_total){
@@ -292,7 +293,10 @@
         });
 
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-    });
+        
+
+        
+        
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
