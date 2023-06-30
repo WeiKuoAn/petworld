@@ -156,11 +156,10 @@ class Rpg13Controller extends Controller
             $datas['products'][$puja_data_product->product_id]['num'] += $puja_data_product->product_num;
             $datas['pujas'][$puja_data_product->puja_id]['details'][$puja_data_product->product_id]['name'] = $puja_product_data->name;
             $datas['pujas'][$puja_data_product->puja_id]['details'][$puja_data_product->product_id]['num'] = intval($datas['pujas'][$puja_data_product->puja_id]['count']) * intval($puja_data_product->product_num);
-            
-            //額外購買
-            
+            $datas['pujas'][$puja_data_product->puja_id]['attachs'] = [];
         }
 
+        //額外購買
         $puja_attachs = DB::table('puja_data_attach_product')
                                 ->join('puja_data','puja_data.id', '=' , 'puja_data_attach_product.puja_data_id')
                                 ->leftjoin('product','product.id', '=' , 'puja_data_attach_product.product_id')
@@ -171,7 +170,6 @@ class Rpg13Controller extends Controller
                                         ,'puja_data_attach_product.*')
                                 ->get();
 
-            $datas['pujas'][$puja_data_product->puja_id]['attachs'] = [];
 
             foreach($puja_attachs as $puja_attach)
             {
