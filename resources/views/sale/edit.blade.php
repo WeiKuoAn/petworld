@@ -113,7 +113,7 @@
                                 @endif
                             </label>
                             <input list="source_company_name_list_q" class="form-control" id="source_company_name_q" 
-                                    name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院、繁殖場、狗園名稱" @if(isset($sale_company)) value="{{ $sale_company->company_id }}" @else value="來源公司須重新登入"  @endif>
+                                    name="source_company_name_q" placeholder="請輸入醫院、禮儀社、美容院、繁殖場、狗園名稱" @if(isset($sale_company)) value="{{ $sale_company->company_id }}" @endif>
                             <datalist id="source_company_name_list_q">
                             </datalist>
                         </div>

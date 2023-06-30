@@ -111,7 +111,8 @@ class Rpg07Controller extends Controller
                         $row['金紙'] = '無';
                     }
                 }
-                fputcsv($file, array($row['No'], $row['日期'], $row['客戶'], $row['寶貝名'], $row['公斤數'], $row['方案'],$row['金紙']));
+                $row['備註'] = $data->comm;
+                fputcsv($file, array($row['No'], $row['日期'], $row['客戶'], $row['寶貝名'], $row['公斤數'], $row['方案'],$row['金紙'],$row['備註']));
             }
 
             fclose($file);

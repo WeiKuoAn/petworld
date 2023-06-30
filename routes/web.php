@@ -42,6 +42,7 @@ use App\Http\Controllers\Rpg09Controller;
 use App\Http\Controllers\Rpg10Controller;
 use App\Http\Controllers\Rpg11Controller;
 use App\Http\Controllers\Rpg12Controller;
+use App\Http\Controllers\Rpg13Controller;
 use App\Http\Controllers\LeaveDayController;
 use App\Http\Controllers\RestockController;
 use Illuminate\Support\Facades\Storage;
@@ -405,6 +406,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/rpg/rpg10', [Rpg10Controller::class, 'rpg10'])->name('rpg10');
     Route::get('/rpg/rpg11', [Rpg11Controller::class, 'rpg11'])->name('rpg11');
     Route::get('/rpg/rpg12', [Rpg12Controller::class, 'rpg12'])->name('rpg12');
+    Route::get('/rpg/rpg13', [Rpg13Controller::class, 'rpg13'])->name('rpg13');
 
     Route::get('image', function()
     {

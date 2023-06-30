@@ -374,7 +374,7 @@
 
 
     type = $('select[name="type"]').val();
-    if(type == 'H' || type == 'B' || type == 'Salon' || type == 'G' || type == 'dogpark'){
+    if(type == 'H' || type == 'B' || type == 'Salon' || type == 'G' || type == 'dogpark' || type == 'other'){
         $("#source_company").show(300);
         $("#source_company_name_q").prop('required', true);
     }else{
@@ -383,7 +383,7 @@
     }
 
     $('select[name="type"]').on('change', function() {
-        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon' || $(this).val() == 'G' || $(this).val() == 'dogpark'){
+        if($(this).val() == 'H' || $(this).val() == 'B' || $(this).val() == 'Salon' || $(this).val() == 'G' || $(this).val() == 'dogpark' || $(this).val() == 'other'){
             $("#source_company").show(300);
             $("#source_company_name_q").prop('required', true);
         }else{

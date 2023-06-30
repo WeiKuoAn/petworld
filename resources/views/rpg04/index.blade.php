@@ -36,6 +36,15 @@
                                 <div class="me-3">
                                     <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="before_date" @if(!isset($request->before_date)) value="{{ $last_date->format("Y-m-d") }}" @endif value="{{ $request->before_date }}">
                                 </div>
+                                <label for="status-select" class="me-2">產品類型</label>
+                                <div class="me-sm-3">
+                                    <select class="form-select my-1 my-lg-0" id="status-select" name="type" onchange="this.form.submit()">
+                                        <option value="null" @if(!isset($request->type)) selected @endif>不限</option>
+                                        <option value="normal" @if($request->type == 'normal') selected @endif>一般</option>
+                                        <option value="set"  @if($request->type == 'set') selected @endif>套組</option>
+                                        <option value="combo"  @if($request->type == 'combo') selected @endif>組合</option>
+                                    </select>
+                                </div>
                                 <label for="status-select" class="me-2">產品類別</label>
                                 <div class="me-sm-3">
                                     <select class="form-select my-1 my-lg-0" id="status-select" name="category_id" onchange="this.form.submit()">

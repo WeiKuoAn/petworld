@@ -23,15 +23,22 @@ class Rpg04Controller extends Controller
 
         
         $category_id = $request->category_id;
-        $products = Product::where('status','up')->get();
+        $type = $request->type;
+
+        $products = Product::where('status','up');
+
+        if ($type != "null") {
+            if(isset($type)){
+                $products = $products->where('type',$type);
+            }
+        }
         
         if ($category_id != "null") {
             if($category_id){
-                $products = Product::where('status','up')->where('category_id',$category_id)->get();
+                $products = $products->where('category_id',$category_id)->get();
             }
-        }else{
-            $products = Product::where('status','up')->get();
         }
+        $products = $products->get();
         
         $categorys = Category::where('status','up')->get();
 
@@ -39,7 +46,7 @@ class Rpg04Controller extends Controller
             $product_datas = DB::table('sale_data')
                             ->join('sale_gdpaper','sale_gdpaper.sale_id', '=' , 'sale_data.id')
                             ->leftjoin('product','product.id', '=' , 'sale_gdpaper.gdpaper_id')
-                            ->leftjoin('category','category.id', '=', 'product.id')
+                            ->leftjoin('category','category.id', '=', 'product.category_id')
                             ->where('sale_data.status','9');
 
             $after_date = $request->after_date;
@@ -54,10 +61,17 @@ class Rpg04Controller extends Controller
 
             if ($category_id != "null") {
                 if($category_id){
-                    $product_datas = $product_datas->where('category.id',$category_id);
+                    $product_datas = $product_datas->where('product.category_id',$category_id);
                 }else{
                     $product_datas = $product_datas;
                 }
+            }
+
+            $type = $request->type;
+            if($type){
+                $product_datas = $product_datas->where('product.type','=',$type);
+            }else{
+                $product_datas = $product_datas->where('product.type','=','normal');
             }
             
             $product_datas = $product_datas->whereNotNull('sale_gdpaper.gdpaper_id')->get();
@@ -73,6 +87,7 @@ class Rpg04Controller extends Controller
                             ->where('sale_data.status','9')
                             ->where('sale_data.sale_date','>=',$after_date)
                             ->where('sale_data.sale_date','<=',$before_date)
+                            ->where('product.type','=','normal')
                             ->whereNotNull('sale_gdpaper.gdpaper_id')
                             ->get();
         }

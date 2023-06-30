@@ -42,6 +42,7 @@
                             <label for="type" class="form-label">商品類型<span class="text-danger">*</span></label>
                             <select id="type" class="form-select" name="type" required>
                                 <option value="normal" @if($data->type == 'normal') selected @endif>一般</option>
+                                <option value="set" @if($data->type == 'set') selected @endif>套組</option>
                                 <option value="combo" @if($data->type == 'combo') selected @endif>組合</option>
                                 {{-- <option value="online" @if($data->type == 'online') selected @endif>數位</option>
                                 <option value="service" @if($data->type == 'service') selected @endif>服務</option> --}}
@@ -112,6 +113,9 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                @else
+                                    <tbody>
+                                    </tbody>
                                 @endif
                         </table>
                     </div>
@@ -265,7 +269,7 @@
     $("#cost").hide();
     $("#commission").hide();
 
-    if($("input[name='type_hidden']").val() == "combo"){
+    if($("input[name='type_hidden']").val() == "combo" || $("input[name='type_hidden']").val() == "set"){
         $("#combo").show(300);
         $("#check_cost_div").hide(300);
         $("#price").prop('readonly', true);
@@ -287,7 +291,7 @@
     }
 
     $('select[name="type"]').on('change', function() {
-        if($(this).val() == 'combo'){
+        if($(this).val() == 'combo' || $(this).val() == 'set'){
             $("#combo").show(300);
             $("#check_cost_div").hide(300);
             $("#price").prop('readonly', true);
@@ -419,7 +423,7 @@
         // alert($("#description").val());
 
 
-        if( $("#type").val() == 'combo' ) {
+        if( $("#type").val() == 'combo' || $("#type").val() == 'set' ) {
             var rownumber = $('table.order-list tbody tr:last').index();
             if (rownumber <= 0) {
                 alert("請新增2件（含）以上組合商品")

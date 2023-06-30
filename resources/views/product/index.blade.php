@@ -37,6 +37,7 @@
                                     <select class="form-select my-1 my-lg-0" id="status-select" name="type" onchange="this.form.submit()">
                                         <option value="null" @if(!isset($request->type)) selected @endif>不限</option>
                                         <option value="normal" @if($request->type == 'normal') selected @endif>一般</option>
+                                        <option value="set" @if($request->type == 'set') selected @endif>套組</option>
                                         <option value="combo" @if($request->type == 'combo') selected @endif>組合</option>
                                     </select>
                                 </div>
@@ -106,10 +107,8 @@
                                                 一般
                                             @elseif($data->type == 'combo')
                                                 組合
-                                            @elseif($data->type == 'online')
-                                                數位
-                                            @elseif($data->type == 'service')
-                                                服務
+                                            @elseif($data->type == 'set')
+                                                套組
                                             @endif
                                         </td>
                                         <td>

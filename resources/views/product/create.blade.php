@@ -42,6 +42,7 @@
                             <label for="type" class="form-label">商品類型<span class="text-danger">*</span></label>
                             <select id="type" class="form-select" name="type" required>
                                 <option value="normal">一般</option>
+                                <option value="set">套組</option>
                                 <option value="combo">組合</option>
                                 {{-- <option value="online">數位</option>
                                 <option value="service">服務</option> --}}
@@ -273,7 +274,7 @@
     $("#cost").hide();
 
     $('select[name="type"]').on('change', function() {
-        if($(this).val() == 'combo'){
+        if($(this).val() == 'combo' || $(this).val() == 'set'){
             $("#combo").show(300);
             $("#check_cost_div").hide(300);
             $("#price").prop('readonly', true);
@@ -393,7 +394,7 @@
         // alert($("#description").val());
 
 
-        if( $("#type").val() == 'combo' ) {
+        if( $("#type").val() == 'combo' || $("#type").val() == 'set') {
             var rownumber = $('table.order-list tbody tr:last').index();
             if (rownumber <= 0) {
                 alert("請新增2件（含）以上組合商品")

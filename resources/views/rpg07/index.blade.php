@@ -60,19 +60,20 @@
                         <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
                             <thead class="table-light">
                                 <tr align="center">
-                                    <th scope="col">日期</th>
-                                    <th scope="col">客戶</th>
-                                    <th scope="col">寶貝名</th>
-                                    <th scope="col">公斤數</th>
-                                    <th scope="col">類別</th>
-                                    <th scope="col">方案</th>
-                                    <th scope="col">金紙</th>
-                                    <th scope="col">後續處理A</th>
-                                    <th scope="col">後續處理B</th>
-                                    <th scope="col">付款方式</th>
+                                    <th >日期</th>
+                                    <th >客戶</th>
+                                    <th >寶貝名</th>
+                                    <th >公斤數</th>
+                                    <th >類別</th>
+                                    <th >方案</th>
+                                    <th >金紙</th>
+                                    <th >後續處理A</th>
+                                    <th >後續處理B</th>
+                                    <th >付款方式</th>
                                     @if(Auth::user()->level == 0)
-                                        <th scope="col">實收價格</th>
+                                        <th >實收價格</th>
                                     @endif
+                                    <th >備註</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,8 +81,8 @@
                                     <tr>
                                         {{-- <td>{{ $data->sale_on }}</td>
                                         <td>{{ $data->user_name->name }}</td> --}}
-                                        <td>{{ $data->sale_date }}</td>
-                                        <td>
+                                        <td align="center">{{ $data->sale_date }}</td>
+                                        <td align="center">
                                             @if (isset($data->customer_id))
                                                 @if(isset($data->cust_name))
                                                     {{ $data->cust_name->name }}
@@ -90,7 +91,7 @@
                                                 @endif
                                             @endif
                                         </td>
-                                        <td>
+                                        <td align="center">
                                             @if (isset($data->pet_name))
                                                 {{ $data->pet_name }}
                                             @endif
@@ -98,12 +99,12 @@
                                         <td>
                                             {{ $data->kg }}
                                         </td>
-                                        <td>
+                                        <td align="center">
                                             @if (isset($data->type))
                                                 {{ $data->source_type->name }}
                                             @endif
                                         </td>
-                                        <td>
+                                        <td align="center">
                                             @if (isset($data->plan_id))
                                                 {{ $data->plan_name->name }}
                                             @endif
@@ -135,7 +136,7 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td>
+                                            <td align="center">
                                                 @foreach ($data->proms as $prom)
                                                     @if ($prom->prom_type == 'B')
                                                         @if(isset($prom->prom_id))
@@ -146,14 +147,17 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                        <td>
+                                        <td align="center">
                                             @if (isset($data->pay_id))
                                                 {{ $data->pay_type() }}
                                             @endif
                                         </td>
                                         @if(Auth::user()->level == 0)
-                                        <td>{{ number_format($data->pay_price) }}</td>
+                                        <td align="center">{{ number_format($data->pay_price) }}</td>
                                         @endif
+                                        <td>
+                                            {{ $data->comm }}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
