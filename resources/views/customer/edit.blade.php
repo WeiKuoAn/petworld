@@ -20,10 +20,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">客戶管理</a></li>
-                        <li class="breadcrumb-item active">新增客戶</li>
+                        <li class="breadcrumb-item active">編輯客戶</li>
                     </ol>
                 </div>
-                <h4 class="page-title">新增客戶</h4>
+                <h4 class="page-title">編輯客戶</h4>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                     @csrf
                     <div class="row">
                         <div class="col-xl-12">
-                            {{-- <div class="mb-3">
+                            <div class="mb-3">
                                 <label for="project-priority" class="form-label">群組<span class="text-danger">*</span></label>
 
                                 <select class="form-control" data-toggle="select" data-width="100%" name="group_id">
@@ -45,7 +45,7 @@
                                     <option value="{{ $group->id }}" @if( $customer->group_id == $group->id ) selected @endif>{{$group->name}}</option>
                                     @endforeach
                                 </select>
-                            </div> --}}
+                            </div>
 
                             <div class="mb-3">
                                  <div class="mb-3">

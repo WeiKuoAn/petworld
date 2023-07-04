@@ -165,7 +165,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('visit/create/{id}', [VisitController::class, 'create'])->name('visit.create');
     Route::post('visit/create/{id}', [VisitController::class, 'store'])->name('visit.create.data');
     Route::get('visit/edit/{cust_id}/{id}', [VisitController::class, 'show'])->name('visit.edit');
-    Route::post('visit/edit/{cust_id}{id}', [VisitController::class, 'update'])->name('visit.edit.data');
+    Route::post('visit/edit/{cust_id}/{id}', [VisitController::class, 'update'])->name('visit.edit.data');
     Route::get('visit/del/{cust_id}/{id}', [VisitController::class, 'delete'])->name('visit.del');
     Route::post('visit/del/{cust_id}{id}', [VisitController::class, 'destroy'])->name('visit.del.data');
     Route::get('visit/company/create', [VisitController::class, 'company_create'])->name('visit.company.create');

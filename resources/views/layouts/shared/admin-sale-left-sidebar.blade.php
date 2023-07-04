@@ -179,6 +179,28 @@
                     </li>
 
                     <li>
+                        <a href="#rpg" data-bs-toggle="collapse">
+                            <i data-feather="file-text"></i>
+                            <span> 報表管理 </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="rpg">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙銷售報表</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('rpg07') }}"  class="{{ request()->is('rpg07') ? 'active' : '' }}">團火查詢</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </li>
+
+                    <li>
                         <a href="#person" data-bs-toggle="collapse">
                             <i data-feather="user"></i>
                             <span> 個人管理 </span>

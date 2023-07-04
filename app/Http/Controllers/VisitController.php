@@ -94,13 +94,15 @@ class VisitController extends Controller
 
     public function update(Request $request , $cust_id ,$id)
     {
+        // dd($id);
         $customer = Customer::where('id',$cust_id)->first();
         $data = Visit::where('customer_id',$cust_id)->where('id',$id)->first();
+        // dd($data);
         $data->customer_id = $request->customer_id;
         $data->date = $request->date;
         $data->comment = $request->comment;
         $data->save();
-        return redirect()->route('visits',$id)->with('customer',$customer);
+        return redirect()->route('visits',$cust_id)->with('customer',$customer);
     }
 
     public function delete(Request $request , $cust_id ,$id)

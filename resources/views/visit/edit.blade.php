@@ -33,7 +33,7 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('visit.edit.data',[$customer->id,$data->id]) }}" method="POST">
+                    <form action="{{  route('visit.edit.data', [$customer->id,$data->id]) }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-xl-12">

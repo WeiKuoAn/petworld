@@ -243,7 +243,12 @@ class CustomerController extends Controller
         $customer->county = $request->county;
         $customer->district = $request->district;
         $customer->address = $request->address;
-        $customer->group_id = 1;
+        if(isset($customer->group_id))
+        {
+            $customer->group_id = $request->group_id;
+        }else{
+            $customer->group_id = 1;
+        }
         $customer->save();
         return redirect()->route('customer');
     }
