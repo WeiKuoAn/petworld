@@ -82,8 +82,8 @@
                             <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>支出日期</th>
-                                        <th>支出單號</th>
+                                        <th>Key單日期</th>
+                                        <th>Key單號</th>
                                         <th>支出科目</th>
                                         <th width="20%">發票號碼</th>
                                         <th>支出總價格</th>
@@ -91,8 +91,6 @@
                                         <th width="10%">key單人員</th>
                                         @if($request->status == '1')
                                             <th>查看</th>
-                                        @else
-                                            <th>審核</th>
                                         @endif
                                         @if(!isset($request->status) || $request->status == '0')
                                             <th width="10%">動作</th>
@@ -127,11 +125,13 @@
                                         <td>{{ number_format($data->price) }}</td>
                                         <td>{{ $data->comment }}</td>
                                         <td>{{ $data->user_name->name }}</td>
+                                        @if($request->status == '1')
                                         <td>
                                             <a href="{{ route('pay.check',$data->id) }}">
                                                 <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
                                             </a>
                                         </td>
+                                        @endif
                                         @if($data->status == '0')
                                         <td>
                                             <div class="btn-group dropdown">

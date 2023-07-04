@@ -100,8 +100,8 @@
                             <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>支出日期</th>
-                                        <th>支出單號</th>
+                                        <th>key單日期</th>
+                                        <th>key單單號</th>
                                         <th>支出科目</th>
                                         <th width="20%">發票號碼</th>
                                         <th>支出總價格</th>
