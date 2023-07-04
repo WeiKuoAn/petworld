@@ -12,7 +12,23 @@
 <body class="loading" data-layout='{"mode": "{{$theme ?? "light" }}", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "{{$theme ?? "light" }}", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}' @yield('body-extra')>
     <!-- Begin page -->
     <div id="wrapper">
-        @include('layouts.shared/topbar')
+        @if(Auth::user()->status == 0)<!--用戶是否啟用-->
+            @if(Auth::user()->job_id == 1 || Auth::user()->job_id== 7)<!-- 老闆(1) 工程師(7)-->
+                @include('layouts.topbar/admin-topbar')
+            @elseif(Auth::user()->job_id == 2)<!-- 行政主管(2) -->
+                @include('layouts.topbar/admin-istrative-topbar')
+            @elseif(Auth::user()->job_id == 3)<!-- 專員主管(3) -->
+                @include('layouts.topbar/admin-sale-topbar')
+            @elseif(Auth::user()->job_id == 4)<!-- 行政(4) -->
+                @include('layouts.topbar/istrative-topbar')
+            @elseif(Auth::user()->job_id == 5)<!-- 專員(5) -->
+                @include('layouts.topbar/sale-topbar')
+            @elseif(Auth::user()->job_id == 6)<!-- 股東(6) -->
+                @include('layouts.topbar/shareholder-topbar')
+            @else
+                @include('layouts.topbar/sale-topbar')
+            @endif
+        @endif
 
         @if(Auth::user()->status == 0)<!--用戶是否啟用-->
             @if(Auth::user()->job_id == 1 || Auth::user()->job_id== 7)<!-- 老闆(1) 工程師(7)-->

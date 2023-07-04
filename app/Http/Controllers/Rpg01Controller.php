@@ -14,7 +14,6 @@ class Rpg01Controller extends Controller
 {
     public function rpg01(Request $request)
     {
-        if(Auth::user()->level !=2){
             $years = range(Carbon::now()->year, 2022);
             if (isset($request)) {
                 $search_year = $request->year;
@@ -53,9 +52,6 @@ class Rpg01Controller extends Controller
                                       ->with('plans', $plans)
                                       ->with('years', $years)
                                       ->with('request', $request);
-        }else{
-            abort(404);
-        }
 
     }
 

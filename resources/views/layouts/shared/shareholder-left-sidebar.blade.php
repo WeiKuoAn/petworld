@@ -60,6 +60,7 @@
                 </li>
 
                 
+                <li class="menu-title mt-2">Apps</li>
 
                 <li>
                     <a href="#rpg" data-bs-toggle="collapse">
@@ -76,7 +77,10 @@
                                 <a href="{{ route('rpg02') }}"  class="{{ request()->is('rpg02') ? 'active' : '' }}">支出報表</a>
                             </li>
                             <li>
-                                <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙報表</a>
+                                <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙銷售報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg13') }}"  class="{{ request()->is('rpg13') ? 'active' : '' }}">金紙賣出報表</a>
                             </li>
                             <li>
                                 <a href="{{ route('rpg06') }}"  class="{{ request()->is('rpg06') ? 'active' : '' }}">舊法會查詢</a>
@@ -86,6 +90,9 @@
                             </li>
                             <li>
                                 <a href="{{ route('rpg10') }}"  class="{{ request()->is('rpg10') ? 'active' : '' }}">專員金紙抽成</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg12') }}"  class="{{ request()->is('rpg12') ? 'active' : '' }}">廠商傭金抽成</a>
                             </li>
                             <li>
                                 <a href="{{ route('rpg05') }}"  class="{{ request()->is('rpg05') ? 'active' : '' }}">日營收報表</a>
@@ -99,6 +106,8 @@
                         </ul>
                     </div>
                 </li>
+
+
             </li>
 
                 

@@ -52,12 +52,12 @@
                         <span> 線上打卡 </span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ route('dashboard.info') }}">
                         <i data-feather="airplay"></i>
                         <span> 當月總表 </span>
                     </a>
-                </li>
+                </li> --}}
 
                 
 

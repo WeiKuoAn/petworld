@@ -363,90 +363,41 @@
                     <span style="color:white;">新增客戶</span>
                 </a>
             </li>
-
-            @if(Auth::user()->job_id ==1 || Auth::user()->job_id ==3 || Auth::user()->job_id ==5)
             <li class="dropdown d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('sale.create') }}" role="button" aria-haspopup="true" aria-expanded="true">
                     <span style="color:white;">業務Key單</span>
                 </a>
             </li>
-            @endif
-
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span style="color:white;">業務管理</span>
+                </a>
+            </li>
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('wait.sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span style="color:white;">業務待對帳確認</span>
+                </a>
+            </li>
             <li class="dropdown d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('pay.create') }}" role="button" aria-haspopup="false" aria-expanded="false">
                     <span style="color:white;">支出Key單</span>
                 </a>
             </li>
-
-            @if(Auth::user()->job_id ==1 || Auth::user()->job_id ==7 || Auth::user()->job_id ==2)
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">業務管理</span>
-                    </a>
-                </li>
-            @elseif(Auth::user()->job_id ==3 || Auth::user()->job_id ==5)
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('person.sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">業務管理</span>
-                    </a>
-                </li>
-            @endif
-
-
-            @if(Auth::user()->job_id ==1 || Auth::user()->job_id ==7 || Auth::user()->job_id ==2)
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('wait.sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">業務待對帳確認</span>
-                    </a>
-                </li>
-            @elseif(Auth::user()->job_id ==3 || Auth::user()->job_id ==5)
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('person.wait.sales') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">業務待對帳確認</span>
-                    </a>
-                </li>
-            @endif
-
-            @if(Auth::user()->job_id ==2 || Auth::user()->job_id ==4)
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('pujas') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">法會管理</span>
-                    </a>
-                </li>
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('contracts') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">合約管理</span>
-                    </a>
-                </li>
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('incomes') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">收入管理</span>
-                    </a>
-                </li>
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('pays') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">支出管理</span>
-                    </a>
-                </li>
-            @endif
-
-            @if(Auth::user()->job_id ==1)
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('rpg01') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">方案報表</span>
-                    </a>
-                </li>
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('rpg02') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">支出報表</span>
-                    </a>
-                </li>
-                <li class="dropdown d-none d-xl-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('rpg11') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                        <span style="color:white;">年度營收報表</span>
-                    </a>
-                </li>
-            @endif
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('rpg01') }}" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span style="color:white;">方案報表</span>
+                </a>
+            </li>
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('rpg02') }}" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span style="color:white;">支出報表</span>
+                </a>
+            </li>
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('rpg11') }}" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span style="color:white;">年度營收報表</span>
+                </a>
+            </li>
 
             {{-- <li class="dropdown dropdown-mega d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
