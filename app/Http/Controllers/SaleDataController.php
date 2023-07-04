@@ -854,6 +854,8 @@ class SaleDataController extends Controller
                     }else{
                         $row['類別'] = $sale->type;
                     }
+                }else{
+                    $row['類別'] = '';
                 }
                 if(isset($sale->plan_id)){
                     $row['方案'] = $sale->plan_name->name;
