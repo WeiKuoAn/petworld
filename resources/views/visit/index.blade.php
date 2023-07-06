@@ -24,6 +24,8 @@
                         繁殖場拜訪紀錄
                     @elseif($customer->group_id == '3')
                         狗園拜訪紀錄
+                    @elseif($customer->group_id == '7')
+                        其他業者拜訪紀錄
                     @else
                         美容院拜訪紀錄
                     @endif

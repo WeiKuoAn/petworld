@@ -56,9 +56,7 @@
                             <thead class="table-light">
                                     <tr align="center">
                                         <th scope="col">月份</th>
-                                        @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
-                                            <th scope="col">業務單量</th>
-                                        @endif
+                                        <th scope="col">業務單量</th>
                                         {{-- <th scope="col">法會單量</th> --}}
                                         <th scope="col">營收</th>
                                         @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
@@ -69,9 +67,7 @@
                                 </thead>
                                 <tr align="center" style="font-weight:bold;" class="text-danger">
                                     <td>當年總計</td>
-                                    @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
-                                        <td>{{  number_format($sums['total_count']) }}</td>
-                                    @endif
+                                    <td>{{  number_format($sums['total_count']) }}</td>
                                     {{-- <td>{{  number_format($sums['total_puja_count']) }}</td> --}}
                                     <td>{{  number_format($sums['total_price_amount']) }}</td>
                                     @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
@@ -83,9 +79,7 @@
                                     @foreach ($datas as $key=>$data)
                                         <tr>
                                             <td>{{ $data['month'] }}</td>
-                                            @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
-                                                <td>{{ $data['cur_count'] }}</td>
-                                            @endif
+                                            <td>{{ $data['cur_count'] }}</td>
                                             {{-- <td>{{ $data['cur_puja_count'] }}</td> --}}
                                             <td>{{ number_format($data['cur_price_amount']) }}</td>
                                             @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
