@@ -225,7 +225,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="number" alt="{{ $i }}"  class="mobile form-control" id="gdpaper_num_{{$i}}" name="gdpaper_num[]" onchange="chgNums(this)">
+                                                <input type="number" alt="{{ $i }}"  class="mobile form-control" id="gdpaper_num_{{$i}}" name="gdpaper_num[]" onchange="chgNums(this)" onclick="chgNums(this)" onkeydown="chgNums(this)">
                                             </td>
                                             <td>
                                                 <input type="text" class="mobile form-control total_number" id="gdpaper_total_{{$i}}" name="gdpaper_total[]" value="">
@@ -477,15 +477,23 @@
     function chgPapers(obj){
         $("#row_id").val($("#"+ obj.id).attr('alt'));
         row_id = $("#row_id").val();
+        console.log(row_id);
         $.ajax({
             url : '{{ route('gdpaper.search') }}',
             data:{'gdpaper_id':$("#gdpaper_id_"+row_id).val()},
             success:function(data){
-                $("#gdpaper_num_"+row_id).on('input', function(){
+                if($("#gdpaper_num_"+row_id).val()){
                     var gdpaper_num = $("#gdpaper_num_"+row_id).val();
                     $("#gdpaper_total_"+row_id).val(gdpaper_num*data);
                     calculate_price();
-                });
+                }else{
+                    $("#gdpaper_num_"+row_id).on('change', function(){
+                        var gdpaper_num = $("#gdpaper_num_"+row_id).val();
+                        $("#gdpaper_total_"+row_id).val(gdpaper_num*data);
+                        calculate_price();
+                    });
+                }
+                
             }
         });
     }
@@ -498,10 +506,12 @@
             data:{'gdpaper_id':$("#gdpaper_id_"+row_id).val()},
             success:function(data){
                 $("#gdpaper_num_"+row_id).on('change', function(){
+                    console.log("#gdpaper_total_"+row_id);
                     var gdpaper_num = $("#gdpaper_num_"+row_id).val();
                     $("#gdpaper_total_"+row_id).val(gdpaper_num*data);
                     calculate_price();
                 });
+                
             }
         });
     }
@@ -529,7 +539,7 @@
         cols += '</select>';
         cols += '</td>';
         cols += '<td>';
-        cols += '<input type="number"  alt="'+rowCount+'"  class="mobile form-control" id="gdpaper_num_'+rowCount+'" name="gdpaper_num[]" value="" onchange="chgNums(this)">';
+        cols += '<input type="number"  alt="'+rowCount+'"  class="mobile form-control" id="gdpaper_num_'+rowCount+'" name="gdpaper_num[]" value="" onchange="chgNums(this)" onmousedown="chgNums(this)" onkeydown="chgNums(this)">';
         cols += '</td>';
         cols += '<td>';
         cols += '<input type="text" class="mobile form-control total_number" id="gdpaper_total_'+rowCount+'" name="gdpaper_total[]">';
@@ -590,7 +600,7 @@
             var cols = '';
             cols += '<td class="text-center"><button type="button" class="ibtnDel_prom demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button></td>';
             cols += '<td>';
-            cols += '<select id="select_prom_'+$rowCount+'" alt="'+$rowCount+'" class="mobile form-select" name="select_proms[]" onchange="chgItems(this)">';
+            cols += '<select id="select_prom_'+$rowCount+'" alt="'+$rowCount+'" class="mobile form-select" name="select_proms[]" onclick="chgItems(this)">';
             cols += '<option value="" selected>請選擇...</option>';
             cols += '<option value="A">安葬處理</option>';
             cols += '<option value="B">後續處理</option>';

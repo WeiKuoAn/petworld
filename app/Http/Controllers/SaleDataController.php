@@ -237,6 +237,7 @@ class SaleDataController extends Controller
                 $sales = $sales->where('sale_on', $sale_on);
             }
             $cust_mobile = $request->cust_mobile;
+
             if ($cust_mobile) {
                 $cust_mobile = $request->cust_mobile.'%';
                 $customers = Customer::where('mobile', 'like' ,$cust_mobile)->get();
@@ -741,9 +742,11 @@ class SaleDataController extends Controller
                 $sales = $sales->where('sale_on', $sale_on);
             }
             $cust_mobile = $request->cust_mobile;
+
             if ($cust_mobile) {
                 $cust_mobile = $request->cust_mobile.'%';
                 $customers = Customer::where('mobile', 'like' ,$cust_mobile)->get();
+
                 foreach($customers as $customer) {
                     $customer_ids[] = $customer->id;
                 }
@@ -823,7 +826,7 @@ class SaleDataController extends Controller
             "Expires"             => "0"
         );
         $header = array('日期', $after_date.'~' ,  $before_date);
-        $columns = array('單號', '專員', '日期', '客戶', '寶貝名' , '類別','方案','金紙','金紙總賣價','安葬方式','後續處理','付款方式','實收價格','狀態','轉單','對拆人員');
+        $columns = array('單號', '專員', '日期', '客戶', '寶貝名' , '類別','方案','金紙','金紙總賣價','安葬方式','後續處理','付款方式','實收價格','狀態','備註','轉單','對拆人員');
 
         $callback = function() use($sales, $columns ,$header) {
             
@@ -859,6 +862,8 @@ class SaleDataController extends Controller
                 }
                 if(isset($sale->plan_id)){
                     $row['方案'] = $sale->plan_name->name;
+                }else{
+                    $row['方案'] = '';
                 }
                 
                 $row['金紙'] = '';
@@ -901,6 +906,12 @@ class SaleDataController extends Controller
                 }
                 $row['實收價格']= number_format($sale->pay_price);
                 $row['狀態'] = $sale->status();
+                if(isset($sale->comm))
+                {
+                    $row['備註'] = $sale->comm;
+                }else{
+                    $row['備註'] = '';
+                }
                 $row['轉單'] = '';
                 if(isset($sale->SaleChange)){
                     $row['轉單'] = '是';
@@ -914,7 +925,7 @@ class SaleDataController extends Controller
                 //'付款方式','實收價格','狀態','轉單','對拆人員'
                 fputcsv($file, array($row['單號'], $row['專員'], $row['日期'], $row['客戶'],$row['寶貝名'],$row['類別']
                                     ,$row['方案'],$row['金紙'],$row['金紙總價格'],$row['安葬方式'],$row['後續處理'],$row['付款方式']
-                                    ,$row['實收價格'],$row['狀態'],$row['轉單'],$row['對拆人員']));
+                                    ,$row['實收價格'],$row['狀態'],$row['備註'],$row['轉單'],$row['對拆人員']));
             }
 
             fclose($file);
