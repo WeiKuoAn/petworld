@@ -123,13 +123,7 @@ class UserController extends Controller
 
     public function update(Request $request , $id)
     {
-        $jobs = Job::where('status','up')->get();
         $user = User::where('id', $id)->first();
-        //取得舊資料，要寫入log中
-        $old_name = $user->name;
-        $old_mobile = $user->mobile;
-        $old_email = $user->email;
-        $old_address = $user->address;
 
         if(Auth::user()->level == 0 || Auth::user()->level == 1){
             $user->name = $request->name;
@@ -152,33 +146,7 @@ class UserController extends Controller
                 $user->state = 0; //用戶只能修改第一次,第一次修改後 只能透過人資去修改，所以狀態是0
             }
             $user->status = $request->status;
-            $user->level = $request->level;
             $user->save();
-        }else{
-            //不是管理員的話，要紀錄到log中
-            $user_log = new UserLog();
-            $user_log->type = 'edit';
-            $user_log->user_id = $user->id;
-            $user_log->title = ' ';
-            $user_log->text = ' ';
-            if ($old_name != $request->name) {
-                $user_log->title .= '姓名' . "*";
-                $user_log->text .= $old_name . "→" . $request->name . "*";
-            }
-            if ($old_email != $request->email) {
-                $user_log->title .= '信箱' . "*";
-                $user_log->text .= $old_email . "→" . $request->email . "*";
-            }
-            if ($old_mobile != $request->mobile) {
-                $user_log->title .= '電話' . "*";
-                $user_log->text .= $old_mobile . "→" . $request->mobile . "*";
-            }
-            if ($old_address != $request->address) {
-                $user_log->title .= '地址' . "*";
-                $user_log->text .= $old_address . "→" . $request->address . "*";
-            }
-            $user_log->Update_at = Auth::user()->id;
-            $user_log->save();
         }
         return redirect()->route('user.edit',$id);
     }
