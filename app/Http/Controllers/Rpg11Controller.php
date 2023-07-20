@@ -20,7 +20,7 @@ class Rpg11Controller extends Controller
         foreach($years as $year)
         {
             $datas[$year]['name']=$year.'年';
-            $datas[$year]['slae_count'] = Sale::where('status', '9')->where('sale_date','>=',$year.'-01-01')->where('sale_date','<=',$year.'-12-31')->whereIn('plan_id',[1,2,3])->whereIn('pay_id', ['A', 'C', 'E'])->count();
+            $datas[$year]['slae_count'] = Sale::where('status', '9')->where('sale_date','>=',$year.'-01-01')->where('sale_date','<=',$year.'-12-31')->whereIn('plan_id',[1,2,3])->whereIn('pay_id', ['A', 'C'])->count();
             $datas[$year]['slae_price'] = Sale::where('status', '9')->where('sale_date','>=',$year.'-01-01')->where('sale_date','<=',$year.'-12-31')->sum('pay_price');
             $datas[$year]['puja_count'] = PujaData::where('date','>=',$year.'-01-01')->where('date','<=',$year.'-12-31')->whereIn('pay_id', ['A', 'C'])->count();
             $datas[$year]['puja_price'] = PujaData::where('date','>=',$year.'-01-01')->where('date','<=',$year.'-12-31')->sum('pay_price');

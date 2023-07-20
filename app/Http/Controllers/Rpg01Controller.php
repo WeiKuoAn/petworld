@@ -33,7 +33,7 @@ class Rpg01Controller extends Controller
                     $sums[$plan->id]['count'] = 0;
                     $sums[$plan->id]['count'] += $datas[$period->format("Y-m-d")][$plan->id]['count'];
                 }
-                $sales = Sale::where('sale_date', $period->format("Y-m-d"))->where('status', '9')->whereIn('pay_id', ['A', 'C', 'E'])->get();
+                $sales = Sale::where('sale_date', $period->format("Y-m-d"))->where('status', '9')->whereIn('pay_id', ['A', 'C'])->get();
                 foreach ($sales as $sale) {
                     if (isset($sale->plan_id)) {
                         $datas[$period->format("Y-m-d")][$sale->plan_id]['count']++;
@@ -61,7 +61,7 @@ class Rpg01Controller extends Controller
         foreach($plans as $plan){
             $plan_name[$plan->id] = $plan->name; 
         }
-        $datas = Sale::where('sale_date',$date)->whereIn('pay_id', ['A', 'C', 'E'])->where('plan_id',$plan_id)->get();
+        $datas = Sale::where('sale_date',$date)->where('status', '9')->whereIn('pay_id', ['A', 'C'])->where('plan_id',$plan_id)->get();
         return view('rpg01.detail')->with('datas',$datas)
                                    ->with('plan_name',$plan_name)
                                    ->with('date',$date)
