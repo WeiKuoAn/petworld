@@ -284,7 +284,7 @@ class SaleDataController extends Controller
                 }
             }
             $price_total = $sales->sum('pay_price');
-            $sales = $sales->orderby('sale_date', 'desc')->paginate(50);
+            $sales = $sales->orderby('sale_date', 'desc')->orderby('user_id','desc')->orderby('sale_on', 'desc')->paginate(50);
 
             $condition = $request->all();
 
@@ -299,7 +299,7 @@ class SaleDataController extends Controller
         } else {
             $condition = ' ';
             $price_total = Sale::where('status', '1')->sum('pay_price');
-            $sales = Sale::orderby('sale_date', 'desc')->where('status', '1')->paginate(50);
+            $sales = Sale::orderby('sale_date', 'desc')->orderby('user_id','desc')->orderby('sale_on', 'desc')->where('status', '1')->paginate(50);
         }
         $users = User::where('status','0')->get();
         $sources = SaleSource::where('status','up')->get();
@@ -322,7 +322,7 @@ class SaleDataController extends Controller
 
     public function wait_index(Request $request) //代確認業務單
     {
-        $sales = Sale::where('status', 3)->orderby('sale_date', 'desc')->get();
+        $sales = Sale::where('status', 3)->orderby('sale_date', 'desc')->orderby('user_id','desc')->orderby('sale_on', 'desc')->get();
         return view('sale.wait')->with('sales', $sales);
     }
 
@@ -359,7 +359,7 @@ class SaleDataController extends Controller
             if ($pay_id) {
                 $sales = $sales->where('pay_id', $pay_id);
             }
-            $sales = $sales->orderby('sale_date', 'desc')->paginate(15);
+            $sales = $sales->orderby('sale_date', 'desc')->orderby('sale_date', 'desc')->orderby('user_id','desc')->orderby('sale_on', 'desc')->paginate(15);
             $price_total = $sales->sum('pay_price');
             $condition = $request->all();
 
@@ -374,7 +374,7 @@ class SaleDataController extends Controller
             }
         } else {
             $condition = ' ';
-            $sales = Sale::where('user_id', $id)->where('status', '1')->orderby('sale_date', 'desc')->paginate(15);
+            $sales = Sale::where('user_id', $id)->where('status', '1')->orderby('sale_date', 'desc')->orderby('user_id','desc')->orderby('sale_on', 'desc')->paginate(15);
             $price_total = Sale::where('user_id', $id)->where('status', '1')->sum('pay_price');
         }
 
