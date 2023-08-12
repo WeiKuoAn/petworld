@@ -16,7 +16,7 @@ class PayDataController extends Controller
     public function index(Request $request)
     {
         $pays = Pay::orderby('seq','asc')->get();
-        $users = User::get();
+        $users = User::where('status','0')->get();
         if($request){
             $status = $request->status;
             if ($status) {
@@ -74,18 +74,10 @@ class PayDataController extends Controller
             }
 
             $items = $items->get();
+            
             // dd($items);
-            if(count($items) > 0)
-            {
-                foreach($items as $item)
-                {
-                    $pay_data_ids[] = $item->pay_data_id;
-                }
-                $datas =  $datas->orWhereIn('id', $pay_data_ids);
-            }
-
-
             $user = $request->user;
+            // dd($user);
             if ($user != "null") {
                 if (isset($user)) {
                     $datas =  $datas->where('user_id', $user);
@@ -94,7 +86,21 @@ class PayDataController extends Controller
                     $datas = $datas;
                     $sum_pay  = $sum_pay;
                 }
+            }else{
+                if(count($items) > 0)
+                {
+                    foreach($items as $item)
+                    {
+                        $pay_data_ids[] = $item->pay_data_id;
+                    }
+                    $datas =  $datas->orWhereIn('id', $pay_data_ids);
+                }
             }
+            
+            
+
+
+            
             $sum_pay  = $sum_pay->sum('price');
             $datas = $datas->orderby('pay_date','desc')->paginate(50);
             $condition = $request->all();
