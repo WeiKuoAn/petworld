@@ -11,6 +11,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $datas = Category::get();
+        //1;
         return view('product.categorys')->with('datas',$datas);
     }
 
