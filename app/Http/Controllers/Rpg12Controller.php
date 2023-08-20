@@ -27,7 +27,7 @@ class Rpg12Controller extends Controller
 
         $CustGroups = CustGroup::where('id','!=',1)->get();
 
-        $sources = SaleSource::whereIn('code',['H','B','Salon','dogpark','G'])->get();
+        $sources = SaleSource::whereIn('code',['H','B','dogpark','G'])->get();
 
         $sale_companys = DB::table('sale_company_commission')
                             ->join('sale_data','sale_data.id','=','sale_company_commission.sale_id')
@@ -35,6 +35,8 @@ class Rpg12Controller extends Controller
                             ->leftjoin('sale_source','sale_source.code','=','sale_company_commission.type')
                             ->where('sale_company_commission.sale_date','>=',$firstDay)
                             ->where('sale_company_commission.sale_date','<=',$lastDay)
+                            ->whereIn('sale_company_commission.type',['H','B','dogpark','G'])
+                            ->where('sale_data.plan_id','!=','3')
                             ->where('sale_data.status','=','9');
                             
 
@@ -48,7 +50,9 @@ class Rpg12Controller extends Controller
         }
 
         $sale_companys = $sale_companys->select('sale_company_commission.*','customer.*','sale_source.name as source_name','sale_data.status as status')
-                                       ->get();
+                                       ->orderby('sale_company_commission.type','desc')
+                                        ->get();
+                                    //    dd($sale_companys);
         $datas = [];
         $sums = [];
 
@@ -57,21 +61,38 @@ class Rpg12Controller extends Controller
             $datas[$sale_company->type]['name'] = $sale_company->source_name;
             $datas[$sale_company->type]['companys'][$sale_company->company_id]['name'] = $sale_company->name;
             $datas[$sale_company->type]['companys'][$sale_company->company_id]['items'] = DB::table('sale_company_commission')
-                                                                                ->join('sale_data','sale_data.id','=','sale_company_commission.sale_id')
-                                                                                ->leftjoin('plan','plan.id', '=' , 'sale_data.plan_id')
-                                                                                ->join('customer','customer.id','=','sale_company_commission.customer_id')
-                                                                                ->leftjoin('sale_source','sale_source.code','=','sale_company_commission.type')
-                                                                                // ->where('sale_company_commission.sale_date','=',$sale_company->sale_date)
-                                                                                ->where('sale_company_commission.type','=',$sale_company->type)
-                                                                                ->where('sale_company_commission.company_id','=',$sale_company->company_id)
-                                                                                ->where('sale_data.status','=','9')
-                                                                                ->select('sale_company_commission.*','customer.*','sale_source.name as source_name'
-                                                                                        ,'sale_data.status as status','plan.name as plan_name')
-                                                                                ->orderBy('sale_company_commission.sale_date','desc')
-                                                                                ->get();
-            $datas[$sale_company->type]['companys'][$sale_company->company_id]['count'] = DB::table('sale_company_commission')->where('sale_company_commission.company_id','=',$sale_company->company_id)->where('sale_company_commission.type','=',$sale_company->type)->count();
-            $datas[$sale_company->type]['companys'][$sale_company->company_id]['plan_amount'] = DB::table('sale_company_commission')->where('sale_company_commission.company_id','=',$sale_company->company_id)->where('sale_company_commission.type','=',$sale_company->type)->sum('plan_price');
-            $datas[$sale_company->type]['companys'][$sale_company->company_id]['commission_amount'] = DB::table('sale_company_commission')->where('sale_company_commission.company_id','=',$sale_company->company_id)->where('sale_company_commission.type','=',$sale_company->type)->sum('commission');
+                                                                                            ->join('sale_data','sale_data.id','=','sale_company_commission.sale_id')
+                                                                                            ->leftjoin('plan','plan.id', '=' , 'sale_data.plan_id')
+                                                                                            ->join('customer','customer.id','=','sale_company_commission.customer_id')
+                                                                                            ->leftjoin('sale_source','sale_source.code','=','sale_company_commission.type')
+                                                                                            // ->where('sale_company_commission.sale_date','=',$sale_company->sale_date)
+                                                                                            ->where('sale_company_commission.type','=',$sale_company->type)
+                                                                                            ->where('sale_company_commission.company_id','=',$sale_company->company_id)
+                                                                                            ->where('sale_company_commission.sale_date','>=',$firstDay)
+                                                                                            ->where('sale_company_commission.sale_date','<=',$lastDay)
+                                                                                            ->where('sale_data.status','=','9')
+                                                                                            ->select('sale_company_commission.*','customer.*','sale_source.name as source_name'
+                                                                                                    ,'sale_data.status as status','plan.name as plan_name')
+                                                                                            ->orderBy('sale_company_commission.sale_date','desc')
+                                                                                            ->get();
+            $datas[$sale_company->type]['companys'][$sale_company->company_id]['count'] = DB::table('sale_company_commission')
+                                                                                                ->where('sale_company_commission.sale_date','>=',$firstDay)
+                                                                                                ->where('sale_company_commission.sale_date','<=',$lastDay)
+                                                                                                ->where('sale_company_commission.company_id','=',$sale_company->company_id)
+                                                                                                ->where('sale_company_commission.type','=',$sale_company->type)->count();
+            $datas[$sale_company->type]['companys'][$sale_company->company_id]['plan_amount'] = DB::table('sale_company_commission')
+                                                                                                    ->where('sale_company_commission.sale_date','>=',$firstDay)
+                                                                                                    ->where('sale_company_commission.sale_date','<=',$lastDay)
+                                                                                                    ->where('sale_company_commission.company_id','=',$sale_company->company_id)
+                                                                                                    ->where('sale_company_commission.type','=',$sale_company->type)
+                                                                                                    ->sum('plan_price');
+
+            $datas[$sale_company->type]['companys'][$sale_company->company_id]['commission_amount'] = DB::table('sale_company_commission')
+                                                                                                        ->where('sale_company_commission.sale_date','>=',$firstDay)
+                                                                                                        ->where('sale_company_commission.sale_date','<=',$lastDay)
+                                                                                                        ->where('sale_company_commission.company_id','=',$sale_company->company_id)
+                                                                                                        ->where('sale_company_commission.type','=',$sale_company->type)
+                                                                                                        ->sum('commission');
             $datas[$sale_company->type]['count_total'] = 0;
             $datas[$sale_company->type]['plan_total'] = 0;
             $datas[$sale_company->type]['commission_total'] = 0;
