@@ -218,6 +218,13 @@ class CustomerController extends Controller
         return view('customer.edit')->with('customer', $customer)->with('groups',$groups);
     }
 
+    public function detail($id)
+    {
+        $groups = CustGroup::where('status','up')->get();
+        $customer = Customer::where('id', $id)->first();
+        return view('customer.detail')->with('customer', $customer)->with('groups',$groups);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

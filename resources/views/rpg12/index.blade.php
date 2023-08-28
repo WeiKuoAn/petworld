@@ -28,31 +28,13 @@
                     <div class="row justify-content-between">
                         <div class="col-auto">
                             <form class="d-flex flex-wrap align-items-center" id="myForm" action="{{ route('rpg12') }}" method="GET">
-                                <label for="status-select" class="me-2">年度</label>
-                                <div class="me-sm-3">
-                                    <select class="form-select my-1 my-lg-0" id="status-select" name="year" onchange="this.form.submit()">
-                                        @foreach($years as $year)
-                                        <option value="{{$year}}" @if($request->year == $year) selected @endif >{{ $year }}年</option>
-                                        @endforeach
-                                    </select>
+                                <label for="status-select" class="me-2">日期區間</label>
+                                <div class="me-2">
+                                    <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="after_date" @if(!isset($request->after_date)) value="{{ $firstDay->format("Y-m-d") }}" @endif value="{{ $request->after_date }}">
                                 </div>
-                                <label for="status-select" class="me-2">月份</label>
-                                <div class="me-sm-3">
-                                    <select class="form-select my-1 my-lg-0" id="status-select" name="month" onchange="this.form.submit()">
-                                        <option value="" selected >請選擇</option>
-                                        <option value="01" @if($request->month == "01" ) selected  @endif>一月</option>
-                                        <option value="02" @if($request->month == "02" ) selected  @endif>二月</option>
-                                        <option value="03" @if($request->month == "03" ) selected  @endif>三月</option>
-                                        <option value="04" @if($request->month == "04" ) selected  @endif>四月</option>
-                                        <option value="05" @if($request->month == "05" ) selected  @endif>五月</option>
-                                        <option value="06" @if($request->month == "06" ) selected  @endif>六月</option>
-                                        <option value="07" @if($request->month == "07" ) selected  @endif>七月</option>
-                                        <option value="08" @if($request->month == "08" ) selected  @endif>八月</option>
-                                        <option value="09" @if($request->month == "09" ) selected  @endif>九月</option>
-                                        <option value="10" @if($request->month == "10" ) selected  @endif>十月</option>
-                                        <option value="11" @if($request->month == "11" ) selected  @endif>十一月</option>
-                                        <option value="12" @if($request->month == "12" ) selected  @endif>十二月</option>
-                                    </select>
+                                <label for="status-select" class="me-2">至</label>
+                                <div class="me-3">
+                                    <input type="date" class="form-control my-1 my-lg-0" id="inputPassword2" name="before_date" @if(!isset($request->before_date)) value="{{ $lastDay->format("Y-m-d") }}" @endif value="{{ $request->before_date }}">
                                 </div>
                                 <label for="status-select" class="me-2">來源類別</label>
                                 <div class="me-sm-3">

@@ -147,6 +147,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('customers', [CustomerController::class, 'index'])->name('customer');
     Route::get('customer/create', [CustomerController::class, 'create'])->name('customer.create');
     Route::post('customer/create', [CustomerController::class, 'store'])->name('customer.create.data');
+    Route::get('customer/detail/{id}', [CustomerController::class, 'detail'])->name('customer.detail');
     Route::get('customer/edit/{id}', [CustomerController::class, 'show'])->name('customer.edit');
     Route::post('customer/edit/{id}', [CustomerController::class, 'update'])->name('customer.edit.data');
     Route::get('customer/del/{id}', [CustomerController::class, 'delete'])->name('customer.del');

@@ -15,15 +15,23 @@ class Rpg12Controller extends Controller
     public function rpg12(Request $request)
     {
         $years = range(Carbon::now()->year, 2022);
-        if (isset($request->year)) {
+        if($request->input() == null){
             $search_year = $request->year;
             $search_month = $request->month;
             $firstDay = Carbon::createFromDate($search_year , $search_month)->firstOfMonth();
             $lastDay = Carbon::createFromDate($search_year , $search_month)->lastOfMonth();
         } else {
-            $firstDay = Carbon::now()->firstOfMonth();
-            $lastDay = Carbon::now()->lastOfMonth();;
+            $firstDay = $request->after_date;
+            $lastDay = $request->before_date;
         }
+
+        // if($request->input() != null){
+        //     $firstDay = Carbon::now()->firstOfMonth();
+        //     $lastDay = Carbon::now()->lastOfMonth();
+        // } else {
+        //     $firstDay = $request->after_date;
+        //     $lastDay = $request->before_date;
+        // }
 
         $CustGroups = CustGroup::where('id','!=',1)->get();
 
@@ -126,6 +134,6 @@ class Rpg12Controller extends Controller
         // }
 
 
-        return view('rpg12.index')->with('sources',$sources)->with('years', $years)->with('request',$request)->with('datas',$datas)->with('sums',$sums);
+        return view('rpg12.index')->with('sources',$sources)->with('years', $years)->with('request',$request)->with('datas',$datas)->with('sums',$sums)->with('firstDay',$firstDay)->with('lastDay',$lastDay);
     }
 }
