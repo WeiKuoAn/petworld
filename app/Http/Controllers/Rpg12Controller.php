@@ -35,7 +35,7 @@ class Rpg12Controller extends Controller
 
         $CustGroups = CustGroup::where('id','!=',1)->get();
 
-        $sources = SaleSource::whereIn('code',['H','B','dogpark','G'])->get();
+        $sources = SaleSource::whereIn('code',['H','B','dogpark','G','other'])->get();
 
         $sale_companys = DB::table('sale_company_commission')
                             ->join('sale_data','sale_data.id','=','sale_company_commission.sale_id')
@@ -43,7 +43,7 @@ class Rpg12Controller extends Controller
                             ->leftjoin('sale_source','sale_source.code','=','sale_company_commission.type')
                             ->where('sale_company_commission.sale_date','>=',$firstDay)
                             ->where('sale_company_commission.sale_date','<=',$lastDay)
-                            ->whereIn('sale_company_commission.type',['H','B','dogpark','G'])
+                            ->whereIn('sale_company_commission.type',['H','B','dogpark','G','other'])
                             ->where('sale_data.plan_id','!=','3')
                             ->where('sale_data.status','=','9');
                             
