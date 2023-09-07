@@ -91,7 +91,7 @@ class Rpg13Controller extends Controller
         //計算業務單，商品類型是的產品
         foreach($normal_sale_products as $normal_sale_product)
         {
-            if($datas['products'][$normal_sale_product->gdpaper_id]['num']){
+            if(isset($datas['products'][$normal_sale_product->gdpaper_id]['num'])){
                 $datas['products'][$normal_sale_product->gdpaper_id]['num'] += $normal_sale_product->gdpaper_num;
             }
 
