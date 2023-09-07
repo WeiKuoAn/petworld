@@ -86,11 +86,14 @@ class Rpg13Controller extends Controller
 
             $datas['pujas'] = []; //法會資訊商品
         }
+        // dd($datas);
         
         //計算業務單，商品類型是的產品
         foreach($normal_sale_products as $normal_sale_product)
         {
-            $datas['products'][$normal_sale_product->gdpaper_id]['num'] += $normal_sale_product->gdpaper_num;
+            if($datas['products'][$normal_sale_product->gdpaper_id]['num']){
+                $datas['products'][$normal_sale_product->gdpaper_id]['num'] += $normal_sale_product->gdpaper_num;
+            }
 
             if(isset($datas['normals'][$normal_sale_product->gdpaper_id]['num'])){
                 $datas['normals'][$normal_sale_product->gdpaper_id]['num'] += $normal_sale_product->gdpaper_num;
