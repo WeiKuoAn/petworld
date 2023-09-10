@@ -169,10 +169,9 @@ class Rpg13Controller extends Controller
                                 ->leftjoin('puja','puja.id', '=', 'puja_data.puja_id')
                                 ->where('puja.date','>=',$firstDay)
                                 ->where('puja.date','<=',$lastDay)
-                                ->select('puja_data.*','puja_data.puja_id','product.type'
+                                ->select('puja_data.*','puja_data.puja_id','product.type','product.name as product_name'
                                         ,'puja_data_attach_product.*')
                                 ->get();
-
 
             foreach($puja_attachs as $puja_attach)
             {
@@ -181,8 +180,8 @@ class Rpg13Controller extends Controller
                 //非套組
                 if($puja_attach->type == 'normal')
                 {
+                    $datas['pujas'][$puja_attach->puja_id]['attachs'][$puja_attach->product_id]['name'] = $puja_attach->product_name;
                     $datas['products'][$puja_attach->product_id]['num'] += $puja_attach->product_num;
-                    $datas['pujas'][$puja_attach->puja_id]['attachs'][$puja_attach->product_id]['name'] = $attach_product_data->name;
                     if(isset($datas['pujas'][$puja_attach->puja_id]['attachs'][$puja_attach->product_id]['num'])){
                         $datas['pujas'][$puja_attach->puja_id]['attachs'][$puja_attach->product_id]['num'] += $puja_attach->product_num;
                     }else{
@@ -192,6 +191,8 @@ class Rpg13Controller extends Controller
                     $attach_combos_products = ComboProduct::where('product_id',$puja_attach->product_id)->get();
                     foreach($attach_combos_products as $attach_combos_product)
                     {
+                        $product_data =  Product::where('id',$attach_combos_product->include_product_id)->first();
+                        $datas['pujas'][$puja_attach->puja_id]['attachs'][$attach_combos_product->include_product_id]['name']=$product_data->name;
                         if(isset($datas['pujas'][$puja_attach->puja_id]['attachs'][$attach_combos_product->include_product_id]['num'])){
                             $datas['pujas'][$puja_attach->puja_id]['attachs'][$attach_combos_product->include_product_id]['num'] += $attach_combos_product->num;
                         }else{

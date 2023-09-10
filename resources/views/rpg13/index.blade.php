@@ -203,21 +203,25 @@
                             <thead >
                                 @foreach($datas['pujas'] as $key => $puja)
                                     <tr class="table-light">
-                                        <td colspan="3">{{ $puja['name'] }}（共{{ $puja['count'] }}個）</td>
+                                        <td colspan="4">{{ $puja['name'] }}（共{{ $puja['count'] }}個）</td>
                                     </tr>
                                     @foreach($puja['details'] as $detail_key=>$detail)
-                                        @if(count($puja['details'])%1 == 1)
+                                        @if(count($puja['details'])%2 == 1)
                                             <tr>
                                         @endif
                                         <td>{{ $detail['name'] }}</td>
                                         <td>{{ $detail['num'] }}</td>
                                     @endforeach
                                     <tr class="table-light">
-                                        <td colspan="3">額外加購</td>
+                                        <td colspan="4">額外加購</td>
                                     </tr>
                                     @foreach($puja['attachs'] as $attach_key=>$attach)
                                     <tr>
-                                        <td>{{ $attach['name'] }}</td>
+                                        <td colspan="3">
+                                            @if(isset($attach['name']))
+                                            {{ $attach['name'] }}
+                                            @endif
+                                        </td>
                                         <td>{{ $attach['num'] }}</td>
                                     </tr>
                                     @endforeach
