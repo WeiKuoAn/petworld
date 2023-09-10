@@ -436,15 +436,15 @@
     
 
     $("#plan_id").on('change', function(){
-        var plan_id = $(this).val();
-        if(plan_id == '3'){
-            var total = $("#total").val();
-            total = total - 100;
-            $("#total").val(total);
-            $("#total_text").html(total);
-        }else{
+        // var plan_id = $(this).val();
+        // if(plan_id == '3'){
+        //     var total = $("#total").val();
+        //     total = total - 100;
+        //     $("#total").val(total);
+        //     $("#total_text").html(total);
+        // }else{
             calculate_price();
-        }
+        // }
     });
 
     $("#final_price").on('input', function(){
@@ -559,9 +559,9 @@
             }
         });
         plan_id = $('select[name="plan_id"]').val();
-        if(plan_id == '3'){
-            total = total - 100;
-        }
+        // if(plan_id == '3'){
+        //     total = total - 100;
+        // }
         $("#total").val(total);
         $("#total_text").html(total);
         console.log(plan_id);
