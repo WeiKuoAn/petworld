@@ -219,7 +219,7 @@ class SaleDataController extends Controller
                 $sales = Sale::whereIn('status', [1, 2]);
             }
             if ($status == 'check') {
-                $sales = Sale::where('status', 9);
+                $sales = Sale::whereIn('status', [9,100]);
             }
             $type_list = $request->type_list;
             if($type_list)
@@ -340,7 +340,7 @@ class SaleDataController extends Controller
                 $sales = Sale::where('user_id',  $id)->whereIn('status', [1, 2]);
             }
             if ($status == 'check') {
-                $sales = Sale::where('user_id',  $id)->where('status', 9);
+                $sales = Sale::where('user_id',  $id)->whereIn('status', [9,100]);;
             }
             $after_date = $request->after_date;
             if ($after_date) {
