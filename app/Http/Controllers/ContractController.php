@@ -8,11 +8,13 @@ use App\Models\ContractType;
 use App\Models\Customer;
 use App\Models\Sale;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ContractController extends Controller
 {
     public function index(Request $request)
     {
+        $today = Carbon::now()->format("Y-m-d");
         $check_renew = $request->check_renew;
         if(!isset($check_renew)){
             $datas = Contract::whereIn('renew',[0,1]);
@@ -62,6 +64,14 @@ class ContractController extends Controller
                 }else{
                     $datas = $datas ;
                 }
+            }
+
+            $colse = $request->check_close;
+            if(!isset($colse) || $colse == '1')
+            {
+                $datas = $datas->where('end_date', '>=', $today);
+            }else{
+                $datas = $datas->where('end_date', '<=', $today);
             }
                 
             $datas = $datas->orderby('start_date', 'desc')->paginate(50);

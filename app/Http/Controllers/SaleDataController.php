@@ -154,6 +154,10 @@ class SaleDataController extends Controller
         $sale->pay_method = $request->pay_method;
         $sale->total = $request->total;
         $sale->comm = $request->comm;
+        if(Auth::user()->job_id == '8')
+        {
+            $sale->status = '100';
+        }
         $sale->save();
 
         $sale_id = Sale::orderby('id', 'desc')->first();

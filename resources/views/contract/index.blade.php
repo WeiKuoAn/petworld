@@ -65,6 +65,13 @@
                                         <option value="0" @if($request->check_renew == '0') selected @endif>否</option>
                                     </select>
                                 </div>
+                                <div class="me-sm-3">
+                                    <label class="form-label">狀態</label>
+                                    <select class="form-select my-1 my-lg-0" id="status-select" name="check_close" onchange="this.form.submit()">
+                                        <option value="1" @if($request->check_close == '1' || !isset($request->check_close)) selected @endif>未結案</option>
+                                        <option value="0" @if($request->check_close == '0') selected @endif>已結案</option>
+                                    </select>
+                                </div>
                                 <div class="me-3 mt-3">
                                     <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
                                 </div>
