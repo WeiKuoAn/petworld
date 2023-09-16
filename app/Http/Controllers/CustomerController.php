@@ -33,6 +33,18 @@ class CustomerController extends Controller
         }
     }
 
+    public function customer_data(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = "";
+            $cust = Customer::where('id',  $request->cust_id)->first();
+
+            if($cust){
+                return Response($cust);
+            }
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *

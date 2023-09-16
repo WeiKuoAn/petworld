@@ -117,13 +117,25 @@
                             @foreach ($datas as $key=>$data)
                                 <tr>
                                     <td>{{ $data->number }}</td>
-                                    <td>{{ $data->type_data->name }}</td>
+                                    <td>
+                                        <span 
+                                            @if($data->type == '1') class=" bg-soft-success text-success p-1" 
+                                            @elseif($data->type == '2') class=" bg-soft-danger text-danger p-1"
+                                            @else class=" bg-soft-blue text-blue p-1"
+                                            @endif>
+                                            {{ $data->type_data->name }}
+                                        </span>
+                                    </td>
                                     <td>{{ $data->cust_name->name }}</td>
                                     <td>{{ $data->mobile }}</td>
                                     <td>{{ $data->pet_name }}</td>
                                     <td>第{{ $data->year }}年</td>
                                     <td>{{ $data->start_date }}</td>
-                                    <td>{{ $data->end_date }}</td>
+                                    @if(!isset($request->check_close) || $request->check_close == '1')
+                                        <td>{{ $data->end_date }}</td>
+                                    @else
+                                        <td>{{ $data->close_date }}</td>
+                                    @endif
                                     <td>{{ number_format($data->price) }}</td>
                                     <td>
                                         @if($data->renew == '1')

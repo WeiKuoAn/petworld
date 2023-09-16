@@ -145,6 +145,7 @@ Route::group(['prefix' => '/'], function () {
     
     /*客戶管理 */
     Route::get('customers', [CustomerController::class, 'index'])->name('customer');
+    Route::get('customer_data', [CustomerController::class, 'customer_data'])->name('customer.data');
     Route::get('customer/create', [CustomerController::class, 'create'])->name('customer.create');
     Route::post('customer/create', [CustomerController::class, 'store'])->name('customer.create.data');
     Route::get('customer/detail/{id}', [CustomerController::class, 'detail'])->name('customer.detail');

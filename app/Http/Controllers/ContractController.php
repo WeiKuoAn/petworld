@@ -69,17 +69,17 @@ class ContractController extends Controller
             $colse = $request->check_close;
             if(!isset($colse) || $colse == '1')
             {
-                $datas = $datas->where('end_date', '>=', $today);
+                $datas = $datas->whereNull('close_date');
             }else{
-                $datas = $datas->where('end_date', '<=', $today);
+                $datas = $datas->whereNotNull('close_date');
             }
                 
-            $datas = $datas->orderby('start_date', 'desc')->paginate(50);
+            $datas = $datas->orderby('start_date', 'asc')->paginate(50);
 
             $condition = $request->all();
         } else {
             $condition = '';
-            $datas = $datas->orderby('start_date', 'desc')->paginate(50);
+            $datas = $datas->orderby('start_date', 'asc')->paginate(50);
         }
         $contract_types = ContractType::where('status','up')->get();
         return view('contract.index')->with('datas',$datas)
@@ -114,6 +114,7 @@ class ContractController extends Controller
         }
         $data->renew_year = $request->renew_year;
         $data->user_id = Auth::user()->id;
+        $data->comment = $request->comment;
         $data->save();
         return redirect()->route('contracts');
     }
@@ -138,13 +139,16 @@ class ContractController extends Controller
         $data->price = $request->price;
         $data->start_date = $request->start_date;
         $data->end_date = $request->end_date;
+
         if(isset($request->renew)){
             $data->renew = $request->renew;
+            $data->renew_year = $request->renew_year;
         }else{
             $data->renew = 0;
             $data->renew_year = null;
         }
-        $data->renew_year = $request->renew_year;
+        $data->close_date = $request->close_date;
+        $data->comment = $request->comment;
         $data->user_id = Auth::user()->id;
         $data->save();
         return redirect()->route('contracts');

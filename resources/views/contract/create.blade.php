@@ -84,7 +84,7 @@
                            </div>
                            <div id="renew_div">
                                 <div class="mb-3">
-                                    <label for="renew_year" class="form-label">續約幾年<span class="text-danger">*</span></label>
+                                    <label for="renew_year" class="form-label">再續約幾年<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="renew_year" name="renew_year" >
                                 </div>
                             </div>
@@ -94,7 +94,10 @@
                                     <label class="form-check-label" for="renew"><b>是否為續約？</b></label>
                                 </div>
                             </div>
-                            
+                            <div>
+                                <label class="form-label">備註</label>
+                                <textarea class="form-control" rows="3" placeholder="" name="comment"></textarea>
+                            </div>
                         </div> <!-- end col-->
                     </div>
                     <!-- end row -->
@@ -150,25 +153,33 @@
             data:{'cust_name':$value},
             success:function(data){
                 $('#cust_name_list_q').html(data);
-                // $("#cust_name_q").change(function() {
-                //     var value1 = $(this).val();
-                //     console.log(value1);
-                //     $.ajax({
-                //         type: 'get',
-                //         url: '{{ route('customer.pet.search') }}',
-                //         data: { 'cust_id': value1 },
-                //         success: function(data) {
-                //             $("#pet_name").html(data[1]);
-                //             // 在這裡處理第二個 AJAX 請求的成功回應
-                //         },
-                //         error: function(xhr, status, error) {
-                //             // 處理第二個 AJAX 請求的錯誤
-                //         }
-                //     });
-                // });
+                $cust_id=$("#cust_name_q").val();
+                console.log($cust_id);
+                $.ajax({
+                    type : 'get',
+                    url : '{{ route('customer.data') }}',
+                    data:{'cust_id':$cust_id},
+                    success:function(data){
+                        console.log(data);
+                        $('#mobile').val(data['mobile']);
+                    }
+                });
             }
         });
-        console.log($value);
+        // console.log($value);
+    });
+
+    $('#start_date').change(function() {
+        var startDate = new Date($(this).val());
+        startDate.setFullYear(startDate.getFullYear() + 1);
+        startDate.setDate(startDate.getDate() - 1);
+
+        var endYear = startDate.getFullYear();
+        var endMonth = ("0" + (startDate.getMonth() + 1)).slice(-2); // JavaScript months are 0-indexed
+        var endDate = ("0" + startDate.getDate()).slice(-2);
+
+        var endDateString = `${endYear}-${endMonth}-${endDate}`;
+        $('#end_date').val(endDateString);
     });
 </script>
 <!-- end demo js-->

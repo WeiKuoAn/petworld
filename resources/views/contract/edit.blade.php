@@ -38,6 +38,11 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="mb-3">
+                                <label for="close_date" class="form-label">合約結案日期<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="close_date" name="close_date"  value="{{ $data->close_date }}">
+                           </div>
+                           <hr>
+                            <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">類別名稱<span class="text-danger">*</span></label>
                                    <select class="form-control" data-toggle="select" data-width="100%" name="type" required>
@@ -84,7 +89,7 @@
                            </div>
                            <div id="renew_div">
                                 <div class="mb-3">
-                                    <label for="renew_year" class="form-label">續約幾年<span class="text-danger">*</span></label>
+                                    <label for="renew_year" class="form-label">再續約幾年<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="renew_year" name="renew_year" value="{{ $data->renew_year }}" >
                                 </div>
                                 <input type="hidden" name="renew_year_hidden" id="renew_year_hidden" value="{{ $data->renew_year }}">
@@ -95,7 +100,10 @@
                                     <label class="form-check-label" for="renew"><b>是否為續約？</b></label>
                                 </div>
                             </div>
-                            
+                            <div>
+                                <label class="form-label">備註</label>
+                                <textarea class="form-control" rows="3" placeholder="" name="comment">{{ $data->comment }}</textarea>
+                            </div>
                         </div> <!-- end col-->
                     </div>
                     <!-- end row -->
@@ -145,9 +153,12 @@
 
     console.log($("input[name='renew_year_hidden']").val());
 
-    if($("input[name='renew_year_hidden']").val() == '1'){
-        $("#renew").prop("checked", true);
+    if($("#renew").is(":checked")){
+        $("input[name='renew']").val('1');
         $("#renew_div").show();
+    } else {
+        $("input[name='renew']").val('0');
+        $("#renew_div").hide();
     }
 
     $( "#cust_name_q" ).keydown(function() {

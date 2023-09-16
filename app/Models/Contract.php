@@ -19,9 +19,11 @@ class Contract extends Model
         'year',
         'start_date',
         'end_date',
+        'close_date',
         'renew',
         'renew_year',
         'user_id',
+        'comment',
     ];
 
     public function cust_name()
