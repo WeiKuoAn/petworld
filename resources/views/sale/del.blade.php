@@ -278,7 +278,7 @@
                         </div>
                         <div class="mb-3 col-md-4" id="transfer_channel_div">
                             <label for="pay_id" class="form-label">匯款管道<span class="text-danger">*</span></label>
-                            <select class="form-select" name="transfer_channel" required>
+                            <select class="form-select" name="transfer_channel">
                                 <option value="" selected>請選擇</option>
                                 <option value="銀行轉帳" @if($data->transfer_channel == '銀行轉帳') selected @endif>銀行轉帳</option>
                                 <option value="Line Pay" @if($data->transfer_channel == 'Line Pay') selected @endif>Line Pay</option>
@@ -353,14 +353,14 @@
             $("#pay_price").prop('required', false);
             $("#cash_price").prop('required', true);
             $("#transfer_price").prop('required', true);
-            $("#transfer_number").prop('required', true);
+            $("#transfer_channel").prop('required', true);
         }else if(payMethod == 'B'){
             $("#transfer_number_div").show(300);
             $("#transfer_channel_div").show(300);
             $("#pay_price").prop('required', true);
             $("#cash_price").prop('required', false);
             $("#transfer_price").prop('required', false);
-            $("#transfer_number").prop('required', true);
+            $("#transfer_channel").prop('required', true);
         }else{
             $("#cash_price_div").hide(300);
             $("#transfer_price_div").hide(300);
@@ -369,7 +369,7 @@
             $("#pay_price").prop('required', true);
             $("#cash_price").prop('required', false);
             $("#transfer_price").prop('required', false);
-            $("#transfer_number").prop('required', false);
+            $("#transfer_channel").prop('required', false);
         }
     $('select[name="pay_method"]').on('change', function() {
         if($(this).val() == 'C'){
@@ -380,14 +380,14 @@
             $("#pay_price").prop('required', false);
             $("#cash_price").prop('required', true);
             $("#transfer_price").prop('required', true);
-            $("#transfer_number").prop('required', true);
+            $("#transfer_channel").prop('required', true);
         }else if($(this).val() == 'B'){
             $("#transfer_number_div").show(300);
             $("#transfer_channel_div").show(300);
             $("#pay_price").prop('required', true);
             $("#cash_price").prop('required', false);
             $("#transfer_price").prop('required', false);
-            $("#transfer_number").prop('required', true);
+            $("#transfer_channel").prop('required', true);
         }else{
             $("#cash_price_div").hide(300);
             $("#transfer_price_div").hide(300);
@@ -396,7 +396,7 @@
             $("#pay_price").prop('required', true);
             $("#cash_price").prop('required', false);
             $("#transfer_price").prop('required', false);
-            $("#transfer_number").prop('required', false);
+            $("#transfer_channel").prop('required', false);
         }
     });
 
