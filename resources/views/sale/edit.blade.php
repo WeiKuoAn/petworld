@@ -158,34 +158,65 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($sale_proms as $key=>$sale_prom)
-                                            <tr id="row-{{ $key }}">
-                                                <td class="text-center">
-                                                    @if($key==0)
-                                                    <button type="button" class="ibtnAdd_prom demo-delete-row btn btn-primary btn-sm btn-icon"><i class="fa fas fa-plus"></i></button>                                                    
-                                                    @else
-                                                    <button type="button" class="ibtnDel_prom demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <select id="select_prom_{{$key}}" alt="{{ $key }}" class="mobile form-select" name="select_proms[]" onchange="chgItems(this)">
-                                                        <option value="" selected>請選擇</option>
-                                                        <option value="A" @if($sale_prom->prom_type == 'A') selected @endif>安葬處理</option>
-                                                        <option value="B" @if($sale_prom->prom_type == 'B') selected @endif>後續處理</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select id="prom_{{$key}}" class="mobile form-select" name="prom[]" >
-                                                        @foreach($proms as $prom)
-                                                            <option value="{{ $prom->id }}" @if($sale_prom->prom_id == $prom->id) selected @endif >{{ $prom->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="mobile form-control total_number" id="prom_total_{{$key}}" name="prom_total[]" value="{{ $sale_prom->prom_total }}">
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        @if(count($sale_proms) > 0)
+                                            @foreach($sale_proms as $key=>$sale_prom)
+                                                <tr id="row-{{ $key }}">
+                                                    <td class="text-center">
+                                                        @if($key==0)
+                                                        <button type="button" class="ibtnAdd_prom demo-delete-row btn btn-primary btn-sm btn-icon"><i class="fa fas fa-plus"></i></button>                                                    
+                                                        @else
+                                                        <button type="button" class="ibtnDel_prom demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <select id="select_prom_{{$key}}" alt="{{ $key }}" class="mobile form-select" name="select_proms[]" onchange="chgItems(this)">
+                                                            <option value="" selected>請選擇</option>
+                                                            <option value="A" @if($sale_prom->prom_type == 'A') selected @endif>安葬處理</option>
+                                                            <option value="B" @if($sale_prom->prom_type == 'B') selected @endif>後續處理</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="prom_{{$key}}" class="mobile form-select" name="prom[]" >
+                                                            @foreach($proms as $prom)
+                                                                <option value="{{ $prom->id }}" @if($sale_prom->prom_id == $prom->id) selected @endif >{{ $prom->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="mobile form-control total_number" id="prom_total_{{$key}}" name="prom_total[]" value="{{ $sale_prom->prom_total }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            @php $j = 0; @endphp
+                                            @for ($i = 0; $i < 1; $i++)
+                                                @php $j = $i+1; @endphp
+                                                <tr id="row-{{ $i }}">
+                                                    <td class="text-center">
+                                                        @if($j==1)
+                                                        <button type="button" class="ibtnAdd_prom demo-delete-row btn btn-primary btn-sm btn-icon"><i class="fa fas fa-plus"></i></button>                                                    
+                                                        @else
+                                                        <button type="button" class="ibtnDel_prom demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <select id="select_prom_{{$i}}" alt="{{ $i }}" class="mobile form-select" name="select_proms[]" onchange="chgItems(this)">
+                                                            <option value="" selected>請選擇</option>
+                                                            <option value="A">安葬處理</option>
+                                                            <option value="B">後續處理</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="prom_{{$i}}" class="mobile form-select" name="prom[]" >
+                                                            <option value="">請選擇</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="mobile form-control total_number" id="prom_total_{{$i}}" name="prom_total[]" >
+                                                    </td>
+                                                </tr>
+                                            @endfor
+                                        @endif
                                     </tbody>
                                 </table>
                             </div> <!-- end .table-responsive -->
@@ -214,31 +245,61 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($sale_gdpapers as $key=>$sale_gdpaper)
-                                            <tr id="row-{{ $key }}">
-                                                <td class="text-center">
-                                                    @if($key==0)
-                                                    <button type="button" class="ibtnAdd_gdpaper demo-delete-row btn btn-primary btn-sm btn-icon"><i class="fa fas fa-plus"></i></button>                                                    
-                                                    @else
-                                                    <button type="button" class="ibtnDel_gdpaper demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button>
-                                                    @endif
+                                        @if(count($sale_gdpapers)>0)
+                                            @foreach($sale_gdpapers as $key=>$sale_gdpaper)
+                                                <tr id="row-{{ $key }}">
+                                                    <td class="text-center">
+                                                        @if($key==0)
+                                                        <button type="button" class="ibtnAdd_gdpaper demo-delete-row btn btn-primary btn-sm btn-icon"><i class="fa fas fa-plus"></i></button>                                                    
+                                                        @else
+                                                        <button type="button" class="ibtnDel_gdpaper demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button>
+                                                        @endif
+                                                    </td>
+                                                <td>
+                                                    <select id="gdpaper_id_{{$key}}" alt="{{ $key }}" class="mobile form-select" name="gdpaper_ids[]" onchange="chgPapers(this)" >
+                                                        <option value="" selected>請選擇...</option>
+                                                        @foreach($products as $product)
+                                                            <option value="{{ $product->id }}" @if($product->id == $sale_gdpaper->gdpaper_id) selected @endif>{{ $product->name }}({{ $product->price }})</option>
+                                                        @endforeach
+                                                    </select>
                                                 </td>
-                                            <td>
-                                                <select id="gdpaper_id_{{$key}}" alt="{{ $key }}" class="mobile form-select" name="gdpaper_ids[]" onchange="chgPapers(this)" >
-                                                    <option value="" selected>請選擇...</option>
-                                                    @foreach($products as $product)
-                                                        <option value="{{ $product->id }}" @if($product->id == $sale_gdpaper->gdpaper_id) selected @endif>{{ $product->name }}({{ $product->price }})</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="number" class="mobile form-control" id="gdpaper_num_{{$key}}" alt="{{ $key }}"  name="gdpaper_num[]" value="{{ $sale_gdpaper->gdpaper_num }}" onchange="chgNums(this)">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="mobile form-control total_number" id="gdpaper_total_{{$key}}" name="gdpaper_total[]" value="{{ $sale_gdpaper->gdpaper_total }}">
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                                                <td>
+                                                    <input type="number" class="mobile form-control" id="gdpaper_num_{{$key}}" alt="{{ $key }}"  name="gdpaper_num[]" value="{{ $sale_gdpaper->gdpaper_num }}" onchange="chgNums(this)">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="mobile form-control total_number" id="gdpaper_total_{{$key}}" name="gdpaper_total[]" value="{{ $sale_gdpaper->gdpaper_total }}">
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                            @php $j = 0; @endphp
+                                            @for ($i = 0; $i < 1; $i++)
+                                                @php $j = $i+1; @endphp
+                                                <tr id="row-{{ $i }}">
+                                                    <td class="text-center">
+                                                        @if($j==1)
+                                                        <button type="button" class="ibtnAdd_gdpaper demo-delete-row btn btn-primary btn-sm btn-icon"><i class="fa fas fa-plus"></i></button>                                                    
+                                                        @else
+                                                        <button type="button" class="ibtnDel_gdpaper demo-delete-row btn btn-danger btn-sm btn-icon"><i class="fa fa-times"></i></button>
+                                                        @endif
+                                                    </td>
+                                                <td>
+                                                    <select id="gdpaper_id_{{$i}}" alt="{{ $i }}" class="mobile form-select" name="gdpaper_ids[]" onchange="chgPapers(this)" >
+                                                        <option value="" selected>請選擇...</option>
+                                                        @foreach($products as $product)
+                                                            <option value="{{ $product->id }}">{{ $product->name }}({{ $product->price }})</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" alt="{{ $i }}"  class="mobile form-control" id="gdpaper_num_{{$i}}" name="gdpaper_num[]" onchange="chgNums(this)" onclick="chgNums(this)" onkeydown="chgNums(this)">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="mobile form-control total_number" id="gdpaper_total_{{$i}}" name="gdpaper_total[]" value="">
+                                                </td>
+                                            </tr>
+                                            @endfor
+                                        @endif
                                     </tbody>
                                 </table>
                             </div> <!-- end .table-responsive -->
@@ -276,8 +337,16 @@
                             <label for="pay_price" class="form-label">匯款收款<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="transfer_price" name="transfer_price" value="{{ $data->transfer_price }}">
                         </div>
+                        <div class="mb-3 col-md-4" id="transfer_channel_div">
+                            <label for="pay_id" class="form-label">匯款管道<span class="text-danger">*</span></label>
+                            <select class="form-select" name="transfer_channel" required>
+                                <option value="" selected>請選擇</option>
+                                <option value="銀行轉帳" @if($data->transfer_channel == '銀行轉帳') selected @endif>銀行轉帳</option>
+                                <option value="Line Pay" @if($data->transfer_channel == 'Line Pay') selected @endif>Line Pay</option>
+                            </select>
+                        </div>
                         <div class="mb-3 col-md-4" id="transfer_number_div">
-                            <label for="pay_price" class="form-label">匯款後四碼<span class="text-danger">*</span></label>
+                            <label for="pay_price" class="form-label">匯款後四碼<span class="text-danger"></span></label>
                             <input type="text" class="form-control" id="transfer_number" name="transfer_number" value="{{ $data->transfer_number }}">
                         </div>
                         <div class="mb-3 col-md-4">
@@ -443,52 +512,53 @@
     $("#cash_price_div").hide();
     $("#transfer_price_div").hide();
     $("#transfer_number_div").hide();
+    $("#transfer_channel_div").hide();
     if(payMethod == 'C'){
             $("#cash_price_div").show(300);
             $("#transfer_price_div").show(300);
             $("#transfer_number_div").show(300);
+            $("#transfer_channel_div").show(300);
             $("#pay_price").prop('required', false);
             $("#cash_price").prop('required', true);
             $("#transfer_price").prop('required', true);
-            $("#transfer_number").prop('required', true);
         }else if(payMethod == 'B'){
             $("#transfer_number_div").show(300);
+            $("#transfer_channel_div").show(300);
             $("#pay_price").prop('required', true);
             $("#cash_price").prop('required', false);
             $("#transfer_price").prop('required', false);
-            $("#transfer_number").prop('required', true);
         }else{
             $("#cash_price_div").hide(300);
             $("#transfer_price_div").hide(300);
             $("#transfer_number_div").hide(300);
+            $("#transfer_channel_div").hide(300);
             $("#pay_price").prop('required', true);
             $("#cash_price").prop('required', false);
             $("#transfer_price").prop('required', false);
-            $("#transfer_number").prop('required', false);
         }
     $('select[name="pay_method"]').on('change', function() {
         if($(this).val() == 'C'){
             $("#cash_price_div").show(300);
             $("#transfer_price_div").show(300);
             $("#transfer_number_div").show(300);
+            $("#transfer_channel_div").show(300);
             $("#pay_price").prop('required', false);
             $("#cash_price").prop('required', true);
             $("#transfer_price").prop('required', true);
-            $("#transfer_number").prop('required', true);
         }else if($(this).val() == 'B'){
             $("#transfer_number_div").show(300);
+            $("#transfer_channel_div").show(300);
             $("#pay_price").prop('required', true);
             $("#cash_price").prop('required', false);
             $("#transfer_price").prop('required', false);
-            $("#transfer_number").prop('required', true);
         }else{
             $("#cash_price_div").hide(300);
             $("#transfer_price_div").hide(300);
             $("#transfer_number_div").hide(300);
+            $("#transfer_channel_div").hide(300);
             $("#pay_price").prop('required', true);
             $("#cash_price").prop('required', false);
             $("#transfer_price").prop('required', false);
-            $("#transfer_number").prop('required', false);
         }
     });
 

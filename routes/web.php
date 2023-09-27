@@ -44,6 +44,7 @@ use App\Http\Controllers\Rpg11Controller;
 use App\Http\Controllers\Rpg12Controller;
 use App\Http\Controllers\Rpg13Controller;
 use App\Http\Controllers\Rpg14Controller;
+use App\Http\Controllers\Rpg15Controller;
 use App\Http\Controllers\LeaveDayController;
 use App\Http\Controllers\RestockController;
 use Illuminate\Support\Facades\Storage;
@@ -412,6 +413,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/rpg/rpg13', [Rpg13Controller::class, 'rpg13'])->name('rpg13');
     Route::get('/rpg/rpg14', [Rpg14Controller::class, 'rpg14'])->name('rpg14');
     Route::get('/rpg/rpg14/detail/{date}/{source_code}', [Rpg14Controller::class, 'detail'])->middleware(['auth'])->name('rpg14.detail');
+    Route::get('/rpg/rpg15', [Rpg15Controller::class, 'rpg15'])->name('rpg15');
 
     Route::get('image', function()
     {

@@ -150,6 +150,7 @@ class SaleDataController extends Controller
             $sale->cash_price = $request->cash_price;
             $sale->transfer_price = $request->transfer_price;
             $sale->transfer_number = $request->transfer_number;
+            $sale->transfer_channel = $request->transfer_channel;
         }
         $sale->pay_method = $request->pay_method;
         $sale->total = $request->total;
@@ -591,10 +592,12 @@ class SaleDataController extends Controller
             $sale->cash_price = $request->cash_price;
             $sale->transfer_price = $request->transfer_price;
             $sale->transfer_number = $request->transfer_number;
+            $sale->transfer_channel = $request->transfer_channel;
         }else{
             $sale->cash_price = null;
             $sale->transfer_price = null;
             $sale->transfer_number = null;
+            $sale->transfer_channel = null;
         }
         $sale->pay_method = $request->pay_method;
         $sale->total = $request->total;

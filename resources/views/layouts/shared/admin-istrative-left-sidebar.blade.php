@@ -362,6 +362,9 @@
                             <li>
                                 <a href="{{ route('rpg11') }}"  class="{{ request()->is('rpg11') ? 'active' : '' }}">年度營收報表</a>
                             </li>
+                            <li>
+                                <a href="{{ route('rpg15') }}"  class="{{ request()->is('rpg15') ? 'active' : '' }}">專員各單量統計</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

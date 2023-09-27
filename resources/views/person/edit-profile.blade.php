@@ -60,6 +60,11 @@
                         <input type="date" class="form-control" data-toggle="flatpicker" name="entry_date" value="{{ $user->entry_date }}" readonly>
                     </div>
 
+                    {{-- <div class="mb-3">
+                        <label class="form-label">特休天數<span class="text-danger"></span></label>
+                        <input type="text" class="form-control" name="name" value="0">
+                    </div> --}}
+
                     <div class="mb-3">
                         <label for="project-priority" class="form-label">分館<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="job_id" @if(isset($user->branch_data))   value="{{ $user->branch_data->name }}" @endif readonly>
