@@ -339,7 +339,7 @@
                         </div>
                         <div class="mb-3 col-md-4" id="transfer_channel_div">
                             <label for="pay_id" class="form-label">匯款管道<span class="text-danger">*</span></label>
-                            <select class="form-select" name="transfer_channel" required>
+                            <select class="form-select" name="transfer_channel">
                                 <option value="" selected>請選擇</option>
                                 <option value="銀行轉帳" @if($data->transfer_channel == '銀行轉帳') selected @endif>銀行轉帳</option>
                                 <option value="Line Pay" @if($data->transfer_channel == 'Line Pay') selected @endif>Line Pay</option>
