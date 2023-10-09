@@ -143,6 +143,21 @@
                 </li>
 
                 <li>
+                    <a href="#rpg" data-bs-toggle="collapse">
+                        <i data-feather="file-text"></i>
+                        <span> 報表管理 </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="rpg">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('preson.sale_statistics') }}"  class="{{ request()->is('preson.sale_statistics') ? 'active' : '' }}">專員各單量統計</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
                     <a href="#person" data-bs-toggle="collapse">
                         <i data-feather="user"></i>
                         <span> 個人管理 </span>

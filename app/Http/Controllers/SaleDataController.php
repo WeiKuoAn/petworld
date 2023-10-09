@@ -802,7 +802,7 @@ class SaleDataController extends Controller
                     $sales = $sales->where('pay_id', $pay_id);
                 }
             }
-            $sales = $sales->orderby('sale_date', 'desc')->get();
+            $sales = $sales->orderby('sale_date', 'desc')->orderby('user_id','desc')->orderby('sale_on', 'desc')->get();
         }else{
             $after_date='';
             $before_date ='';

@@ -218,6 +218,9 @@
                             <li>
                                 <a href="{{ route('rpg09') }}"  class="{{ request()->is('rpg09') ? 'active' : '' }}">每月營收報表</a>
                             </li>
+                            <li>
+                                <a href="{{ route('rpg15') }}"  class="{{ request()->is('rpg15') ? 'active' : '' }}">專員各單量統計</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

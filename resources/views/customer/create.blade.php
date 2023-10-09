@@ -69,7 +69,7 @@
                                 <label class="form-label">地址<span class="text-danger">*</span></label>
                                 <div id="twzipcode" ></div>
                                 <div class="mb-3 mt-1">
-                                    <input type="text" class="form-control" name="address" placeholder="輸入地址" required>
+                                    <input type="text" class="form-control" name="address" placeholder="輸入地址">
                                 </div>
                            </div>
                            <div class="mb-3 mt-3">

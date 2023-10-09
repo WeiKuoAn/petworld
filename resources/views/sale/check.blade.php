@@ -73,10 +73,6 @@
                             <label for="sale_date" class="form-label">日期<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="sale_date" name="sale_date" value="{{ $data->sale_date }}" required readonly>
                         </div>
-                        <div class="mb-3 col-md-4">
-                            <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" value="{{ $data->user_name->name }}" readonly>
-                        </div>
                         <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
                             <select id="type" class="form-select" name="customer_id" disabled >
@@ -86,10 +82,11 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3 col-md-4 not_final_show not_memorial_show">
+                        <div class="mb-3 col-md-4  not_memorial_show">
                             <label for="pet_name" class="form-label">寵物名稱<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pet_name" name="pet_name" value="{{ $data->pet_name }}" readonly>
                         </div>
+                        
                         <div class="mb-3 col-md-4 not_final_show not_memorial_show">
                             <label for="kg" class="form-label">公斤數<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="kg" name="kg" value="{{ $data->kg }}" readonly>
@@ -133,6 +130,10 @@
                         <div class="mb-3 col-md-4 not_memorial_show" id="final_price">
                             <label for="plan_price" class="form-label">尾款價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number"  name="final_price" value="{{ $data->pay_price }}" readonly >
+                        </div>
+                        <div class="mb-3 col-md-4">
+                            <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="user_id" name="user_id" value="{{ $data->user_name->name }}" readonly>
                         </div>
                     </div>
                 </div>

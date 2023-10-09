@@ -111,10 +111,10 @@
                                 <a href="{{ route('rpg07') }}"  class="{{ request()->is('rpg07') ? 'active' : '' }}">團火查詢</a>
                             </li>
                             <li>
-                                <a href="{{ route('rpg10') }}"  class="{{ request()->is('rpg10') ? 'active' : '' }}">專員金紙抽成</a>
+                                <a href="{{ route('rpg10') }}"  class="{{ request()->is('rpg10') ? 'active' : '' }}">專員金紙獎金</a>
                             </li>
                             <li>
-                                <a href="{{ route('rpg12') }}"  class="{{ request()->is('rpg12') ? 'active' : '' }}">廠商傭金抽成</a>
+                                <a href="{{ route('rpg12') }}"  class="{{ request()->is('rpg12') ? 'active' : '' }}">廠商佣金抽成</a>
                             </li>
                             <li>
                                 <a href="{{ route('rpg05') }}"  class="{{ request()->is('rpg05') ? 'active' : '' }}">日營收報表</a>
@@ -124,6 +124,9 @@
                             </li>
                             <li>
                                 <a href="{{ route('rpg11') }}"  class="{{ request()->is('rpg11') ? 'active' : '' }}">年度營收報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg15') }}"  class="{{ request()->is('rpg15') ? 'active' : '' }}">專員各單量統計</a>
                             </li>
                         </ul>
                     </div>

@@ -67,7 +67,7 @@
                                     <div data-role="county" data-value="{{ $customer->county }}"></div>
                                 </div>
                                 <div class="mb-3 mt-1">
-                                    <input type="text" class="form-control" name="address" placeholder="輸入地址" value="{{ $customer->address }}" required>
+                                    <input type="text" class="form-control" name="address" placeholder="輸入地址" value="{{ $customer->address }}">
                                 </div>
                            </div>
 

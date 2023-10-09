@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "廠商傭金抽成"])
+@extends('layouts.vertical', ["page_title"=> "廠商佣金抽成"])
 
 @section('content')
 <!-- Start Content-->
@@ -12,10 +12,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">報表管理</a></li>
-                        <li class="breadcrumb-item active">廠商傭金抽成</li>
+                        <li class="breadcrumb-item active">廠商佣金抽成</li>
                     </ol>
                 </div>
-                <h4 class="page-title">廠商傭金抽成</h4>
+                <h4 class="page-title">廠商佣金抽成</h4>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-auto">
                             <div class="text-lg-end my-1 my-lg-0">
-                                <h3><span class="text-danger">共計：{{ number_format($sums['count']) }}單，傭金共{{ number_format($sums['commission']) }}元</span></h3>
+                                <h3><span class="text-danger">共計：{{ number_format($sums['count']) }}單，佣金共{{ number_format($sums['commission']) }}元</span></h3>
                             </div>
                         </div><!-- end col-->
                     </div> <!-- end row -->
@@ -76,7 +76,7 @@
                                     <th>客戶名稱</th>
                                     <th>方案</th>
                                     <th>方案價格</th>
-                                    <th>傭金</th>
+                                    <th>佣金</th>
                                 </tr>
                             </thead>
                                 <tbody>
@@ -98,7 +98,7 @@
                                             <td colspan="3"></td>
                                             <td align="center">共計：{{ number_format($company_data['count']) }}單</td>
                                             <td align="right">小計：{{ number_format($company_data['plan_amount']) }}元</td>
-                                            <td align="right">傭金小計：{{ number_format($company_data['commission_amount']) }}元</td>
+                                            <td align="right">佣金小計：{{ number_format($company_data['commission_amount']) }}元</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -106,7 +106,7 @@
                                     <td colspan="3"></td>
                                     <td align="center">總共：{{ $data['count_total'] }}份</td>
                                     <td align="right">總計：{{ number_format($data['plan_total']) }}元</td>
-                                    <td align="right">傭金總計：{{ number_format($data['commission_total']) }}元</td>
+                                    <td align="right">佣金總計：{{ number_format($data['commission_total']) }}元</td>
                                 </tr>
                         </table><br>
                     </div>
