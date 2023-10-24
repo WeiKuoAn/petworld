@@ -146,9 +146,9 @@
                                         <td>{{ number_format($data->price) }}</td>
                                         <td>{{ $data->comment }}</td>
                                         <td>
-                                            @if(isset($data->user_name))
+                                            {{-- @if(isset($data->user_name))
                                                 {{ $data->user_name->name }}
-                                            @endif
+                                            @endif --}}
                                         </td>
                                         <td>
                                             <a href="{{ route('pay.check',$data->id) }}">

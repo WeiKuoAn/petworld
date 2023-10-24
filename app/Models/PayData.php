@@ -28,7 +28,7 @@ class PayData extends Model
     }
 
     public function pay_items(){
-        return $this->hasMany(PayItem::class ,'pay_data_id','id');
+        return $this->hasMany('App\Models\PayItem' ,'pay_data_id','id');
     }
 
 }
