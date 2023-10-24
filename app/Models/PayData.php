@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PayItem;
 
 class PayData extends Model
 {
@@ -27,7 +28,7 @@ class PayData extends Model
     }
 
     public function pay_items(){
-        return $this->hasMany('App\Models\PayItem','pay_data_id','id');
+        return $this->hasMany(PayItem::class ,'pay_data_id','id');
     }
 
 }
