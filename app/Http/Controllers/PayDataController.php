@@ -74,6 +74,7 @@ class PayDataController extends Controller
             }
 
             $items = $items->get();
+            // dd($items);
             
             // dd($items);
             $user = $request->user;

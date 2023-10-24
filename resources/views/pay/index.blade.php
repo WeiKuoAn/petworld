@@ -123,17 +123,18 @@
                                         <td>{{ $data->pay_date }}</td>
                                         <td>{{ $data->pay_on }}</td>
                                         <td>
-                                            @if(isset($data->pay_id))
+                                            {{-- @if(isset($data->pay_id))
                                                 {{ $data->pay_name->name }}
-                                            @else
-                                                @if(isset($data->pay_items))
-                                                    @foreach ($data->pay_items as $item)
+                                            @else --}}
+                                                {{-- @if(isset($data->pay_items)) --}}
+                                                {{-- {{ $data->pay_items }} --}}
+                                                    {{-- @foreach ($data->pay_items as $item)
                                                         @if(isset($item->pay_id))
-                                                        {{ $item->pay_name->name }}<br>
+                                                            {{ $item->pay_name->name }}<br>
                                                         @endif
                                                     @endforeach
                                                 @endif
-                                            @endif
+                                            @endif --}}
                                         </td>
                                         <td>
                                             @if(isset($data->pay_items))
@@ -144,11 +145,11 @@
                                         </td>
                                         <td>{{ number_format($data->price) }}</td>
                                         <td>{{ $data->comment }}</td>
-                                        {{-- <td>
+                                        <td>
                                             @if(isset($data->user_name))
                                                 {{ $data->user_name->name }}
                                             @endif
-                                        </td> --}}
+                                        </td>
                                         <td>
                                             <a href="{{ route('pay.check',$data->id) }}">
                                                 <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
