@@ -144,11 +144,11 @@
                                         </td>
                                         <td>{{ number_format($data->price) }}</td>
                                         <td>{{ $data->comment }}</td>
-                                        <td>
+                                        {{-- <td>
                                             @if(isset($data->user_name))
                                                 {{ $data->user_name->name }}
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <a href="{{ route('pay.check',$data->id) }}">
                                                 <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
@@ -171,7 +171,7 @@
                             </table>
                             <br>
                             <ul class="pagination pagination-rounded justify-content-end mb-0">
-                                {{ $datas->links('vendor.pagination.bootstrap-4') }}
+                                {{-- {{ $datas->links('vendor.pagination.bootstrap-4') }} --}}
                             </ul>
                         </div>
                     </div>
