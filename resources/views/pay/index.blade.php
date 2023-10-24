@@ -144,7 +144,11 @@
                                         </td>
                                         <td>{{ number_format($data->price) }}</td>
                                         <td>{{ $data->comment }}</td>
-                                        <td>{{ $data->user_name->name }}</td>
+                                        <td>
+                                            @if(isset($data->user_name))
+                                                {{ $data->user_name->name }}
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('pay.check',$data->id) }}">
                                                 <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
