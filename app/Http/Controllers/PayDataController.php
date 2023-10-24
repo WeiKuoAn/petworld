@@ -79,24 +79,24 @@ class PayDataController extends Controller
             // dd($items);
             $user = $request->user;
             // dd($user);
-            if ($user != "null") {
-                if (isset($user)) {
-                    $datas =  $datas->where('user_id', $user);
-                    $sum_pay  = $sum_pay->where('user_id', $user);
-                } else {
-                    $datas = $datas;
-                    $sum_pay  = $sum_pay;
-                }
-            }else{
-                if(count($items) > 0)
-                {
-                    foreach($items as $item)
-                    {
-                        $pay_data_ids[] = $item->pay_data_id;
-                    }
-                    $datas =  $datas->orWhereIn('id', $pay_data_ids);
-                }
-            }
+            // if ($user != "null") {
+            //     if (isset($user)) {
+            //         $datas =  $datas->where('user_id', $user);
+            //         $sum_pay  = $sum_pay->where('user_id', $user);
+            //     } else {
+            //         $datas = $datas;
+            //         $sum_pay  = $sum_pay;
+            //     }
+            // }else{
+            //     if(count($items) > 0)
+            //     {
+            //         foreach($items as $item)
+            //         {
+            //             $pay_data_ids[] = $item->pay_data_id;
+            //         }
+            //         $datas =  $datas->orWhereIn('id', $pay_data_ids);
+            //     }
+            // }
             
             $sum_pay  = $sum_pay->sum('price');
             $datas = $datas->orderby('pay_date','desc')->paginate(50);
@@ -109,8 +109,7 @@ class PayDataController extends Controller
         // $condition = [];
         // dd($datas);
         // dd($condition);
-        return view('pay.index')->with('datas',$datas)->with('request',$request)->with('pays',$pays)->with('users',$users)->with('condition',$condition)
-                                   ->with('sum_pay',$sum_pay);
+        return view('pay.index')->with('datas',$datas)->with('request',$request)->with('pays',$pays)->with('users',$users)->with('condition',$condition);
     }
 
     public function create(){
