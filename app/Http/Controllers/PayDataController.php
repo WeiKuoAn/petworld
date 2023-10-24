@@ -97,18 +97,17 @@ class PayDataController extends Controller
                 }
             }
             
-            
-
-
-            
             $sum_pay  = $sum_pay->sum('price');
             $datas = $datas->orderby('pay_date','desc')->paginate(50);
             $condition = $request->all();
         }else{
             $datas = PayData::orderby('pay_date','desc')->paginate(50);
             $sum_pay  = PayData::sum('price');
-            $condition = '';
+            $condition = [];
         }
+
+        // dd($datas);
+        // dd($condition);
         return view('pay.index')->with('datas',$datas)->with('request',$request)->with('pays',$pays)->with('users',$users)->with('condition',$condition)
                                    ->with('sum_pay',$sum_pay);
     }
