@@ -29,51 +29,51 @@ class PayDataController extends Controller
                 $sum_pay = PayData::where('status', 0);
             }
 
-            // item支出日期
-            $pay_after_date = $request->pay_after_date;
-            if ($pay_after_date) {
-                $items =  $items->where('pay_date', '>=', $pay_after_date);
-            }
-            $pay_before_date = $request->pay_before_date;
-            if ($pay_before_date) {
-                $items =  $items->where('pay_date', '<=', $pay_before_date);
-            }
-            if($pay_after_date && $pay_before_date){
-                $items =  $items->where('pay_date', '>=', $pay_after_date)->where('pay_date', '<=', $pay_before_date);
-            }
+            // // item支出日期
+            // $pay_after_date = $request->pay_after_date;
+            // if ($pay_after_date) {
+            //     $items =  $items->where('pay_date', '>=', $pay_after_date);
+            // }
+            // $pay_before_date = $request->pay_before_date;
+            // if ($pay_before_date) {
+            //     $items =  $items->where('pay_date', '<=', $pay_before_date);
+            // }
+            // if($pay_after_date && $pay_before_date){
+            //     $items =  $items->where('pay_date', '>=', $pay_after_date)->where('pay_date', '<=', $pay_before_date);
+            // }
 
             
 
             // key單日期
-            $after_date = $request->after_date;
-            if ($after_date) {
-                $datas =  $datas->where('pay_date', '>=', $after_date);
-                $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date);
-            }
-            $before_date = $request->before_date;
-            if ($before_date) {
-                $datas =  $datas->where('pay_date', '<=', $before_date);
-                $sum_pay  = $sum_pay->where('pay_date', '<=', $before_date);
-            }
-            if($after_date && $before_date){
-                $datas =  $datas->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
-                $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
-            }
+            // $after_date = $request->after_date;
+            // if ($after_date) {
+            //     $datas =  $datas->where('pay_date', '>=', $after_date);
+            //     $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date);
+            // }
+            // $before_date = $request->before_date;
+            // if ($before_date) {
+            //     $datas =  $datas->where('pay_date', '<=', $before_date);
+            //     $sum_pay  = $sum_pay->where('pay_date', '<=', $before_date);
+            // }
+            // if($after_date && $before_date){
+            //     $datas =  $datas->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
+            //     $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
+            // }
 
-            $pay = $request->pay;
-            if ($pay != "null") {
-                if (isset($pay)) {
-                    $items = $items->where('pay_id',$pay);
-                    $datas =  $datas->where('pay_id', $pay);
-                    $sum_pay  = $sum_pay->where('pay_id', $pay);
-                } else {
-                    // $datas = $datas;
-                    $sum_pay  = $sum_pay;
-                    $items = $items;
-                }
-            }
+            // $pay = $request->pay;
+            // if ($pay != "null") {
+            //     if (isset($pay)) {
+            //         $items = $items->where('pay_id',$pay);
+            //         $datas =  $datas->where('pay_id', $pay);
+            //         $sum_pay  = $sum_pay->where('pay_id', $pay);
+            //     } else {
+            //         // $datas = $datas;
+            //         $sum_pay  = $sum_pay;
+            //         $items = $items;
+            //     }
+            // }
 
-            $items = $items->get();
+            // $items = $items->get();
             // dd($items);
             
             // dd($items);
@@ -99,12 +99,12 @@ class PayDataController extends Controller
             // }
             
             $sum_pay  = $sum_pay->sum('price');
-            $datas = $datas->orderby('pay_date','desc')->paginate(50);
+            $datas = $datas->orderby('pay_date','desc')->get();
             $condition = $request->all();
         }else{
-            $datas = PayData::orderby('pay_date','desc')->paginate(50);
+            $datas = PayData::orderby('pay_date','desc')->get();
             $sum_pay  = PayData::sum('price');
-            $condition = [];
+            $condition = '';
         }
         // $condition = [];
         // dd($datas);
