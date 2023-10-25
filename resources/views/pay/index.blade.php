@@ -107,12 +107,13 @@
                                         <th>支出總價格</th>
                                         <th width="15%">備註</th>
                                         <th width="10%">key單人員</th>
-                                        @if($request->status == '1')
+                                        @if($status == '1')
                                             <th>查看</th>
                                         @else
                                             <th>審核</th>
                                         @endif
-                                        @if($request->status!= null || $request->status == '1')
+                                        {{-- {{ dd($status) }} --}}
+                                        @if($status == 1)
                                             <th width="10%">動作</th>
                                         @endif
                                     </tr>
@@ -121,44 +122,37 @@
                                 {{-- {{ dd($datas) }} --}}
                                 @foreach ($datas as $key=>$data)
                                     <tr>
-                                        {{-- {{ dd($data->pay_items) }} --}}
-                                        <td>{{ $data->pay_date }}</td>
-                                        <td>{{ $data->pay_on }}</td>
+                                        <td>{{ $data['pay_date'] }}</td>
+                                        <td>{{ $data['pay_on'] }}</td>
                                         <td>
-                                            @if(isset($data->pay_id))
-                                                {{ $data->pay_name->name }}
-                                            @else
-                                                @if(count($data->pay_items)>0)
-                                                    @foreach ($data->pay_items as $item)
-                                                        @if(isset($item->pay_id))
-                                                            {{ $item->pay_name->name }}<br>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if(isset($data->pay_items))
-                                                @foreach ($data->pay_items as $item)
-                                                    <b>{{ $item->invoice_number }}</b> - ${{ number_format($item->price) }}<br>
+                                            @if(isset($data['pay_items']))
+                                                @foreach ($data['pay_items'] as $item)
+                                                    {{ $item['pay_name']['name'] }}<br>
                                                 @endforeach
                                             @endif
                                         </td>
-                                        <td>{{ number_format($data->price) }}</td>
-                                        <td>{{ $data->comment }}</td>
-                                        <td>{{ $data->user_id }}</td>
                                         <td>
-                                            <a href="{{ route('pay.check',$data->id) }}">
+                                            @if(isset($data['pay_items']))
+                                                @foreach ($data['pay_items'] as $item)
+                                                    <b>{{ $item['invoice_number'] }}</b> - ${{ number_format($item['price']) }}<br>
+                                                @endforeach
+                                            @endif
+                                        </td>
+                                        <td>{{ number_format($data['price']) }}</td>
+                                        <td>{{ $data['comment'] }}</td>
+                                        <td>{{ $data['user_name'] }}</td>
+                                        <td>
+                                            <a href="{{ route('pay.check',$data['id']) }}">
                                                 <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
                                             </a>
                                         </td>
-                                        @if($data->status == '1')
+                                        @if($data['status'] == '1')
                                         <td>
                                             <div class="btn-group dropdown">
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="{{ route('pay.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
-                                                    <a class="dropdown-item" href="{{ route('pay.del',$data->id) }}"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a>
+                                                    <a class="dropdown-item" href="{{ route('pay.edit',$data['id']) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                    <a class="dropdown-item" href="{{ route('pay.del',$data['id']) }}"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -169,7 +163,7 @@
                             </table>
                             <br>
                             <ul class="pagination pagination-rounded justify-content-end mb-0">
-                               
+                                {{ $datas->appends($condition)->links('vendor.pagination.bootstrap-4') }}
                             </ul>
                         </div>
                     </div>

@@ -12,6 +12,7 @@ class PayData extends Model
 
     protected $fillable = [
         'pay_id',
+        'pay_on',
         'user_id',
         'pay_date',
         'price',
@@ -28,7 +29,7 @@ class PayData extends Model
     }
 
     public function pay_items(){
-        return $this->hasMany('App\Models\PayItem' ,'pay_data_id','id');
+        return $this->hasMany(PayItem::class, 'pay_data_id', 'id');
     }
 
 }
