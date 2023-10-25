@@ -118,6 +118,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                {{ dd($datas) }}
                                 @foreach ($datas as $key=>$data)
                                     <tr>
                                         {{ dd($data->pay_items) }}
