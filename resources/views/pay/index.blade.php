@@ -120,6 +120,7 @@
                                 <tbody>
                                 @foreach ($datas as $key=>$data)
                                     <tr>
+                                        {{ dd($data->pay_items) }}
                                         <td>{{ $data->pay_date }}</td>
                                         <td>{{ $data->pay_on }}</td>
                                         <td>

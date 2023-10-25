@@ -21,12 +21,8 @@ class PayDataController extends Controller
             $status = $request->status;
             if ($status) {
                 $datas = PayData::where('status',  $status);
-                $items = PayItem::where('status',  $status);
-                $sum_pay = PayData::where('status', $status);
             }else{
                 $datas = PayData::where('status', 0);
-                $items = PayItem::where('status',  0);
-                $sum_pay = PayData::where('status', 0);
             }
 
             // // item支出日期
@@ -98,7 +94,6 @@ class PayDataController extends Controller
             //     }
             // }
             
-            $sum_pay  = $sum_pay->sum('price');
             $datas = $datas->orderby('pay_date','desc')->get();
             $condition = $request->all();
         }else{
