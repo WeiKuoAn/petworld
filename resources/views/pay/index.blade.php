@@ -118,20 +118,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {{ dd($datas) }}
+                                {{-- {{ dd($datas) }} --}}
                                 @foreach ($datas as $key=>$data)
                                     <tr>
-                                        {{ dd($data->pay_items) }}
+                                        {{-- {{ dd($data->pay_items) }} --}}
                                         <td>{{ $data->pay_date }}</td>
                                         <td>{{ $data->pay_on }}</td>
                                         <td>
                                             @if(isset($data->pay_id))
                                                 {{ $data->pay_name->name }}
                                             @else
-                                                @if(isset($data->pay_items))
+                                                @if(count($data->pay_items)>0)
                                                     @foreach ($data->pay_items as $item)
                                                         @if(isset($item->pay_id))
-                                                        {{ $item->pay_name->name }}<br>
+                                                            {{ $item->pay_name->name }}<br>
                                                         @endif
                                                     @endforeach
                                                 @endif

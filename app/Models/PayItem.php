@@ -29,7 +29,7 @@ class PayItem extends Model
     }
 
     public function pay_name(){
-        return $this->hasMany(Pay::class, 'id', 'pay_id');
+        return $this->hasOne('App\Models\Pay','id','pay_id');
     }
     
 
