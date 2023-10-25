@@ -109,6 +109,7 @@ class PayDataController extends Controller
             $sum_pay  = PayData::sum('price');
             $condition = '';
         }
+        dd($datas);
         return view('pay.index')->with('datas',$datas)->with('request',$request)->with('pays',$pays)->with('users',$users)->with('condition',$condition)
                                    ->with('sum_pay',$sum_pay);
     }
