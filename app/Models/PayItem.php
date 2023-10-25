@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pay;
 
 class PayItem extends Model
 {
@@ -12,13 +13,14 @@ class PayItem extends Model
     protected $table = "pay_item";
 
     protected $fillable = [
-        'id',
         'pay_data_id',
         'pay_date',
         'invoice_number',
         'price',
         'invoice_type',
         'vender_id',
+        'comment',
+        'status'
     ];
 
     public function vender_data()
@@ -27,7 +29,7 @@ class PayItem extends Model
     }
 
     public function pay_name(){
-        return $this->hasOne('App\Models\Pay','id','pay_id');
+        return $this->hasMany(Pay::class, 'id', 'pay_id');
     }
     
 
