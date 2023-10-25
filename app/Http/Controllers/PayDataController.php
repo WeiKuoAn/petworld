@@ -33,6 +33,7 @@ class PayDataController extends Controller
         }else{
             $pay_datas = PayData::orderby('pay_date','desc')->get();
             $sum_pay  = PayData::sum('price');
+            $status = 0;
             $condition = [];
         }
 
