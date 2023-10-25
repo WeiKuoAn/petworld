@@ -107,13 +107,13 @@
                                         <th>支出總價格</th>
                                         <th width="15%">備註</th>
                                         <th width="10%">key單人員</th>
-                                        @if($status == '1')
+                                        @if($status == null)
                                             <th>查看</th>
                                         @else
                                             <th>審核</th>
                                         @endif
                                         {{-- {{ dd($status) }} --}}
-                                        @if($status == 1)
+                                        @if($status != null)
                                             <th width="10%">動作</th>
                                         @endif
                                     </tr>
