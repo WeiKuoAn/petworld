@@ -97,10 +97,6 @@ class PayDataController extends Controller
                 }
             }
             
-            
-
-
-            
             $sum_pay  = $sum_pay->sum('price');
             $datas = $datas->orderby('pay_date','desc')->paginate(50);
             $condition = $request->all();
