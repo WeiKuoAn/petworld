@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class PayDataController extends Controller
+class PayDataControllerCopy2 extends Controller
 {
     public function index(Request $request)
     {

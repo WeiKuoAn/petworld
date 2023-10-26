@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class PayDataController extends Controller
+class PayDataControllerCopy1 extends Controller
 {
     public function index(Request $request)
     {
