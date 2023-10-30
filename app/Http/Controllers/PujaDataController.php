@@ -78,7 +78,7 @@ class PujaDataController extends Controller
             }
             $cust_name = $request->cust_name;
             if ($cust_name) {
-                $cust_name = $request->cust_name.'%';
+                $cust_name = '%'.$request->cust_name.'%';
                 $customers = Customer::where('name', 'like' ,$cust_name)->get();
                 foreach($customers as $customer) {
                     $customer_ids[] = $customer->id;
@@ -89,6 +89,13 @@ class PujaDataController extends Controller
                     $datas = $datas;
                 }
             }
+
+            $pet_name = $request->pet_name;
+            if($pet_name){
+                $pet_name = $request->pet_name.'%';
+                $datas = $datas::where('pet_name', 'like' ,$pet_name);
+            }
+
             $puja_id = $request->puja_id;
 
             if ($puja_id != "null") {

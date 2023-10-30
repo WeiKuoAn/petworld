@@ -7,6 +7,11 @@
     @include('layouts.shared/head-css', ["mode" => $mode ?? '', "demo" => $demo ?? ''])
 
 </head>
+<style>
+    body.authentication-bg-pattern {
+        background-image: url("../../../images/bg2.jpg");
+    }
+</style>
 
 <body class="loading authentication-bg authentication-bg-pattern">
 

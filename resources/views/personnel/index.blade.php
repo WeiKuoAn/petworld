@@ -48,9 +48,9 @@
                                     <th>入職時間</th>
                                     <th>電話</th>
                                     <th>年資</th>
-                                    {{-- <th>餘額</th>
+                                    {{-- <th>餘額</th> --}}
                                     <th>特休天數</th>
-                                    <th>剩餘休假天數（含特休）</th> --}}
+                                    {{-- <th>剩餘休假天數（含特休）</th> --}}
                                     <th>動作</th>
                                 </tr>
                             </thead>
@@ -73,9 +73,9 @@
                                                 {{ number_format($datas[$user->id]['balance']) }}
                                             @endif
                                             元
-                                        </td>
+                                        </td> --}}
                                         <td>{{ $datas[$user->id]['specil_vacation'] }}天</td>
-                                        <td>{{ $datas[$user->id]['remain_specil_vacation'] }}天</td> --}}
+                                        {{-- <td>{{ $datas[$user->id]['remain_specil_vacation'] }}天</td> --}}
                                         <td>
                                             <div class="btn-group dropdown">
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>

@@ -40,6 +40,10 @@
                                     <label for="before_date" class="form-label">顧客姓名</label>
                                     <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" name="cust_name">
                                 </div>
+                                <div class="me-3">
+                                    <label for="before_date" class="form-label">寶貝名</label>
+                                    <input type="search" class="form-control my-1 my-lg-0" id="pet_name" name="pet_name">
+                                </div>
                                 <div class="me-sm-3">
                                     <label class="form-label">年份</label>
                                     <select class="form-select my-1 my-lg-0" id="status-select" name="year" onchange="this.form.submit()">

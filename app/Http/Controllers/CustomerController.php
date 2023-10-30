@@ -58,7 +58,7 @@ class CustomerController extends Controller
         if ($request) {
             $name = $request->name;
             if (!empty($name)) {
-                $name = $request->name . '%';
+                $name = '%'.$request->name . '%';
                 $customers = Customer::where('name', 'like', $name)->paginate(30);
             }
             $mobile = $request->mobile;

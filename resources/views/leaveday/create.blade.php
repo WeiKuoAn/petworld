@@ -41,8 +41,16 @@
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">姓名<span class="text-danger">*</span></label>
-                                   <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}" readonly>
-                               </div>
+                                   @if(Auth::user()->job_id == 2)
+                                        <select class="form-control" data-toggle="select" data-width="100%" name="auth_name" required>
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                   @else
+                                        <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}" readonly>
+                                   @endif
+                                </div>
                            </div>
                         </div>
                     </div>
@@ -50,7 +58,7 @@
                         <div class="col-xl-12">
                             <div class="mb-3">
                                 <label for="project-priority" class="form-label">假別<span class="text-danger">*</span></label>
-                                <select class="form-control" data-toggle="select" data-width="100%" name="leave_day">
+                                <select class="form-control" data-toggle="select" data-width="100%" name="leave_day" required>
                                     <option value="" selected>請選擇</option>
                                     <option value="special">特休</option>
                                     <option value="marriage">婚假</option>
@@ -73,7 +81,7 @@
                         <div class="col-xl-6">
                             <div class="mb-3">
                                 <label class="form-label">請假起始時間<span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" name="start_date" placeholder="起始日期">
+                                <input type="date" class="form-control" name="start_date" placeholder="起始日期" required>
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -91,7 +99,7 @@
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">請假結束時間<span class="text-danger">*</span></label>
-                                   <input type="date" class="form-control"  name="end_date" placeholder="結束時間">
+                                   <input type="date" class="form-control"  name="end_date" placeholder="結束時間" required>
                                </div>
                            </div>
                         </div>
@@ -111,7 +119,7 @@
                         <div class="col-xl-12">
                             <div class="mb-3">
                                 <label for="project-priority" class="form-label">請假單位<span class="text-danger">*</span></label>
-                                <select class="form-control" data-toggle="select" data-width="100%" name="unit">
+                                <select class="form-control" data-toggle="select" data-width="100%" name="unit" required>
                                     <option value="day">天</option>
                                     <option value="hour">小時</option>
                                 </select>
@@ -119,7 +127,7 @@
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">總請假數量<span class="text-danger">*</span></label>
-                                   <input type="text" class="form-control" name="total" value="" >
+                                   <input type="text" class="form-control" name="total" value="" required>
                                </div>
                            </div>
                         </div>

@@ -70,10 +70,16 @@
                                         <option value="9" @if($request->state == '9') selected @endif>已核准</option>
                                     </select>
                                 </div>
-                                <div class="me-3 mt-3">
+                                <div class="me-3 mt-4">
                                     <button type="submit" class="btn btn-success waves-effect waves-light me-1"><i class="fe-search me-1"></i>搜尋</button>
                                 </div>
+                                <div class="col-auto text-sm-end mt-4">
+                                    <a href="{{ route('leave_day.create') }}">
+                                        <button type="button" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i>新增專員假單</button>
+                                    </a>
+                                </div>
                             </form>
+                            
                         </div>
                     </div> <!-- end row -->
                 </div>

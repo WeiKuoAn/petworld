@@ -68,20 +68,34 @@ class LeaveDayController extends Controller
 
     public function create()
     {
-        return view('leaveday.create');
+        $users = User::where('status','0')->get();
+        return view('leaveday.create')->with('users', $users);
     }
 
     public function store(Request $request)
     {
+        // dd($request->all());
         // dd($request->start_date .' '. $request->start_time.':00');
         $job = Job::where('id',Auth::user()->job_id)->first();
         $data = new LeaveDay;
-        $data->user_id = Auth::user()->id;
-        // dd($job);
-        if(isset($job->director_id)){
-            $data->director_id = $job->director_id;
+        
+        if(Auth::user()->job_id == 2)
+        {
+            $data->user_id = $request->auth_name;
+            if(isset($job->director_id)){
+                $data->director_id = $job->director_id;
+            }else{
+                $data->director_id = '1'; //主管直接顯示老闆
+            }
+            $data->state = 9;
         }else{
-            $data->director_id = '1'; //主管直接顯示老闆
+            $data->user_id = Auth::user()->id;
+            if(isset($job->director_id)){
+                $data->director_id = $job->director_id;
+            }else{
+                $data->director_id = '1'; //主管直接顯示老闆
+            }
+            $data->state = 1;
         }
         $data->leave_day = $request->leave_day;
         $data->start_datetime = $request->start_date .' '. $request->start_time;
@@ -89,7 +103,6 @@ class LeaveDayController extends Controller
         $data->unit = $request->unit;
         $data->total = $request->total;
         $data->comment = $request->comment;
-        $data->state = 1;
         $data->save();
 
 
@@ -99,10 +112,20 @@ class LeaveDayController extends Controller
         $item->check_day = Carbon::now()->locale('zh-tw')->format('Y-m-d');
         $item->check_user_id = Auth::user()->id;
         $item->created_at = Carbon::now()->locale('zh-tw');
-        $item->state = 1;
+        if(Auth::user()->job_id == 2)
+        {
+            $item->state = 9;
+        }else{
+            $item->state = 1;
+        }
         $item->save();
 
-        return redirect()->route('person.leave_days');
+        if(Auth::user()->job_id == 2)
+        {
+            return redirect()->route('personnel.leave_days');
+        }else{
+            return redirect()->route('person.leave_days');
+        }
     }
 
     public function show($id)
