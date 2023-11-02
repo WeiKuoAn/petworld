@@ -9,7 +9,7 @@
 </head>
 <style>
     body.authentication-bg-pattern {
-        background-image: url("../../../images/bg2.jpg");
+        background-image: url("../../../images/bg4.jpg");
     }
 </style>
 
