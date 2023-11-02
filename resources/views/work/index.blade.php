@@ -64,9 +64,9 @@
                                         <th>時間</th>
                                         <th>備註</th>
                                         <th>狀態</th>
-                                        @if(Auth::user()->level == 0)
+                                        {{-- @if(Auth::user()->level == 0) --}}
                                         <th>操作</th>
-                                        @endif
+                                        {{-- @endif --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,12 +90,12 @@
                                                 <b style="color:red;">補簽</b>
                                             @endif
                                         </td>
-                                        @if(Auth::user()->level == 0)
+                                        {{-- @if(Auth::user()->level == 0) --}}
                                         <td>
                                             <a href="{{ route('user.work.edit',$work->id) }}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                             <a href="{{ route('user.work.del',$work->id) }}" class="action-icon"> <i class="mdi mdi-trash-can-outline"></i></a>
                                         </td>
-                                        @endif
+                                        {{-- @endif --}}
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -139,12 +139,12 @@ class WorkController extends Controller
 
     public function showuserwork($workId)
     {
-        if (Auth::user()->level == '0') {
+        // if (Auth::user()->level == '0') {
             $work = Works::where('id', $workId)->first();
             return view('work.edit')->with(['work' => $work]);
-        } else {
-            return redirect()->route('dashboard');
-        }
+        // } else {
+        //     return redirect()->route('dashboard');
+        // }
     }
 
     public function edituserwork(Request $request, $workId)
