@@ -47,6 +47,7 @@ use App\Http\Controllers\Rpg14Controller;
 use App\Http\Controllers\Rpg15Controller;
 use App\Http\Controllers\Rpg16Controller;
 use App\Http\Controllers\Rpg17Controller;
+use App\Http\Controllers\Rpg18Controller;
 use App\Http\Controllers\LeaveDayController;
 use App\Http\Controllers\RestockController;
 use Illuminate\Support\Facades\Storage;
@@ -418,7 +419,10 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/rpg/rpg14/detail/{date}/{source_code}', [Rpg14Controller::class, 'detail'])->middleware(['auth'])->name('rpg14.detail');
     Route::get('/rpg/rpg15', [Rpg15Controller::class, 'rpg15'])->name('rpg15');
     Route::get('/rpg/rpg16', [Rpg16Controller::class, 'rpg16'])->name('rpg16');
+    Route::get('/rpg/rpg16/{month}/{prom_id}/detail', [Rpg16Controller::class, 'detail'])->name('rpg16.detail');
     Route::get('/rpg/rpg17', [Rpg17Controller::class, 'rpg17'])->name('rpg17');
+    Route::get('/rpg/rpg17/{month}/{prom_id}/detail', [Rpg17Controller::class, 'detail'])->name('rpg17.detail');
+    Route::get('/rpg/rpg18', [Rpg18Controller::class, 'rpg18'])->name('rpg18');
 
 
     Route::get('image', function()

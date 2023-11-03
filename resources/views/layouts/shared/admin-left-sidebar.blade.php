@@ -333,6 +333,9 @@
                                 <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
                             </li>
                             <li>
+                                <a href="{{ route('rpg17') }}"  class="{{ request()->is('rpg17') ? 'active' : '' }}">安葬服務報表</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">後續服務報表</a>
                             </li>
                             <li>
@@ -370,6 +373,9 @@
                             </li>
                             <li>
                                 <a href="{{ route('rpg15') }}"  class="{{ request()->is('rpg15') ? 'active' : '' }}">專員各單量統計</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg18') }}"  class="{{ request()->is('rpg18') ? 'active' : '' }}">法會收入統計</a>
                             </li>
                         </ul>
                     </div>

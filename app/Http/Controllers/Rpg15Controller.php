@@ -66,6 +66,6 @@ class Rpg15Controller extends Controller
 
         // dd($datas);
         
-        return view('Rpg15.index')->with('datas',$datas)->with('years',$years)->with('months',$months)->with('request',$request);
+        return view('rpg15.index')->with('datas',$datas)->with('years',$years)->with('months',$months)->with('request',$request);
     }
 }

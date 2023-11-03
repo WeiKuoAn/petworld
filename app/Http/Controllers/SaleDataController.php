@@ -892,7 +892,7 @@ class SaleDataController extends Controller
                 foreach ($sale->proms as $prom){
                     if ($prom->prom_type == 'A'){
                         if(isset($prom->prom_id)){
-                            $row['安葬方式'] = $prom->prom_name->name .'-'.number_format($prom->prom_total);
+                            $row['安葬方式'] .= ($row['安葬方式']=='' ? '' : "\r\n").$prom->prom_name->name .'-'.number_format($prom->prom_total);
                         }else{
                             $row['安葬方式'] = '無';
                         }
@@ -902,7 +902,7 @@ class SaleDataController extends Controller
                 foreach ($sale->proms as $prom){
                     if ($prom->prom_type == 'B'){
                         if(isset($prom->prom_id)){
-                            $row['後續處理'] = $prom->prom_name->name .'-'.number_format($prom->prom_total);
+                            $row['後續處理'] .= ($row['後續處理']=='' ? '' : "\r\n").$prom->prom_name->name .'-'.number_format($prom->prom_total);
                         }else{
                             $row['後續處理'] = '無';
                         }

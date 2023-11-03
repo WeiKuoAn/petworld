@@ -51,12 +51,14 @@ class Rpg16Controller extends Controller
                 $datas[$key]['proms'][$prom->id]['id'] = $prom->id;
                 $datas[$key]['proms'][$prom->id]['name'] = $prom->name;
                 $datas[$key]['proms'][$prom->id]['count'] = DB::table('sale_data')
-                                                                ->join('sale_prom','sale_prom.sale_id', '=' , 'sale_data.id')
-                                                                ->where('sale_date','>=',$month['start_date'])->where('sale_date','<=',$month['end_date'])
+                                                                ->leftjoin('sale_prom','sale_prom.sale_id', '=' , 'sale_data.id')
+                                                                ->whereNot('sale_prom.prom_id','NULL')
+                                                                ->where('sale_data.sale_date','>=',$month['start_date'])->where('sale_data.sale_date','<=',$month['end_date'])
                                                                 ->where('sale_prom.prom_id',$prom->id)
-                                                                ->whereNotNull('sale_prom.prom_id')
                                                                 ->count();
+                                                                
             }
+            // dd($datas);
         }
 
         foreach($proms as $prom)
@@ -95,5 +97,25 @@ class Rpg16Controller extends Controller
         }
         
         return $date_text;
+    }
+
+    public function detail(Request $request , $month , $prom_id)
+    {
+        $prom = Prom::where('id',$prom_id)->first();
+        $search_year = $request->year;
+        if(!isset($search_year)){
+            $search_year = Carbon::now()->year;
+        }
+        $startOfMonth = Carbon::create($search_year, $month, 1)->startOfMonth();
+        $endOfMonth = $startOfMonth->copy()->endOfMonth();
+        $datas = Sale::join('sale_prom','sale_prom.sale_id', '=' , 'sale_data.id')
+                    ->where('sale_data.sale_date','>=',$startOfMonth->toDateString())->where('sale_data.sale_date','<=',$endOfMonth->toDateString())
+                    ->where('sale_prom.prom_id',$prom_id)
+                    ->whereNotNull('sale_prom.prom_id')
+                    ->where('sale_prom.prom_type','B')
+                    ->get();
+                    // dd($datas);
+
+        return view('rpg16.detail')->with('datas',$datas)->with('prom',$prom)->with('year',$search_year)->with('month',$month);
     }
 }

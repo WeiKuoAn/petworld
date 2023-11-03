@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "後續服務報表"])
+@extends('layouts.vertical', ["page_title"=> "廠商佣金抽成"])
 
 @section('content')
 <!-- Start Content-->
@@ -12,10 +12,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">報表管理</a></li>
-                        <li class="breadcrumb-item active">後續服務報表</li>
+                        <li class="breadcrumb-item active">廠商佣金抽成</li>
                     </ol>
                 </div>
-                <h4 class="page-title">後續服務報表</h4>
+                <h4 class="page-title">廠商佣金抽成</h4>
             </div>
         </div>
     </div>
@@ -27,12 +27,21 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <div class="col-auto">
-                            <form class="d-flex flex-wrap align-items-center" action="{{ route('rpg16') }}" method="GET">
+                            <form class="d-flex flex-wrap align-items-center" action="{{ route('rpg18') }}" method="GET">
                                 <label for="status-select" class="me-2">年度</label>
                                 <div class="me-sm-3">
                                     <select class="form-select my-1 my-lg-0" id="status-select" name="year" onchange="this.form.submit()">
                                         @foreach($years as $year)
                                             <option value="{{ $year }}" @if($request->year == $year) selected @endif>{{ $year }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <label for="status-select" class="me-2">法會</label>
+                                <div class="me-sm-3">
+                                    <select class="form-select my-1 my-lg-0" id="status-select" name="type" onchange="this.form.submit()">
+                                        <option value="null">請選擇</option>
+                                        @foreach($puja_types as $puja_type)
+                                            <option value="{{ $puja_type->id }}" @if($request->type == $puja_type->id) selected @endif>{{ $puja_type->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -46,6 +55,7 @@
             </div> <!-- end card -->
         </div> <!-- end col-->
     </div>
+
     
     <div class="row">
         <div class="col-12">
@@ -54,42 +64,37 @@
                     <div class="table-responsive ">
                         <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
                             <thead class="table-light">
+                                <tr align="center">
+                                    <th>法會名稱</th>
+                                    <th>報名人數</th>
+                                    <th>報名收入</th>
+                                    <th>金紙收入</th>
+                                    <th>總收入</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    @foreach($datas as $data)
                                     <tr align="center">
-                                        <th scope="col">後續服務</th>
-                                        @foreach($months as $key=>$month)
-                                            <th scope="col">{{ $month['month'] }}</th>
-                                        @endforeach
-                                        <th scope="col">總次數</th>
+                                        <td>{{ $data['name'] }}</td>
+                                        <td>{{ $data['count'] }}</td>
+                                        <td>{{ number_format($data['apply_price']) }}</td>
+                                        <td>{{ number_format($data['monty_price']) }}</td>
+                                        <td>{{ number_format($data['total_price']) }}</td>
                                     </tr>
-                                </thead>
-                                {{-- <tr align="center" style="font-weight:bold;" class="text-danger">
-                                    <td>當年總計</td>
-                                    <td>{{  number_format($sums['total_count']) }}</td>
-                                    <td>{{  number_format($sums['total_price_amount']) }}</td>
-                                    @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
-                                        <td>{{  number_format($sums['total_pay_price']) }}</td>
-                                        <td>{{  number_format($sums['total_month_total']) }}</td>
-                                    @endif
-                                </tr> --}}
-                                <tbody align="center">
-                                    @foreach($proms as $prom)
-                                        <tr>
-                                            <td>{{ $prom['name'] }}</td>
-                                            @foreach($datas as $key=>$data)
-                                                <td><a href="{{ route('rpg16.detail',['year'=>$request->year,'month'=>$key,'prom_id'=>$prom->id]) }}">{{ $data['proms'][$prom->id]['count'] }} </a></td>
-                                            @endforeach
-                                            <td>{{ $sums[$prom->id] }}</td>
-                                        </tr>
                                     @endforeach
                                 </tbody>
+                                {{-- <tr style="color:red;" >
+                                    <td colspan="3"></td>
+                                    <td align="center">總共：{{ $data['count_total'] }}份</td>
+                                    <td align="right">總計：{{ number_format($data['plan_total']) }}元</td>
+                                    <td align="right">佣金總計：{{ number_format($data['commission_total']) }}元</td>
+                                </tr> --}}
                         </table><br>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-                    
 
 </div> <!-- container -->
 @endsection
