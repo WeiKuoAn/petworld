@@ -50,12 +50,23 @@ class Rpg17Controller extends Controller
             {
                 $datas[$key]['proms'][$prom->id]['id'] = $prom->id;
                 $datas[$key]['proms'][$prom->id]['name'] = $prom->name;
-                $datas[$key]['proms'][$prom->id]['count'] = DB::table('sale_data')
-                                                                ->join('sale_prom','sale_prom.sale_id', '=' , 'sale_data.id')
-                                                                ->where('sale_date','>=',$month['start_date'])->where('sale_date','<=',$month['end_date'])
-                                                                ->where('sale_prom.prom_id',$prom->id)
-                                                                ->whereNotNull('sale_prom.prom_id')
-                                                                ->count();
+                $datas[$key]['proms'][$prom->id]['count'] = 0;
+                $datas[$key]['proms'][$prom->id]['sale_count'] = DB::table('sale_data')
+                                                                     ->where('sale_data.sale_date','>=',$month['start_date'])->where('sale_data.sale_date','<=',$month['end_date'])
+                                                                     ->where('sale_data.before_prom_id',$prom->id)
+                                                                     ->whereNotNull('sale_data.before_prom_id')
+                                                                     ->count();
+                $datas[$key]['proms'][$prom->id]['sale_prom_count'] = DB::table('sale_data')
+                                                                          ->join('sale_prom','sale_prom.sale_id', '=' , 'sale_data.id')
+                                                                          ->where('sale_date','>=',$month['start_date'])->where('sale_date','<=',$month['end_date'])
+                                                                          ->where('sale_prom.prom_id',$prom->id)
+                                                                          ->whereNotNull('sale_prom.prom_id')
+                                                                          ->count();
+            }
+
+            foreach($proms as $prom)
+            {
+                $datas[$key]['proms'][$prom->id]['count'] = $datas[$key]['proms'][$prom->id]['sale_count']+$datas[$key]['proms'][$prom->id]['sale_prom_count'];
             }
         }
 

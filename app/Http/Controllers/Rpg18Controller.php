@@ -37,7 +37,7 @@ class Rpg18Controller extends Controller
                 $pujas = $pujas;
             }
         }
-        $pujas = $pujas->get();
+        $pujas = $pujas->orderby('id','desc')->get();
 
         foreach($pujas as $key=>$puja)
         {
