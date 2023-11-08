@@ -368,21 +368,6 @@
                 </a>
             </li>
             <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('pujas') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                    <span style="color:white;">法會管理</span>
-                </a>
-            </li>
-            <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('contracts') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                    <span style="color:white;">合約管理</span>
-                </a>
-            </li>
-            <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('cashs') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                    <span style="color:white;">零用金管理</span>
-                </a>
-            </li>
-            <li class="dropdown d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('person.pays') }}" role="button" aria-haspopup="false" aria-expanded="false">
                     <span style="color:white;">個人支出</span>
                 </a>

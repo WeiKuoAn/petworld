@@ -373,16 +373,6 @@
                 </a>
             </li>
             <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('pujas') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                    <span style="color:white;">法會管理</span>
-                </a>
-            </li>
-            <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('contracts') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                    <span style="color:white;">合約管理</span>
-                </a>
-            </li>
-            <li class="dropdown d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('incomes') }}" role="button" aria-haspopup="true" aria-expanded="true">
                     <span style="color:white;">收入管理</span>
                 </a>

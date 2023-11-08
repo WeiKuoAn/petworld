@@ -358,11 +358,6 @@
                 <!-- End mobile menu toggle-->
             </li>
             <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('rpg01') }}" role="button" aria-haspopup="true" aria-expanded="true">
-                    <span style="color:white;">方案報表</span>
-                </a>
-            </li>
-            <li class="dropdown d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('rpg02') }}" role="button" aria-haspopup="true" aria-expanded="true">
                     <span style="color:white;">支出報表</span>
                 </a>
