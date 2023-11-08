@@ -14,7 +14,7 @@ class Rpg11Controller extends Controller
 {
     public function rpg11(Request $request)
     {
-        $years = range(Carbon::now()->year,2022);
+        $years = range(Carbon::now()->year,2023);
         $datas = [];
 
         foreach($years as $year)
@@ -39,7 +39,9 @@ class Rpg11Controller extends Controller
                 $datas[$year]['cur_total'] = 0;
             }
             if(isset($datas[$year-1])){
-                $datas[$year]['percent']=round( ($datas[$year]['total']-$datas[$year]['cur_total'])/$datas[$year]['cur_total']*100,2);
+                $datas[$year]['percent']=round(($datas[$year]['total']-$datas[$year]['cur_total'])/$datas[$year]['cur_total']*100,2);
+            }else{
+                $datas[$year]['percent']=100;
             }
         }
 

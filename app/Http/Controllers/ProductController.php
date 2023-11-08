@@ -193,9 +193,12 @@ class ProductController extends Controller
     public function create()
     {   
         $products = Product::where('type','=','normal')->orderby('seq','desc')->orderby('price','desc')->get();
+        $data = [];
         foreach($products as $product) {
             $data[] = $product->name;
         }
+
+        // dd($data);
         $categorys = Category::where('status','up')->get();
 
         return view('product.create')->with('products',$data)->with('categorys',$categorys);
