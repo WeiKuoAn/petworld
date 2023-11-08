@@ -265,7 +265,6 @@
 
             <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{asset('assets/images/users/user-9.jpg')}}" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ms-1">
                         {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
                     </span>
@@ -321,21 +320,21 @@
         <div class="logo-box">
             <a href="" class="logo logo-dark text-center">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="22">
+                    <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="22">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="20">
+                    <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="20">
                     <!-- <span class="logo-lg-text-light">U</span> -->
                 </span>
             </a>
 
             <a href="{{route( 'index')}}" class="logo logo-light text-center">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="22">
+                    <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="22">
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="50">
+                    <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="50">
                 </span>
             </a>
         </div>

@@ -169,31 +169,6 @@
                         <input name="description" id="description" type="hidden" value="" >
                     </div>
 
-                    <div class="mb-3 mt-3" id="check_cost_div">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="check_cost" name="check_cost">
-                            <label class="form-check-label" for="check_cost"><b>此產品成本是否固定？</b></label>
-                        </div>
-                        <div class="mt-2 col-md-4">
-                            <input type="text" class="form-control" id="cost" name="cost" placeholder="產品成本" value="{{ $data->cost }}">
-                            <input type="hidden" name="cost_hidden" id="cost_hidden" value="{{ $data->cost }}">
-                        </div>
-                    </div>
-
-                    <div class="mb-3 mt-3">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="stock" name="stock" @if($data->stock == 0)  checked  @endif>
-                            <label class="form-check-label" for="stock"><b>此產品不須紀錄至庫存盤點</b></label>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 mt-3" id="check_commission_div">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="commission" name="commission"  @if($data->commission == 1)  checked  @endif>
-                            <label class="form-check-label" for="commission"><b>此產品不列入專員獎金</b></label>
-                        </div>
-                    </div>
-
                     <div class="mb-3 mt-3">
                         <label class="mb-2">商品狀態<span class="text-danger">*</span></label>
                         <br />

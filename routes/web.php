@@ -402,27 +402,27 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/contract/del/{id}', [ContractController::class, 'destroy'])->name('contract.del.data');
 
     /*報表管理*/
-    Route::get('/rpg/rpg01', [Rpg01Controller::class, 'rpg01'])->name('rpg01');
-    Route::get('/rpg/rpg01/detail/{date}/{plan_id}', [Rpg01Controller::class, 'detail'])->middleware(['auth'])->name('rpg01.detail');
+    // Route::get('/rpg/rpg01', [Rpg01Controller::class, 'rpg01'])->name('rpg01');
+    // Route::get('/rpg/rpg01/detail/{date}/{plan_id}', [Rpg01Controller::class, 'detail'])->middleware(['auth'])->name('rpg01.detail');
     Route::get('/rpg/rpg02', [Rpg02Controller::class, 'rpg02'])->name('rpg02');
-    Route::get('/rpg/rpg04', [Rpg04Controller::class, 'rpg04'])->name('rpg04');
+    // Route::get('/rpg/rpg04', [Rpg04Controller::class, 'rpg04'])->name('rpg04');
     Route::get('/rpg/rpg05', [Rpg05Controller::class, 'rpg05'])->name('rpg05');
     Route::get('/rpg/rpg06', [Rpg06Controller::class, 'rpg06'])->name('rpg06');//舊法會查詢
-    Route::get('/rpg/rpg07', [Rpg07Controller::class, 'rpg07'])->name('rpg07');
-    Route::get('/rpg/rpg07/export', [Rpg07Controller::class, 'export'])->name('rpg07.export');
+    // Route::get('/rpg/rpg07', [Rpg07Controller::class, 'rpg07'])->name('rpg07');
+    // Route::get('/rpg/rpg07/export', [Rpg07Controller::class, 'export'])->name('rpg07.export');
     Route::get('/rpg/rpg09', [Rpg09Controller::class, 'rpg09'])->name('rpg09');
-    Route::get('/rpg/rpg10', [Rpg10Controller::class, 'rpg10'])->name('rpg10');
+    // Route::get('/rpg/rpg10', [Rpg10Controller::class, 'rpg10'])->name('rpg10');
     Route::get('/rpg/rpg11', [Rpg11Controller::class, 'rpg11'])->name('rpg11');
-    Route::get('/rpg/rpg12', [Rpg12Controller::class, 'rpg12'])->name('rpg12');
-    Route::get('/rpg/rpg13', [Rpg13Controller::class, 'rpg13'])->name('rpg13');
-    Route::get('/rpg/rpg14', [Rpg14Controller::class, 'rpg14'])->name('rpg14');
-    Route::get('/rpg/rpg14/detail/{date}/{source_code}', [Rpg14Controller::class, 'detail'])->middleware(['auth'])->name('rpg14.detail');
-    Route::get('/rpg/rpg15', [Rpg15Controller::class, 'rpg15'])->name('rpg15');
-    Route::get('/rpg/rpg16', [Rpg16Controller::class, 'rpg16'])->name('rpg16');
-    Route::get('/rpg/rpg16/{month}/{prom_id}/detail', [Rpg16Controller::class, 'detail'])->name('rpg16.detail');
-    Route::get('/rpg/rpg17', [Rpg17Controller::class, 'rpg17'])->name('rpg17');
-    Route::get('/rpg/rpg17/{month}/{prom_id}/detail', [Rpg17Controller::class, 'detail'])->name('rpg17.detail');
-    Route::get('/rpg/rpg18', [Rpg18Controller::class, 'rpg18'])->name('rpg18');
+    // Route::get('/rpg/rpg12', [Rpg12Controller::class, 'rpg12'])->name('rpg12');
+    // Route::get('/rpg/rpg13', [Rpg13Controller::class, 'rpg13'])->name('rpg13');
+    // Route::get('/rpg/rpg14', [Rpg14Controller::class, 'rpg14'])->name('rpg14');
+    // Route::get('/rpg/rpg14/detail/{date}/{source_code}', [Rpg14Controller::class, 'detail'])->middleware(['auth'])->name('rpg14.detail');
+    // Route::get('/rpg/rpg15', [Rpg15Controller::class, 'rpg15'])->name('rpg15');
+    // Route::get('/rpg/rpg16', [Rpg16Controller::class, 'rpg16'])->name('rpg16');
+    // Route::get('/rpg/rpg16/{month}/{prom_id}/detail', [Rpg16Controller::class, 'detail'])->name('rpg16.detail');
+    // Route::get('/rpg/rpg17', [Rpg17Controller::class, 'rpg17'])->name('rpg17');
+    // Route::get('/rpg/rpg17/{month}/{prom_id}/detail', [Rpg17Controller::class, 'detail'])->name('rpg17.detail');
+    // Route::get('/rpg/rpg18', [Rpg18Controller::class, 'rpg18'])->name('rpg18');
 
 
     Route::get('image', function()

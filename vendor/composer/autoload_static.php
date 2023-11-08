@@ -358,8 +358,8 @@ class ComposerStaticInitdb41598589aede83ccc2d6a5583ad2a5
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -589,6 +589,9 @@ class ComposerStaticInitdb41598589aede83ccc2d6a5583ad2a5
         'App\\Http\\Controllers\\Rpg13Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Rpg13Controller.php',
         'App\\Http\\Controllers\\Rpg14Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Rpg14Controller.php',
         'App\\Http\\Controllers\\Rpg15Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Rpg15Controller.php',
+        'App\\Http\\Controllers\\Rpg16Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Rpg16Controller.php',
+        'App\\Http\\Controllers\\Rpg17Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Rpg17Controller.php',
+        'App\\Http\\Controllers\\Rpg18Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Rpg18Controller.php',
         'App\\Http\\Controllers\\SaleDataController' => __DIR__ . '/../..' . '/app/Http/Controllers/SaleDataController.php',
         'App\\Http\\Controllers\\SaleSourceController' => __DIR__ . '/../..' . '/app/Http/Controllers/SaleSourceController.php',
         'App\\Http\\Controllers\\UserBankDataController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserBankDataController.php',
@@ -3587,6 +3590,7 @@ class ComposerStaticInitdb41598589aede83ccc2d6a5583ad2a5
         'Nette\\Utils\\Html' => __DIR__ . '/..' . '/nette/utils/src/Utils/Html.php',
         'Nette\\Utils\\IHtmlString' => __DIR__ . '/..' . '/nette/utils/src/compatibility.php',
         'Nette\\Utils\\Image' => __DIR__ . '/..' . '/nette/utils/src/Utils/Image.php',
+        'Nette\\Utils\\ImageColor' => __DIR__ . '/..' . '/nette/utils/src/Utils/ImageColor.php',
         'Nette\\Utils\\ImageException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Utils\\ImageType' => __DIR__ . '/..' . '/nette/utils/src/Utils/ImageType.php',
         'Nette\\Utils\\Json' => __DIR__ . '/..' . '/nette/utils/src/Utils/Json.php',
@@ -3595,6 +3599,7 @@ class ComposerStaticInitdb41598589aede83ccc2d6a5583ad2a5
         'Nette\\Utils\\Paginator' => __DIR__ . '/..' . '/nette/utils/src/Utils/Paginator.php',
         'Nette\\Utils\\Random' => __DIR__ . '/..' . '/nette/utils/src/Utils/Random.php',
         'Nette\\Utils\\Reflection' => __DIR__ . '/..' . '/nette/utils/src/Utils/Reflection.php',
+        'Nette\\Utils\\ReflectionMethod' => __DIR__ . '/..' . '/nette/utils/src/Utils/ReflectionMethod.php',
         'Nette\\Utils\\RegexpException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Utils\\Strings' => __DIR__ . '/..' . '/nette/utils/src/Utils/Strings.php',
         'Nette\\Utils\\Type' => __DIR__ . '/..' . '/nette/utils/src/Utils/Type.php',

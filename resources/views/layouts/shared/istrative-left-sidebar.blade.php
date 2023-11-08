@@ -127,46 +127,6 @@
                             </ul>
                         </div>
                     </li>
-
-                    <li>
-                        <a href="#contract" data-bs-toggle="collapse">
-                            <i data-feather="folder"></i>
-                            <span> 合約管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="contract">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{ route('contractTypes') }}"  class="{{ request()->is('contractTypes') ? 'active' : '' }}">合約類別</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">合約管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增合約</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="#cash" data-bs-toggle="collapse">
-                            <i data-feather="dollar-sign"></i>
-                            <span> 零用金管理 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="cash">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{ route('cashs') }}"  class="{{ request()->is('cashs') ? 'active' : '' }}">零用金管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('cash.create') }}"  class="{{ request()->is('cash.create') ? 'active' : '' }}">零用金Key單</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
                 <li>
                     <a href="#person" data-bs-toggle="collapse">
                         <i data-feather="user"></i>
@@ -177,9 +137,6 @@
                         <ul class="nav-second-level">
                             <li>
                                 <a href="{{ route('person.pays') }}"  class="{{ request()->is('person.pays') ? 'active' : '' }}">個人支出</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('person.leave_days') }}"  class="{{ request()->is('person.leave_days') ? 'active' : '' }}">個人假單</a>
                             </li>
                             <li>
                                 <a href="{{ route('user-profile') }}"  class="{{ request()->is('user-profile') ? 'active' : '' }}">個人資料</a>

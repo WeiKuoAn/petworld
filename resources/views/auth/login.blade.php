@@ -9,7 +9,7 @@
 </head>
 <style>
     body.authentication-bg-pattern {
-        background-image: url("../../../images/bg4.jpg");
+        background-image: url("../../../images/bg.jpg");
     }
 </style>
 
@@ -23,17 +23,17 @@
 
                         <div class="card-body p-4">
 
-                            <div class="text-center w-75 m-auto">
+                            <div class="text-center w-100 m-auto">
                                 <div class="auth-logo">
                                     <a href="" class="logo logo-dark text-center">
                                         <span class="logo-lg">
-                                            <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="60">
+                                            <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="110">
                                         </span>
                                     </a>
 
                                     <a href="" class="logo logo-light text-center">
                                         <span class="logo-lg">
-                                            <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="22">
+                                            <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="22">
                                         </span>
                                     </a>
                                 </div>
