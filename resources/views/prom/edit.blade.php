@@ -42,6 +42,8 @@
                                 <option value="" selected>請選擇...</option>
                                 <option value="A" @if($data->type == 'A') selected @endif>安葬方式</option>
                                 <option value="B" @if($data->type == 'B') selected @endif>後續處理</option>
+                                <option value="C" @if($data->type == 'C') selected @endif>祈福儀式</option>
+                                <option value="D" @if($data->type == 'D') selected @endif>法會報名</option>
                             </select>
                             </select>
                         </div>
