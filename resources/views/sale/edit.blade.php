@@ -80,10 +80,12 @@
                         <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
                             <select id="type" class="form-select" name="customer_id" >
-                                <option value="">請選擇...</option>
+                                @if(!isset($data->cust_name))
+                                    <option value="null">*客戶姓名須重新登入*</option>
+                                @endif
                                 @foreach ($customers as $customer)
-                                    <option value="{{ $customer->id }}" @if($data->customer_id == $customer->id) selected @endif>{{ $customer->name }}</option>
-                                @endforeach
+                                        <option value="{{ $customer->id }}" @if($data->customer_id == $customer->id) selected @endif>{{ $customer->name }}</option>
+                                    @endforeach
                             </select>
                         </div>
                         <div class="mb-3 col-md-4 not_final_show not_memorial_show">
