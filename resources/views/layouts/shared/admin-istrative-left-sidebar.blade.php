@@ -105,7 +105,7 @@
                     </div>
                 </li>
 
-                <li>
+                {{-- <li>
                     <a href="#puja" data-bs-toggle="collapse">
                         <i data-feather="feather"></i>
                         <span> 法會管理 </span>
@@ -130,7 +130,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="#pay" data-bs-toggle="collapse">

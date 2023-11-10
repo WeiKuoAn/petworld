@@ -123,29 +123,24 @@
                             <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>單號</th>
                                         <th>Key單人員</th>
                                         <th>日期</th>
                                         <th>客戶</th>
                                         <th>寶貝名</th>
-                                        <th>類別</th>
                                         <th>方案</th>
                                         <th>金紙</th>
                                         <th>安葬方式</th>
                                         <th>後續處理</th>
+                                        <th>祈福儀式</th>
+                                        <th>法會報名</th>
                                         <th>付款方式</th>
                                         <th>實收價格</th>
-                                        @if($request->status == 'check')
-                                            <th>轉單</th>
-                                            <th>對拆</th>
-                                        @endif
                                         <th>動作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($sales as $sale)
                                     <tr>
-                                        <td>{{ $sale->sale_on }}</td>
                                         <td>{{ $sale->user_name->name }}</td>
                                         <td>{{ $sale->sale_date }}</td>
                                         <td>
@@ -162,15 +157,6 @@
                                         <td>
                                             @if (isset($sale->pet_name))
                                                 {{ $sale->pet_name }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if (isset($sale->type))
-                                                @if(isset($sale->source_type))
-                                                    {{ $sale->source_type->name }}
-                                                @else
-                                                    {{$sale->type}}
-                                                @endif
                                             @endif
                                         </td>
                                         <td>
@@ -221,27 +207,33 @@
                                             @endforeach
                                         </td>
                                         <td>
+                                            @foreach ($sale->proms as $prom)
+                                                @if ($prom->prom_type == 'C')
+                                                    @if(isset($prom->prom_id))
+                                                        {{ $prom->prom_name->name }}-{{ number_format($prom->prom_total) }}<br>
+                                                    @else
+                                                        無
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach ($sale->proms as $prom)
+                                                @if ($prom->prom_type == 'D')
+                                                    @if(isset($prom->prom_id))
+                                                        {{ $prom->prom_name->name }}-{{ number_format($prom->prom_total) }}<br>
+                                                    @else
+                                                        無
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
                                             @if (isset($sale->pay_id))
                                                 {{ $sale->pay_type() }}
                                             @endif
                                         </td>
                                         <td>{{ number_format($sale->pay_price) }}</td>
-                                        @if($request->status == 'check')
-                                            <td>
-                                                @if(isset($sale->SaleChange))
-                                                    Y
-                                                @else
-                                                    N
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(isset($sale->SaleSplit))
-                                                    {{ $sale->SaleSplit->user_name->name }}
-                                                @else
-                                                    N
-                                                @endif
-                                            </td>
-                                        @endif
                                         <td>
                                             {{-- @if ($sale->status != '9')
                                                 <a href="{{ route('edit-sale', $sale->id) }}"><button type="button"
@@ -269,8 +261,8 @@
                                                     <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a class="dropdown-item" href="{{ route('sale.check',$sale->id) }}"><i class="mdi mdi-eye me-2 font-18 text-muted vertical-middle"></i>查看</a>
-                                                        <a class="dropdown-item" href="{{ route('sale.change',$sale->id) }}"><i class="mdi mdi-autorenew me-2 text-muted font-18 vertical-middle"></i>轉單/對拆</a>
-                                                        <a class="dropdown-item" href="{{ route('sale.change.record',$sale->id) }}"><i class="mdi mdi-cash me-2 text-muted font-18 vertical-middle"></i>轉單/對拆紀錄</a>
+                                                        {{-- <a class="dropdown-item" href="{{ route('sale.change',$sale->id) }}"><i class="mdi mdi-autorenew me-2 text-muted font-18 vertical-middle"></i>轉單/對拆</a>
+                                                        <a class="dropdown-item" href="{{ route('sale.change.record',$sale->id) }}"><i class="mdi mdi-cash me-2 text-muted font-18 vertical-middle"></i>轉單/對拆紀錄</a> --}}
                                                     </div>
                                                 </div>
                                             @endif

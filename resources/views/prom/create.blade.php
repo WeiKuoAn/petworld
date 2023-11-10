@@ -42,6 +42,8 @@
                                 <option value="" selected>請選擇...</option>
                                 <option value="A">安葬方式</option>
                                 <option value="B" >後續處理</option>
+                                <option value="C">祈福儀式</option>
+                                <option value="D" >法會報名</option>
                             </select>
                             </select>
                         </div>

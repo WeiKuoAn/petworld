@@ -65,10 +65,10 @@
                                 <option value="D">尾款</option>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-4">
+                        {{-- <div class="mb-3 col-md-4">
                             <label for="sale_on" class="form-label">單號<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="sale_on" name="sale_on" required >
-                        </div>
+                        </div> --}}
                         <div class="mb-3 col-md-4">
                             <label for="sale_date" class="form-label">日期<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="sale_date" name="sale_date" required>
@@ -163,6 +163,8 @@
                                                         <option value="" selected>請選擇</option>
                                                         <option value="A">安葬處理</option>
                                                         <option value="B">後續處理</option>
+                                                        <option value="C">祈福儀式</option>
+                                                        <option value="D">法會報名</option>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -616,6 +618,8 @@
             cols += '<option value="" selected>請選擇...</option>';
             cols += '<option value="A">安葬處理</option>';
             cols += '<option value="B">後續處理</option>';
+            cols += '<option value="C">祈福儀式</option>';
+            cols += '<option value="D">法會報名</option>';
             cols += '</select>';
             cols += '</td>';
             cols += '<td>';

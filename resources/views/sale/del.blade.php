@@ -67,10 +67,6 @@
                             </select>
                         </div>
                         <div class="mb-3 col-md-4">
-                            <label for="sale_on" class="form-label">單號<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="sale_on" name="sale_on" value="{{ $data->sale_on }}" required  >
-                        </div>
-                        <div class="mb-3 col-md-4">
                             <label for="sale_date" class="form-label">日期<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="sale_date" name="sale_date" value="{{ $data->sale_date }}" required>
                         </div>
@@ -176,6 +172,8 @@
                                                         <option value="" selected>請選擇</option>
                                                         <option value="A" @if($sale_prom->prom_type == 'A') selected @endif>安葬處理</option>
                                                         <option value="B" @if($sale_prom->prom_type == 'B') selected @endif>後續處理</option>
+                                                        <option value="C" @if($sale_prom->prom_type == 'C') selected @endif>祈福儀式</option>
+                                                        <option value="D" @if($sale_prom->prom_type == 'D') selected @endif>法會報名</option>
                                                     </select>
                                                 </td>
                                                 <td>

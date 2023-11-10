@@ -29,10 +29,12 @@
                         <div class="col-auto">
                             <form class="d-flex flex-wrap align-items-center" action="{{ route('proms') }}" method="GET">
                                 <div class="me-sm-3">
-                                    <select class="form-select my-1 my-lg-0" id="status-select" name="type">
+                                    <select class="form-select my-1 my-lg-0" id="status-select" name="type" onchange="this.form.submit()">
                                         <option value="" selected>不限</option>
                                         <option value="A" @if($request->type == 'A') selected @endif>安葬方式</option>
                                         <option value="B" @if($request->type == 'B') selected @endif>後續處理</option>
+                                        <option value="C" @if($request->type == 'C') selected @endif>祈福儀式</option>
+                                        <option value="D" @if($request->type == 'D') selected @endif>法會報名</option>
                                     </select>
                                 </div>
                                 <div class="me-3">
@@ -75,8 +77,12 @@
                                     <td>
                                         @if($data->type == 'A')
                                             安葬方式
-                                        @else
+                                        @elseif($data->type == 'B')
                                             後續處理
+                                        @elseif($data->type == 'C')
+                                            祈福儀式
+                                        @else
+                                            法會報名
                                         @endif
                                     </td>
                                     <td>{{ $data->name }}</td>
