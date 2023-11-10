@@ -407,7 +407,6 @@
     //案件單類別
     if(type_list == 'memorial'){
         $(".not_memorial_show").hide(300);
-        $("#cust_name_q").prop('required', false);
         $("#pet_name").prop('required', false);
         $("#kg").prop('required', false);
         $("#type").prop('required', false);
@@ -436,7 +435,6 @@
     $('select[name="type_list"]').on('change', function() {
         if($(this).val() == 'memorial'){
             $(".not_memorial_show").hide(300);
-            $("#cust_name_q").prop('required', false);
             $("#pet_name").prop('required', false);
             $("#kg").prop('required', false);
             $("#type").prop('required', false);
