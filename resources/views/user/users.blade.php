@@ -49,7 +49,9 @@
                                     <th>入職時間</th>
                                     <th>等級</th>
                                     <th>權限</th>
+                                    @if(Auth::user()->job_id == 1 || Auth::user()->job_id == 7)
                                     <th>動作</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,19 +79,21 @@
                                                 關閉
                                             @endif
                                         </td>
-                                    <td>
-                                        <div class="btn-group dropdown">
-                                            @if($user->level != '0')
-                                            <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="{{ route('user.edit',$user->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
-                                                {{-- <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a> --}}
-                                                <a class="dropdown-item" href="{{ route('user.sale',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看業務單</a>
-                                                <a class="dropdown-item" href="{{ route('user.work.index',$user->id) }}"><i class="mdi mdi-clock me-2 font-18 text-muted vertical-middle"></i>出勤紀錄</a>
+                                        @if(Auth::user()->job_id == 1 || Auth::user()->job_id == 7)
+                                        <td>
+                                            <div class="btn-group dropdown">
+                                                @if($user->level != '0')
+                                                <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="{{ route('user.edit',$user->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                    {{-- <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a> --}}
+                                                    <a class="dropdown-item" href="{{ route('user.sale',$user->id) }}"><i class="mdi mdi-clipboard-text-search me-2 font-18 text-muted vertical-middle"></i>查看業務單</a>
+                                                    <a class="dropdown-item" href="{{ route('user.work.index',$user->id) }}"><i class="mdi mdi-clock me-2 font-18 text-muted vertical-middle"></i>出勤紀錄</a>
+                                                </div>
+                                                @endif
                                             </div>
-                                            @endif
-                                        </div>
-                                    </td>
+                                        </td>
+                                        @endif
                                 </tr>
                             @endforeach
                             </tbody>
