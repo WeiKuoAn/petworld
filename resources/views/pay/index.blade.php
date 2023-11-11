@@ -107,7 +107,7 @@
                                         <th>支出總價格</th>
                                         <th width="15%">備註</th>
                                         <th width="10%">key單人員</th>
-                                        @if(Auth::user()->job_id == 2)
+                                        @if(Auth::user()->job_id == 1 || Auth::user()->job_id == 7)
                                             @if($request->status == '1')
                                                 <th>查看</th>
                                             @else
@@ -147,7 +147,7 @@
                                         <td>{{ number_format($data->price) }}</td>
                                         <td>{{ $data->comment }}</td>
                                         <td>{{ $data->user_name->name }}</td>
-                                        @if(Auth::user()->job_id == 2)
+                                        @if(Auth::user()->job_id == 1 || Auth::user()->job_id == 7)
                                             <td>
                                                 <a href="{{ route('pay.check',$data->id) }}">
                                                     <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>

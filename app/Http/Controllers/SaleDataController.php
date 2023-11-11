@@ -456,7 +456,7 @@ class SaleDataController extends Controller
     {
         
         $sale = Sale::where('id', $id)->first();
-
+        //如果是管理者就直接確認對帳
         if (Auth::user()->level != 2) {
             if ($request->admin_check == 'check') {
                 $sale->status = '9';

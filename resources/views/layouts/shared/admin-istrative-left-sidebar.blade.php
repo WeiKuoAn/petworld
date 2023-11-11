@@ -64,6 +64,32 @@
                 <li class="menu-title mt-2">Apps</li>
 
                 <li>
+                    <li>
+                        <a href="#sidebarEcommerce" data-bs-toggle="collapse">
+                            <i data-feather="users"></i>
+                            <span> 用戶管理 </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarEcommerce">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{route('branchs')}}"  class="{{ request()->is('branchs') ? 'active' : '' }}">部門列表</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('jobs')}}"  class="{{ request()->is('jobs') ? 'active' : '' }}">職稱列表</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('user.create')}}"  class="{{ request()->is('user.create') ? 'active' : '' }}">新增用戶</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('users')}}"  class="{{ request()->is('users') ? 'active' : '' }}">用戶列表</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </li>
+
+                <li>
                     <a href="#customer" data-bs-toggle="collapse">
                         <i data-feather="life-buoy"></i>
                         <span> 客戶管理 </span>
@@ -104,6 +130,33 @@
                         </ul>
                     </div>
                 </li>
+
+                {{-- <li>
+                    <a href="#puja" data-bs-toggle="collapse">
+                        <i data-feather="feather"></i>
+                        <span> 法會管理 </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="puja">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('puja.types') }}"  class="{{ request()->is('puja.types') ? 'active' : '' }}">法會類別設定</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('puja.create') }}"  class="{{ request()->is('puja.create') ? 'active' : '' }}">法會設定</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('pujas') }}"  class="{{ request()->is('pujas') ? 'active' : '' }}">法會管理</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('puja_data.create') }}"  class="{{ request()->is('puja_data.create') ? 'active' : '' }}">法會報名</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('puja_datas') }}"  class="{{ request()->is('puja_datas') ? 'active' : '' }}">法會報名查詢</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> --}}
 
                 <li>
                     <a href="#pay" data-bs-toggle="collapse">
