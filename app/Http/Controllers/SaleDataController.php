@@ -62,20 +62,23 @@ class SaleDataController extends Controller
     public function prom_search(Request $request)
     {
         if ($request->ajax()) {
-            $output = "";
+            $proms = Prom::where('type', $request->select_prom)
+                        ->where('status', 'up')
+                        ->orderBy('seq', 'asc')
+                        ->get();
 
-            $proms = Prom::where('type',$request->select_prom)->where('status', 'up')->orderby('seq','asc')->get();
-            
-            if(isset($proms)){
-                foreach ($proms as $key => $prom) {
-                    $output.=  '<option value="'.$prom->id.'">'.$prom->name.'</option>';
-                  }
-            }else{
-                $output.=  '<option value="">請選擇...</option>';
+            if ($proms->isEmpty()) {
+                return response('<option value="">請選擇...</option>');
+            } else {
+                $output = $proms->map(function($prom) {
+                    return '<option value="'.$prom->id.'">'.$prom->name.'</option>';
+                })->join('');
+
+                return response($output);
             }
-            return Response($output);
         }
     }
+
 
     public function gdpaper_search(Request $request)
     {

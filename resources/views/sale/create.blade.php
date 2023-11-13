@@ -1,10 +1,6 @@
 @extends('layouts.vertical', ["page_title"=> "新增業務Key單"])
 
 @section('css')
-{{-- <link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{asset('assets/libs/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{asset('assets/libs/quill/quill.min.css')}}" rel="stylesheet" type="text/css" /> --}}
-{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 @endsection
 
 @section('content')
@@ -319,19 +315,10 @@
 @endsection
 
 @section('script')
-<!-- third party js -->
-<script src="{{asset('assets/libs/select2/select2.min.js')}}"></script>
-<script src="{{asset('assets/libs/dropzone/dropzone.min.js')}}"></script>
-<script src="{{asset('assets/libs/quill/quill.min.js')}}"></script>
-<script src="{{asset('assets/libs/footable/footable.min.js')}}"></script>
-<!-- third party js ends -->
 
 <!-- demo app -->
-<script src="{{asset('assets/js/pages/form-fileuploads.init.js')}}"></script>
-<script src="{{asset('assets/js/pages/add-product.init.js')}}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css" />
 {{-- <script src="{{asset('assets/js/pages/foo-tables.init.js')}}"></script> --}}
 
 
@@ -474,16 +461,22 @@
     });
 
     function chgItems(obj){
-        $("#row_id").val($("#"+ obj.id).attr('alt'));
-        row_id = $("#row_id").val();
+        let $obj = $(obj);
+        let row_id = $obj.attr('alt');
+        $("#row_id").val(row_id);
+        let $selectProm = $("#select_prom_" + row_id);
+        let $prom = $("#prom_" + row_id);
+        let $promTotal = $("#prom_total_" + row_id);
+
         $.ajax({
-            url : '{{ route('prom.search') }}',
-            data:{'select_prom':$("#select_prom_"+row_id).val()},
-            success:function(data){
-                $("#prom_"+row_id).html(data);
-                $("#prom_total_"+row_id).on('input', function(){
-                    calculate_price();
-                });
+            url: '{{ route('prom.search') }}',
+            data: {'select_prom': $selectProm.val()},
+            success: function(data){
+                $prom.html(data);
+                $promTotal.on('input', calculate_price);
+            },
+            error: function(xhr, status, error) {
+                console.error("An error occurred: " + error);
             }
         });
     }
@@ -632,33 +625,10 @@
             cols += '</td>';
             cols += '</tr>';
             newRow.append(cols);
-            $("table.prom-list tbody").append(newRow);
+            $("table.prom-list tbody").append(newRow);            
         });
+
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script>
-
-{{-- <script type="text/javascript">
-    
-    $(document).ready(function() {
-  $("#your-form").submit(function(event) {
-    event.preventDefault(); // 阻止預設的表單提交行為
-    var formData = $(this).serialize(); // 將表單數據序列化為字串
-    
-    // 使用AJAX發送表單數據
-    $.ajax({
-      url: '{{ route('sale.data.create') }}',
-      type: "POST",
-      data: formData,
-      success: function(response) {
-        // 請求成功的處理邏輯
-      },
-      error: function(xhr, status, error) {
-        // 請求失敗的處理邏輯
-      }
-    });
-  });
-});
-
-</script> --}}
 <!-- end demo js-->
 @endsection
