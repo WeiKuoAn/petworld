@@ -36,7 +36,7 @@
                                         <th scope="col">其他收入</th>
                                         <th scope="col">總營收</th>
                                         <th scope="col">總支出</th>
-                                        <th scope="col">淨利</th>
+                                        <th scope="col">銀行存款</th>
                                         <th scope="col">成長比</th>
                                     </tr>
                                 </thead>

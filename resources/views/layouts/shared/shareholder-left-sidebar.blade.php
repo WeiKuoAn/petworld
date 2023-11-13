@@ -90,6 +90,15 @@
                     <div class="collapse" id="rpg">
                         <ul class="nav-second-level">
                             <li>
+                                <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">安葬服務報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg17') }}"  class="{{ request()->is('rpg17') ? 'active' : '' }}">後續服務報表</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('rpg02') }}"  class="{{ request()->is('rpg02') ? 'active' : '' }}">支出報表</a>
                             </li>
                             <li>

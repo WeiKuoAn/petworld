@@ -102,6 +102,7 @@
                                     <tr>
                                         <th>key單日期</th>
                                         <th>key單單號</th>
+                                        <th>支出日期</th>
                                         <th>支出科目</th>
                                         <th width="20%">發票號碼</th>
                                         <th>支出總價格</th>
@@ -113,9 +114,11 @@
                                             @else
                                                 <th>審核</th>
                                             @endif
-                                            @if($request->status!= null || $request->status == '1')
-                                                <th width="10%">動作</th>
-                                            @endif
+                                        @endif
+                                        @if($request->status != '1')
+                                                <th>動作</th>
+                                        @elseif(Auth::user()->job_id == 1 || Auth::user()->job_id == 7)
+                                        <td></td>
                                         @endif
                                     </tr>
                                 </thead>
@@ -124,6 +127,13 @@
                                     <tr>
                                         <td>{{ $data->pay_date }}</td>
                                         <td>{{ $data->pay_on }}</td>
+                                        <td>
+                                            @if(isset($data->pay_items))
+                                                @foreach ($data->pay_items as $item)
+                                                    {{ $item->pay_date }}<br>
+                                                @endforeach
+                                            @endif
+                                        </td>
                                         <td>
                                             @if(isset($data->pay_id))
                                                 {{ $data->pay_name->name }}
@@ -153,18 +163,33 @@
                                                     <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
                                                 </a>
                                             </td>
-                                            @if($data->status == '1')
-                                            <td>
-                                                <div class="btn-group dropdown">
-                                                    <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="{{ route('pay.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
-                                                        <a class="dropdown-item" href="{{ route('pay.del',$data->id) }}"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            @endif
                                         @endif
+                                        @if($data->status != '1')
+                                            @if($data->user_id == Auth::user()->id)
+                                                <td>
+                                                    <div class="btn-group dropdown">
+                                                        <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" href="{{ route('pay.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                            <a class="dropdown-item" href="{{ route('pay.del',$data->id) }}"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            @else
+                                            <td></td>
+                                            @endif
+                                        @elseif(Auth::user()->job_id == 1 || Auth::user()->job_id == 7)
+                                        <td>
+                                            <div class="btn-group dropdown">
+                                                <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="{{ route('pay.edit',$data->id) }}"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
+                                                    <a class="dropdown-item" href="{{ route('pay.del',$data->id) }}"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>刪除</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        @endif
+                                        
                                     </tr>
                                 @endforeach
                                 </tbody>
