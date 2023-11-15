@@ -17,9 +17,9 @@ class ContractController extends Controller
         $today = Carbon::now()->format("Y-m-d");
         $check_renew = $request->check_renew;
         if(!isset($check_renew)){
-            $datas = Contract::whereIn('renew',[0,1]);
+            $datas = Contract::where('status','0');
         }else{
-            $datas = Contract::where('renew',$check_renew);
+            $datas = Contract::where('status',$check_renew);
         }
                 
         if ($request) {
@@ -99,20 +99,18 @@ class ContractController extends Controller
         // dd($request->renew);
         $data = new Contract;
         $data->type = $request->type;
-        $data->number = $request->number;
         $data->customer_id = $request->cust_name_q;
         $data->pet_name = $request->pet_name;
+        $data->pet_variety = $request->pet_variety;
         $data->mobile = $request->mobile;
-        $data->year = $request->year;
         $data->price = $request->price;
         $data->start_date = $request->start_date;
         $data->end_date = $request->end_date;
-        if(isset($request->renew)){
-            $data->renew = $request->renew;
+        if(isset($request->status)){
+            $data->status = $request->status;
         }else{
-            $data->renew = 0;
+            $data->status = 0;
         }
-        $data->renew_year = $request->renew_year;
         $data->user_id = Auth::user()->id;
         $data->comment = $request->comment;
         $data->save();
@@ -131,21 +129,17 @@ class ContractController extends Controller
     {
         $data = Contract::where('id',$id)->first();
         $data->type = $request->type;
-        $data->number = $request->number;
         $data->customer_id = $request->cust_name_q;
         $data->pet_name = $request->pet_name;
         $data->mobile = $request->mobile;
-        $data->year = $request->year;
         $data->price = $request->price;
         $data->start_date = $request->start_date;
         $data->end_date = $request->end_date;
 
-        if(isset($request->renew)){
-            $data->renew = $request->renew;
-            $data->renew_year = $request->renew_year;
+        if(isset($request->close_date)){
+            $data->status = $request->status;
         }else{
-            $data->renew = 0;
-            $data->renew_year = null;
+            $data->status = 0;
         }
         $data->close_date = $request->close_date;
         $data->comment = $request->comment;

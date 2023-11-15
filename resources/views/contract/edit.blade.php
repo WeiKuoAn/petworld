@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "編輯合約"])
+@extends('layouts.vertical', ["page_title"=> "編輯契約"])
 
 @section('css')
 <!-- third party css -->
@@ -19,11 +19,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">合約管理</a></li>
-                        <li class="breadcrumb-item active">編輯合約</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">契約管理</a></li>
+                        <li class="breadcrumb-item active">編輯契約</li>
                     </ol>
                 </div>
-                <h4 class="page-title">編輯合約</h4>
+                <h4 class="page-title">編輯契約</h4>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="mb-3">
-                                <label for="close_date" class="form-label">合約結案日期<span class="text-danger">*</span></label>
+                                <label for="close_date" class="form-label">契約失效日期<span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="close_date" name="close_date"  value="{{ $data->close_date }}">
                            </div>
                            <hr>
@@ -52,10 +52,6 @@
                                         @endforeach
                                    </select>
                                </div>
-                           </div>
-                           <div class="mb-3">
-                                <label for="number" class="form-label">位置編號<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="number" name="number" value="{{ $data->number }}"  required>
                            </div>
                            <div class="mb-3">
                                 <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
@@ -72,22 +68,22 @@
                                 <input type="text" class="form-control" id="pet_name" name="pet_name" value="{{ $data->pet_name }}"  required>
                            </div>
                            <div class="mb-3">
-                                <label for="year" class="form-label">第幾年<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="year" name="year" value="{{ $data->year }}"  required>
-                           </div>
+                                <label for="pet_name" class="form-label">寶貝品種<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="pet_variety" name="pet_variety" value="{{ $data->pet_variety }}"  required>
+                        </div>
                            <div class="mb-3">
-                                <label for="start_date" class="form-label">開始日期<span class="text-danger">*</span></label>
+                                <label for="start_date" class="form-label">簽約日期<span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="start_date" name="start_date"  value="{{ $data->start_date }}" required>
                            </div>
                            <div class="mb-3">
-                                <label for="end_date" class="form-label">結束日期<span class="text-danger">*</span></label>
+                                <label for="end_date" class="form-label">生效日期<span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="end_date" name="end_date"  value="{{ $data->end_date }}" required>
                            </div>
                            <div class="mb-3">
                                 <label for="price" class="form-label">金額<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="price" name="price"  value="{{ $data->price }}" required>
                            </div>
-                           <div id="renew_div">
+                           {{-- <div id="renew_div">
                                 <div class="mb-3">
                                     <label for="renew_year" class="form-label">再續約幾年<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="renew_year" name="renew_year" value="{{ $data->renew_year }}" >
@@ -99,7 +95,7 @@
                                     <input type="checkbox" class="form-check-input" id="renew" name="renew" @if($data->renew == '1')  checked  @endif>
                                     <label class="form-check-label" for="renew"><b>是否為續約？</b></label>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div>
                                 <label class="form-label">備註</label>
                                 <textarea class="form-control" rows="3" placeholder="" name="comment">{{ $data->comment }}</textarea>

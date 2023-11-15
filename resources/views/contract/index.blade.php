@@ -57,19 +57,12 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="me-sm-3">
-                                    <label class="form-label">續約</label>
-                                    <select class="form-select my-1 my-lg-0" id="status-select" name="check_renew" onchange="this.form.submit()">
-                                        <option value="" selected >請選擇</option>
-                                        <option value="1" @if($request->check_renew == '1') selected @endif>是</option>
-                                        <option value="0" @if($request->check_renew == '0') selected @endif>否</option>
-                                    </select>
-                                </div>
+                               
                                 <div class="me-sm-3">
                                     <label class="form-label">狀態</label>
-                                    <select class="form-select my-1 my-lg-0" id="status-select" name="check_close" onchange="this.form.submit()">
-                                        <option value="1" @if($request->check_close == '1' || !isset($request->check_close)) selected @endif>未結案</option>
-                                        <option value="0" @if($request->check_close == '0') selected @endif>已結案</option>
+                                    <select class="form-select my-1 my-lg-0" id="status-select" name="status" onchange="this.form.submit()">
+                                        <option value="0" @if($request->status == '0' || !isset($request->status)) selected @endif>未結案</option>
+                                        <option value="1" @if($request->status == '1') selected @endif>已結案</option>
                                     </select>
                                 </div>
                                 <div class="me-3 mt-3">
@@ -104,19 +97,18 @@
                                     <th>合約類別</th>
                                     <th>顧客名稱</th>
                                     <th>電話</th>
+                                    <th>寶貝品種</th>
                                     <th>寶貝名稱</th>
-                                    <th>目前簽約年份</th>
-                                    <th>開始日期</th>
-                                    <th>結束日期</th>
+                                    <th>簽約日期</th>
+                                    <th>生效日期</th>
                                     <th>金額</th>
-                                    <th>續約</th>
                                     <th>動作</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach ($datas as $key=>$data)
                                 <tr>
-                                    <td>{{ $data->number }}</td>
+                                    <td>{{ $key+1 }}</td>
                                     <td>
                                         <span 
                                             @if($data->type == '1') class=" bg-soft-success text-success p-1" 
@@ -128,8 +120,8 @@
                                     </td>
                                     <td>{{ $data->cust_name->name }}</td>
                                     <td>{{ $data->mobile }}</td>
+                                    <td>{{ $data->pet_variety }}</td>
                                     <td>{{ $data->pet_name }}</td>
-                                    <td>第{{ $data->year }}年</td>
                                     <td>{{ $data->start_date }}</td>
                                     @if(!isset($request->check_close) || $request->check_close == '1')
                                         <td>{{ $data->end_date }}</td>
@@ -137,11 +129,6 @@
                                         <td>{{ $data->close_date }}</td>
                                     @endif
                                     <td>{{ number_format($data->price) }}</td>
-                                    <td>
-                                        @if($data->renew == '1')
-                                            是（{{ $data->renew_year }}年）
-                                        @endif
-                                    </td>
                                     <td>
                                         <div class="btn-group dropdown">
                                             <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>

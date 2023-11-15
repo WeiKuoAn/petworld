@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "新增合約"])
+@extends('layouts.vertical', ["page_title"=> "新增契約"])
 
 @section('css')
 <!-- third party css -->
@@ -19,11 +19,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">合約管理</a></li>
-                        <li class="breadcrumb-item active">新增合約</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">契約管理</a></li>
+                        <li class="breadcrumb-item active">新增契約</li>
                     </ol>
                 </div>
-                <h4 class="page-title">新增合約</h4>
+                <h4 class="page-title">新增契約</h4>
             </div>
         </div>
     </div>
@@ -39,18 +39,13 @@
                         <div class="col-xl-12">
                             <div class="mb-3">
                                 <div class="mb-3">
-                                   <label class="form-label">類別名稱<span class="text-danger">*</span></label>
+                                   <label class="form-label">契約類別<span class="text-danger">*</span></label>
                                    <select class="form-control" data-toggle="select" data-width="100%" name="type" required>
-                                   <option value="" selected>請選擇</option>
                                         @foreach($contract_types as $contract_type)
                                                 <option value="{{ $contract_type->id }}">{{ $contract_type->name }}</option>
                                         @endforeach
                                    </select>
                                </div>
-                           </div>
-                           <div class="mb-3">
-                                <label for="number" class="form-label">位置編號<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="number" name="number"  required>
                            </div>
                            <div class="mb-3">
                                 <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
@@ -67,33 +62,21 @@
                                 <input type="text" class="form-control" id="pet_name" name="pet_name"  required>
                            </div>
                            <div class="mb-3">
-                                <label for="year" class="form-label">第幾年<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="year" name="year"  required>
-                           </div>
-                           <div class="mb-3">
-                                <label for="start_date" class="form-label">開始日期<span class="text-danger">*</span></label>
+                                <label for="pet_variety" class="form-label">寶貝品種<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="pet_variety" name="pet_variety"  required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="start_date" class="form-label">簽約日期<span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="start_date" name="start_date"  required>
-                           </div>
-                           <div class="mb-3">
-                                <label for="end_date" class="form-label">結束日期<span class="text-danger">*</span></label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="end_date" class="form-label">生效日期<span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="end_date" name="end_date"  required>
-                           </div>
+                            </div>
                            <div class="mb-3">
-                                <label for="price" class="form-label">金額<span class="text-danger">*</span></label>
+                                <label for="price" class="form-label">契約費用<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="price" name="price"  required>
                            </div>
-                           <div id="renew_div">
-                                <div class="mb-3">
-                                    <label for="renew_year" class="form-label">再續約幾年<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="renew_year" name="renew_year" >
-                                </div>
-                            </div>
-                           <div class="mb-3 mt-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="renew" name="renew" value="0">
-                                    <label class="form-check-label" for="renew"><b>是否為續約？</b></label>
-                                </div>
-                            </div>
                             <div>
                                 <label class="form-label">備註</label>
                                 <textarea class="form-control" rows="3" placeholder="" name="comment"></textarea>
@@ -171,8 +154,9 @@
 
     $('#start_date').change(function() {
         var startDate = new Date($(this).val());
-        startDate.setFullYear(startDate.getFullYear() + 1);
-        startDate.setDate(startDate.getDate() - 1);
+        
+        // Add 7 days to the start date
+        startDate.setDate(startDate.getDate() + 7);
 
         var endYear = startDate.getFullYear();
         var endMonth = ("0" + (startDate.getMonth() + 1)).slice(-2); // JavaScript months are 0-indexed
@@ -181,6 +165,7 @@
         var endDateString = `${endYear}-${endMonth}-${endDate}`;
         $('#end_date').val(endDateString);
     });
+
 </script>
 <!-- end demo js-->
 @endsection

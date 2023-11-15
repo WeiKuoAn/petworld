@@ -15,16 +15,18 @@ class Rpg06Controller extends Controller
     {
 
         if($request){
-            $datas = Sale_prom::where('prom_type','B')->where('prom_id',8);
+            $datas = Sale_prom::where('prom_type','D')
+                                ->join('sale_data','sale_prom.sale_id', '=', 'sale_data.id')
+                                ->where('sale_data.status','9');
             $after_date = $request->after_date;
             if($after_date){
                 $after_date = $after_date.' 00:00:00';
-                $datas = $datas->where('created_at','>=',$after_date);
+                $datas = $datas->where('sale_prom.created_at','>=',$after_date);
             }
             $before_date = $request->before_date;
             if($before_date){
                 $before_date = $before_date.' 23:59:59';
-                $datas = $datas->where('created_at','<=',$before_date);
+                $datas = $datas->where('sale_prom.created_at','<=',$before_date);
             }
             $cust_name = $request->cust_name;
             if($cust_name){
@@ -52,10 +54,10 @@ class Rpg06Controller extends Controller
                 }
                 $datas = $datas->whereIn('sale_id',$sale_ids);
             }
-            $datas = $datas->orderby('created_at', 'desc')->paginate(50);
+            $datas = $datas->orderby('prom_id', 'asc')->orderby('sale_prom.created_at', 'desc')->paginate(50);
             $condition = $request->all();
         }else{
-            $datas = Sale_prom::where('prom_type','B')->where('prom_id',8)->orderby('created_at', 'desc')->paginate(50);
+            $datas = Sale_prom::where('prom_type','D')->orderby('prom_id', 'asc')->orderby('sale_prom.created_at', 'desc')->paginate(50);
             $condition = '';
         }
         

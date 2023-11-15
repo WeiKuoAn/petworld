@@ -24,6 +24,8 @@ class Contract extends Model
         'renew_year',
         'user_id',
         'comment',
+        'pet_variety',
+        'status'
     ];
 
     public function cust_name()

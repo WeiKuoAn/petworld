@@ -131,32 +131,26 @@
                     </div>
                 </li>
 
-                {{-- <li>
-                    <a href="#puja" data-bs-toggle="collapse">
-                        <i data-feather="feather"></i>
-                        <span> 法會管理 </span>
+                <li>
+                    <a href="#contract" data-bs-toggle="collapse">
+                        <i data-feather="folder"></i>
+                        <span> 契約管理 </span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="puja">
+                    <div class="collapse" id="contract">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('puja.types') }}"  class="{{ request()->is('puja.types') ? 'active' : '' }}">法會類別設定</a>
+                                <a href="{{ route('contractTypes') }}"  class="{{ request()->is('contractTypes') ? 'active' : '' }}">契約類別</a>
                             </li>
                             <li>
-                                <a href="{{ route('puja.create') }}"  class="{{ request()->is('puja.create') ? 'active' : '' }}">法會設定</a>
+                                <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">契約管理</a>
                             </li>
                             <li>
-                                <a href="{{ route('pujas') }}"  class="{{ request()->is('pujas') ? 'active' : '' }}">法會管理</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('puja_data.create') }}"  class="{{ request()->is('puja_data.create') ? 'active' : '' }}">法會報名</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('puja_datas') }}"  class="{{ request()->is('puja_datas') ? 'active' : '' }}">法會報名查詢</a>
+                                <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增契約</a>
                             </li>
                         </ul>
                     </div>
-                </li> --}}
+                </li>
 
                 <li>
                     <a href="#pay" data-bs-toggle="collapse">
@@ -254,10 +248,19 @@
                                 <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
                             </li>
                             <li>
+                                <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙銷售報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg13') }}"  class="{{ request()->is('rpg13') ? 'active' : '' }}">金紙賣出報表</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">安葬服務報表</a>
                             </li>
                             <li>
                                 <a href="{{ route('rpg17') }}"  class="{{ request()->is('rpg17') ? 'active' : '' }}">後續服務報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg06') }}"  class="{{ request()->is('rpg06') ? 'active' : '' }}">套組法會查詢</a>
                             </li>
                             <li>
                                 <a href="{{ route('rpg02') }}"  class="{{ request()->is('rpg02') ? 'active' : '' }}">支出報表</a>

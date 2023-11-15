@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "舊法會查詢"])
+@extends('layouts.vertical', ["page_title"=> "套組法會查詢"])
 
 @section('content')
 <!-- Start Content-->
@@ -12,10 +12,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">報表管理</a></li>
-                        <li class="breadcrumb-item active">舊法會查詢</li>
+                        <li class="breadcrumb-item active">套組法會查詢</li>
                     </ol>
                 </div>
-                <h4 class="page-title">舊法會查詢</h4>
+                <h4 class="page-title">套組法會查詢</h4>
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <div class="col-auto">
-                            <form class="d-flex flex-wrap align-items-center" id="myForm" action="{{ route('rpg07') }}" method="GET">
+                            <form class="d-flex flex-wrap align-items-center" id="myForm" action="{{ route('rpg06') }}" method="GET">
                                 <label for="status-select" class="me-2">日期區間</label>
                                 <div class="me-2">
                                     <input type="date" class="form-control my-1 my-lg-0" id="after_date" name="after_date" value="{{ $request->after_date }}">
@@ -42,9 +42,9 @@
                             </form>
                         </div>
                         <div class="col-auto">
-                            <div class="text-lg-end my-1 my-lg-0">
+                            {{-- <div class="text-lg-end my-1 my-lg-0">
                                 <a href="{{ route('rpg07.export',request()->input()) }}" class="btn btn-danger waves-effect waves-light">匯出</a>
-                            </div>
+                            </div> --}}
                         </div><!-- end col-->
                     </div> <!-- end row -->
                 </div>
@@ -61,6 +61,7 @@
                             <thead class="table-light">
                                 <tr align="center">
                                     <th scope="col">報名日期</th>
+                                    <th scope="col">法會名稱</th>
                                     <th scope="col">客戶姓名</th>
                                     <th scope="col">客戶電話</th>
                                     <th scope="col">寶貝名稱</th>
@@ -72,6 +73,7 @@
                                 @foreach($datas as $key=>$data)
                                     <tr align="center">
                                         <td>{{ date('Y-m-d',strtotime($data->created_at)) }}</td>
+                                        <td>{{ $data->prom_name->name }}</td>
                                         <td>{{ $data->sale_data->cust_name->name }}</td>
                                         <td>{{ $data->sale_data->cust_name->mobile }}</td>
                                         <td>{{ $data->sale_data->pet_name }}</td>
