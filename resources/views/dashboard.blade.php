@@ -160,8 +160,8 @@
                         </div>
                         <div class="col-6">
                             <div class="text-end">
-                                <h3 class="text-dark mt-1" @if($net_income<0) style="color: red;" @endif>
-                                    <span data-plugin="counterup">{{ number_format($net_income) }}</span>元</h3>
+                                <h3 class="text-dark mt-1" >
+                                    <span data-plugin="counterup" @if(number_format($net_income)<0) style="color: red;" @endif>{{ number_format($net_income) }}</span>元</h3>
                                 <p class="text-muted mb-1 text-truncate">營業淨利</p>
                             </div>
                         </div>
