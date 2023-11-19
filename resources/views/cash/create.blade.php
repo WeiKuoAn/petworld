@@ -18,7 +18,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">零用金管理</a></li>
                         <li class="breadcrumb-item active">新增零用金</li>
                     </ol>
