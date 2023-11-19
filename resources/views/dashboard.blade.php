@@ -201,7 +201,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-end">
-                                <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ number_format($net_income) }}</span>元</h3>
+                                <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ number_format($total_income) }}</span>元</h3>
                                 <p class="text-muted mb-1 text-truncate">銀行存款</p>
                             </div>
                         </div>
