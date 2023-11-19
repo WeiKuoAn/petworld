@@ -119,6 +119,23 @@
                             <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="user_id" name="user_id" readonly value="{{ Auth::user()->name }}">
                         </div>
+                        <div class="col-xl-12">
+                            <div id="use_check">
+                                <hr>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="use_contract" name="use_contract" value="0">
+                                    <label class="form-check-label" for="use_contract"><b>使用契約</b></label>
+                                </div>
+                            </div>
+                            <div id="use_div" class="col-md-4 mt-2">
+                                <div class="mb-3">
+                                    <label for="contract_id" class="form-label">契約選擇<span class="text-danger">*</span></label>
+                                    <select id="contract_id" class="form-select" name="contract_id" >
+                                        <option value="">請選擇...</option>                      
+                                    </select>
+                               </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div> <!-- end card -->
@@ -379,17 +396,20 @@
             $("#type").prop('required', false);
             $("#plan_id").prop('required', false);
             $("#plan_price").prop('required', false);
+            $("#use_check").hide(300);
             if(type_list == 'memorial'){
-                $("#final_price").hide();
+                $("#final_price").hide(300);
                 $(".not_memorial_show").hide();
+                $("#use_check").hide(300);
             }
         }else{
             $("#final_price").hide(300);
             if(type_list == 'memorial'){
                 $("#final_price").hide();
-                $(".not_memorial_show").hide();
+                $(".not_memorial_show").hide(300);
             }else{
-                $(".not_memorial_show").show();
+                $("#use_check").show(300);
+                $(".not_memorial_show").show(300);
                 $("#pet_name").prop('required', true);
                 $("#kg").prop('required', true);
                 $("#type").prop('required', true);
@@ -437,15 +457,7 @@
     
 
     $("#plan_id").on('change', function(){
-        // var plan_id = $(this).val();
-        // if(plan_id == '3'){
-        //     var total = $("#total").val();
-        //     total = total - 100;
-        //     $("#total").val(total);
-        //     $("#total_text").html(total);
-        // }else{
-            calculate_price();
-        // }
+        calculate_price();
     });
 
     $("#final_price").on('input', function(){
@@ -555,7 +567,38 @@
         newRow.append(cols);
         $("table.gdpaper-list tbody").append(newRow);
     });
+
+    $("#use_div").hide();
+    var salePrice = 0;
+    $('#use_contract').change(function() {
+        if ($(this).is(':checked')) {
+            $(this).val(1);
+            $("#use_div").show(300);
+            $("#contract_id").prop('required', true);
+            $.ajax({
+                url : '{{ route('customer.contract.search') }}',
+                data:{'customer_id':$("#cust_name_q").val()},
+                success:function(data){
+                    $('#contract_id').html(data);
+                        salePrice = $('#contract_id option:selected').attr('data-sale-price');
+                    $('#contract_id').change(function() {
+                        salePrice = $('#contract_id option:selected').data('sale-price');
+                    });
+                    calculate_price();
+                }
+            });
+        } else {
+            $(this).val(0);
+            $("#use_div").hide(300);
+            $("#contract_id").prop('required', false);
+        }
+    });
     
+    $(document).on('change', '#contract_id', function() {
+        salePrice = $('#contract_id option:selected').data('sale-price');
+        calculate_price();
+        console.log(salePrice); // 現在這應該能正確輸出
+    });
     
     function calculate_price() {
         var total = 0;
@@ -564,14 +607,18 @@
             if(!isNaN(value)) {
                 total += value;
             }
+            console.log(salePrice);
         });
+        if(typeof salePrice !== '0')
+        {
+            total = total-salePrice;
+        }
         plan_id = $('select[name="plan_id"]').val();
         // if(plan_id == '3'){
         //     total = total - 100;
         // }
         $("#total").val(total);
         $("#total_text").html(total);
-        console.log(plan_id);
     }
 
     $( "#cust_name_q" ).keydown(function() {

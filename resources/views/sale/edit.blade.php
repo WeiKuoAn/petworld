@@ -69,10 +69,6 @@
                             <label for="sale_date" class="form-label">日期<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="sale_date" name="sale_date" value="{{ $data->sale_date }}" required>
                         </div>
-                        <div class="mb-3 col-md-4">
-                            <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" value="{{ $data->user_name->name }}" readonly>
-                        </div>
                         <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
                             <select id="type" class="form-select" name="customer_id" >
@@ -128,6 +124,48 @@
                             <label for="plan_price" class="form-label">方案價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number" id="plan_price" name="plan_price" value="{{ $data->plan_price }}" >
                         </div>
+                        <div class="mb-3 col-md-4">
+                            <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="user_id" name="user_id" value="{{ $data->user_name->name }}" readonly>
+                        </div>
+                        <div class="col-xl-12">
+                            <div id="use_check">
+                                <hr>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="use_contract" name="use_contract" @if(isset($data->sale_contract)) value = "1" checked @else value="0" @endif>
+                                    <label class="form-check-label" for="use_contract"><b>使用契約</b></label>
+                                </div>
+                            </div>
+                            <div id="use_div" class="col-md-4 mt-2">
+                                <div class="mb-3">
+                                    <label for="contract_id" class="form-label">契約選擇<span class="text-danger">*</span></label>
+                                    <select id="contract_id" class="form-select" name="contract_id" >
+                                        @if(isset($data->sale_contract))
+                                            <option value="{{ $data->sale_contract->contract_id }}">
+                                                品種（{{ $data->sale_contract->contract_data->pet_variety}}）寶貝名：{{ $data->sale_contract->contract_data->pet_name }}，折扣金額：{{ $data->sale_contract->contract_data->price+$data->sale_contract->use_contract->sale_price }}
+                                            </option>            
+                                        @endif          
+                                    </select>
+                               </div>
+                            </div>
+                        </div> 
+                        <div class="col-xl-12">
+                            <div id="edit_check">
+                                <hr>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="edit_contract" name="edit_contract"  value="0">
+                                    <label class="form-check-label" for="edit_contract"><b>修改契約</b></label>
+                                </div>
+                            </div>
+                            <div id="edit_div" class="col-md-4 mt-2">
+                                <div class="mb-3">
+                                    <label for="edit_contract_id" class="form-label">契約選擇<span class="text-danger">*</span></label>
+                                    <select id="edit_contract_id" class="form-select" name="edit_contract_id" >
+                                        <option value="">請選擇...</option>                      
+                                    </select>
+                               </div>
+                            </div>
+                        </div> 
                         {{-- <div class="mb-3 col-md-4 not_memorial_show" id="final_price">
                             <label for="plan_price" class="form-label">方案追加/尾款價格<span class="text-danger">*</span></label>
                             <input type="text" class="form-control total_number"  name="final_price" value="{{ $data->plan_price }}" >
@@ -668,6 +706,59 @@
         $("table.gdpaper-list tbody").append(newRow);
     });
     
+    $("input[name='use_contract']").on('click', function() {
+        if($(this).val() == "0"){
+            $("#use_div").show(300);
+            $("#contract_id").prop('required', true);
+            $(this).val(1); // 設置 value 為 1
+        }else{
+            $(this).val(0); // 設置 value 為 0
+            $("#use_div").hide(300);
+            $("#contract_id").prop('required', false);
+        }
+        $(this).prop('checked', $(this).prop('checked')); // 切換 checked 狀態
+    });
+
+    use_contract = $("input[name='use_contract']").val();
+    if(use_contract == "1"){
+        $("#use_div").show(300);
+        $("#contract_id").prop('required', true);
+    }else{
+        $("#use_div").hide(300);
+        $("#contract_id").prop('required', false);
+    }
+    
+    $("#edit_div").hide();
+    var salePrice = 0;
+    $('#edit_contract').change(function() {
+        if ($(this).is(':checked')) {
+            $(this).val(1);
+            $("#edit_div").show(300);
+            $("#edit_contract_id").prop('required', true);
+            $.ajax({
+                url : '{{ route('customer.contract.search') }}',
+                data:{'customer_id':$('select[name="customer_id"]').val()},
+                success:function(data){
+                    $('#edit_contract_id').html(data);
+                        salePrice = $('#edit_contract_id option:selected').attr('data-sale-price');
+                    $('#edit_contract_id').change(function() {
+                        salePrice = $('#edit_contract_id option:selected').data('sale-price');
+                    });
+                    calculate_price();
+                }
+            });
+        } else {
+            $(this).val(0);
+            $("#edit_div").hide(300);
+            $("#edit_contract_id").prop('required', false);
+        }
+    });
+    
+    $(document).on('change', '#edit_contract_id', function() {
+        salePrice = $('#edit_contract_id option:selected').data('sale-price');
+        calculate_price();
+        console.log(salePrice); // 現在這應該能正確輸出
+    });
     
     function calculate_price() {
         var total = 0;
@@ -677,6 +768,10 @@
                 total += value;
             }
         });
+        if(typeof salePrice !== '0')
+        {
+            total = total-salePrice;
+        }
         $("#total").val(total);
         $("#total_text").html(total);
     }
@@ -732,6 +827,18 @@
             newRow.append(cols);
             $("table.prom-list tbody").append(newRow);
         });
+
+        $("#your-form").on('submit', function(event) {
+            var isUseContractChecked = $("#use_contract").is(":checked");
+            var isEditContractChecked = $("#edit_contract").is(":checked");
+
+            if (isUseContractChecked && isEditContractChecked) {
+                alert("使用契約與編輯契約只能擇一");
+                event.preventDefault(); // 阻止表單提交
+            }
+        });
+
+
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script>
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contract;
+use App\Models\ContractUse;
+use App\Models\ContractRefund;
 use App\Models\ContractType;
 use App\Models\Customer;
 use App\Models\Sale;
@@ -12,14 +14,36 @@ use Carbon\Carbon;
 
 class ContractController extends Controller
 {
+    public function customer_contract_search(Request $request)
+    {
+        if ($request->ajax()) {
+            $contracts = Contract::where('customer_id', $request->customer_id)
+                               ->join('contract_use','contract_use.contract_id','=','contract.id')
+                               ->where('contract.status', '8')
+                               ->select('contract.*','contract_use.sale_price')
+                               ->get();
+
+            if ($contracts->isEmpty()) {
+                return response('<option value="">請選擇...</option>');
+            } else {
+                $output = $contracts->map(function($contract) {
+                    $sale_price = $contract->price + $contract->sale_price;
+                    return '<option value="'.$contract->id.'" data-sale-price="'.$sale_price.'" >'.'品種（'.$contract->pet_variety.'）'.'寶貝名：'.$contract->pet_name.'，折扣金額：'.$sale_price.'</option>';
+                });
+
+                return response($output);
+            }
+        }
+    }
+
     public function index(Request $request)
     {
         $today = Carbon::now()->format("Y-m-d");
-        $check_renew = $request->check_renew;
-        if(!isset($check_renew)){
+        $status = $request->status;
+        if(!isset($status)){
             $datas = Contract::where('status','0');
         }else{
-            $datas = Contract::where('status',$check_renew);
+            $datas = Contract::where('status',$status);
         }
                 
         if ($request) {
@@ -65,14 +89,6 @@ class ContractController extends Controller
                     $datas = $datas ;
                 }
             }
-
-            $colse = $request->check_close;
-            if(!isset($colse) || $colse == '1')
-            {
-                $datas = $datas->whereNull('close_date');
-            }else{
-                $datas = $datas->whereNotNull('close_date');
-            }
                 
             $datas = $datas->orderby('start_date', 'asc')->paginate(50);
 
@@ -106,11 +122,6 @@ class ContractController extends Controller
         $data->price = $request->price;
         $data->start_date = $request->start_date;
         $data->end_date = $request->end_date;
-        if(isset($request->status)){
-            $data->status = $request->status;
-        }else{
-            $data->status = 0;
-        }
         $data->user_id = Auth::user()->id;
         $data->comment = $request->comment;
         $data->save();
@@ -131,17 +142,74 @@ class ContractController extends Controller
         $data->type = $request->type;
         $data->customer_id = $request->cust_name_q;
         $data->pet_name = $request->pet_name;
+        $data->pet_variety = $request->pet_variety;
         $data->mobile = $request->mobile;
         $data->price = $request->price;
         $data->start_date = $request->start_date;
         $data->end_date = $request->end_date;
 
-        if(isset($request->close_date)){
-            $data->status = $request->status;
-        }else{
-            $data->status = 0;
+        $use_data = ContractUse::where('contract_id',$id)->first();
+        $refund_data = ContractRefund::where('contract_id',$id)->first();
+        if($request->use == '1'){
+            $new_contrcat = new ContractUse;
+            $new_contrcat->contract_id =$id;
+            $new_contrcat->use_date = $request->use_date;
+            $new_contrcat->comment = $request->use_comment;
+
+            $start_date = Carbon::createFromFormat('Y-m-d', $request->start_date);
+            $use_date = Carbon::createFromFormat('Y-m-d', $request->use_date);
+
+            // 計算兩個日期之間的差異（以天為單位）
+            $daysDifference = $start_date->diffInDays($use_date, false);
+            // dd($daysDifference);
+
+            // 根據天數差異決定金額
+            if ($daysDifference <= 6) {
+                $new_contrcat->sale_price = 500;
+            } else {
+                $new_contrcat->sale_price = 1000;
+            }
+            $new_contrcat->save();
+            $data->status = 8;
+        }else if($request->refund == '1'){
+            $refund_contrcat = new ContractRefund();
+            $refund_contrcat->contract_id =$id;
+            $refund_contrcat->refund_date = $request->refund_date;
+            $refund_contrcat->comment = $request->refund_comment;
+            $refund_contrcat->save();
+            $data->status = 5;
+        }else if(isset($use_data) && $request->refund == '1'){
+            ContractUse::where('contract_id',$id)->delete();
+            $refund_contrcat = new ContractRefund();
+            $refund_contrcat->contract_id =$id;
+            $refund_contrcat->refund_date = $request->refund_date;
+            $refund_contrcat->comment = $request->refund_comment;
+            $refund_contrcat->save();
+            $data->status = 5;
+        }else if(isset($refund_data) && $request->refund == '1'){
+            ContractRefund::where('contract_id',$id)->delete();
+            $new_contrcat = new ContractUse;
+                $new_contrcat->contract_id =$id;
+                $new_contrcat->use_date = $request->use_date;
+                $new_contrcat->comment = $request->use_comment;
+    
+                $start_date = Carbon::createFromFormat('Y-m-d', $request->start_date);
+                $use_date = Carbon::createFromFormat('Y-m-d', $request->use_date);
+    
+                // 計算兩個日期之間的差異（以天為單位）
+                $daysDifference = $start_date->diffInDays($use_date, false);
+                // dd($daysDifference);
+    
+                // 根據天數差異決定金額
+                if ($daysDifference <= 6) {
+                    $new_contrcat->sale_price = 500;
+                } else {
+                    $new_contrcat->sale_price = 1000;
+                }
+                $new_contrcat->save();
+                $data->status = 8;
         }
-        $data->close_date = $request->close_date;
+
         $data->comment = $request->comment;
         $data->user_id = Auth::user()->id;
         $data->save();
@@ -159,6 +227,13 @@ class ContractController extends Controller
     public function destroy(Request $request, $id)
     {
         Contract::where('id',$id)->delete();
+        $use_data = ContractUse::where('contract_id',$id)->first();
+        $refund_data = ContractRefund::where('contract_id',$id)->first();
+        if(isset($use_data)){
+            ContractUse::where('contract_id',$id)->delete();
+        }else if(isset($refund_data)){
+            ContractRefund::where('contract_id',$id)->delete();
+        }
         return redirect()->route('contracts');
     }
 }

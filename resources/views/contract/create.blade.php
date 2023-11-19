@@ -156,7 +156,7 @@
         var startDate = new Date($(this).val());
         
         // Add 7 days to the start date
-        startDate.setDate(startDate.getDate() + 7);
+        startDate.setDate(startDate.getDate() + 6);
 
         var endYear = startDate.getFullYear();
         var endMonth = ("0" + (startDate.getMonth() + 1)).slice(-2); // JavaScript months are 0-indexed

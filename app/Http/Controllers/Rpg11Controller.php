@@ -9,6 +9,7 @@ use App\Models\IncomeData;
 use App\Models\PayData;
 use App\Models\PayItem;
 use App\Models\PujaData;
+use App\Models\Contract;
 
 class Rpg11Controller extends Controller
 {
@@ -24,11 +25,13 @@ class Rpg11Controller extends Controller
             $datas[$year]['slae_price'] = Sale::where('status', '9')->where('sale_date','>=',$year.'-01-01')->where('sale_date','<=',$year.'-12-31')->sum('pay_price');
             $datas[$year]['puja_count'] = PujaData::where('date','>=',$year.'-01-01')->where('date','<=',$year.'-12-31')->whereIn('pay_id', ['A', 'C'])->count();
             $datas[$year]['puja_price'] = PujaData::where('date','>=',$year.'-01-01')->where('date','<=',$year.'-12-31')->sum('pay_price');
+            $datas[$year]['contract_count'] = Contract::where('start_date','>=',$year.'-01-01')->where('start_date','<=',$year.'-12-31')->where('status', 9)->count();
+            $datas[$year]['contract_price'] = Contract::where('start_date','>=',$year.'-01-01')->where('start_date','<=',$year.'-12-31')->where('status', 9)->sum('price');
             $datas[$year]['income_price'] = IncomeData::where('income_date','>=',$year.'-01-01')->where('income_date','<=',$year.'-12-31')->sum('price');
             $datas[$year]['pay_data_price'] = PayData::where('status','1')->where('pay_date','>=',$year.'-01-01')->where('pay_date','<=',$year.'-12-31')->where('created_at','<=','2023-01-08 14:22:21')->sum('price');//data總支出
             $datas[$year]['pay_item_price'] = PayItem::where('status','1')->where('pay_date','>=',$year.'-01-01')->where('pay_date','<=',$year.'-12-31')->sum('price');//data總支出
             $datas[$year]['pay_price'] = $datas[$year]['pay_data_price']+$datas[$year]['pay_item_price'];
-            $datas[$year]['total_income'] = intval($datas[$year]['slae_price']) + intval($datas[$year]['puja_price']) + intval($datas[$year]['income_price']);//總收入
+            $datas[$year]['total_income'] = intval($datas[$year]['slae_price']) + intval($datas[$year]['puja_price']) + intval($datas[$year]['income_price'] + intval($datas[$year]['contract_price']));//總收入
             $datas[$year]['total'] = intval($datas[$year]['total_income']) - intval($datas[$year]['pay_price']);
         }
         foreach($years as $year)

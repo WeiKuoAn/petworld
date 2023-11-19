@@ -33,6 +33,8 @@
                                         <th scope="col">業務營收</th>
                                         <th scope="col">法會單量</th>
                                         <th scope="col">法會營收</th>
+                                        <th scope="col">契約單量</th>
+                                        <th scope="col">契約營收</th>
                                         <th scope="col">其他收入</th>
                                         <th scope="col">總營收</th>
                                         <th scope="col">總支出</th>
@@ -48,6 +50,8 @@
                                             <td>{{ number_format($data['slae_price']) }}</td>
                                             <td>{{ number_format($data['puja_count']) }}</td>
                                             <td>{{ number_format($data['puja_price']) }}</td>
+                                            <td>{{ number_format($data['contract_count']) }}</td>
+                                            <td>{{ number_format($data['contract_price']) }}</td>
                                             <td>{{ number_format($data['income_price']) }}</td>
                                             <td>{{ number_format($data['total_income']) }}</td>
                                             <td>{{ number_format($data['pay_price']) }}</td>
@@ -61,6 +65,8 @@
                                     @endforeach
                                 </tbody>
                                 <tr align="center">
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>

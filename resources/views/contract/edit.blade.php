@@ -37,11 +37,57 @@
                     @csrf
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="mb-3">
-                                <label for="close_date" class="form-label">契約失效日期<span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" id="close_date" name="close_date"  value="{{ $data->close_date }}">
-                           </div>
-                           <hr>
+                            <div id="use_check">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="use" name="use" @if(isset($data->use_data)) value="1" checked  @else value="0" @endif>
+                                    <label class="form-check-label" for="use"><b>使用契約</b></label>
+                                </div>
+                            </div>
+                            <div id="use_div" class="mt-2">
+                                <div class="mb-3">
+                                    <label for="use_date" class="form-label">契約使用日期<span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="use_date" name="use_date" @if(isset($data->use_data))  value="{{ $data->use_data->use_date }}" @else value="" @endif>
+                               </div>
+                               <div>
+                                <label class="form-label">備註</label>
+                                <textarea class="form-control" rows="3" placeholder="" name="use_comment">
+                                    @if(isset($data->use_data))
+                                        {{$data->use_data->comment }}
+                                    @endif
+                                </textarea>
+                            </div>
+                            </div>
+                        </div> 
+                        <div class="col-xl-12 mt-2">
+                            <div id="refund_check">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="refund" name="refund" @if(isset($data->refund_data)) value="1" checked  @else value="0" @endif>
+                                    <label class="form-check-label" for="refund"><b>契約退款</b></label>
+                                </div>
+                            </div>
+                            <div id="refund_div" class="mt-2">
+                                <div class="mb-3">
+                                    <label for="refund_date" class="form-label">契約退款日期<span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="refund_date" name="refund_date"  @if(isset($data->refund_data))  value="{{ $data->refund_data->refund_date }}" @else value="" @endif>
+                               </div>
+                               <div>
+                                    <label class="form-label">備註</label>
+                                    <textarea class="form-control" rows="3" placeholder="" name="refund_comment">
+                                        @if(isset($data->refund_data))
+                                            {{$data->refund_data->comment }}
+                                        @endif
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div> 
+                    </div> <!-- end card-->
+                </div> <!-- end col-->
+            </div>
+        </div>
+                           <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">類別名稱<span class="text-danger">*</span></label>
@@ -134,28 +180,64 @@
 <!-- demo app -->
 <script src="{{asset('assets/js/pages/create-project.init.js')}}"></script>
 <script>
-    $("#renew_div").hide();
-    $('#renew').change(function() {
+    $("#use_div").hide();
+    $("#refund_div").hide();
+
+    $('#use').change(function() {
         if ($(this).is(':checked')) {
             $(this).val(1);
-            $("#renew_div").show(300);
-            $("#renew_year").prop('required', true);
+            $("#use_div").show(300);
+            $("#use_date").prop('required', true);
+            $("#refund_check").hide(200);
+            $("#refund_div").hide(200);
+            $("input[name='refund']").val('0');
+            $('#refund').prop('checked', false);
         } else {
             $(this).val(0);
-            $("#renew_div").hide(300);
-            $("#renew_year").prop('required', false);
+            $("#use_div").hide(300);
+            $("#use_date").prop('required', false);
+            $("#refund_check").show(200);
+            $("#use_div").hide(200);
+        }
+    });
+
+    $('#refund').change(function() {
+        if ($(this).is(':checked')) {
+            $(this).val(1);
+            $("#refund_div").show(300);
+            $("#refund_check").show(300);
+            $("#refund_date").prop('required', true);
+            $("#use_check").hide(200);
+            $("#use_div").hide(200);
+            $("input[name='use']").val('0');
+            $('#use').prop('checked', false);
+        } else {
+            $(this).val(0);
+            $("#refund_div").hide(300);
+            $("#refund_date").prop('required', false);
+            $("#use_check").show(200);
+            $("#use_div").hide(200);
         }
     });
 
     console.log($("input[name='renew_year_hidden']").val());
 
-    if($("#renew").is(":checked")){
-        $("input[name='renew']").val('1');
-        $("#renew_div").show();
+    if($("#use").is(":checked")){
+        $("input[name='use']").val('1');
+        $("#use_div").show();
     } else {
-        $("input[name='renew']").val('0');
-        $("#renew_div").hide();
+        $("input[name='use']").val('0');
+        $("#use_div").hide();
     }
+
+    if($("#refund").is(":checked")){
+        $("input[name='refund']").val('1');
+        $("#refund_div").show();
+    } else {
+        $("input[name='refund']").val('0');
+        $("#refund_div").hide();
+    }
+    
 
     $( "#cust_name_q" ).keydown(function() {
         $value=$(this).val();

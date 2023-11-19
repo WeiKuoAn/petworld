@@ -29,7 +29,7 @@
                         <div class="col-auto">
                             <form class="d-flex flex-wrap align-items-center" action="{{ route('contracts') }}" method="GET">
                                 <div class="me-3">
-                                    <label for="start_date_start" class="form-label">起始日期</label>
+                                    <label for="start_date_start" class="form-label">簽約日期</label>
                                     <input type="date" class="form-control" id="start_date_start" name="start_date_start" value="{{ $request->start_date_start }}">
                                 </div>
                                 <div class="me-3">
@@ -37,7 +37,7 @@
                                     <input type="date" class="form-control" id="start_date_end" name="start_date_end" value="{{ $request->start_date_end }}">
                                 </div>
                                 <div class="me-3">
-                                    <label for="end_date_start" class="form-label">結束日期</label>
+                                    <label for="end_date_start" class="form-label">生效日期</label>
                                     <input type="date" class="form-control" id="end_date_start" name="end_date_start" value="{{ $request->end_date_start }}">
                                 </div>
                                 <div class="me-3">
@@ -62,7 +62,9 @@
                                     <label class="form-label">狀態</label>
                                     <select class="form-select my-1 my-lg-0" id="status-select" name="status" onchange="this.form.submit()">
                                         <option value="0" @if($request->status == '0' || !isset($request->status)) selected @endif>未結案</option>
-                                        <option value="1" @if($request->status == '1') selected @endif>已結案</option>
+                                        <option value="5" @if($request->status == '5') selected @endif>已退款</option>
+                                        <option value="8" @if($request->status == '8') selected @endif>已使用未key單</option>
+                                        <option value="9" @if($request->status == '9') selected @endif>已使用並key單</option>
                                     </select>
                                 </div>
                                 <div class="me-3 mt-3">
@@ -74,7 +76,7 @@
                             <div class="text-lg-end my-1 my-lg-0">
                                 {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
                                 <a href="{{ route('contract.create') }}">
-                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#custom-modal"><i class="mdi mdi-plus-circle me-1"></i>新增合約</button>
+                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#custom-modal"><i class="mdi mdi-plus-circle me-1"></i>新增契約</button>
                                 </a>
                             </div>
                         </div><!-- end col-->
@@ -101,8 +103,15 @@
                                     <th>寶貝名稱</th>
                                     <th>簽約日期</th>
                                     <th>生效日期</th>
+                                    @if($request->status == '8' || $request->status == '9')
+                                        <th>使用日期</th>
+                                    @elseif($request->status == '5')
+                                        <th>退款日期</th>
+                                    @endif
                                     <th>金額</th>
-                                    <th>動作</th>
+                                    @if($request->status != '9')
+                                        <th>動作</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,12 +132,14 @@
                                     <td>{{ $data->pet_variety }}</td>
                                     <td>{{ $data->pet_name }}</td>
                                     <td>{{ $data->start_date }}</td>
-                                    @if(!isset($request->check_close) || $request->check_close == '1')
-                                        <td>{{ $data->end_date }}</td>
-                                    @else
-                                        <td>{{ $data->close_date }}</td>
+                                    <td>{{ $data->end_date }}</td>
+                                    @if($request->status == '8' || $request->status == '9')
+                                        <td><b style="color: red;">{{ $data->use_data->use_date }}</b></td>
+                                    @elseif($request->status == '5')
+                                        <td><b style="color: red;">{{ $data->refund_data->refund_date }}</b></td>
                                     @endif
                                     <td>{{ number_format($data->price) }}</td>
+                                    @if($request->status != '9')
                                     <td>
                                         <div class="btn-group dropdown">
                                             <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
@@ -138,6 +149,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

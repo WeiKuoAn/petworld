@@ -81,6 +81,11 @@ class Sale extends Model
         return $this->belongsTo('App\Models\SaleSource', 'type', 'code');
     }
 
+    public function sale_contract()
+    {
+        return $this->hasOne('App\Models\SaleContract', 'sale_id', 'id');
+    }
+
     public function pay_type()
     {
         $pay_type = ['A' => '結清', 'B' => '結清', 'C' => '訂金', 'D' => '尾款' , 'E' => '追加'];

@@ -131,6 +131,27 @@
                             <label for="user_id" class="form-label">服務專員<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="user_id" name="user_id" value="{{ $data->user_name->name }}" readonly>
                         </div>
+                        <div class="col-xl-12">
+                            <div id="use_check">
+                                <hr>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="use_contract" name="use_contract" @if(isset($data->sale_contract)) value = "1" checked @else value="0" @endif>
+                                    <label class="form-check-label" for="use_contract"><b>使用契約</b></label>
+                                </div>
+                            </div>
+                            <div id="use_div" class="col-md-4 mt-2">
+                                <div class="mb-3">
+                                    <label for="contract_id" class="form-label">契約選擇<span class="text-danger">*</span></label>
+                                    <select id="contract_id" class="form-select" name="contract_id" >
+                                        @if(isset($data->sale_contract))
+                                            <option value="{{ $data->sale_contract->contract_id }}">
+                                                品種（{{ $data->sale_contract->contract_data->pet_variety}}）寶貝名：{{ $data->sale_contract->contract_data->pet_name }}，折扣金額：{{ $data->sale_contract->contract_data->price+$data->sale_contract->use_contract->sale_price }}
+                                            </option>            
+                                        @endif          
+                                    </select>
+                               </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div> <!-- end card -->
@@ -575,7 +596,14 @@
         console.log(total);
     }
 
-   
+    use_contract = $("input[name='use_contract']").val();
+    if(use_contract == "1"){
+        $("#use_div").show(300);
+        $("#contract_id").prop('required', true);
+    }else{
+        $("#use_div").hide(300);
+        $("#contract_id").prop('required', false);
+    }
 
 
     $( "#cust_name_q" ).keydown(function() {

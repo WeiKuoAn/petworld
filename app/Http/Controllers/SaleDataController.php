@@ -11,12 +11,14 @@ use App\Models\Sale_gdpaper;
 use App\Models\Sale_prom;
 use App\Models\SaleSplit;
 use App\Models\SaleChange;
+use App\Models\SaleContract;
 use App\Models\Sale;
 use App\Models\User;
 use App\Models\SaleSource;
 use App\Models\Product;
 use App\Models\CustGroup;
 use App\Models\SaleCompanyCommission;
+use App\Models\Contract;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -165,6 +167,19 @@ class SaleDataController extends Controller
         $sale->save();
 
         $sale_id = Sale::orderby('id', 'desc')->first();
+        // dd($request->use_contract);
+        if($request->use_contract == '1')
+        {
+            $sale_contract = new SaleContract;
+            $sale_contract->sale_id = $sale_id->id;
+            $sale_contract->contract_id = $request->contract_id;
+            $sale_contract->save();
+
+            $contrace = Contract::where('id',$request->contract_id)->first();
+            // dd($request->contract_id);
+            $contrace->status = 9;
+            $contrace->save();
+        }
 
 
         foreach($request->select_proms as $key=>$select_prom)
@@ -608,6 +623,26 @@ class SaleDataController extends Controller
         $sale->save();
 
         $sale_id = Sale::where('id', $id)->first();
+
+        if($request->edit_contract == '1')
+        {
+            $contract_data = SaleContract::where('sale_id', $id)->first();
+            $edit_contract = Contract::where('id',$contract_data->contract_id)->first();
+            $edit_contract->status = 8;
+            $edit_contract->save();
+            
+            SaleContract::where('sale_id', $id)->delete();
+
+            $sale_contract = new SaleContract;
+            $sale_contract->sale_id = $sale_id->id;
+            $sale_contract->contract_id = $request->edit_contract_id;
+            $sale_contract->save();
+
+            $contrace = Contract::where('id',$request->edit_contract_id)->first();
+            $contrace->status = 9;
+            $contrace->save();
+        }
+
         Sale_prom::where('sale_id', $sale_id->id)->delete();
 
         if(isset($request->select_proms)){
@@ -707,7 +742,7 @@ class SaleDataController extends Controller
             ->with('sources',$sources)
             ->with('sale_company',$sale_company);
     }
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $sale = Sale::where('id', $id);
         $sale_gdpapers = Sale_gdpaper::where('sale_id', $id);
@@ -718,6 +753,16 @@ class SaleDataController extends Controller
         $sale_gdpapers->delete();
         $sale_promBs->delete();
         $sale_company->delete();
+
+        if($request->use_contract == '1')
+        {
+            $contract_data = SaleContract::where('sale_id', $id)->first();
+            $contract = Contract::where('id',$contract_data->contract_id)->first();
+            $contract->status = 8;
+            $contract->save();
+            
+            SaleContract::where('sale_id', $id)->delete();
+        }
         return redirect()->route('sales');
     }
 

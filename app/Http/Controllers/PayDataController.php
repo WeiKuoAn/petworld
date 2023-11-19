@@ -22,11 +22,9 @@ class PayDataController extends Controller
             if ($status) {
                 $datas = PayData::where('status',  $status);
                 $items = PayItem::where('status',  $status);
-                $sum_pay = PayData::where('status', $status);
             }else{
                 $datas = PayData::where('status', 0);
                 $items = PayItem::where('status',  0);
-                $sum_pay = PayData::where('status', 0);
             }
 
             // item支出日期
@@ -48,27 +46,22 @@ class PayDataController extends Controller
             $after_date = $request->after_date;
             if ($after_date) {
                 $datas =  $datas->where('pay_date', '>=', $after_date);
-                $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date);
             }
             $before_date = $request->before_date;
             if ($before_date) {
                 $datas =  $datas->where('pay_date', '<=', $before_date);
-                $sum_pay  = $sum_pay->where('pay_date', '<=', $before_date);
             }
-            if($after_date && $before_date){
-                $datas =  $datas->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
-                $sum_pay  = $sum_pay->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
-            }
+            // if($after_date && $before_date){
+            //     $datas =  $datas->where('pay_date', '>=', $after_date)->where('pay_date', '<=', $before_date);
+            // }
 
             $pay = $request->pay;
             if ($pay != "null") {
                 if (isset($pay)) {
                     $items = $items->where('pay_id',$pay);
                     $datas =  $datas->where('pay_id', $pay);
-                    $sum_pay  = $sum_pay->where('pay_id', $pay);
                 } else {
                     // $datas = $datas;
-                    $sum_pay  = $sum_pay;
                     $items = $items;
                 }
             }
@@ -81,13 +74,11 @@ class PayDataController extends Controller
             if ($user != "null") {
                 if (isset($user)) {
                     $datas =  $datas->where('user_id', $user);
-                    $sum_pay  = $sum_pay->where('user_id', $user);
                 } else {
                     $datas = $datas;
-                    $sum_pay  = $sum_pay;
                 }
             }else{
-                if(count($items) > 0)
+                if(isset($pay_after_date) || isset($pay_before_date))
                 {
                     foreach($items as $item)
                     {
@@ -97,17 +88,15 @@ class PayDataController extends Controller
                 }
             }
             
-            $sum_pay  = $sum_pay->sum('price');
             $datas = $datas->orderby('pay_date','desc')->paginate(50);
             $condition = $request->all();
         }else{
             $datas = PayData::orderby('pay_date','desc')->paginate(50);
-            $sum_pay  = PayData::sum('price');
             $condition = '';
         }
         // dd($datas);
         return view('pay.index')->with('datas',$datas)->with('request',$request)->with('pays',$pays)->with('users',$users)->with('condition',$condition)
-                                   ->with('sum_pay',$sum_pay);
+                                ;
     }
 
     public function create(){

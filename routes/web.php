@@ -385,14 +385,15 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/customer/pet/search', [PujaDataController::class, 'customer_pet_search'])->name('customer.pet.search');
     Route::get('/puja/search', [PujaDataController::class, 'puja_search'])->name('puja.search');
 
-    /*合約類別管理*/
+    /*契約類別管理*/
     Route::get('/contractType', [ContractTypeController::class, 'index'])->name('contractTypes');
     Route::get('/contractType/create', [ContractTypeController::class, 'create'])->name('contractType.create');
     Route::post('/contractType/create', [ContractTypeController::class, 'store'])->name('contractType.create.data');
     Route::get('/contractType/edit/{id}', [ContractTypeController::class, 'show'])->name('contractType.edit');
     Route::post('/contractType/edit/{id}', [ContractTypeController::class, 'update'])->name('contractType.edit.data');
 
-    /*合約管理*/
+    /*契約管理*/
+    Route::get('customer/contract', [ContractController::class, 'customer_contract_search'])->name('customer.contract.search');
     Route::get('/contract', [ContractController::class, 'index'])->name('contracts');
     Route::get('/contract/create', [ContractController::class, 'create'])->name('contract.create');
     Route::post('/contract/create', [ContractController::class, 'store'])->name('contract.create.data');

@@ -19,7 +19,7 @@ class Contract extends Model
         'year',
         'start_date',
         'end_date',
-        'close_date',
+        'use_date',
         'renew',
         'renew_year',
         'user_id',
@@ -41,5 +41,15 @@ class Contract extends Model
     public function user_name()
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
+
+    public function use_data()
+    {
+        return $this->hasOne('App\Models\ContractUse', 'contract_id', 'id');
+    }
+
+    public function refund_data()
+    {
+        return $this->hasOne('App\Models\ContractRefund', 'contract_id', 'id');
     }
 }
