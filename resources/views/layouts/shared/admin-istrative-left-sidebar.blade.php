@@ -131,6 +131,27 @@
                     </div>
                 </li>
 
+                <li>
+                    <a href="#contract" data-bs-toggle="collapse">
+                        <i data-feather="folder"></i>
+                        <span> 契約管理 </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="contract">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('contractTypes') }}"  class="{{ request()->is('contractTypes') ? 'active' : '' }}">契約類別</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">契約管理</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增契約</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 {{-- <li>
                     <a href="#puja" data-bs-toggle="collapse">
                         <i data-feather="feather"></i>
@@ -260,10 +281,10 @@
                                 <a href="{{ route('rpg13') }}"  class="{{ request()->is('rpg13') ? 'active' : '' }}">金紙賣出報表</a>
                             </li>
                             <li>
-                                <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">安葬服務報表</a>
+                                <a href="{{ route('rpg17') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">安葬服務報表</a>
                             </li>
                             <li>
-                                <a href="{{ route('rpg17') }}"  class="{{ request()->is('rpg17') ? 'active' : '' }}">後續服務報表</a>
+                                <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg17') ? 'active' : '' }}">後續服務報表</a>
                             </li>
                             <li>
                                 <a href="{{ route('rpg02') }}"  class="{{ request()->is('rpg02') ? 'active' : '' }}">支出報表</a>

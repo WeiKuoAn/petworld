@@ -99,10 +99,10 @@
                                 <a href="{{ route('rpg13') }}"  class="{{ request()->is('rpg13') ? 'active' : '' }}">金紙賣出報表</a>
                             </li>
                             <li>
-                                <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">安葬服務報表</a>
+                                <a href="{{ route('rpg17') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">安葬服務報表</a>
                             </li>
                             <li>
-                                <a href="{{ route('rpg17') }}"  class="{{ request()->is('rpg17') ? 'active' : '' }}">後續服務報表</a>
+                                <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg17') ? 'active' : '' }}">後續服務報表</a>
                             </li>
                             <li>
                                 <a href="{{ route('rpg02') }}"  class="{{ request()->is('rpg02') ? 'active' : '' }}">支出報表</a>
