@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "合約列表"])
+@extends('layouts.vertical', ["page_title"=> "契約列表"])
 
 @section('content')
 <!-- Start Content-->
@@ -11,11 +11,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">合約管理</a></li>
-                        <li class="breadcrumb-item active">合約列表</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">契約管理</a></li>
+                        <li class="breadcrumb-item active">契約列表</li>
                     </ol>
                 </div>
-                <h4 class="page-title">合約列表</h4>
+                <h4 class="page-title">契約列表</h4>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
                                     <input type="search" class="form-control my-1 my-lg-0" id="cust_name" name="cust_name">
                                 </div>
                                 <div class="me-sm-3">
-                                    <label class="form-label">合約類別</label>
+                                    <label class="form-label">契約類別</label>
                                     <select class="form-select my-1 my-lg-0" id="status-select" name="type" onchange="this.form.submit()">
                                         <option value="null" selected>請選擇...</option>
                                         @foreach($contract_types as $contract_type)
@@ -61,7 +61,7 @@
                                 <div class="me-sm-3">
                                     <label class="form-label">狀態</label>
                                     <select class="form-select my-1 my-lg-0" id="status-select" name="status" onchange="this.form.submit()">
-                                        <option value="0" @if($request->status == '0' || !isset($request->status)) selected @endif>未結案</option>
+                                        <option value="0" @if($request->status == '0' || !isset($request->status)) selected @endif>未使用</option>
                                         <option value="5" @if($request->status == '5') selected @endif>已退款</option>
                                         <option value="8" @if($request->status == '8') selected @endif>已使用未key單</option>
                                         <option value="9" @if($request->status == '9') selected @endif>已使用並key單</option>
@@ -96,7 +96,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>編號</th>
-                                    <th>合約類別</th>
+                                    <th>契約類別</th>
                                     <th>顧客名稱</th>
                                     <th>電話</th>
                                     <th>寶貝品種</th>
