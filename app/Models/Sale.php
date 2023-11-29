@@ -86,6 +86,12 @@ class Sale extends Model
         return $this->hasOne('App\Models\SaleContract', 'sale_id', 'id');
     }
 
+    public function pay_method()
+    {
+        $pay_method = ['A'=>'現金','B'=>'匯款','B'=>'現金與匯款'];
+        return $pay_method[$this->pay_method];
+    }
+
     public function pay_type()
     {
         $pay_type = ['A' => '結清', 'B' => '結清', 'C' => '訂金', 'D' => '尾款' , 'E' => '追加'];

@@ -19,6 +19,7 @@ class PayDataController extends Controller
         $users = User::where('status','0')->get();
         if($request){
             $status = $request->status;
+            // dd($status);
             if ($status) {
                 $datas = PayData::where('status',  $status);
                 $items = PayItem::where('status',  $status);
@@ -80,11 +81,16 @@ class PayDataController extends Controller
             }else{
                 if(isset($pay_after_date) || isset($pay_before_date)  || isset($pay))
                 {
-                    foreach($items as $item)
+                    // dd($items);
+                    
+                    if(count($items) > 0)
                     {
-                        $pay_data_ids[] = $item->pay_data_id;
+                        foreach($items as $item)
+                        {
+                            $pay_data_ids[] = $item->pay_data_id;
+                        }
+                        $datas =  $datas->orWhereIn('id', $pay_data_ids);
                     }
-                    $datas =  $datas->orWhereIn('id', $pay_data_ids);
                 }
             }
             
