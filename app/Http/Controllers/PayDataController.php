@@ -89,7 +89,7 @@ class PayDataController extends Controller
                         {
                             $pay_data_ids[] = $item->pay_data_id;
                         }
-                        $datas =  $datas->orWhereIn('id', $pay_data_ids);
+                        $datas =  $datas->WhereIn('id', $pay_data_ids);
                     }
                 }
             }
