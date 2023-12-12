@@ -260,11 +260,11 @@ class PayDataController extends Controller
                 }else{
                     $Pay_Item->vender_id = null;
                 }
-                // if($user->job_id == '1' || $user->job_id == '2' || $user->job_id == '4'){
-                //     $Pay_Item->status = 1;
-                // }else{
-                //     $Pay_Item->status = 0;
-                // }
+                if($user->job_id == '1' || $user->job_id == '2' || $user->job_id == '4'){
+                    $Pay_Item->status = 1;
+                }else{
+                    $Pay_Item->status = 0;
+                }
                 $Pay_Item->comment = $request->pay_text[$key];
                 $Pay_Item->save();
             }
