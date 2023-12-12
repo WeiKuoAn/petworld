@@ -241,6 +241,7 @@ class PayDataController extends Controller
         $pay->save();
         // dd($request->pay_invoice_number);
         PayItem::where('pay_data_id', $id)->delete();
+        $user = User::where('id',Auth::user()->id)->first();
         if(isset($request->pay_data_date)){
             foreach($request->pay_data_date as $key=>$data){
                 $Pay_Item = new PayItem();
@@ -259,6 +260,11 @@ class PayDataController extends Controller
                 }else{
                     $Pay_Item->vender_id = null;
                 }
+                // if($user->job_id == '1' || $user->job_id == '2' || $user->job_id == '4'){
+                //     $Pay_Item->status = 1;
+                // }else{
+                //     $Pay_Item->status = 0;
+                // }
                 $Pay_Item->comment = $request->pay_text[$key];
                 $Pay_Item->save();
             }
