@@ -60,7 +60,6 @@ class PayDataController extends Controller
             if ($pay != "null") {
                 if (isset($pay)) {
                     $items = $items->where('pay_id',$pay);
-                    $datas =  $datas->where('pay_id', $pay);
                 } else {
                     // $datas = $datas;
                     $items = $items;
