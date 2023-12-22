@@ -372,11 +372,6 @@
                     <span style="color:white;">個人支出</span>
                 </a>
             </li>
-            <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('person.leave_days') }}" role="button" aria-haspopup="false" aria-expanded="false">
-                    <span style="color:white;">個人假單</span>
-                </a>
-            </li>
 
 
             {{-- <li class="dropdown dropdown-mega d-none d-xl-block">
