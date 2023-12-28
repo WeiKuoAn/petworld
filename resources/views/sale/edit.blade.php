@@ -562,6 +562,8 @@
             $("#cash_price").prop('required', true);
             $("#transfer_price").prop('required', true);
         }else if(payMethod == 'B'){
+            $("#cash_price_div").hide(300);
+            $("#transfer_price_div").hide(300);
             $("#transfer_number_div").show(300);
             $("#transfer_channel_div").show(300);
             $("#pay_price").prop('required', true);
@@ -586,6 +588,8 @@
             $("#cash_price").prop('required', true);
             $("#transfer_price").prop('required', true);
         }else if($(this).val() == 'B'){
+            $("#cash_price_div").hide(300);
+            $("#transfer_price_div").hide(300);
             $("#transfer_number_div").show(300);
             $("#transfer_channel_div").show(300);
             $("#pay_price").prop('required', true);
