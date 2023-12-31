@@ -127,7 +127,13 @@
                                             {{ $data->type_data->name }}
                                         </span>
                                     </td>
-                                    <td>{{ $data->cust_name->name }}</td>
+                                    <td>
+                                        @if(isset($data->cust_name))
+                                            {{ $data->cust_name->name }}
+                                        @else
+                                            {{ $data->customer_id }}<b style="color: red;">（客戶姓名須重新登入）</b>
+                                        @endif
+                                    </td>
                                     <td>{{ $data->mobile }}</td>
                                     <td>{{ $data->pet_variety }}</td>
                                     <td>{{ $data->pet_name }}</td>
