@@ -1,6 +1,7 @@
 @extends('layouts.vertical', ["page_title"=> "新增業務Key單"])
 
 @section('css')
+<link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -71,9 +72,12 @@
                         </div>
                         <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
-                            <input list="cust_name_list_q" class="form-control" id="cust_name_q" name="cust_name_q" placeholder="請輸入客戶姓名" required>
-                            <datalist id="cust_name_list_q">
-                            </datalist>
+                            <select class="form-control" data-toggle="select2" data-width="100%" name="cust_name_q" id="cust_name_q" required>
+                                <option value="">請選擇...</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{ $customer->id }}">No.{{ $customer->id }} {{ $customer->name }}（{{ $customer->mobile }}）</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3 col-md-4 not_memorial_show">
                             <label for="pet_name" class="form-label">寵物名稱<span class="text-danger">*</span></label>
@@ -332,11 +336,20 @@
 @endsection
 
 @section('script')
-
+<!-- third party js -->
+<script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
+<script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
+<script src="{{asset('assets/libs/multiselect/multiselect.min.js')}}"></script>
+<script src="{{asset('assets/libs/select2/select2.min.js')}}"></script>
+<script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
+<script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
+{{-- <script src="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
+<script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script> --}}
 <!-- demo app -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
-{{-- <script src="{{asset('assets/js/pages/foo-tables.init.js')}}"></script> --}}
+<script src="{{ asset('assets/js/twzipcode-1.4.1-min.js') }}"></script>
+<script src="{{ asset('assets/js/twzipcode.js') }}"></script>
+<!-- third party js ends -->
+<script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
 
 
 <script>

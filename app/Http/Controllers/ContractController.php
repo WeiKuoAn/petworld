@@ -107,7 +107,9 @@ class ContractController extends Controller
     public function create()
     {
         $contract_types = ContractType::where('status','up')->get();
-        return view('contract.create')->with('contract_types',$contract_types);
+        $customers = Customer::orderby('created_at','desc')->get();
+        return view('contract.create')->with('contract_types',$contract_types)
+                                      ->with('customers',$customers);;
     }
 
     public function store(Request $request)
@@ -133,7 +135,8 @@ class ContractController extends Controller
         $contract_types = ContractType::where('status','up')->get();
         $data = Contract::where('id',$id)->first();
         $sales = Sale::where('customer_id', $data->customer_id)->distinct('pet_name')->whereNotNull('pet_name')->get();
-        return view('contract.edit')->with('data',$data)->with('contract_types',$contract_types)->with('sales',$sales);
+        $customers = Customer::orderby('created_at','desc')->get();
+        return view('contract.edit')->with('data',$data)->with('contract_types',$contract_types)->with('sales',$sales)->with('customers',$customers);
     }
 
     public function update(Request $request, $id)

@@ -116,10 +116,11 @@ class SaleDataController extends Controller
         $sources = SaleSource::where('status','up')->get();
         $plans = Plan::where('status', 'up')->get();
         $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
-
+        $customers = Customer::orderby('created_at','desc')->get();
         return view('sale.create')->with('products', $products)
                                   ->with('sources', $sources)
-                                  ->with('plans', $plans);
+                                  ->with('plans', $plans)
+                                  ->with('customers',$customers);
     }
 
      /**
@@ -437,6 +438,7 @@ class SaleDataController extends Controller
         $sale_gdpapers = Sale_gdpaper::where('sale_id', $id)->get();
         $sale_proms = Sale_prom::where('sale_id', $id)->get();
         $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
+        $customers = Customer::orderby('created_at','desc')->get();
         return view('sale.edit')->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
@@ -445,7 +447,8 @@ class SaleDataController extends Controller
             ->with('sale_proms', $sale_proms)
             ->with('sale_gdpapers', $sale_gdpapers)
             ->with('sources',$sources)
-            ->with('sale_company',$sale_company);
+            ->with('sale_company',$sale_company)
+            ->with('customers',$customers);
     }
 
     public function check_show($id)
@@ -590,7 +593,7 @@ class SaleDataController extends Controller
         $sale->type = $request->type;
         // $sale->user_id = Auth::user()->id;
         $sale->sale_date = $request->sale_date;
-        $sale->customer_id = $request->customer_id;
+        $sale->customer_id = $request->cust_name_q;
         $sale->pet_name = $request->pet_name;
         $sale->kg = $request->kg;
         $sale->type = $request->type;

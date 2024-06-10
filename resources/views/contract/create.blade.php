@@ -5,6 +5,7 @@
 <link href="{{asset('assets/libs/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
+
 <!-- third party css end -->
 @endsection
 
@@ -49,9 +50,12 @@
                            </div>
                            <div class="mb-3">
                                 <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
-                                <input list="cust_name_list_q" class="form-control" id="cust_name_q" name="cust_name_q" placeholder="請輸入客戶姓名" required>
-                                <datalist id="cust_name_list_q">
-                                </datalist>
+                                <select class="form-control" data-toggle="select2" data-width="100%" name="cust_name_q" id="cust_name_q" required>
+                                    <option value="">請選擇...</option>
+                                    @foreach($customers as $customer)
+                                        <option value="{{ $customer->id }}">No.{{ $customer->id }} {{ $customer->name }}（{{ $customer->mobile }}）</option>
+                                    @endforeach
+                                </select>
                            </div>
                            <div class="mb-3">
                                 <label for="mobile" class="form-label">客戶電話<span class="text-danger">*</span></label>
@@ -111,6 +115,18 @@
 <script src="{{asset('assets/libs/select2/select2.min.js')}}"></script>
 <script src="{{asset('assets/libs/flatpickr/flatpickr.min.js')}}"></script>
 <!-- third party js ends -->
+<script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
+<script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
+<script src="{{asset('assets/libs/multiselect/multiselect.min.js')}}"></script>
+<script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
+<script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
+{{-- <script src="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
+<script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script> --}}
+<!-- demo app -->
+<script src="{{ asset('assets/js/twzipcode-1.4.1-min.js') }}"></script>
+<script src="{{ asset('assets/js/twzipcode.js') }}"></script>
+<!-- third party js ends -->
+<script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
 
 <!-- demo app -->
 <script src="{{asset('assets/js/pages/create-project.init.js')}}"></script>
@@ -128,7 +144,7 @@
         }
     });
 
-    $( "#cust_name_q" ).keydown(function() {
+    $( "#cust_name_q" ).change(function() {
         $value=$(this).val();
         $.ajax({
             type : 'get',
