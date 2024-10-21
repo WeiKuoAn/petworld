@@ -38,6 +38,7 @@
                                         <th>金紙</th>
                                         <th>安葬方式</th>
                                         <th>後續處理</th>
+                                        <th>法會報名</th>
                                         <th>付款方式</th>
                                         <th>實收價格</th>
                                         {{-- @if($request->status == 'check')
@@ -117,6 +118,17 @@
                                         <td>
                                             @foreach ($sale->proms as $prom)
                                                 @if ($prom->prom_type == 'B')
+                                                    @if(isset($prom->prom_id))
+                                                        {{ $prom->prom_name->name }}-{{ number_format($prom->prom_total) }}<br>
+                                                    @else
+                                                        無
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach ($sale->proms as $prom)
+                                                @if ($prom->prom_type == 'D')
                                                     @if(isset($prom->prom_id))
                                                         {{ $prom->prom_name->name }}-{{ number_format($prom->prom_total) }}<br>
                                                     @else
