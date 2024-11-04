@@ -346,8 +346,35 @@ class SaleDataController extends Controller
 
     public function wait_index(Request $request) //代確認業務單
     {
-        $sales = Sale::where('status', 3)->orderby('sale_date', 'desc')->orderby('user_id','desc')->orderby('sale_on', 'desc')->get();
-        return view('sale.wait')->with('sales', $sales);
+        $sales = Sale::where('status', 3);
+        if ($request) {
+            $after_date = $request->after_date;
+            if ($after_date) {
+                $sales = $sales->where('sale_date', '>=', $after_date);
+            }
+            $before_date = $request->before_date;
+            if ($before_date) {
+                $sales = $sales->where('sale_date', '<=', $before_date);
+            }
+            $user = $request->user;
+            if ($user != "null") {
+                if (isset($user)) {
+                    $sales = $sales->where('user_id', $user);
+                } else {
+                    $sales = $sales;
+                }
+            }
+        } else {
+            $sales = $sales->orderby('sale_date', 'desc')->orderby('user_id', 'desc')->orderby('sale_on', 'desc');
+        }
+        $sales = $sales->get();
+        $users = User::where('status', '0')->whereIn('job_id', [1,2,3, 5])->get();
+
+        $total = 0;
+        foreach ($sales as $sale) {
+            $total += $sale->pay_price;
+        }
+        return view('sale.wait')->with('sales', $sales)->with('request', $request)->with('users', $users)->with('total', $total);
     }
 
     public function user_sale($id, Request $request) //從用戶管理進去看業務單
@@ -451,17 +478,48 @@ class SaleDataController extends Controller
             ->with('customers',$customers);
     }
 
-    public function check_show($id)
+    public function check_show( Request $request, $id)
     {
-        $sources = SaleSource::where('status','up')->get();
+        $source_companys = Customer::whereIn('group_id', [2, 3, 4, 5, 6, 7])->get();
+        $sources = SaleSource::where('status', 'up')->orderby('seq', 'asc')->get();
         $customers = Customer::get();
         $plans = Plan::where('status', 'up')->get();
-        $products = Product::where('status', 'up')->orderby('seq','asc')->orderby('price','desc')->get();
-        $proms = Prom::where('status', 'up')->orderby('seq','asc')->get();
+        $products = Product::where('status', 'up')->orderby('seq', 'asc')->orderby('price', 'desc')->get();
+        $proms = Prom::where('status', 'up')->orderby('seq', 'asc')->get();
         $data = Sale::where('id', $id)->first();
         $sale_gdpapers = Sale_gdpaper::where('sale_id', $id)->get();
         $sale_proms = Sale_prom::where('sale_id', $id)->get();
         $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
+        // 获取上一个页面的 URL
+        // 从_previous中获取user参数的值
+        // dd($request->session());
+        $previousUrl = $request->session()->get('_previous.url');
+        $parsedUrl = parse_url($previousUrl);
+
+        // 初始化变量
+        $user = null;
+        $afterDate = null;
+        $beforeDate = null;
+
+        if (isset($parsedUrl['query'])) {
+            parse_str($parsedUrl['query'], $queryParameters);
+
+            // 检查并获取user参数的值
+            if (isset($queryParameters['user'])) {
+                $user = $queryParameters['user'];
+            }
+            if (isset($queryParameters['after_date'])) {
+                $afterDate = $queryParameters['after_date'];
+            }
+            if (isset($queryParameters['before_date'])) {
+                $beforeDate = $queryParameters['before_date'];
+            }
+
+            // 存储参数值在会话中
+            session(['user' => $user, 'afterDate' => $afterDate, 'beforeDate' => $beforeDate]);
+        }
+
+
         return view('sale.check')->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
@@ -469,8 +527,9 @@ class SaleDataController extends Controller
             ->with('proms', $proms)
             ->with('sale_proms', $sale_proms)
             ->with('sale_gdpapers', $sale_gdpapers)
-            ->with('sources',$sources)
-            ->with('sale_company',$sale_company);
+            ->with('sources', $sources)
+            ->with('sale_company', $sale_company)
+            ->with('source_companys', $source_companys);
     }
 
     public function check_update(Request $request, $id)
