@@ -481,7 +481,7 @@ class SaleDataController extends Controller
     public function check_show( Request $request, $id)
     {
         $source_companys = Customer::whereIn('group_id', [2, 3, 4, 5, 6, 7])->get();
-        $sources = SaleSource::where('status', 'up')->orderby('seq', 'asc')->get();
+        $sources = SaleSource::where('status', 'up')->get();
         $customers = Customer::get();
         $plans = Plan::where('status', 'up')->get();
         $products = Product::where('status', 'up')->orderby('seq', 'asc')->orderby('price', 'desc')->get();
