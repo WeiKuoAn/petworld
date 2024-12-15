@@ -59,7 +59,7 @@
                                         <th scope="col">業務單量</th>
                                         {{-- <th scope="col">法會單量</th> --}}
                                         <th scope="col">營收</th>
-                                        @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
+                                        @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7' || Auth::user()->job_id == '2' || Auth::user()->job_id == '3')
                                             <th scope="col">支出</th>
                                             <th scope="col">當月淨利</th>
                                         @endif
@@ -70,7 +70,7 @@
                                     <td>{{  number_format($sums['total_count']) }}</td>
                                     {{-- <td>{{  number_format($sums['total_puja_count']) }}</td> --}}
                                     <td>{{  number_format($sums['total_price_amount']) }}</td>
-                                    @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
+                                    @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7' || Auth::user()->job_id == '2' || Auth::user()->job_id == '3')
                                         <td>{{  number_format($sums['total_pay_price']) }}</td>
                                         <td>{{  number_format($sums['total_month_total']) }}</td>
                                     @endif
@@ -82,7 +82,7 @@
                                             <td>{{ $data['cur_count'] }}</td>
                                             {{-- <td>{{ $data['cur_puja_count'] }}</td> --}}
                                             <td>{{ number_format($data['cur_price_amount']) }}</td>
-                                            @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7')
+                                            @if(Auth::user()->job_id == '1' || Auth::user()->job_id == '6' || Auth::user()->job_id == '7' || Auth::user()->job_id == '2' || Auth::user()->job_id == '3')
                                                 <td>{{ number_format($data['cur_pay_price']) }}</td>
                                                 @if(number_format($data['cur_month_total']) < 0)
                                                     <td style="color: red;">{{ number_format($data['cur_month_total']) }}</td>
