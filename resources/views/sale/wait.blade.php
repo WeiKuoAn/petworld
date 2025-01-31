@@ -88,8 +88,10 @@
                                         <th>類別</th>
                                         <th>方案</th>
                                         <th>金紙</th>
-                                        <th>後續處理A</th>
-                                        <th>後續處理B</th>
+                                        <th>安葬方式</th>
+                                        <th>後續處理</th>
+                                        <th>祈福儀式</th>
+                                        <th>法會報名</th>
                                         <th>付款類別</th>
                                         <th>付款方式</th>
                                         <th>實收價格</th>
@@ -144,12 +146,12 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                @if (isset($sale->before_prom_id))
+                                                @if(isset($sale->before_prom_id))
                                                     {{ $sale->PromA_name->name }}-{{ number_format($sale->before_prom_price) }}
                                                 @endif
                                                 @foreach ($sale->proms as $prom)
                                                     @if ($prom->prom_type == 'A')
-                                                        @if (isset($prom->prom_id))
+                                                        @if(isset($prom->prom_id))
                                                             {{ $prom->prom_name->name }}-{{ number_format($prom->prom_total) }}<br>
                                                         @else
                                                             無
@@ -160,7 +162,29 @@
                                             <td>
                                                 @foreach ($sale->proms as $prom)
                                                     @if ($prom->prom_type == 'B')
-                                                        @if (isset($prom->prom_id))
+                                                        @if(isset($prom->prom_id))
+                                                            {{ $prom->prom_name->name }}-{{ number_format($prom->prom_total) }}<br>
+                                                        @else
+                                                            無
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach ($sale->proms as $prom)
+                                                    @if ($prom->prom_type == 'C')
+                                                        @if(isset($prom->prom_id))
+                                                            {{ $prom->prom_name->name }}-{{ number_format($prom->prom_total) }}<br>
+                                                        @else
+                                                            無
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach ($sale->proms as $prom)
+                                                    @if ($prom->prom_type == 'D')
+                                                        @if(isset($prom->prom_id))
                                                             {{ $prom->prom_name->name }}-{{ number_format($prom->prom_total) }}<br>
                                                         @else
                                                             無
