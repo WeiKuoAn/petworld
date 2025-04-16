@@ -320,21 +320,21 @@
         <div class="logo-box">
             <a href="" class="logo logo-dark text-center">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="22">
+                    <img src="{{asset('assets/images/logo.png')}}" alt="" height="22">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="20">
+                    <img src="{{asset('assets/images/logo.png')}}" alt="" height="20">
                     <!-- <span class="logo-lg-text-light">U</span> -->
                 </span>
             </a>
 
             <a href="{{route( 'index')}}" class="logo logo-light text-center">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="22">
+                    <img src="{{asset('assets/images/logo.png')}}" alt="" height="22">
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/huaxixiang.png')}}" alt="" height="50">
+                    <img src="{{asset('assets/images/logo.png')}}" alt="" height="50">
                 </span>
             </a>
         </div>
