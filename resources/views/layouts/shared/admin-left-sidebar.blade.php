@@ -134,7 +134,7 @@
                 <li>
                     <a href="#contract" data-bs-toggle="collapse">
                         <i data-feather="folder"></i>
-                        <span> 契約管理 </span>
+                        <span> 契約/合約管理 </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="contract">

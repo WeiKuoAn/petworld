@@ -134,7 +134,7 @@
                 <li>
                     <a href="#contract" data-bs-toggle="collapse">
                         <i data-feather="folder"></i>
-                        <span> 契約管理 </span>
+                        <span> 契約/合約管理 </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="contract">
@@ -143,10 +143,10 @@
                                 <a href="{{ route('contractTypes') }}"  class="{{ request()->is('contractTypes') ? 'active' : '' }}">契約類別</a>
                             </li>
                             <li>
-                                <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">契約管理</a>
+                                <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">生前契約管理</a>
                             </li>
                             <li>
-                                <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">合約管理</a>
+                                <a href="{{ route('contractOthers') }}"  class="{{ request()->is('contractOthers') ? 'active' : '' }}">合約管理</a>
                             </li>
                             <li>
                                 <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增契約</a>
@@ -202,70 +202,7 @@
                         </ul>
                     </div>
                 </li>
-
-                <li>
-                    <a href="#income" data-bs-toggle="collapse">
-                        <i data-feather="trending-up"></i>
-                        <span> 收入管理 </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="income">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('income.sujects') }}"  class="{{ request()->is('income.sujects') ? 'active' : '' }}">收入科目</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('incomes') }}"  class="{{ request()->is('incomes') ? 'active' : '' }}">收入管理</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('income.create') }}"  class="{{ request()->is('income.create') ? 'active' : '' }}">收入key單</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="#product" data-bs-toggle="collapse">
-                        <i data-feather="shopping-cart"></i>
-                        <span> 商品管理 </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="product">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{route('product.category')}}"  class="{{ request()->is('product.category') ? 'active' : '' }}">商品類別</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('product.create') }}"  class="{{ request()->is('product.create') ? 'active' : '' }}">新增商品</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('product') }}"  class="{{ request()->is('product') ? 'active' : '' }}">商品列表</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="#other" data-bs-toggle="collapse">
-                        <i data-feather="database"></i>
-                        <span> 其他管理 </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="other">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('sources') }}"  class="{{ request()->is('sources') ? 'active' : '' }}">來源資料</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('plans') }}"  class="{{ request()->is('plans') ? 'active' : '' }}">方案資料</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('proms') }}"  class="{{ request()->is('proms') ? 'active' : '' }}">後續處理</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
+                
                 <li>
                     <a href="#rpg" data-bs-toggle="collapse">
                         <i data-feather="file-text"></i>
