@@ -95,7 +95,7 @@
                                         <div id="renew_check">
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="renew"
-                                                    name="renew" value="0">
+                                                    name="renew">
                                                 <label class="form-check-label" for="renew"><b>續約</b></label>
                                             </div>
                                         </div>
@@ -125,8 +125,7 @@
                                         <div id="closed_check">
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="closed_button"
-                                                    name="closed_button"
-                                                    @if (isset($data->use_data)) value="1" checked  @else value="0" @endif>
+                                                    name="closed_button">
                                                 <label class="form-check-label" for="closed_button"><b>合約結束</b></label>
                                             </div>
                                         </div>
@@ -137,11 +136,7 @@
                                        </div>
                                        <div>
                                         <label class="form-label">備註</label>
-                                        <textarea class="form-control" rows="3" placeholder="" name="closed_comment">
-                                            @if (isset($data->closed_data))
-                                                {{$data->closed_data->comment }}
-                                            @endif
-                                        </textarea>
+                                        <textarea class="form-control" rows="3" placeholder="" name="closed_comment"></textarea>
                                     </div>
                                     </div>
                             @endif
@@ -289,7 +284,7 @@
                 $("#use_date").prop('required', true);
                 $("#refund_check").hide(200);
                 $("#refund_div").hide(200);
-                $("input[name='refund']").val('0');
+                $("input[name='refund']").val('1');
                 $('#refund').prop('checked', false);
             } else {
                 $(this).val(0);
@@ -338,6 +333,22 @@
             $("#refund_div").hide();
         }
 
+        if ($("#renew").is(":checked")) {
+            $("input[name='renew']").val('1');
+            $("#renew_div").show();
+        } else {
+            $("input[name='renew']").val('0');
+            $("#renew_div").hide();
+        }
+
+        if ($("#closed_button").is(":checked")) {
+            $("input[name='closed_button']").val('1');
+            $("#closed_div").show();
+        } else {
+            $("input[name='closed_button']").val('0');
+            $("#closed_div").hide();
+        }
+
 
         $('#renew').change(function() {
             if ($(this).is(':checked')) {
@@ -347,8 +358,9 @@
                 $("#renew_end_date").prop('required', true);
                 $("#renew_price").prop('required', true);
                 $("#closed_check").hide(200);
-                $("input[name='refund']").val('0');
+                $("input[name='renew']").val('1');
                 $('#refund').prop('checked', false);
+                console.log($("input[name='renew']").val());
             } else {
                 $(this).val(0);
                 $("#renew_div").hide(300);
@@ -357,6 +369,7 @@
                 $("#renew_price").prop('required', false);
                 $("#closed_check").show(200);
                 $("#renew_div").hide(200);
+                console.log($("input[name='renew']").val());
             }
         });
 
@@ -367,7 +380,7 @@
                 $("#closed_check").show(300);
                 $("#closed_date").prop('required', true);
                 $("#renew_check").hide(200);
-                $("input[name='closed_button']").val('0');
+                $("input[name='closed_button']").val('1');
                 $('#use').prop('checked', false);
             } else {
                 $(this).val(0);

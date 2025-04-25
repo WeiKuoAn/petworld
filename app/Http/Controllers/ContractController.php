@@ -158,7 +158,6 @@ class ContractController extends Controller
         $data->price = $request->price;
         $data->start_date = $request->start_date;
         $data->end_date = $request->end_date;
-
         $use_data = ContractUse::where('contract_id', $id)->first();
         $refund_data = ContractRefund::where('contract_id', $id)->first();
         if ($request->use == '1') {
@@ -239,10 +238,11 @@ class ContractController extends Controller
             $renew->renew = '1';
             $renew->save();
             // dd($renew);
-        }else if ($request->closed_date == '1') {
+        }else if ($request->closed_button == '1') {
             //合約結束
             $data->status = 10;
             $data->closed_date = $request->closed_date;
+            $data->closed_comment = $request->closed_comment;
         }
 
         $data->comment = $request->comment;

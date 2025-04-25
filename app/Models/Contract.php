@@ -24,6 +24,7 @@ class Contract extends Model
         'renew_year',
         'user_id',
         'comment',
+        'closed_comment',
         'pet_variety',
         'status',
         'closed_date',
