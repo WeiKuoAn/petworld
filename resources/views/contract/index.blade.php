@@ -87,7 +87,7 @@
                                             onchange="this.form.submit()">
                                             <option value="0" @if ($request->status == '0' || !isset($request->status)) selected @endif>未使用
                                             </option>
-                                            @if (!isset($request->type) || $request->type=="null")
+                                            @if (!isset($request->type) || $request->type == 'null')
                                                 {{-- 顯示全部狀態選項 --}}
                                                 <option value="5" @if ($request->status == '5') selected @endif>已退款
                                                 </option>
@@ -157,6 +157,7 @@
                                         @elseif($request->status == '5')
                                             <th>退款日期</th>
                                         @elseif($request->status == '10')
+                                            <th>續約</th>
                                             <th>結束日期</th>
                                         @endif
                                         <th>金額</th>
@@ -194,6 +195,7 @@
                                             @elseif($request->status == '5')
                                                 <td><b style="color: red;">{{ $data->refund_data->refund_date }}</b></td>
                                             @elseif($request->status == '10')
+                                                <td>@if($data->renew == 1) 是 @else 否 @endif</td>
                                                 <td><b style="color: red;">{{ $data->closed_date }}</b></td>
                                             @endif
                                             <td>{{ number_format($data->price) }}</td>
