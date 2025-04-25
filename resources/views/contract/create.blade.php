@@ -70,12 +70,13 @@
                                 <input type="text" class="form-control" id="pet_variety" name="pet_variety"  required>
                             </div>
                             <div class="mb-3">
-                                <label for="start_date" class="form-label">簽約日期<span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" id="start_date" name="start_date"  required>
+                                <label for="start_date" class="form-label" id="start_date_label">簽約日期<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="start_date" name="start_date" required>
                             </div>
+                            
                             <div class="mb-3">
-                                <label for="end_date" class="form-label">生效日期<span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" id="end_date" name="end_date"  required>
+                                <label for="end_date" class="form-label" id="end_date_label">生效日期<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="end_date" name="end_date" required>
                             </div>
                            <div class="mb-3">
                                 <label for="price" class="form-label">契約費用<span class="text-danger">*</span></label>
@@ -131,57 +132,57 @@
 <!-- demo app -->
 <script src="{{asset('assets/js/pages/create-project.init.js')}}"></script>
 <script>
-    $("#renew_div").hide();
-    $('#renew').change(function() {
-        if ($(this).is(':checked')) {
-            $(this).val(1);
-            $("#renew_div").show(300);
-            $("#renew_year").prop('required', true);
-        } else {
-            $(this).val(0);
-            $("#renew_div").hide(300);
-            $("#renew_year").prop('required', false);
+    $(document).ready(function() {
+        function updateLabelsByType() {
+            const type = $('select[name="type"]').val();
+            if (type !== '1') {
+                $('#start_date_label').html('開始日期<span class="text-danger">*</span>');
+                $('#end_date_label').html('結束日期<span class="text-danger">*</span>');
+            } else {
+                $('#start_date_label').html('簽約日期<span class="text-danger">*</span>');
+                $('#end_date_label').html('生效日期<span class="text-danger">*</span>');
+            }
         }
-    });
 
-    $( "#cust_name_q" ).change(function() {
-        $value=$(this).val();
-        $.ajax({
-            type : 'get',
-            url : '{{ route('customer.search') }}',
-            data:{'cust_name':$value},
-            success:function(data){
-                $('#cust_name_list_q').html(data);
-                $cust_id=$("#cust_name_q").val();
-                console.log($cust_id);
-                $.ajax({
-                    type : 'get',
-                    url : '{{ route('customer.data') }}',
-                    data:{'cust_id':$cust_id},
-                    success:function(data){
-                        console.log(data);
-                        $('#mobile').val(data['mobile']);
-                    }
-                });
+        // 初次執行一次（若有預設值）
+        updateLabelsByType();
+
+        // 當類別變更時更新 label
+        $('select[name="type"]').on('change', function() {
+            updateLabelsByType();
+        });
+
+        // 客戶名稱變更時，自動填入電話
+        $("#cust_name_q").change(function() {
+            const custId = $(this).val();
+            $.ajax({
+                type : 'get',
+                url : '{{ route('customer.data') }}',
+                data:{'cust_id': custId},
+                success:function(data){
+                    $('#mobile').val(data['mobile']);
+                }
+            });
+        });
+
+        // 日期自動設定
+        $('#start_date').change(function() {
+            const type = $('select[name="type"]').val();
+            const startDate = new Date($(this).val());
+
+            // 加 6 天的邏輯僅適用生前契約（type==1）
+            if (type === '1') {
+                startDate.setDate(startDate.getDate() + 6);
+                const endYear = startDate.getFullYear();
+                const endMonth = ("0" + (startDate.getMonth() + 1)).slice(-2);
+                const endDay = ("0" + startDate.getDate()).slice(-2);
+                $('#end_date').val(`${endYear}-${endMonth}-${endDay}`);
+            } else {
+                $('#end_date').val(''); // 非生前契約不自動算
             }
         });
-        // console.log($value);
     });
-
-    $('#start_date').change(function() {
-        var startDate = new Date($(this).val());
-        
-        // Add 7 days to the start date
-        startDate.setDate(startDate.getDate() + 6);
-
-        var endYear = startDate.getFullYear();
-        var endMonth = ("0" + (startDate.getMonth() + 1)).slice(-2); // JavaScript months are 0-indexed
-        var endDate = ("0" + startDate.getDate()).slice(-2);
-
-        var endDateString = `${endYear}-${endMonth}-${endDate}`;
-        $('#end_date').val(endDateString);
-    });
-
 </script>
+
 <!-- end demo js-->
 @endsection

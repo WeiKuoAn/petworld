@@ -28,6 +28,7 @@
         </div>
     </div>
     <!-- end page title -->
+    @if($data->type == '1')
 
     <div class="row">
         <div class="col-xl-6">
@@ -84,6 +85,7 @@
                 </div> <!-- end col-->
             </div>
         </div>
+        @endif
                            <div class="row">
                             <div class="col-xl-6">
                                 <div class="card">
