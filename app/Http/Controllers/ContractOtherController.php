@@ -12,38 +12,16 @@ use App\Models\Sale;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-class ContractController extends Controller
+class ContractOtherController extends Controller
 {
-    public function customer_contract_search(Request $request)
-    {
-        if ($request->ajax()) {
-            $contracts = Contract::where('customer_id', $request->customer_id)
-                ->join('contract_use', 'contract_use.contract_id', '=', 'contract.id')
-                ->where('contract.status', '8')
-                ->select('contract.*', 'contract_use.sale_price')
-                ->get();
-
-            if ($contracts->isEmpty()) {
-                return response('<option value="">請選擇...</option>');
-            } else {
-                $output = $contracts->map(function ($contract) {
-                    $sale_price = $contract->price + $contract->sale_price;
-                    return '<option value="' . $contract->id . '" data-sale-price="' . $sale_price . '" >' . '品種（' . $contract->pet_variety . '）' . '寶貝名：' . $contract->pet_name . '，折扣金額：' . $sale_price . '</option>';
-                });
-
-                return response($output);
-            }
-        }
-    }
-
     public function index(Request $request)
     {
         $today = Carbon::now()->format("Y-m-d");
         $status = $request->status;
         if (!isset($status)) {
-            $datas = Contract::where('status', '0')->where('type','1');
+            $datas = Contract::where('status', '0')->whereNotIn('type',[1]);
         } else {
-            $datas = Contract::where('status', $status)->where('type','1');
+            $datas = Contract::where('status', $status)->whereNotIn('type',[1]);
         }
 
         if ($request) {
@@ -105,8 +83,8 @@ class ContractController extends Controller
             $condition = '';
             $datas = $datas->orderby('start_date', 'asc')->paginate(50);
         }
-        $contract_types = ContractType::where('status', 'up')->where('id','1')->get();
-        return view('contract.index')->with('datas', $datas)
+        $contract_types = ContractType::where('status', 'up')->whereNotIn('id',[1])->get();
+        return view('contract_other.index')->with('datas', $datas)
             ->with('contract_types', $contract_types)
             ->with('request', $request)
             ->with('condition', $condition);

@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "新增契約/合約"])
+@extends('layouts.vertical', ["page_title"=> "新增契約"])
 
 @section('css')
 <!-- third party css -->
@@ -21,10 +21,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">契約管理</a></li>
-                        <li class="breadcrumb-item active">新增契約/合約</li>
+                        <li class="breadcrumb-item active">新增契約</li>
                     </ol>
                 </div>
-                <h4 class="page-title">新增契約/合約</h4>
+                <h4 class="page-title">新增契約</h4>
             </div>
         </div>
     </div>

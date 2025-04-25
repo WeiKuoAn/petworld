@@ -29,6 +29,7 @@ use App\Http\Controllers\PujaController;
 use App\Http\Controllers\PujaTypeController;
 use App\Http\Controllers\PujaDataController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\ContractOtherController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ContractTypeController;
@@ -401,6 +402,15 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/contract/edit/{id}', [ContractController::class, 'update'])->name('contract.edit.data');
     Route::get('/contract/del/{id}', [ContractController::class, 'delete'])->name('contract.del');
     Route::post('/contract/del/{id}', [ContractController::class, 'destroy'])->name('contract.del.data');
+
+    //合約
+    Route::get('/contractOther', [ContractOtherController::class, 'index'])->name('contractOthers');
+    Route::get('/contractOther/create', [ContractOtherController::class, 'create'])->name('contractOther.create');
+    Route::post('/contractOther/create', [ContractOtherController::class, 'store'])->name('contractOther.create.data');
+    Route::get('/contractOther/edit/{id}', [ContractOtherController::class, 'show'])->name('contractOther.edit');
+    Route::post('/contractOther/edit/{id}', [ContractOtherController::class, 'update'])->name('contractOther.edit.data');
+    Route::get('/contractOther/del/{id}', [ContractOtherController::class, 'delete'])->name('contractOther.del');
+    Route::post('/contractOther/del/{id}', [ContractOtherController::class, 'destroy'])->name('contractOther.del.data');
 
     /*報表管理*/
     Route::get('/rpg/rpg01', [Rpg01Controller::class, 'rpg01'])->name('rpg01');

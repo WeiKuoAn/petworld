@@ -98,6 +98,24 @@
                 </li>
 
                 <li>
+                    <a href="#contract" data-bs-toggle="collapse">
+                        <i data-feather="folder"></i>
+                        <span> 契約管理 </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="contract">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">契約管理</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增契約</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
                     <a href="#person" data-bs-toggle="collapse">
                         <i data-feather="user"></i>
                         <span> 個人管理 </span>

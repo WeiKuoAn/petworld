@@ -143,7 +143,10 @@
                                 <a href="{{ route('contractTypes') }}"  class="{{ request()->is('contractTypes') ? 'active' : '' }}">契約類別</a>
                             </li>
                             <li>
-                                <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">契約管理</a>
+                                <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">生前契約管理</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('contractOthers') }}"  class="{{ request()->is('contractOthers') ? 'active' : '' }}">合約管理</a>
                             </li>
                             <li>
                                 <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增契約</a>

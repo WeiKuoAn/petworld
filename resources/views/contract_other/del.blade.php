@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "刪除契約/合約"])
+@extends('layouts.vertical', ["page_title"=> "刪除合約"])
 
 @section('css')
 <!-- third party css -->
@@ -19,11 +19,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">契約管理</a></li>
-                        <li class="breadcrumb-item active">刪除契約/合約</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">合約管理</a></li>
+                        <li class="breadcrumb-item active">刪除合約</li>
                     </ol>
                 </div>
-                <h4 class="page-title">刪除契約/合約</h4>
+                <h4 class="page-title">刪除合約</h4>
             </div>
         </div>
     </div>

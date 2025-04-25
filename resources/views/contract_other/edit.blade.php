@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ['page_title' => '編輯契約/合約'])
+@extends('layouts.vertical', ['page_title' => '編輯契約'])
 
 @section('css')
     <!-- third party css -->
@@ -20,10 +20,10 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0);">契約管理</a></li>
-                            <li class="breadcrumb-item active">編輯契約/合約</li>
+                            <li class="breadcrumb-item active">編輯契約</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">編輯契約/合約</h4>
+                    <h4 class="page-title">編輯契約</h4>
                 </div>
             </div>
         </div>
@@ -192,12 +192,12 @@
                                 value="{{ $data->pet_variety }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="start_date" class="form-label">@if($data->type==1)簽約日期 @else 開始日期 @endif<span class="text-danger">*</span></label>
+                            <label for="start_date" class="form-label">簽約日期<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="start_date" name="start_date"
                                 value="{{ $data->start_date }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="end_date" class="form-label">@if($data->type==1)簽約日期 @else 結束日期 @endif<span class="text-danger">*</span></label>
+                            <label for="end_date" class="form-label">生效日期<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="end_date" name="end_date"
                                 value="{{ $data->end_date }}" required>
                         </div>
