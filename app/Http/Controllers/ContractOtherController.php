@@ -76,12 +76,12 @@ class ContractOtherController extends Controller
                 }
             }
 
-            $datas = $datas->orderby('start_date', 'asc')->paginate(50);
+            $datas = $datas->orderby('end_date', 'desc')->paginate(50);
 
             $condition = $request->all();
         } else {
             $condition = '';
-            $datas = $datas->orderby('start_date', 'asc')->paginate(50);
+            $datas = $datas->orderby('end_date', 'desc')->paginate(50);
         }
         $contract_types = ContractType::where('status', 'up')->whereNotIn('id',[1])->get();
         return view('contract_other.index')->with('datas', $datas)
