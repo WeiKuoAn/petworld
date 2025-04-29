@@ -70,10 +70,6 @@
                                 <input type="text" class="form-control" id="pet_variety" name="pet_variety"  required>
                             </div>
                             <div class="mb-3">
-                                <label for="pet_variety" class="form-label">寶貝品種<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="pet_variety" name="pet_variety"  required>
-                            </div>
-                            <div class="mb-3">
                                 <label for="start_date" class="form-label" id="start_date_label">簽約日期<span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="start_date" name="start_date" required>
                             </div>
