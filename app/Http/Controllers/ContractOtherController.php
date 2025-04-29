@@ -113,7 +113,7 @@ class ContractOtherController extends Controller
         $data->user_id = Auth::user()->id;
         $data->comment = $request->comment;
         $data->save();
-        return redirect()->route('contracts');
+        return redirect()->route('contractOthers');
     }
 
     public function show($id)
@@ -122,7 +122,7 @@ class ContractOtherController extends Controller
         $data = Contract::where('id', $id)->first();
         $sales = Sale::where('customer_id', $data->customer_id)->distinct('pet_name')->whereNotNull('pet_name')->get();
         $customers = Customer::orderby('created_at', 'desc')->get();
-        return view('contract.edit')->with('data', $data)->with('contract_types', $contract_types)->with('sales', $sales)->with('customers', $customers);
+        return view('contract_other.edit')->with('data', $data)->with('contract_types', $contract_types)->with('sales', $sales)->with('customers', $customers);
     }
 
     public function update(Request $request, $id)
@@ -226,27 +226,21 @@ class ContractOtherController extends Controller
         $data->comment = $request->comment;
         $data->user_id = Auth::user()->id;
         $data->save();
-        return redirect()->route('contracts');
+        return redirect()->route('contractOthers');
     }
 
     public function delete($id)
     {
+        $customers = Customer::orderby('created_at', 'desc')->get();
         $contract_types = ContractType::where('status', 'up')->get();
         $data = Contract::where('id', $id)->first();
         $sales = Sale::where('customer_id', $data->customer_id)->distinct('pet_name')->whereNotNull('pet_name')->get();
-        return view('contract.del')->with('data', $data)->with('contract_types', $contract_types)->with('sales', $sales);
+        return view('contract_other.del')->with('data', $data)->with('contract_types', $contract_types)->with('sales', $sales)->with('customers', $customers);
     }
 
     public function destroy(Request $request, $id)
     {
         Contract::where('id', $id)->delete();
-        $use_data = ContractUse::where('contract_id', $id)->first();
-        $refund_data = ContractRefund::where('contract_id', $id)->first();
-        if (isset($use_data)) {
-            ContractUse::where('contract_id', $id)->delete();
-        } else if (isset($refund_data)) {
-            ContractRefund::where('contract_id', $id)->delete();
-        }
-        return redirect()->route('contracts');
+        return redirect()->route('contractOthers');
     }
 }

@@ -186,10 +186,10 @@
                                                                 class="mdi mdi-arrow-down-drop-circle"></i></a>
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <a class="dropdown-item"
-                                                                href="{{ route('contract.edit', $data->id) }}"><i
+                                                                href="{{ route('contractOther.edit', $data->id) }}"><i
                                                                     class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>編輯</a>
                                                             <a class="dropdown-item"
-                                                                href="{{ route('contract.del', $data->id) }}"><i
+                                                                href="{{ route('contractOther.del', $data->id) }}"><i
                                                                     class="mdi mdi-delete me-2 font-18 text-muted vertical-middle"></i>刪除</a>
                                                         </div>
                                                     </div>

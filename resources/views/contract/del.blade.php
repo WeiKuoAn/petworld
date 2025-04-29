@@ -113,10 +113,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
-                            <input list="cust_name_list_q" class="form-control" id="cust_name_q" name="cust_name_q"
-                                placeholder="請輸入客戶姓名" value="{{ $data->customer_id }}" required>
-                            <datalist id="cust_name_list_q">
-                            </datalist>
+                            <select class="form-control" data-toggle="select2" data-width="100%" name="cust_name_q"
+                                id="cust_name_q" required>
+                                <option value="">請選擇...</option>
+                                @foreach ($customers as $customer)
+                                    <option value="{{ $customer->id }}"
+                                        @if ($data->customer_id == $customer->id) selected @endif>No.{{ $customer->id }}
+                                        {{ $customer->name }}（{{ $customer->mobile }}）</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="mobile" class="form-label">客戶電話<span class="text-danger">*</span></label>

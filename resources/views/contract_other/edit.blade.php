@@ -33,180 +33,124 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('contract.edit.data', $data->id) }}" method="POST">
+                        <form action="{{ route('contractOther.edit.data', $data->id) }}" method="POST">
                             @csrf
-                            @if ($data->type == 1)
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div id="use_check">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="use"
-                                                    name="use"
-                                                    @if (isset($data->use_data)) value="1" checked  @else value="0" @endif>
-                                                <label class="form-check-label" for="use"><b>使用契約</b></label>
-                                            </div>
-                                        </div>
-                                        <div id="use_div" class="mt-2">
-                                            <div class="mb-3">
-                                                <label for="use_date" class="form-label">契約使用日期<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="date" class="form-control" id="use_date" name="use_date"
-                                                    @if (isset($data->use_data)) value="{{ $data->use_data->use_date }}" @else value="" @endif>
-                                            </div>
-                                            <div>
-                                                <label class="form-label">備註</label>
-                                                <textarea class="form-control" rows="3" placeholder="" name="use_comment">
-                                    @if (isset($data->use_data))
-{{ $data->use_data->comment }}
-@endif
-                                </textarea>
-                                            </div>
-                                        </div>
+                            <div class="col-xl-12">
+                                <div id="renew_check">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="renew" name="renew">
+                                        <label class="form-check-label" for="renew"><b>續約</b></label>
                                     </div>
-                                    <div class="col-xl-12 mt-2">
-                                        <div id="refund_check">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="refund"
-                                                    name="refund"
-                                                    @if (isset($data->refund_data)) value="1" checked  @else value="0" @endif>
-                                                <label class="form-check-label" for="refund"><b>契約退款</b></label>
-                                            </div>
-                                        </div>
-                                        <div id="refund_div" class="mt-1">
-                                            <div class="mb-3">
-                                                <label for="refund_date" class="form-label">契約退款日期<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="date" class="form-control" id="refund_date"
-                                                    name="refund_date"
-                                                    @if (isset($data->refund_data)) value="{{ $data->refund_data->refund_date }}" @else value="" @endif>
-                                            </div>
-                                            <div>
-                                                <label class="form-label">備註</label>
-                                                <textarea class="form-control" rows="3" placeholder="" name="refund_comment">
-                                        @if (isset($data->refund_data))
-{{ $data->refund_data->comment }}
-@endif
-                                    </textarea>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div id="renew_div" class="mt-2">
+                                    <div class="mb-3">
+                                        <label for="renew_start_date" class="form-label">契約續約生效日期<span
+                                                class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="renew_start_date"
+                                            name="renew_start_date" value="">
                                     </div>
-                                @else
-                                    <div class="col-xl-12">
-                                        <div id="renew_check">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="renew"
-                                                    name="renew">
-                                                <label class="form-check-label" for="renew"><b>續約</b></label>
-                                            </div>
-                                        </div>
-                                        <div id="renew_div" class="mt-2">
-                                            <div class="mb-3">
-                                                <label for="renew_start_date" class="form-label">契約續約生效日期<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="date" class="form-control" id="renew_start_date" name="renew_start_date"
-                                                    value="">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="renew_end_date" class="form-label">契約續約結束日期<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="date" class="form-control" id="renew_end_date"
-                                                    name="renew_end_date" value="">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="price" class="form-label">續約金額<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="renew_price" name="renew_price"
-                                                    value="">
-                                            </div>
-                                            <label class="form-label">備註</label>
-                                            <textarea class="form-control" rows="3" placeholder="" name="renew_comment"></textarea>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="renew_end_date" class="form-label">契約續約結束日期<span
+                                                class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="renew_end_date" name="renew_end_date"
+                                            value="">
                                     </div>
-                                    <div class="col-xl-12 mt-1">
-                                        <div id="closed_check">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="closed_button"
-                                                    name="closed_button">
-                                                <label class="form-check-label" for="closed_button"><b>合約結束</b></label>
-                                            </div>
-                                        </div>
-                                        <div id="closed_div" class="mt-2">
-                                        <div class="mb-3">
-                                            <label for="closed_date" class="form-label">合約結案日期<span class="text-danger">*</span></label>
-                                            <input type="date" class="form-control" id="closed_date" name="closed_date"  value="">
-                                       </div>
-                                       <div>
+                                    <div class="mb-3">
+                                        <label for="price" class="form-label">續約金額<span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="renew_price" name="renew_price"
+                                            value="">
+                                    </div>
+                                    <label class="form-label">備註</label>
+                                    <textarea class="form-control" rows="3" placeholder="" name="renew_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 mt-1">
+                                <div id="closed_check">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="closed_button"
+                                            name="closed_button">
+                                        <label class="form-check-label" for="closed_button"><b>合約結束</b></label>
+                                    </div>
+                                </div>
+                                <div id="closed_div" class="mt-2">
+                                    <div class="mb-3">
+                                        <label for="closed_date" class="form-label">合約結案日期<span
+                                                class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="closed_date" name="closed_date"
+                                            value="">
+                                    </div>
+                                    <div>
                                         <label class="form-label">備註</label>
                                         <textarea class="form-control" rows="3" placeholder="" name="closed_comment"></textarea>
                                     </div>
-                                    </div>
-                            @endif
-
-                            
-                    </div> <!-- end card-->
-                </div> <!-- end col-->
+                                </div>
+                            </div> <!-- end card-->
+                    </div> <!-- end col-->
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label">類別名稱<span class="text-danger">*</span></label>
-                                <select class="form-control" data-toggle="select" data-width="100%" name="type"
-                                    required>
-                                    <option value="" selected>請選擇</option>
-                                    @foreach ($contract_types as $contract_type)
-                                        <option value="{{ $contract_type->id }}"
-                                            @if ($data->type == $contract_type->id) selected @endif>{{ $contract_type->name }}
-                                        </option>
+                                <div class="mb-3">
+                                    <label class="form-label">類別名稱<span class="text-danger">*</span></label>
+                                    <select class="form-control" data-toggle="select" data-width="100%" name="type"
+                                        required>
+                                        <option value="" selected>請選擇</option>
+                                        @foreach ($contract_types as $contract_type)
+                                            <option value="{{ $contract_type->id }}"
+                                                @if ($data->type == $contract_type->id) selected @endif>{{ $contract_type->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="customer_id" class="form-label">客戶名稱<span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control" data-toggle="select2" data-width="100%" name="cust_name_q"
+                                    id="cust_name_q" required>
+                                    <option value="">請選擇...</option>
+                                    @foreach ($customers as $customer)
+                                        <option value="{{ $customer->id }}"
+                                            @if ($data->customer_id == $customer->id) selected @endif>No.{{ $customer->id }}
+                                            {{ $customer->name }}（{{ $customer->mobile }}）</option>
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="customer_id" class="form-label">客戶名稱<span class="text-danger">*</span></label>
-                            <select class="form-control" data-toggle="select2" data-width="100%" name="cust_name_q"
-                                id="cust_name_q" required>
-                                <option value="">請選擇...</option>
-                                @foreach ($customers as $customer)
-                                    <option value="{{ $customer->id }}"
-                                        @if ($data->customer_id == $customer->id) selected @endif>No.{{ $customer->id }}
-                                        {{ $customer->name }}（{{ $customer->mobile }}）</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="mobile" class="form-label">客戶電話<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="mobile" name="mobile"
-                                value="{{ $data->mobile }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pet_name" class="form-label">寶貝名稱<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="pet_name" name="pet_name"
-                                value="{{ $data->pet_name }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pet_name" class="form-label">寶貝品種<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="pet_variety" name="pet_variety"
-                                value="{{ $data->pet_variety }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="start_date" class="form-label">簽約日期<span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="start_date" name="start_date"
-                                value="{{ $data->start_date }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="end_date" class="form-label">生效日期<span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="end_date" name="end_date"
-                                value="{{ $data->end_date }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="price" class="form-label">金額<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="price" name="price"
-                                value="{{ $data->price }}" required>
-                        </div>
-                        {{-- <div id="renew_div">
+                            <div class="mb-3">
+                                <label for="mobile" class="form-label">客戶電話<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="mobile" name="mobile"
+                                    value="{{ $data->mobile }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pet_name" class="form-label">寶貝名稱<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="pet_name" name="pet_name"
+                                    value="{{ $data->pet_name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pet_name" class="form-label">寶貝品種<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="pet_variety" name="pet_variety"
+                                    value="{{ $data->pet_variety }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="start_date" class="form-label">簽約日期<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="start_date" name="start_date"
+                                    value="{{ $data->start_date }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="end_date" class="form-label">生效日期<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="end_date" name="end_date"
+                                    value="{{ $data->end_date }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">金額<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="price" name="price"
+                                    value="{{ $data->price }}" required>
+                            </div>
+                            {{-- <div id="renew_div">
                                 <div class="mb-3">
                                     <label for="renew_year" class="form-label">再續約幾年<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="renew_year" name="renew_year" value="{{ $data->renew_year }}" >
@@ -219,27 +163,27 @@
                                     <label class="form-check-label" for="renew"><b>是否為續約？</b></label>
                                 </div>
                             </div> --}}
-                        <div>
-                            <label class="form-label">備註</label>
-                            <textarea class="form-control" rows="3" placeholder="" name="comment">{{ $data->comment }}</textarea>
-                        </div>
-                    </div> <!-- end col-->
-                </div>
-                <!-- end row -->
-
-
-                <div class="row mt-3">
-                    <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-success waves-effect waves-light m-1"><i
-                                class="fe-check-circle me-1"></i>編輯</button>
-                        <button type="reset" class="btn btn-secondary waves-effect waves-light m-1"
-                            onclick="history.go(-1)"><i class="fe-x me-1"></i>回上一頁</button>
+                            <div>
+                                <label class="form-label">備註</label>
+                                <textarea class="form-control" rows="3" placeholder="" name="comment">{{ $data->comment }}</textarea>
+                            </div>
+                        </div> <!-- end col-->
                     </div>
-                </div>
-                </form>
-            </div> <!-- end card-body -->
-        </div> <!-- end card-->
-    </div> <!-- end col-->
+                    <!-- end row -->
+
+
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-success waves-effect waves-light m-1"><i
+                                    class="fe-check-circle me-1"></i>編輯</button>
+                            <button type="reset" class="btn btn-secondary waves-effect waves-light m-1"
+                                onclick="history.go(-1)"><i class="fe-x me-1"></i>回上一頁</button>
+                        </div>
+                    </div>
+                    </form>
+                </div> <!-- end card-body -->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
     </div>
     <!-- end row-->
 
