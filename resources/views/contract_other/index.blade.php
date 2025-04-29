@@ -122,11 +122,10 @@
                             <table class="table table-centered table-nowrap table-hover mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>編號</th>
+                                        <th>寶貝編號</th>
                                         <th>合約類別</th>
                                         <th>顧客名稱</th>
                                         <th>電話</th>
-                                        <th>寶貝品種</th>
                                         <th>寶貝名稱</th>
                                         <th>開始日期</th>
                                         <th>結束日期</th>
@@ -143,7 +142,7 @@
                                 <tbody>
                                     @foreach ($datas as $key => $data)
                                         <tr>
-                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $data->pet_variety }}</td>
                                             <td>
                                                 <span
                                                     @if ($data->type == '1') class=" bg-soft-success text-success p-1" 
@@ -160,7 +159,6 @@
                                                 @endif
                                             </td>
                                             <td>{{ $data->mobile }}</td>
-                                            <td>{{ $data->pet_variety }}</td>
                                             <td>{{ $data->pet_name }}</td>
                                             <td>{{ $data->start_date }}</td>
                                             <td>{{ $data->end_date }}</td>
