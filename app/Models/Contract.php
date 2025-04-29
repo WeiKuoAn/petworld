@@ -21,6 +21,7 @@ class Contract extends Model
         'end_date',
         'use_date',
         'renew',
+        'number',
         'renew_year',
         'user_id',
         'comment',

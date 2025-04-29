@@ -66,6 +66,10 @@
                                 <input type="text" class="form-control" id="pet_name" name="pet_name"  required>
                            </div>
                            <div class="mb-3">
+                                <label for="pet_variety" class="form-label" id="pet_variety_label">寶貝品種<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="pet_variety" name="pet_variety"  required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="pet_variety" class="form-label">寶貝品種<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="pet_variety" name="pet_variety"  required>
                             </div>
@@ -138,9 +142,15 @@
             if (type !== '1') {
                 $('#start_date_label').html('開始日期<span class="text-danger">*</span>');
                 $('#end_date_label').html('結束日期<span class="text-danger">*</span>');
+                if(type == '2' || type == '4'){
+                    $('#pet_variety_label').html('位置編號<span class="text-danger">*</span>');
+                }else{
+                    $('#pet_variety_label').html('寶貝品種<span class="text-danger">*</span>');
+                }
             } else {
                 $('#start_date_label').html('簽約日期<span class="text-danger">*</span>');
                 $('#end_date_label').html('生效日期<span class="text-danger">*</span>');
+                $('#pet_variety_label').html('寶貝品種<span class="text-danger">*</span>');
             }
         }
 

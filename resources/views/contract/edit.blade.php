@@ -187,17 +187,17 @@
                                 value="{{ $data->pet_name }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="pet_name" class="form-label">寶貝品種<span class="text-danger">*</span></label>
+                            <label for="pet_name" class="form-label" id="pet_variety_label">寶貝品種<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pet_variety" name="pet_variety"
                                 value="{{ $data->pet_variety }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="start_date" class="form-label">@if($data->type==1)簽約日期 @else 開始日期 @endif<span class="text-danger">*</span></label>
+                            <label for="start_date" class="form-label" id="start_date_label">@if($data->type==1)簽約日期 @else 開始日期 @endif<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="start_date" name="start_date"
                                 value="{{ $data->start_date }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="end_date" class="form-label">@if($data->type==1)簽約日期 @else 結束日期 @endif<span class="text-danger">*</span></label>
+                            <label for="end_date" class="form-label" id="end_date_label">@if($data->type==1)簽約日期 @else 結束日期 @endif<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="end_date" name="end_date"
                                 value="{{ $data->end_date }}" required>
                         </div>
@@ -276,6 +276,27 @@
         $("#refund_div").hide();
         $("#renew_div").hide();
         $("#closed_div").hide();
+
+        function updateLabelsByType() {
+            const type = $('select[name="type"]').val();
+            if (type !== '1') {
+                $('#start_date_label').html('開始日期<span class="text-danger">*</span>');
+                $('#end_date_label').html('結束日期<span class="text-danger">*</span>');
+                if(type == '2' || type == '4'){
+                    $('#pet_variety_label').html('位置編號<span class="text-danger">*</span>');
+                }else{
+                    $('#pet_variety_label').html('寶貝品種<span class="text-danger">*</span>');
+                }
+            } else {
+                $('#start_date_label').html('簽約日期<span class="text-danger">*</span>');
+                $('#end_date_label').html('生效日期<span class="text-danger">*</span>');
+                $('#pet_variety_label').html('寶貝品種<span class="text-danger">*</span>');
+            }
+        }
+        updateLabelsByType();
+        $('select[name="type"]').on('change', function() {
+            updateLabelsByType();
+        });
 
         $('#use').change(function() {
             if ($(this).is(':checked')) {
