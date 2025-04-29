@@ -52,6 +52,14 @@
                         <span> 線上打卡 </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('dashboard.info') }}">
+                        <i data-feather="airplay"></i>
+                        <span> 當月總表 </span>
+                    </a>
+                </li>
+
+                
 
                 <li class="menu-title mt-2">Apps</li>
 
@@ -85,13 +93,13 @@
                     <div class="collapse" id="sale">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('person.sales') }}"  class="{{ request()->is('person.sales') ? 'active' : '' }}">業務管理</a>
+                                <a href="{{ route('sales') }}"  class="{{ request()->is('sales') ? 'active' : '' }}">業務管理</a>
                             </li>
                             <li>
                                 <a href="{{ route('sale.create') }}"  class="{{ request()->is('sale.create') ? 'active' : '' }}">業務Key單</a>
                             </li>
                             <li>
-                                <a href="{{ route('person.wait.sales') }}"  class="{{ request()->is('person.wait.sales') ? 'active' : '' }}">業務對帳確認</a>
+                                <a href="{{ route('wait.sales') }}"  class="{{ request()->is('wait.sales') ? 'active' : '' }}">業務對帳確認</a>
                             </li>
                         </ul>
                     </div>
@@ -106,6 +114,9 @@
                     <div class="collapse" id="contract">
                         <ul class="nav-second-level">
                             <li>
+                                <a href="{{ route('contractTypes') }}"  class="{{ request()->is('contractTypes') ? 'active' : '' }}">契約類別</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('contracts') }}"  class="{{ request()->is('contracts') ? 'active' : '' }}">生前契約管理</a>
                             </li>
                             <li>
@@ -113,6 +124,58 @@
                             </li>
                             <li>
                                 <a href="{{ route('contract.create') }}"  class="{{ request()->is('contract.create') ? 'active' : '' }}">新增契約</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="#product" data-bs-toggle="collapse">
+                        <i data-feather="shopping-cart"></i>
+                        <span> 商品管理 </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="product">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{route('product.category')}}"  class="{{ request()->is('product.category') ? 'active' : '' }}">商品類別</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('product.create') }}"  class="{{ request()->is('product.create') ? 'active' : '' }}">新增商品</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('product') }}"  class="{{ request()->is('product') ? 'active' : '' }}">商品列表</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                
+                <li>
+                    <a href="#rpg" data-bs-toggle="collapse">
+                        <i data-feather="file-text"></i>
+                        <span> 報表管理 </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="rpg">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('rpg01') }}"  class="{{ request()->is('rpg01') ? 'active' : '' }}">方案報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg04') }}"  class="{{ request()->is('rpg04') ? 'active' : '' }}">金紙銷售報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg13') }}"  class="{{ request()->is('rpg13') ? 'active' : '' }}">金紙賣出報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg17') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">安葬服務報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg17') ? 'active' : '' }}">後續服務報表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rpg06') }}"  class="{{ request()->is('rpg06') ? 'active' : '' }}">套組法會查詢</a>
                             </li>
                         </ul>
                     </div>
