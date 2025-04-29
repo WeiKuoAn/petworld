@@ -94,7 +94,7 @@ class ContractOtherController extends Controller
     {
         $contract_types = ContractType::where('status', 'up')->get();
         $customers = Customer::orderby('created_at', 'desc')->get();
-        return view('contract.create')->with('contract_types', $contract_types)
+        return view('contract_other.create')->with('contract_types', $contract_types)
             ->with('customers', $customers);;
     }
 

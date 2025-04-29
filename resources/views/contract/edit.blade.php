@@ -155,7 +155,6 @@
                                 <label class="form-label">類別名稱<span class="text-danger">*</span></label>
                                 <select class="form-control" data-toggle="select" data-width="100%" name="type"
                                     required>
-                                    <option value="" selected>請選擇</option>
                                     @foreach ($contract_types as $contract_type)
                                         <option value="{{ $contract_type->id }}"
                                             @if ($data->type == $contract_type->id) selected @endif>{{ $contract_type->name }}

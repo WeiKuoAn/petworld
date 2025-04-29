@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "新增契約"])
+@extends('layouts.vertical', ["page_title"=> "新增契約/合約"])
 
 @section('css')
 <!-- third party css -->
@@ -21,10 +21,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">契約管理</a></li>
-                        <li class="breadcrumb-item active">新增契約</li>
+                        <li class="breadcrumb-item active">新增契約/合約</li>
                     </ol>
                 </div>
-                <h4 class="page-title">新增契約</h4>
+                <h4 class="page-title">新增契約/合約</h4>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('contract.create.data') }}" method="POST">
+                    <form action="{{ route('contractOther.create.data') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-xl-12">
@@ -66,7 +66,7 @@
                                 <input type="text" class="form-control" id="pet_name" name="pet_name"  required>
                            </div>
                            <div class="mb-3">
-                                <label for="pet_variety" class="form-label">寶貝品種<span class="text-danger">*</span></label>
+                                <label for="pet_variety" class="form-label" id="pet_variety_label">寶貝品種<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="pet_variety" name="pet_variety"  required>
                             </div>
                             <div class="mb-3">
@@ -138,9 +138,15 @@
             if (type !== '1') {
                 $('#start_date_label').html('開始日期<span class="text-danger">*</span>');
                 $('#end_date_label').html('結束日期<span class="text-danger">*</span>');
+                if(type == '2' || type == '4'){
+                    $('#pet_variety_label').html('位置編號<span class="text-danger">*</span>');
+                }else{
+                    $('#pet_variety_label').html('寶貝品種<span class="text-danger">*</span>');
+                }
             } else {
                 $('#start_date_label').html('簽約日期<span class="text-danger">*</span>');
                 $('#end_date_label').html('生效日期<span class="text-danger">*</span>');
+                $('#pet_variety_label').html('寶貝品種<span class="text-danger">*</span>');
             }
         }
 

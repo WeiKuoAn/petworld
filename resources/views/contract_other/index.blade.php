@@ -100,7 +100,7 @@
                             <div class="col-auto" style="margin-top: 25px;">
                                 <div class="text-lg-end my-1 my-lg-0">
                                     {{-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> --}}
-                                    <a href="{{ route('contract.create') }}">
+                                    <a href="{{ route('contractOther.create') }}">
                                         <button type="button" class="btn btn-danger waves-effect waves-light"
                                             data-bs-toggle="modal" data-bs-target="#custom-modal"><i
                                                 class="mdi mdi-plus-circle me-1"></i>新增合約</button>
