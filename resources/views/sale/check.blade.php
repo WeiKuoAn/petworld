@@ -331,7 +331,9 @@
                 @else
                     @if ($data->status == '1')
                         <button type="button" class="btn w-sm btn-light waves-effect" onclick="history.go(-1)">回上一頁</button>
+                        @if(Auth::user()->id == $data->user_id)
                         <button type="submit" class="btn w-sm btn-success waves-effect waves-light" value="usercheck" name="user_check" onclick="if(!confirm('是否已確定對帳，若要取消對帳，請進行撤回')){event.returnValue=false;return false;}">確定對帳</button>
+                    @endif
                     @elseif($data->status == '3' || $data->status == '9')
                         <button type="button" class="btn w-sm btn-light waves-effect" onclick="history.go(-1)">回上一頁</button>
                     @endif
