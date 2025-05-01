@@ -24,8 +24,9 @@
             @elseif(Auth::user()->job_id == 3)
                 <!-- 業務經理(3) -->
                 @include('layouts.topbar/admin-sale-topbar')
-                {{-- @elseif(Auth::user()->job_id == 8)<!-- 專員主管(8) -->
-                @include('layouts.topbar/director-sale-left-sidebar') --}}
+            @elseif(Auth::user()->job_id == 8)
+                <!-- 專員主管(8) -->
+                @include('layouts.topbar/director-sale-left-sidebar')
             @elseif(Auth::user()->job_id == 4)
                 <!-- 行政(4) -->
                 @include('layouts.topbar/istrative-topbar')
