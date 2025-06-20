@@ -50,6 +50,7 @@ use App\Http\Controllers\Rpg16Controller;
 use App\Http\Controllers\Rpg17Controller;
 use App\Http\Controllers\Rpg18Controller;
 use App\Http\Controllers\LeaveDayController;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\RestockController;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -85,7 +86,7 @@ require __DIR__ . '/auth.php';
 
 
 Route::group(['prefix' => '/'], function () {
-    Route::get('', function ()    {
+    Route::get('', function () {
         Auth::logout();
         return view('auth.login');
     });
@@ -93,14 +94,14 @@ Route::group(['prefix' => '/'], function () {
     Route::get('dashboard', [DashboardController::class, 'loginSuccess'])->name('index');
     Route::post('/dashboard', [DashboardController::class, 'store'])->name('index.worktime');
     Route::get('dashboard_info', [DashboardController::class, 'index'])->name('dashboard.info');
-    
+
     /*用戶管理*/
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::get('user/create', [UserController::class, 'create'])->name('user.create');
     Route::post('user/create', [UserController::class, 'store'])->name('user.create.data');
     Route::get('user/edit/{id}', [UserController::class, 'show'])->name('user.edit');
     Route::post('user/edit/{id}', [UserController::class, 'update'])->name('user.edit.data');
-    
+
     //用戶出勤
     Route::get('user/work/{id}', [WorkController::class, 'user_work'])->name('user.work.index');
     Route::get('user/work/edit/{id}', [WorkController::class, 'showuserwork'])->name('user.work.edit');
@@ -148,7 +149,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('leave_day/del/{id}', [LeaveDayController::class, 'destroy'])->name('leave_day.del.data');
     Route::get('leave_day/check/{id}', [LeaveDayController::class, 'check'])->name('leave_day.check');
     Route::post('leave_day/check/{id}', [LeaveDayController::class, 'check_data'])->name('leave_day.check.data');
-    
+
     /*客戶管理 */
     Route::get('customers', [CustomerController::class, 'index'])->name('customer');
     Route::get('customer_data', [CustomerController::class, 'customer_data'])->name('customer.data');
@@ -162,14 +163,14 @@ Route::group(['prefix' => '/'], function () {
     Route::get('customer/{id}/sales', [CustomerController::class, 'sales'])->name('customer.sales');
 
     /*拜訪管理*/
-    Route::get('search_district', [VisitController::class, 'search_district'])->name('search.district');//ajax搜尋區域
+    Route::get('search_district', [VisitController::class, 'search_district'])->name('search.district'); //ajax搜尋區域
 
-    Route::get('hospitals', [VisitController::class, 'hospitals'])->name('hospitals');//醫院
-    Route::get('etiquettes', [VisitController::class, 'etiquettes'])->name('etiquettes');//禮儀社
-    Route::get('reproduces', [VisitController::class, 'reproduces'])->name('reproduces');//繁殖場
-    Route::get('dogparks', [VisitController::class, 'dogparks'])->name('dogparks');//狗園
-    Route::get('salons', [VisitController::class, 'salons'])->name('salons');//美容院
-    Route::get('others', [VisitController::class, 'others'])->name('others');//其他合作廠商
+    Route::get('hospitals', [VisitController::class, 'hospitals'])->name('hospitals'); //醫院
+    Route::get('etiquettes', [VisitController::class, 'etiquettes'])->name('etiquettes'); //禮儀社
+    Route::get('reproduces', [VisitController::class, 'reproduces'])->name('reproduces'); //繁殖場
+    Route::get('dogparks', [VisitController::class, 'dogparks'])->name('dogparks'); //狗園
+    Route::get('salons', [VisitController::class, 'salons'])->name('salons'); //美容院
+    Route::get('others', [VisitController::class, 'others'])->name('others'); //其他合作廠商
     Route::get('visit/{id}', [VisitController::class, 'index'])->name('visits');
     Route::get('visit/create/{id}', [VisitController::class, 'create'])->name('visit.create');
     Route::post('visit/create/{id}', [VisitController::class, 'store'])->name('visit.create.data');
@@ -348,7 +349,7 @@ Route::group(['prefix' => '/'], function () {
 
     /*人事管理*/
     Route::get('personnels', [PersonnelController::class, 'index'])->name('personnels');
-    
+
     /*例假日總覽 */
     Route::get('personnel/holidays', [PersonnelController::class, 'holidays'])->name('personnel.holidays');
     Route::get('personnel/holiday/create', [PersonnelController::class, 'holiday_create'])->name('personnel.holidays.create');
@@ -360,7 +361,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/vacation/create', [VacationController::class, 'store'])->name('vacation.create.data');
     Route::get('/vacation/edit/{id}', [VacationController::class, 'show'])->name('vacation.edit');
     Route::post('/vacation/edit/{id}', [VacationController::class, 'update'])->name('vacation.edit.data');
-    
+
     /*法會類別管理*/
     Route::get('/puja/type', [PujaTypeController::class, 'index'])->name('puja.types');
     Route::get('/puja/type/create', [PujaTypeController::class, 'create'])->name('puja.type.create');
@@ -418,7 +419,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/rpg/rpg02', [Rpg02Controller::class, 'rpg02'])->name('rpg02');
     Route::get('/rpg/rpg04', [Rpg04Controller::class, 'rpg04'])->name('rpg04');
     Route::get('/rpg/rpg05', [Rpg05Controller::class, 'rpg05'])->name('rpg05');
-    Route::get('/rpg/rpg06', [Rpg06Controller::class, 'rpg06'])->name('rpg06');//舊法會查詢
+    Route::get('/rpg/rpg06', [Rpg06Controller::class, 'rpg06'])->name('rpg06'); //舊法會查詢
     // Route::get('/rpg/rpg07', [Rpg07Controller::class, 'rpg07'])->name('rpg07');
     // Route::get('/rpg/rpg07/export', [Rpg07Controller::class, 'export'])->name('rpg07.export');
     Route::get('/rpg/rpg09', [Rpg09Controller::class, 'rpg09'])->name('rpg09');
@@ -436,10 +437,12 @@ Route::group(['prefix' => '/'], function () {
     // Route::get('/rpg/rpg18', [Rpg18Controller::class, 'rpg18'])->name('rpg18');
 
 
-    Route::get('image', function()
-    {
+    //所有Ajax
+    //1.商品類別
+    Route::get('/ajax/product/search', [AjaxController::class, 'product_search'])->name('ajax.product_search');
+    Route::get('/ajax/product/search/price', [AjaxController::class, 'product_search_price'])->name('ajax.product_search_price');
+    Route::get('image', function () {
         $img = Image::make('https://images.pexels.com/photos/4273439/pexels-photo-4273439.jpeg')->resize(300, 200); // 這邊可以隨便用網路上的image取代
         return $img->response('jpg');
     });
-
 });

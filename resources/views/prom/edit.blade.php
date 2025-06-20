@@ -44,6 +44,7 @@
                                 <option value="B" @if($data->type == 'B') selected @endif>後續處理</option>
                                 <option value="C" @if($data->type == 'C') selected @endif>祈福儀式</option>
                                 <option value="D" @if($data->type == 'D') selected @endif>法會報名</option>
+                                <option value="E" @if($data->type == 'E') selected @endif>紀念品</option>
                             </select>
                             </select>
                         </div>
