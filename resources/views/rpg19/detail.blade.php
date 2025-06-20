@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "紀念品報表"])
+@extends('layouts.vertical', ["page_title"=> "紀念品服務報表"])
 
 @section('content')
 <!-- Start Content-->
@@ -12,7 +12,7 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">報表管理</a></li>
-                        <li class="breadcrumb-item active">紀念品報表</li>
+                        <li class="breadcrumb-item active">紀念品服務報表</li>
                     </ol>
                 </div>
                 <h4 class="page-title">{{ $year."/".$month }}</h4>

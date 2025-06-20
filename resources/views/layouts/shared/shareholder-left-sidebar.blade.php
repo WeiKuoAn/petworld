@@ -105,7 +105,7 @@
                                 <a href="{{ route('rpg16') }}"  class="{{ request()->is('rpg16') ? 'active' : '' }}">後續服務報表</a>
                             </li>
                             <li>
-                                <a href="{{ route('rpg19') }}"  class="{{ request()->is('rpg19') ? 'active' : '' }}">紀念品報表</a>
+                                <a href="{{ route('rpg19') }}"  class="{{ request()->is('rpg19') ? 'active' : '' }}">紀念品服務報表</a>
                             </li>
                             <li>
                                 <a href="{{ route('rpg02') }}"  class="{{ request()->is('rpg02') ? 'active' : '' }}">支出報表</a>
