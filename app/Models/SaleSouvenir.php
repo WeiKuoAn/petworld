@@ -24,4 +24,9 @@ class SaleSouvenir extends Model
     {
         return $this->hasOne('App\Models\Sale', 'id', 'sale_id');
     }
+
+    public function souvenir_name()
+    {
+        return $this->belongsTo('App\Models\Prom', 'souvenir_id', 'id');
+    }
 }

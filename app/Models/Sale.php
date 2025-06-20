@@ -56,6 +56,11 @@ class Sale extends Model
         return $this->hasMany('App\Models\Sale_prom', 'sale_id', 'id');
     }
 
+     public function sale_souvenirs()
+    {
+        return $this->hasMany('App\Models\SaleSouvenir', 'sale_id', 'id');
+    }
+
     public function user_name()
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');

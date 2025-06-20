@@ -161,6 +161,7 @@
                                         <th>後續處理</th>
                                         <th>祈福儀式</th>
                                         <th>法會報名</th>
+                                        <th>紀念品</th>
                                         <th>付款方式</th>
                                         <th>實收價格</th>
                                         <th>動作</th>
@@ -257,23 +258,21 @@
                                                 @endforeach
                                             </td>
                                             <td>
+                                                @foreach ($sale->sale_souvenirs as $sale_souvenir)
+                                                    @if (isset($sale_souvenir->souvenir_id))
+                                                        {{ $sale_souvenir->souvenir_name->name }}({{number_format($sale_souvenir->souvenir_num)}}個){{ number_format($sale_souvenir->souvenir_total) }}<br>
+                                                    @else
+                                                        無
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
                                                 @if (isset($sale->pay_id))
                                                     {{ $sale->pay_type() }}
                                                 @endif
                                             </td>
                                             <td>{{ number_format($sale->pay_price) }}</td>
                                             <td>
-                                                {{-- @if ($sale->status != '9')
-                                                <a href="{{ route('edit-sale', $sale->id) }}"><button type="button"
-                                                        class="btn btn-secondary btn-sm">修改</button></a>
-                                                        <a href="{{ route('del-sale', $sale->id) }}"><button type="button"
-                                                            class="btn btn-secondary btn-sm">刪除</button></a>
-                                                <a href="{{ route('check-sale', $sale->id) }}"><button type="button"
-                                                        class="btn btn-success btn-sm">送出對帳</button></a>
-                                            @else
-                                                <a href="{{ route('check-sale', $sale->id) }}"><button type="button"
-                                                        class="btn btn-danger btn-sm">查看</button></a>
-                                            @endif --}}
                                                 @if ($sale->status != '9')
                                                     <div class="btn-group dropdown">
                                                         <a href="javascript: void(0);"

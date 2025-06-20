@@ -487,7 +487,7 @@
                         <button type="button" class="btn w-sm btn-light waves-effect"
                             onclick="history.go(-1)">回上一頁</button>
                         @if (Auth::user()->level != 2 || Auth::user()->id == $data->user_id)
-                            <button type="submit" class="btn w-sm btn-success waves-effect waves-light">編輯</button>
+                            <button type="submit" class="btn w-sm btn-success waves-effect waves-light">刪除</button>
                         @endif
                     </div>
                 </div> <!-- end col -->
