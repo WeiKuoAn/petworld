@@ -55,7 +55,7 @@
                         <table class="table table-centered table-nowrap table-hover mb-0 mt-2">
                             <thead class="table-light">
                                     <tr align="center">
-                                        <th scope="col">後續服務</th>
+                                        <th scope="col">紀念品服務</th>
                                         @foreach($months as $key=>$month)
                                             <th scope="col">{{ $month['month'] }}</th>
                                         @endforeach
