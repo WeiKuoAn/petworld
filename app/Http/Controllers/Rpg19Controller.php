@@ -50,13 +50,23 @@ class Rpg19Controller extends Controller
             {
                 $datas[$key]['proms'][$prom->id]['id'] = $prom->id;
                 $datas[$key]['proms'][$prom->id]['name'] = $prom->name;
-                $datas[$key]['proms'][$prom->id]['count'] = DB::table('sale_data')
+                $datas[$key]['proms'][$prom->id]['prom_count'] = DB::table('sale_data')
                                                                 ->leftjoin('sale_prom','sale_prom.sale_id', '=' , 'sale_data.id')
                                                                 ->whereNotNull('sale_prom.prom_id')
                                                                 ->where('sale_data.sale_date','>=',$month['start_date'])->where('sale_data.sale_date','<=',$month['end_date'])
                                                                 ->where('sale_data.status','9')
                                                                 ->where('sale_prom.prom_id',$prom->id)
                                                                 ->count();
+
+                $datas[$key]['proms'][$prom->id]['souvenir_count'] = DB::table('sale_data')
+                                                                ->leftjoin('sale_souvenir','sale_souvenir.sale_id', '=' , 'sale_data.id')
+                                                                ->whereNotNull('sale_souvenir.souvenir_id')
+                                                                ->where('sale_data.sale_date','>=',$month['start_date'])->where('sale_data.sale_date','<=',$month['end_date'])
+                                                                ->where('sale_data.status','9')
+                                                                ->where('sale_souvenir.souvenir_id',$prom->id)
+                                                                ->count();
+
+                $datas[$key]['proms'][$prom->id]['count'] = $datas[$key]['proms'][$prom->id]['prom_count'] + $datas[$key]['proms'][$prom->id]['souvenir_count'];
                                                                 
             }
             // dd($datas);
@@ -109,7 +119,7 @@ class Rpg19Controller extends Controller
         }
         $startOfMonth = Carbon::create($search_year, $month, 1)->startOfMonth();
         $endOfMonth = $startOfMonth->copy()->endOfMonth();
-        $datas = Sale::join('sale_prom','sale_prom.sale_id', '=' , 'sale_data.id')
+        $prom_datas = Sale::join('sale_prom','sale_prom.sale_id', '=' , 'sale_data.id')
                     ->where('sale_data.sale_date','>=',$startOfMonth->toDateString())->where('sale_data.sale_date','<=',$endOfMonth->toDateString())
                     ->where('sale_prom.prom_id',$prom_id)
                     ->whereNotNull('sale_prom.prom_id')
@@ -118,6 +128,13 @@ class Rpg19Controller extends Controller
                     ->get();
                     // dd($datas);
 
-        return view('rpg19.detail')->with('datas',$datas)->with('prom',$prom)->with('year',$search_year)->with('month',$month);
+        $souvenir_datas = Sale::join('sale_souvenir','sale_souvenir.sale_id', '=' , 'sale_data.id')
+                    ->where('sale_data.sale_date','>=',$startOfMonth->toDateString())->where('sale_data.sale_date','<=',$endOfMonth->toDateString())
+                    ->where('sale_souvenir.souvenir_id',$prom_id)
+                    ->whereNotNull('sale_souvenir.souvenir_id')
+                    ->where('sale_data.status','9')
+                    ->get();
+
+        return view('rpg19.detail')->with('prom_datas',$prom_datas)->with('prom',$prom)->with('year',$search_year)->with('month',$month)->with('souvenir_datas',$souvenir_datas);
     }
 }

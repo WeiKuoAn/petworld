@@ -35,21 +35,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($datas as $key=>$data)
+                                    @foreach($prom_datas as $prom_key=>$prom_data)
                                         <tr align="center">
-                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $prom_key+1 }}</td>
                                             {{-- <td>{{ $data->sale_id }}</td> --}}
-                                            <td>{{ $data->sale_date }}</td>
+                                            <td>{{ $prom_data->sale_date }}</td>
                                             <td>
-                                                @if (isset($data->customer_id))
-                                                    @if(isset($data->cust_name))
-                                                        {{ $data->cust_name->name }}
+                                                @if (isset($prom_data->customer_id))
+                                                    @if(isset($prom_data->cust_name))
+                                                        {{ $prom_data->cust_name->name }}
                                                     @else
-                                                    {{ $data->customer_id }}
+                                                    {{ $prom_data->customer_id }}
                                                     @endif
                                                 @endif
                                             </td>
-                                            <td>{{ $data->pet_name }}</td>
+                                            <td>{{ $prom_data->pet_name }}</td>
+                                        </tr>
+                                    @endforeach
+                                    @foreach($souvenir_datas as $souvenir_key=>$souvenir_data)
+                                        <tr align="center">
+                                            <td>{{ $souvenir_key+1 }}</td>
+                                            {{-- <td>{{ $data->sale_id }}</td> --}}
+                                            <td>{{ $souvenir_data->sale_date }}</td>
+                                            <td>
+                                                @if (isset($souvenir_data->customer_id))
+                                                    @if(isset($souvenir_data->cust_name))
+                                                        {{ $souvenir_data->cust_name->name }}
+                                                    @else
+                                                    {{ $souvenir_data->customer_id }}
+                                                    @endif
+                                                @endif
+                                            </td>
+                                            <td>{{ $souvenir_data->pet_name }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

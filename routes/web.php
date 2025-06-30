@@ -437,6 +437,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/rpg/rpg17/{month}/{prom_id}/detail', [Rpg17Controller::class, 'detail'])->name('rpg17.detail');
     // Route::get('/rpg/rpg18', [Rpg18Controller::class, 'rpg18'])->name('rpg18');
     Route::get('/rpg/rpg19', [Rpg19Controller::class, 'rpg19'])->name('rpg19');
+    Route::get('/rpg/rpg19/{month}/{prom_id}/detail', [rpg19Controller::class, 'detail'])->name('rpg19.detail');
 
 
     //所有Ajax
