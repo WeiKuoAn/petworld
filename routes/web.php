@@ -53,9 +53,12 @@ use App\Http\Controllers\Rpg19Controller;
 use App\Http\Controllers\LeaveDayController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\RestockController;
+use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\LeaveSettingController;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
+
 
 
 /*
@@ -438,6 +441,46 @@ Route::group(['prefix' => '/'], function () {
     // Route::get('/rpg/rpg18', [Rpg18Controller::class, 'rpg18'])->name('rpg18');
     Route::get('/rpg/rpg19', [Rpg19Controller::class, 'rpg19'])->name('rpg19');
     Route::get('/rpg/rpg19/{month}/{prom_id}/detail', [rpg19Controller::class, 'detail'])->name('rpg19.detail');
+
+    //人事
+    /*例假日總覽 */
+    Route::get('personnel/holidays', [PersonnelController::class, 'holidays'])->name('personnel.holidays');
+    Route::get('personnel/holiday/create', [PersonnelController::class, 'holiday_create'])->name('personnel.holidays.create');
+    Route::post('personnel/holiday/create', [PersonnelController::class, 'holiday_store'])->name('personnel.holidays.create.data');
+    Route::get('personnel/holiday/edit/{user_id}/{year}/{month}', [PersonnelController::class, 'holiday_edit'])->name('personnel.holidays.edit');
+    Route::post('personnel/holiday/edit/{user_id}/{year}/{month}', [PersonnelController::class, 'holiday_update'])->name('personnel.holidays.edit.data');
+    Route::get('personnel/other_holidays', [PersonnelController::class, 'other_holidays'])->name('personnel.other_holidays');
+
+    /*年度總休假管理*/
+    Route::get('/vacation', [VacationController::class, 'index'])->name('vacations');
+    Route::get('/vacation/create', [VacationController::class, 'create'])->name('vacation.create');
+    Route::post('/vacation/create', [VacationController::class, 'store'])->name('vacation.create.data');
+    Route::get('/vacation/edit/{year}', [VacationController::class, 'show'])->name('vacation.edit');
+    Route::post('/vacation/edit/{year}', [VacationController::class, 'update'])->name('vacation.edit.data');
+
+    /*請假管理 */
+    Route::get('personnel/leave_days', [LeaveDayController::class, 'index'])->name('personnel.leave_days');
+    Route::get('personnel/user/{id}/leave_day', [LeaveDayController::class, 'user_index'])->name('user.leave_day');
+    Route::get('leave_day/create', [LeaveDayController::class, 'create'])->name('leave_day.create');
+    Route::post('leave_day/create', [LeaveDayController::class, 'store'])->name('leave_day.create.data');
+    Route::post('/leave-day/upload-file', [LeaveDayController::class, 'uploadFile'])->name('leave_day.upload_file');
+    Route::get('leave_day/edit/{id}', [LeaveDayController::class, 'show'])->name('leave_day.edit');
+    Route::post('leave_day/edit/{id}', [LeaveDayController::class, 'update'])->name('leave_day.edit.data');
+    Route::get('leave_day/del/{id}', [LeaveDayController::class, 'delete'])->name('leave_day.del');
+    Route::post('leave_day/del/{id}', [LeaveDayController::class, 'destroy'])->name('leave_day.del.data');
+    Route::get('leave_day/check/{id}', [LeaveDayController::class, 'check'])->name('leave_day.check');
+    Route::post('leave_day/check/{id}', [LeaveDayController::class, 'check_data'])->name('leave_day.check.data');
+
+    //假別管理
+    Route::get('personnel/leaves', [LeaveController::class, 'index'])->name('personnel.leaves');
+    Route::get('personnel/leaves/create', [LeaveController::class, 'create'])->name('personnel.leaves.create');
+    Route::post('personnel/leaves/create', [LeaveController::class, 'store'])->name('personnel.leaves.create.data');
+    Route::get('personnel/leaves/edit/{id}', [LeaveController::class, 'edit'])->name('personnel.leaves.edit');
+    Route::post('personnel/leaves/edit/{id}', [LeaveController::class, 'update'])->name('personnel.leaves.edit.data');
+    Route::get('personnel/leaveSetting/create', [LeaveSettingController::class, 'create'])->name('personnel.leavesitting.create');
+    Route::post('personnel/leaveSetting/store', [LeaveSettingController::class, 'store'])->name('personnel.leavesitting.create.data');
+    Route::get('personnel/leaveSetting/edit/{id}', [LeaveSettingController::class, 'edit'])->name('personnel.leavesitting.edit');
+    Route::post('personnel/leaveSetting/edit/{id}', [LeaveSettingController::class, 'update'])->name('personnel.leavesitting.edit.data');
 
 
     //所有Ajax

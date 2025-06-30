@@ -18,7 +18,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">人事管理</a></li>
                         <li class="breadcrumb-item active">新增專員每月休假</li>
                     </ol>
@@ -41,7 +41,7 @@
                             <div class="mb-3">
                                 <div class="mb-3">
                                    <label class="form-label">年度<span class="text-danger">*</span></label>
-                                   <input type="text" class="form-control" name="year" value="{{ $year }}" readonly required>
+                                   <input type="text" class="form-control" name="year" value="{{ $year }}" required>
                                </div>
                            </div>
                             <div class="mb-3">

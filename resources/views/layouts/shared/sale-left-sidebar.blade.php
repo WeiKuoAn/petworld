@@ -130,6 +130,10 @@
                                 <a href="{{ route('person.pays') }}"  class="{{ request()->is('person.pays') ? 'active' : '' }}">個人支出</a>
                             </li>
                             <li>
+                                <a href="{{ route('person.leave_days') }}"
+                                    class="{{ request()->is('person.leave_days') ? 'active' : '' }}">個人假單</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('user-profile') }}"  class="{{ request()->is('user-profile') ? 'active' : '' }}">個人資料</a>
                             </li>
                         </ul>

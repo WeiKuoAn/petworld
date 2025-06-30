@@ -117,7 +117,7 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $data->user_name->name }}</td>
                                     <td>{{ date('Y-m-d', strtotime($data->created_at)) }}</td>
-                                    <td>{{ $data->leave_name() }}</td>
+                                    <td>{{ $data->leave_name->name }}</td>
                                     <td>{{ $data->start_datetime }}</td>
                                     <td>{{ $data->end_datetime }}</td>
                                     <td>

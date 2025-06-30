@@ -18,7 +18,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">人事管理</a></li>
                         <li class="breadcrumb-item active">新增年度總休假</li>
                     </ol>
@@ -33,6 +33,12 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
+                    @if ($hint == '1')
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            年度已存在                        
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <form action="{{ route('vacation.create.data') }}" method="POST">
                     @csrf
                     <div class="row">
@@ -48,8 +54,18 @@
                                </div>
                            </div>
                             <div class="mb-3">
-                                <label for="project-priority" class="form-label">天數<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="day" value="" required>
+                                <label for="project-priority" class="form-label">月份/天數<span class="text-danger">*</span></label>
+                                @for ($i = 1; $i <= 12; $i++)
+                                    <div class="row mt-2">
+                                        <div class="col-2" style="text-align: center;">
+                                            {{ $i }}月：
+                                            <input type="hidden" class="form-control" name="months[]" value="{{ $i }}" >
+                                        </div>
+                                        <div class="col-10">
+                                            <input type="text" class="form-control" name="days[]" value="0" placeholder="天數">
+                                        </div>
+                                    </div>
+                                @endfor
                             </div>
                         </div> <!-- end col-->
                         

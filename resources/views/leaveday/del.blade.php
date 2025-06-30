@@ -19,7 +19,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">個人管理</a></li>
                         <li class="breadcrumb-item active">請假刪除</li>
                     </ol>
@@ -52,19 +52,9 @@
                             <div class="mb-3">
                                 <label for="project-priority" class="form-label">假別<span class="text-danger">*</span></label>
                                 <select class="form-control" data-toggle="select" data-width="100%" name="leave_day">
-                                    <option value="special" @if($data->leave_day == 'special') selected @endif>特休</option>
-                                    <option value="marriage" @if($data->leave_day == 'marriage') selected @endif>婚假</option>
-                                    <option value="sick" @if($data->leave_day == 'sick') selected @endif>病假</option>
-                                    <option value="personal" @if($data->leave_day == 'personal') selected @endif>事假</option>
-                                    <option value="bereavement" @if($data->leave_day == 'bereavement') selected @endif>喪假</option>
-                                    <option value="work-related" @if($data->leave_day == 'work-related') selected @endif>工傷假</option>
-                                    <option value="public" @if($data->leave_day == 'public') selected @endif>公假</option>
-                                    <option value="menstrual" @if($data->leave_day == 'menstrual') selected @endif>生理假</option>
-                                    <option value="maternity" @if($data->leave_day == 'maternity') selected @endif>產假</option>
-                                    <option value="prenatalCheckUp" @if($data->leave_day == 'prenatalCheckUp') selected @endif>產檢假</option>
-                                    <option value="paternity" @if($data->leave_day == 'paternity') selected @endif>陪產假</option>
-                                    <option value="fetalProtection" @if($data->leave_day == 'fetalProtection') selected @endif>安胎假</option>
-                                    <option value="familyCare" @if($data->leave_day == 'familyCare') selected @endif>家庭照顧假</option>
+                                    @foreach($leaves as $leave)
+                                        <option value="{{ $leave->id }}" @if($data->leave_day ==  $leave->id) selected @endif>{{ $leave->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -114,6 +104,8 @@
                                 <select class="form-control" data-toggle="select" data-width="100%" name="unit">
                                     <option value="day" @if($data->unit == 'day') selected @endif>天</option>
                                     <option value="hour" @if($data->unit == 'hour') selected @endif>小時</option>
+                                    <option value="week" @if($data->unit == 'week') selected @endif>週</option>
+                                    <option value="month" @if($data->unit == 'month') selected @endif>月</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -125,7 +117,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">備註</label>
-                            <textarea class="form-control" rows="3" placeholder="" name="comm">{{ $data->comment }}</textarea>
+                            <textarea class="form-control" rows="3" placeholder="" name="comment">{{ $data->comment }}</textarea>
                         </div>
                     </div>
                     <div class="row mt-3">

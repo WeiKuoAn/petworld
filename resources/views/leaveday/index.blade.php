@@ -10,7 +10,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">寵返星球</a>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Huaxixiang</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">人事管理</a></li>
                         <li class="breadcrumb-item active">部門請假核准</li>
                     </ol>
@@ -48,19 +48,9 @@
                                     <label class="form-label">假別</label>
                                     <select class="form-select my-1 my-lg-0" id="status-select" name="leave_day" onchange="this.form.submit()">
                                         <option value="null" selected>請選擇...</option>
-                                        <option value="special" @if($request->leave_day == 'special') selected @endif>特休</option>
-                                        <option value="marriage" @if($request->leave_day == 'marriage') selected @endif>婚假</option>
-                                        <option value="sick" @if($request->leave_day == 'sick') selected @endif>病假</option>
-                                        <option value="personal" @if($request->leave_day == 'personal') selected @endif>事假</option>
-                                        <option value="bereavement" @if($request->leave_day == 'bereavement') selected @endif>喪假</option>
-                                        <option value="work-related" @if($request->leave_day == 'work-related') selected @endif>工傷假</option>
-                                        <option value="public" @if($request->leave_day == 'public') selected @endif>公假</option>
-                                        <option value="menstrual" @if($request->leave_day == 'menstrual') selected @endif>生理假</option>
-                                        <option value="maternity" @if($request->leave_day == 'maternity') selected @endif>產假</option>
-                                        <option value="prenatalCheckUp" @if($request->leave_day == 'prenatalCheckUp') selected @endif>產檢假</option>
-                                        <option value="paternity" @if($request->leave_day == 'paternity') selected @endif>陪產假</option>
-                                        <option value="fetalProtection" @if($request->leave_day == 'fetalProtection') selected @endif>安胎假</option>
-                                        <option value="familyCare" @if($request->leave_day == 'familyCare') selected @endif>家庭照顧假</option>
+                                        @foreach($leaves as $leave)
+                                            <option value="{{ $leave->id }}" @if($request->leave_day ==  $leave->id) selected @endif>{{ $leave->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="me-sm-3">
@@ -104,6 +94,7 @@
                                     <th width="12%">請假結束時間</th>
                                     <th>總時數</th>
                                     <th>備註</th>
+                                    <th>附件</th>
                                     <th>狀態</th>
                                     <th>審核</th>
                                 </tr>
@@ -114,16 +105,21 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $data->user_name->name }}</td>
                                     <td>{{ date('Y-m-d', strtotime($data->created_at)) }}</td>
-                                    <td>{{ $data->leave_name() }}</td>
+                                    <td>@if(isset($data->leave_name)){{ $data->leave_name->name }}@endif</td>
                                     <td>{{ $data->start_datetime }}</td>
                                     <td>{{ $data->end_datetime }}</td>
                                     <td>
                                         {{ $data->total }}
                                         @if($data->unit == 'hour')小時
+                                        @elseif($data->unit == 'week')週
+                                        @elseif($data->unit == 'month')月
                                         @else 天
                                         @endif
                                     </td>
                                     <td>{{ $data->comment }}</td>
+                                    <td><a href="{{$data->file }}" target="_blank" class="action-icon"> 
+                                        <i class="mdi mdi-file-document"></i>
+                                    </a></td>
                                     <td>{{ $data->leave_status() }}</td>
                                     <td>
                                         @if($data->state == '2')
