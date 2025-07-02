@@ -225,6 +225,38 @@
                 </li>
 
                 <li>
+                    <a href="#holiday" data-bs-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> 人事管理 </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="holiday">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('personnel.leaves') }}"
+                                    class="{{ request()->is('personnel.leaves') ? 'active' : '' }}">假別列表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('personnels') }}"
+                                    class="{{ request()->is('personnels') ? 'active' : '' }}">人事列表</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('personnel.leave_days') }}"
+                                    class="{{ request()->is('personnel.leave_days') ? 'active' : '' }}">請假核准</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('personnel.holidays') }}"
+                                    class="{{ request()->is('personnel.holidays') ? 'active' : '' }}">例休假總覽</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('personnel.other_holidays') }}"
+                                    class="{{ request()->is('personnel.other_holidays') ? 'active' : '' }}">其他假總覽</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
                     <a href="#product" data-bs-toggle="collapse">
                         <i data-feather="shopping-cart"></i>
                         <span> 商品管理 </span>
@@ -320,7 +352,15 @@
                     <div class="collapse" id="person">
                         <ul class="nav-second-level">
                             <li>
+                                <a href="{{ route('person.last_leave_days') }}"
+                                    class="{{ request()->is('person.last_leave_days') ? 'active' : '' }}">剩餘假總覽</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('person.pays') }}"  class="{{ request()->is('person.pays') ? 'active' : '' }}">個人支出</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('person.leave_days') }}"
+                                    class="{{ request()->is('person.leave_days') ? 'active' : '' }}">個人假單</a>
                             </li>
                             <li>
                                 <a href="{{ route('user-profile') }}"  class="{{ request()->is('user-profile') ? 'active' : '' }}">個人資料</a>

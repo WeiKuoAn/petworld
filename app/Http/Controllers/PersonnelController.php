@@ -105,7 +105,7 @@ class PersonnelController extends Controller
             $year = Carbon::now()->year; //取得當年
         }
         $years = range(Carbon::now()->year, 2022);
-        $users = User::where('status', '0')->whereIn('job_id', [3, 4, 5])->orderby('job_id')->get();
+        $users = User::where('status', '0')->whereIn('job_id', [2, 3, 4, 5, 8])->orderby('job_id')->get();
         $year_holiday = Vacation::where('year', $year)->sum('day'); //取放假天數
         // dd($year_holiday);
         $datas = [];
@@ -162,7 +162,7 @@ class PersonnelController extends Controller
     {
         $year = Carbon::now()->year; //取得當年
         $this_month = Carbon::now()->month;
-        $users = User::where('status', '0')->whereIn('job_id', [3, 4, 5])->orderby('job_id')->get();
+        $users = User::where('status', '0')->whereIn('job_id', [2, 3, 4, 5, 8])->orderby('job_id')->get();
         $months = [
             '01' => ['name' => '一月'],
             '02' => ['name' => '二月'],
@@ -263,7 +263,7 @@ class PersonnelController extends Controller
         $year = $request->year ?? Carbon::now()->year;
         $now_year = Carbon::now()->year;
         $years = range(Carbon::now()->year, 2022);
-        $users = User::where('status', '0')->whereIn('job_id', [3, 4, 5])->orderby('job_id')->get();
+        $users = User::where('status', '0')->whereIn('job_id', [2, 3, 4, 5, 8])->orderby('job_id')->get();
         $datas = [];
         $leaves = DB::table('leaves')
             ->join('leave_setting', 'leave_setting.leave_id', '=', 'leaves.id')
