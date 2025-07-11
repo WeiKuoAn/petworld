@@ -272,6 +272,12 @@ class PersonnelController extends Controller
             ->select('leaves.*', 'leave_setting.approved_days as day')
             ->get();
         $dates = [];
+        
+        // 確保特休（id=1）一定會顯示
+        $dates['1']['name'] = '特休';
+        $dates['1']['day'] = 0; // 預設值，會根據年資重新計算
+        $dates['1']['hour'] = 0; // 預設值，會根據年資重新計算
+        
         foreach ($leaves as $leave) {
             $dates[$leave->id]['name'] = $leave->name;
             $dates[$leave->id]['day'] = $leave->day;

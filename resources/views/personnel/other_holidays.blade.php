@@ -78,7 +78,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($dates as $date_type => $date)
-                                            <tr>
+                                            <tr align="center">
                                                 <td>
                                                     @if (isset($date['name']))
                                                         {{ $date['name'] }}
