@@ -64,7 +64,7 @@ class Rpg19Controller extends Controller
                                                                 ->where('sale_data.sale_date','>=',$month['start_date'])->where('sale_data.sale_date','<=',$month['end_date'])
                                                                 ->where('sale_data.status','9')
                                                                 ->where('sale_souvenir.souvenir_id',$prom->id)
-                                                                ->count();
+                                                                ->sum('sale_souvenir.souvenir_num');
 
                 $datas[$key]['proms'][$prom->id]['count'] = $datas[$key]['proms'][$prom->id]['prom_count'] + $datas[$key]['proms'][$prom->id]['souvenir_count'];
                                                                 
