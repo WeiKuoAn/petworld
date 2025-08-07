@@ -68,7 +68,7 @@
                 </div> <!-- end widget-rounded-circle-->
             </div> <!-- end col-->
 
-            @if (Auth::user()->job_id == 1 || Auth::user()->job_id == 2 || Auth::user()->job_id == 3)
+            @if (Auth::user()->job_id == 1 || Auth::user()->job_id == 2 || Auth::user()->job_id == 3 || Auth::user()->job_id == 9)
                 <div class="col-md-6 col-xl-3">
                     <div class="widget-rounded-circle card">
                         <div class="card-body">
@@ -132,7 +132,7 @@
                     </div>
                 </div> <!-- end widget-rounded-circle-->
             </div> <!-- end col-->
-            @if (Auth::user()->job_id == 1 || Auth::user()->job_id == 2 || Auth::user()->job_id == 3)
+            @if (Auth::user()->job_id == 1 || Auth::user()->job_id == 2 || Auth::user()->job_id == 3 || Auth::user()->job_id == 9)
             <div class="col-md-6 col-xl-3">
                 <div class="widget-rounded-circle card">
                     <div class="card-body">
@@ -154,7 +154,7 @@
                 </div> <!-- end widget-rounded-circle-->
             </div> <!-- end col-->
             @endif
-            @if (Auth::user()->job_id == 1 || Auth::user()->job_id == 2 || Auth::user()->job_id == 3)
+            @if (Auth::user()->job_id == 1 || Auth::user()->job_id == 2 || Auth::user()->job_id == 3 )
             <div class="col-md-6 col-xl-3">
                 <div class="widget-rounded-circle card">
                     <div class="card-body">
@@ -178,7 +178,7 @@
                 </div> <!-- end widget-rounded-circle-->
             </div> <!-- end col-->
             @endif
-            @if (Auth::user()->job_id == 1 || Auth::user()->job_id == 2 || Auth::user()->job_id == 3)
+            @if (Auth::user()->job_id == 1 || Auth::user()->job_id == 2 || Auth::user()->job_id == 3 || Auth::user()->job_id == 9)
             <div class="col-md-6 col-xl-3">
                 <div class="widget-rounded-circle card">
                     <div class="card-body">

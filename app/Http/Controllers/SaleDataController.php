@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Contract;
+use App\Models\CustGroup;
 use App\Models\Customer;
 use App\Models\Gdpaper;
 use App\Models\Plan;
+use App\Models\Product;
 use App\Models\Prom;
+use App\Models\Sale;
 use App\Models\Sale_gdpaper;
 use App\Models\Sale_prom;
-use App\Models\SaleSplit;
 use App\Models\SaleChange;
-use App\Models\SaleContract;
-use App\Models\Sale;
-use App\Models\User;
-use App\Models\SaleSource;
-use App\Models\Product;
-use App\Models\CustGroup;
 use App\Models\SaleCompanyCommission;
-use App\Models\Contract;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
+use App\Models\SaleContract;
+use App\Models\SaleSource;
 use App\Models\SaleSouvenir;
-
+use App\Models\SaleSplit;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SaleDataController extends Controller
 {
@@ -31,16 +30,16 @@ class SaleDataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*ajax*/
+    /* ajax */
     public function customer_search(Request $request)
     {
         if ($request->ajax()) {
-            $output = "";
+            $output = '';
             $custs = Customer::where('name', 'like', $request->cust_name . '%')->get();
 
             if ($custs) {
                 foreach ($custs as $key => $cust) {
-                    $output .=  '<option value="' . $cust->id . '" label="(' . $cust->name . ')-' . $cust->mobile . '">';
+                    $output .= '<option value="' . $cust->id . '" label="(' . $cust->name . ')-' . $cust->mobile . '">';
                 }
             }
             return Response($output);
@@ -50,13 +49,13 @@ class SaleDataController extends Controller
     public function company_search(Request $request)
     {
         if ($request->ajax()) {
-            $output = "";
+            $output = '';
             $hospitals = Customer::whereIn('group_id', [2, 3, 4, 5, 6, 7])->where('name', 'like', '%' . $request->cust_name . '%')->get();
 
             if ($hospitals) {
                 foreach ($hospitals as $key => $hospital) {
                     $CustGroup = CustGroup::where('id', $hospital->group_id)->first();
-                    $output .=  '<option value="' . $hospital->id . '" label="' . $CustGroup->name . '(' . $hospital->name . ')-' . $hospital->mobile . '">';
+                    $output .= '<option value="' . $hospital->id . '" label="' . $CustGroup->name . '(' . $hospital->name . ')-' . $hospital->mobile . '">';
                 }
             }
             return Response($output);
@@ -83,16 +82,14 @@ class SaleDataController extends Controller
         }
     }
 
-
     public function gdpaper_search(Request $request)
     {
         if ($request->ajax()) {
-            $output = "";
+            $output = '';
             $product = Product::where('id', $request->gdpaper_id)->first();
 
-
             if ($product) {
-                $output .=  $product->price;
+                $output .= $product->price;
             }
             return Response($output);
         }
@@ -104,7 +101,6 @@ class SaleDataController extends Controller
     //         $output = "";
     //         $product = Sale::where('customer_id', $request->cust_id)->orderby('id','desc')->first();
 
-
     //         if($product){
     //             $output.=  $product->price;
     //         }
@@ -112,16 +108,16 @@ class SaleDataController extends Controller
     //     }
     // }
 
-
     public function create()
     {
         $sources = SaleSource::where('status', 'up')->get();
         $plans = Plan::where('status', 'up')->get();
         $products = Product::where('status', 'up')->orderby('seq', 'asc')->orderby('price', 'desc')->get();
-        //紀念品
+        // 紀念品
         $souvenirs = Prom::where('type', 'E')->orderby('seq', 'asc')->get();
         $customers = Customer::orderby('created_at', 'desc')->get();
-        return view('sale.create')->with('products', $products)
+        return view('sale.create')
+            ->with('products', $products)
             ->with('sources', $sources)
             ->with('plans', $plans)
             ->with('souvenirs', $souvenirs)
@@ -152,7 +148,7 @@ class SaleDataController extends Controller
         }
         $sale->plan_price = $request->plan_price;
         $sale->pay_id = $request->pay_id;
-        //尾款或追加為方案價格
+        // 尾款或追加為方案價格
         if (isset($request->final_price)) {
             $sale->plan_price = $request->final_price;
         }
@@ -186,9 +182,8 @@ class SaleDataController extends Controller
             $contrace->save();
         }
 
-
         foreach ($request->select_proms as $key => $select_prom) {
-            if (isset($select_prom)) { //不等於空的話
+            if (isset($select_prom)) {  // 不等於空的話
                 $prom = new Sale_prom();
                 $prom->prom_type = $request->select_proms[$key];
                 $prom->sale_id = $sale_id->id;
@@ -215,7 +210,7 @@ class SaleDataController extends Controller
         }
 
         foreach ($request->souvenir_ids as $key => $souvenir_id) {
-            if (isset($souvenir_id)) { //不等於空的話
+            if (isset($souvenir_id)) {  // 不等於空的話
                 $souvenir = new SaleSouvenir();
                 $souvenir->sale_id = $sale_id->id;
                 $souvenir->souvenir_id = $request->souvenir_ids[$key];
@@ -227,7 +222,7 @@ class SaleDataController extends Controller
             }
         }
 
-        //如果存在來源公司名稱的話就存入
+        // 如果存在來源公司名稱的話就存入
         if (isset($request->source_company_name_q)) {
             $CompanyCommission = new SaleCompanyCommission();
             $CompanyCommission->sale_date = $request->sale_date;
@@ -243,10 +238,8 @@ class SaleDataController extends Controller
         return redirect()->route('sale.create');
     }
 
-
     public function index(Request $request)
     {
-
         if ($request) {
             $status = $request->status;
             if (!isset($status) || $status == 'not_check') {
@@ -295,7 +288,7 @@ class SaleDataController extends Controller
             }
 
             $user = $request->user;
-            if ($user != "null") {
+            if ($user != 'null') {
                 if (isset($user)) {
                     $sales = $sales->where('user_id', $user);
                 } else {
@@ -304,7 +297,7 @@ class SaleDataController extends Controller
             }
 
             $plan = $request->plan;
-            if ($plan != "null") {
+            if ($plan != 'null') {
                 if (isset($plan)) {
                     $sales = $sales->where('plan_id', $plan);
                 } else {
@@ -341,8 +334,9 @@ class SaleDataController extends Controller
         $users = User::where('status', '0')->get();
         $sources = SaleSource::where('status', 'up')->get();
         $plans = Plan::where('status', 'up')->get();
-        if (Auth::user()->level != 2 || Auth::user()->job_id == 8 || Auth::user()->job_id == 3) { //20250501
-            return view('sale.index')->with('sales', $sales)
+        if (Auth::user()->level != 2 || Auth::user()->job_id == 8 || Auth::user()->job_id == 3 || Auth::user()->job_id == 2 || Auth::user()->job_id == 9) {  // 20250501
+            return view('sale.index')
+                ->with('sales', $sales)
                 ->with('users', $users)
                 ->with('request', $request)
                 ->with('condition', $condition)
@@ -355,7 +349,7 @@ class SaleDataController extends Controller
         }
     }
 
-    public function wait_index(Request $request) //代確認業務單
+    public function wait_index(Request $request)  // 代確認業務單
     {
         $sales = Sale::where('status', 3);
         if ($request) {
@@ -368,7 +362,7 @@ class SaleDataController extends Controller
                 $sales = $sales->where('sale_date', '<=', $before_date);
             }
             $user = $request->user;
-            if ($user != "null") {
+            if ($user != 'null') {
                 if (isset($user)) {
                     $sales = $sales->where('user_id', $user);
                 } else {
@@ -379,7 +373,7 @@ class SaleDataController extends Controller
             $sales = $sales->orderby('sale_date', 'desc')->orderby('user_id', 'desc')->orderby('sale_on', 'desc');
         }
         $sales = $sales->get();
-        $users = User::where('status', '0')->whereIn('job_id', [1, 2, 3, 5])->get();
+        $users = User::where('status', '0')->whereIn('job_id', [1, 3, 4, 5, 9])->get();
 
         $total = 0;
         foreach ($sales as $sale) {
@@ -388,17 +382,17 @@ class SaleDataController extends Controller
         return view('sale.wait')->with('sales', $sales)->with('request', $request)->with('users', $users)->with('total', $total);
     }
 
-    public function user_sale($id, Request $request) //從用戶管理進去看業務單
+    public function user_sale($id, Request $request)  // 從用戶管理進去看業務單
     {
         $user = User::where('id', $id)->first();
         $plans = Plan::where('status', 'up')->get();
         if ($request) {
             $status = $request->status;
             if (!isset($status) || $status == 'not_check') {
-                $sales = Sale::where('user_id',  $id)->whereIn('status', [1, 2]);
+                $sales = Sale::where('user_id', $id)->whereIn('status', [1, 2]);
             }
             if ($status == 'check') {
-                $sales = Sale::where('user_id',  $id)->whereIn('status', [9, 100]);;
+                $sales = Sale::where('user_id', $id)->whereIn('status', [9, 100]);;
             }
             $after_date = $request->after_date;
             if ($after_date) {
@@ -440,8 +434,8 @@ class SaleDataController extends Controller
             $price_total = Sale::where('user_id', $id)->where('status', '1')->sum('pay_price');
         }
 
-
-        return view('sale.user_index')->with('sales', $sales)
+        return view('sale.user_index')
+            ->with('sales', $sales)
             ->with('user', $user)
             ->with('request', $request)
             ->with('condition', $condition)
@@ -455,9 +449,6 @@ class SaleDataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
-
 
     /**
      * Display the specified resource.
@@ -479,7 +470,8 @@ class SaleDataController extends Controller
         $customers = Customer::orderby('created_at', 'desc')->get();
         $sale_souvenirs = SaleSouvenir::where('sale_id', $id)->get();
         $souvenirs = Prom::where('type', 'E')->orderby('seq', 'asc')->get();
-        return view('sale.edit')->with('data', $data)
+        return view('sale.edit')
+            ->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
             ->with('products', $products)
@@ -536,8 +528,8 @@ class SaleDataController extends Controller
             session(['user' => $user, 'afterDate' => $afterDate, 'beforeDate' => $beforeDate]);
         }
 
-
-        return view('sale.check')->with('data', $data)
+        return view('sale.check')
+            ->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
             ->with('products', $products)
@@ -555,7 +547,7 @@ class SaleDataController extends Controller
     {
         // dd($request->all());
         $sale = Sale::where('id', $id)->first();
-        //如果是管理者就直接確認對帳
+        // 如果是管理者就直接確認對帳
         if (Auth::user()->level != 2) {
             if ($request->admin_check == 'check') {
                 $sale->status = '9';
@@ -575,7 +567,7 @@ class SaleDataController extends Controller
                 $sale->status = '3';
                 $sale->save();
             }
-            if (Auth::user()->job_id == 8) { //20250501如果是專員主管就跳回業務管理
+            if (Auth::user()->job_id == 8) {  // 20250501如果是專員主管就跳回業務管理
                 return redirect()->route('sales');
             } else {
                 return redirect()->route('person.sales');
@@ -583,8 +575,7 @@ class SaleDataController extends Controller
         }
     }
 
-
-    //轉單、對拆
+    // 轉單、對拆
     public function change_record($id)
     {
         $sale_changes = SaleChange::where('sale_id', $id)->orderby('id', 'desc')->get();
@@ -607,7 +598,8 @@ class SaleDataController extends Controller
 
         $sale_change = SaleChange::where('sale_id', $id)->orderby('id', 'desc')->first();
         $sale_split = SaleSplit::where('sale_id', $id)->orderby('id', 'desc')->first();
-        return view('sale.change')->with('data', $data)
+        return view('sale.change')
+            ->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
             ->with('products', $products)
@@ -646,7 +638,6 @@ class SaleDataController extends Controller
             $split_data->save();
         }
 
-
         return redirect()->route('sales', ['status' => 'check']);
     }
 
@@ -683,7 +674,7 @@ class SaleDataController extends Controller
         }
         $sale->plan_price = $request->plan_price;
         $sale->pay_id = $request->pay_id;
-        //尾款或追加為方案價格
+        // 尾款或追加為方案價格
         if (isset($request->final_price)) {
             $sale->plan_price = $request->final_price;
         }
@@ -728,7 +719,7 @@ class SaleDataController extends Controller
 
         if (isset($request->select_proms)) {
             foreach ($request->select_proms as $key => $select_prom) {
-                if (isset($select_prom)) { //不等於空的話
+                if (isset($select_prom)) {  // 不等於空的話
                     $prom = new Sale_prom();
                     $prom->prom_type = $request->select_proms[$key];
                     $prom->sale_id = $sale_id->id;
@@ -758,11 +749,9 @@ class SaleDataController extends Controller
             }
         }
 
-
-
         SaleSouvenir::where('sale_id', $sale_id->id)->delete();
         foreach ($request->souvenir_ids as $key => $souvenir_id) {
-            if (isset($souvenir_id)) { //不等於空的話
+            if (isset($souvenir_id)) {  // 不等於空的話
                 $souvenir = new SaleSouvenir();
                 $souvenir->sale_id = $sale_id->id;
                 $souvenir->souvenir_id = $request->souvenir_ids[$key];
@@ -774,13 +763,13 @@ class SaleDataController extends Controller
             }
         }
 
-        if ($request->source_company_name_q == null) //如果是null，會把舊的存在刪除
+        if ($request->source_company_name_q == null)  // 如果是null，會把舊的存在刪除
         {
             $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
             if (isset($sale_company)) {
                 SaleCompanyCommission::where('sale_id', $id)->delete();
             }
-        } else { //不是null，如果存在值就更新，不然就新增
+        } else {  // 不是null，如果存在值就更新，不然就新增
             $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
             if (isset($sale_company)) {
                 $sale_company->sale_date = $request->sale_date;
@@ -804,7 +793,6 @@ class SaleDataController extends Controller
             }
         }
 
-
         return redirect()->route('sales');
     }
 
@@ -814,7 +802,6 @@ class SaleDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function delete($id)
     {
         $sources = SaleSource::where('status', 'up')->get();
@@ -828,7 +815,8 @@ class SaleDataController extends Controller
         $sale_company = SaleCompanyCommission::where('sale_id', $id)->first();
         $sale_souvenirs = SaleSouvenir::where('sale_id', $id)->get();
         $souvenirs = Prom::where('type', 'E')->orderby('seq', 'asc')->get();
-        return view('sale.del')->with('data', $data)
+        return view('sale.del')
+            ->with('data', $data)
             ->with('customers', $customers)
             ->with('plans', $plans)
             ->with('products', $products)
@@ -840,6 +828,7 @@ class SaleDataController extends Controller
             ->with('sale_souvenirs', $sale_souvenirs)
             ->with('souvenirs', $souvenirs);
     }
+
     public function destroy(Request $request, $id)
     {
         $sale = Sale::where('id', $id);
@@ -865,7 +854,7 @@ class SaleDataController extends Controller
         return redirect()->route('sales');
     }
 
-    //匯出
+    // 匯出
     public function export(Request $request)
     {
         if ($request->input() != null) {
@@ -923,7 +912,7 @@ class SaleDataController extends Controller
             }
 
             $user = $request->user;
-            if ($user != "null") {
+            if ($user != 'null') {
                 if (isset($user)) {
                     $sales = $sales->where('user_id', $user);
                 } else {
@@ -932,7 +921,7 @@ class SaleDataController extends Controller
             }
 
             $plan = $request->plan;
-            if ($plan != "null") {
+            if ($plan != 'null') {
                 if (isset($plan)) {
                     $sales = $sales->where('plan_id', $plan);
                 } else {
@@ -969,27 +958,26 @@ class SaleDataController extends Controller
         //     }
         // }
 
-        $fileName = '專員業務key單' . date("Y-m-d") . '.csv';
+        $fileName = '專員業務key單' . date('Y-m-d') . '.csv';
 
         $headers = array(
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
+            'Content-type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=$fileName",
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0'
         );
-        $header = array('日期', $after_date . '~',  $before_date);
+        $header = array('日期', $after_date . '~', $before_date);
         $columns = array('單號', '專員', '日期', '客戶', '寶貝名', '類別', '方案', '金紙', '金紙總賣價', '安葬方式', '後續處理', '付款方式', '實收價格', '狀態', '備註', '轉單', '對拆人員');
 
         $callback = function () use ($sales, $columns, $header) {
-
             $file = fopen('php://output', 'w');
             fputs($file, chr(0xEF) . chr(0xBB) . chr(0xBF), 3);
             fputcsv($file, $header);
             fputcsv($file, $columns);
 
             foreach ($sales as $key => $sale) {
-                $row['單號']  = $sale->sale_on;
+                $row['單號'] = $sale->sale_on;
                 $row['專員'] = $sale->user_name->name;
                 $row['日期'] = $sale->sale_date;
                 if ((isset($sale->customer_id))) {
@@ -1074,7 +1062,7 @@ class SaleDataController extends Controller
                 if (isset($sale->SaleSplit)) {
                     $row['對拆人員'] = $sale->SaleSplit->user_name->name;
                 }
-                //'付款方式','實收價格','狀態','轉單','對拆人員'
+                // '付款方式','實收價格','狀態','轉單','對拆人員'
                 fputcsv($file, array(
                     $row['單號'],
                     $row['專員'],

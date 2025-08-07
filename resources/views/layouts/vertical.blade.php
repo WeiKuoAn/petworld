@@ -21,6 +21,9 @@
             @elseif(Auth::user()->job_id == 2)
                 <!-- 行政主管(2) -->
                 @include('layouts.topbar/admin-istrative-topbar')
+            @elseif(Auth::user()->job_id == 9)
+                <!-- 行政(9) -->
+                @include('layouts.topbar/istrative-topbar')
             @elseif(Auth::user()->job_id == 3)
                 <!-- 業務經理(3) -->
                 @include('layouts.topbar/admin-sale-topbar')
@@ -48,6 +51,9 @@
             @elseif(Auth::user()->job_id == 2)
                 <!-- 行政主管(2) -->
                 @include('layouts.shared/admin-istrative-left-sidebar')
+            @elseif(Auth::user()->job_id == 9)
+                <!-- 行政(9) -->
+                @include('layouts.shared/istrative-left-sidebar')
             @elseif(Auth::user()->job_id == 3)
                 <!-- 業務經理(3) -->
                 @include('layouts.shared/admin-sale-left-sidebar')

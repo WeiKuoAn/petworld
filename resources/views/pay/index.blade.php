@@ -157,7 +157,7 @@
                                         <td>{{ number_format($data->price) }}</td>
                                         <td>{{ $data->comment }}</td>
                                         <td>{{ $data->user_name->name }}</td>
-                                        @if(Auth::user()->job_id == 1 || Auth::user()->job_id == 7)
+                                        @if(Auth::user()->job_id == 1 || Auth::user()->job_id == 7 || Auth::user()->job_id == 2)
                                             <td>
                                                 <a href="{{ route('pay.check',$data->id) }}">
                                                     <i class="mdi mdi-file-document me-2 text-muted font-18 vertical-middle"></i>
@@ -178,7 +178,7 @@
                                             @else
                                             <td></td>
                                             @endif
-                                        @elseif(Auth::user()->job_id == 1 || Auth::user()->job_id == 7)
+                                        @elseif(Auth::user()->job_id == 1 || Auth::user()->job_id == 7 || Auth::user()->job_id == 2)
                                         <td>
                                             <div class="btn-group dropdown">
                                                 <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-outline-secondary waves-effect" data-bs-toggle="dropdown" aria-expanded="false">動作 <i class="mdi mdi-arrow-down-drop-circle"></i></a>
