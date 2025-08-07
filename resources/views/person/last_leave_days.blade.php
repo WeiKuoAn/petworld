@@ -36,6 +36,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($dates as $date_type => $date)
+                                    @if(isset($date['name']))
                                         <tr align="center">
                                             <td>{{ $date['name'] }}</td>
                                             @if ($date['name'] == '特休')
@@ -49,6 +50,11 @@
                                                 {{ $leave_datas[Auth::user()->id]['leavedays'][$date_type]['day'] }}
                                             </td>
                                         </tr>
+                                    @else
+                                        <tr align="center">
+                                            <td colspan="3">目前無假別</td>
+                                        </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
