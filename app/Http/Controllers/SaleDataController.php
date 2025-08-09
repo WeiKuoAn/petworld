@@ -545,10 +545,9 @@ class SaleDataController extends Controller
 
     public function check_update(Request $request, $id)
     {
-        // dd($request->all());
         $sale = Sale::where('id', $id)->first();
         // 如果是管理者就直接確認對帳
-        if (Auth::user()->level != 2) {
+        if (Auth::user()->level != 2 || Auth::user()->job_id == 9) {
             if ($request->admin_check == 'check') {
                 $sale->status = '9';
                 $sale->save();
