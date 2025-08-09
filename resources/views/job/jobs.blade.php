@@ -50,7 +50,7 @@
                             <tbody>
                             @foreach ($datas as $key=>$data)
                                 <tr>
-                                    <td>{{ $key->id }}</td>
+                                    <td>{{ $key+1 }}</td>
                                     <td><span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#bs-example-modal-lg">{{ $data->name }}</span></td>
                                     <td>
                                         @if(isset($data->director_id)) {{ $data->director_data->name }}
