@@ -452,7 +452,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center mb-3">
-                        @if (Auth::user()->level != '2' && Auth::user()->job_id == 9)
+                        @if (Auth::user()->level != '2' || Auth::user()->job_id == 9)
                             @if ($data->status == '3')
                                 <button type="button" class="btn w-sm btn-light waves-effect"
                                     onclick="history.go(-1)">回上一頁</button>
